@@ -12,7 +12,8 @@
     "serve:ssr": "node dist/spacex-application-web/server/main.js",
     "build:ssr": "ng build --prod && ng run spacex-application-web:server:production",
     "prerender": "ng run spacex-application-web:prerender",
-    "build:universal":"npm run build:ssr && npm run serve:ssr"
+    "build:universal":"npm run build:ssr && npm run serve:ssr",
+    "heroku-postbuild":"npm run build:ssr"
   },
   "private": true,
   "dependencies": {
