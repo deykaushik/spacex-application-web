@@ -1,0 +1,18 @@
+/* You can add global styles to this file, and also import other style files */
+@import "./variables";
+@import "./mixin";
+@import "./button";
+
+body {
+  font-family: $font-famly-defaut;
+  color: map-get($gray, 1);
+  background-color: map-get($gray, 6);
+  font-size: $font-base;
+  position: relative;
+  &,
+  * {
+    margin: 0px;
+    box-sizing: border-box;
+    outline: 0;
+  }
+}

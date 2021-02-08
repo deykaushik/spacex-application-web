@@ -1,0 +1,22 @@
+@import "../styles/variables";
+@import "../styles/mixin";
+
+.primary-btn {
+  background-color: map-get($green, 4);
+  font-family: inherit;
+  outline: 0px;
+  border: 0px;
+  padding: 10px 0;
+  min-width: 80px;
+  width: 100%;
+  max-width: 150px;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  @include border-radius;
+
+  &:hover,
+  &.active,
+  &:focus {
+    background-color: map-get($green, 3);
+  }
+}

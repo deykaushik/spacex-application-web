@@ -1,0 +1,10 @@
+@import "../../../../styles/mixin";
+@import "../../../../styles/variables";
+
+.footer {
+  @include page-wrapper;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: $footer-height;
+}

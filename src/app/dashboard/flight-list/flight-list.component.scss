@@ -1,0 +1,65 @@
+@import "../../../styles/variables";
+@import "../../../styles/mixin";
+
+.dashboard-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0px 15px;
+
+  @media (min-width: $media-sm) {
+    grid-template-columns: 0.5fr 2fr;
+  }
+}
+
+ul.flight-list {
+  @include list-default-style-reset;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 15px;
+
+  @media (min-width: $media-sm) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: $media-md) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .flight-info-wrapper {
+    padding: 15px;
+    background-color: white;
+    @include border-radius;
+  }
+
+  .info-row {
+    &:not(:last-child) {
+      margin-bottom: 8px;
+    }
+    &.two-col {
+      display: grid;
+      grid-template-columns: 0.7fr 0.3fr;
+    }
+    .label {
+      font-weight: bold;
+    }
+    &.name {
+      h2 {
+        font-size: $font-lg;
+        text-decoration: none;
+        color: inherit;
+        color: map-get($blue, 1);
+      }
+    }
+    &.mission {
+      .mission-lbl {
+        font-weight: bold;
+      }
+      ul li {
+        list-style-type: disc;
+      }
+    }
+    img {
+      width: 100%;
+    }
+  }
+}

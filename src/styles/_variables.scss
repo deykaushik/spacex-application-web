@@ -1,0 +1,53 @@
+$green: (
+  1: #266232,
+  2: #348644,
+  3: #6cc04a,
+  4: #bde093,
+  5: #f1fced,
+);
+
+$blue: (
+  1: #004a75,
+  2: #0e76b7,
+  3: #62b3e5,
+  4: #afd8f1,
+  5: #e5f6fe,
+);
+
+$red: (
+  1: #9b0c4b,
+  2: #d82373,
+  3: #e56385,
+  4: #f0b3ca,
+  5: #ffeff3,
+);
+
+$gray: (
+  0: #000000,
+  1: #333333,
+  2: #666666,
+  3: #999999,
+  4: #cccccc,
+  5: #dddddd,
+  6: #eeeeee,
+  7: #f8f8f8,
+);
+
+$media-xlg: 1920px;
+$media-lg: 1440px;
+$media-md: 1024px;
+$media-sm: 700px;
+
+$font-famly-defaut: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+  Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+  "Segoe UI Symbol";
+
+$font-base: 14px;
+$font-default: $font-base;
+$font-sm: $font-default - 2px;
+$font-mid: $font-default + 2px;
+$font-lg: $font-default + 4px;
+$font-xlg: $font-default + 12px;
+
+$header-height: 80px;
+$footer-height: 60px;

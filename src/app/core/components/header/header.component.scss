@@ -1,0 +1,19 @@
+@import "../../../../styles/variables";
+@import "../../../../styles/mixin";
+
+.logo-wrap {
+  a {
+    font-size: $font-xlg;
+    text-decoration: none;
+    color: inherit;
+    line-height: 1;
+    font-weight: bold;
+  }
+}
+
+.header {
+  @include page-wrapper;
+  display: flex;
+  align-items: center;
+  height: $header-height;
+}

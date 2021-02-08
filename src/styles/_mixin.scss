@@ -1,0 +1,15 @@
+@mixin page-wrapper {
+  width: calc(100vw - 60px);
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+@mixin border-radius($value: 10px) {
+  border-radius: $value;
+}
+
+@mixin list-default-style-reset {
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+}

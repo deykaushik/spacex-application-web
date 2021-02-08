@@ -1,0 +1,52 @@
+<div class="filter-wrapper">
+  <div class="filter-header">
+    <h1>{{labels?.filters}}</h1>
+  </div>
+  <div class="filter years">
+    <div class="header-title">
+      <span class="header-lbl">{{labels?.launchYear}}</span>
+    </div>
+    <div class="filter-options">
+      <ul>
+        <li *ngFor="let year of filters?.years">
+          <button (click)="onFilterSelection(year , 'launch_year')"
+                  [class.active]="year === selectedOption?.launch_year"
+                  class="primary-btn">{{year}}</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="filter launch">
+    <div class="header-title">
+      <span class="header-lbl">{{labels?.successfulLaunch}}</span>
+    </div>
+    <div class="filter-options">
+      <ul>
+        <li *ngFor="let launch of filters?.launch"
+            class="filter-option">
+          <button (click)="onFilterSelection(launch , 'launch_success')"
+                  [class.active]="launch === selectedOption?.launch_success"
+                  class="primary-btn">{{launch ? 'True' : 'False'}}</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="filter landing">
+    <div class="header-title">
+      <span class="header-lbl">{{labels?.successfulLanding}}</span>
+    </div>
+    <div class="filter-options">
+      <ul>
+        <li *ngFor="let land of filters?.land"
+            class="filter-option">
+          <button (click)="onFilterSelection(land , 'land_success')"
+                  [class.active]="land === selectedOption?.land_success"
+                  class="primary-btn">{{land ? 'True' : 'False'}}</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

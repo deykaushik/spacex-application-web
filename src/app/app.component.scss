@@ -1,0 +1,7 @@
+@import "../styles/variables";
+@import "../styles/mixin";
+
+.page-content-wrapper {
+  @include page-wrapper;
+  min-height: calc(100vh - #{$header-height + $footer-height});
+}
