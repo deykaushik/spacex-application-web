@@ -1,0 +1,126 @@
+<div class="acc-details-container text-left">
+   <div class="">
+      <div>
+         <div class="header">
+            <span>{{openAccountMessages.regularPayment}}</span>
+         </div>
+         <div class="acc-details-wrapper form-container">
+            <form autocomplete="off" id="acc-details-form" novalidate>
+               <div class="gd-form-row yes-no-toggler">
+                  <label class="gd-sm-label">{{openAccountMessages.recurringPayments}}</label>
+                  <div class="toggle-btn-wrapper">
+                     <div class="yes toggle-btn" [class.active]="isRecuringPayments === true" (click)="changeRecuringPayment(true)">
+                        <span>{{labels.yes}}</span>
+                     </div>
+                     <div class=" no toggle-btn" [class.active]="isRecuringPayments === false" (click)="changeRecuringPayment(false)">
+                        <span>{{labels.no}}</span>
+                     </div>
+                  </div>
+               </div>
+               <div class="gd-form-row">
+                  <div class="notice">
+                     <span class="highlight">{{openAccountMessages.noteHeader}}</span>
+                     <span class="notice-text" *ngIf="isRecuringPayments">{{openAccountMessages.recurringSubHeader}}</span>
+                     <span class="notice-text" *ngIf="!isRecuringPayments">{{openAccountMessages.recurringMessage}}</span>
+                  </div>
+               </div>
+               <div *ngIf="isRecuringPayments">
+                  <div class="gd-form-row">
+                     <label class="gd-sm-label">{{openAccountMessages.paymentsHappen}}</label>
+                     <app-radio-button-list [radioList]='paymentDurationList' [selectedValue]="selectedPaymentDuration" [groupName]="paymentDuration.paymentType"
+                        (onSelectionChange)="onPaymentDurationChange($event)">
+                     </app-radio-button-list>
+                  </div>
+                  <div class="gd-form-row option-selected" *ngIf="isWeekly">
+                     <label class="gd-sm-label">{{openAccountMessages.recurringPaymentDay}}</label>
+                     <div class="gd-basic-dropdown" dropdown>
+                        <div dropdownToggle class="dropdown-place">
+                           <div class="text">
+                              {{selectedDay}}
+                           </div>
+                           <div class="icon">
+                              <span class="caret"></span>
+                           </div>
+                        </div>
+                        <ul *dropdownMenu class="dropdown-menu" role="menu">
+                           <li role="menuitem" *ngFor="let day of days; let i = index" (click)="onDayChange(day, i)">
+                              {{day}}
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+                  <div class="form-group option-selected" *ngIf="isMonthly">
+                     <label class="gd-sm-label">{{openAccountMessages.recurringPaymentDay}}</label>
+                     <div class="month-duration">
+                        <div class="input-group">
+                           <span class="input-group-btn">
+                                    <button type="button " class="btn btn-success btn-number counter-btn"
+                                       data-type="minus" (click)= "decreaseDay()" [disabled]="!isDecrement">
+                                       <span class="glyphicon glyphicon-minus"></span>
+                           </button>
+                           </span>
+                           <input type="text" id="quantity" name="quantity" class="form-control input-number" [(ngModel)]="selectedMonth" min="1" max="31"
+                              (ngModelChange)="onMonthChange(selectedMonth)">
+                           <span class="input-group-btn">
+                                    <button type="button" class="btn btn-success btn-number counter-btn"
+                                       data-type="plus" (click)= "increaseDay()" [disabled]="!isIncrement">
+                                          <span class="glyphicon glyphicon-plus"></span>
+                           </button>
+                           </span>
+                        </div>
+                     </div>
+                     <label class="gd-sm-label" [class.error-msg]="!isValidMonth">{{labels.selectDay}} </label>
+                  </div>
+                  <div class="gd-form-row">
+                     <label class="gd-sm-label">{{labels.depositEachTime}}</label>
+                     <input type="text" class="investment-amount" id="deposit-amount" autocomplete="off" name="payoutDeposit" [ngModel]=" payoutDeposit | amountTransform"
+                        (ngModelChange)="onAmountChange($event)" [class.error]="false" #amount="ngModel" appValidateRequired
+                        [class.invalid-amount]="!isValidAmount" appAmountFormatMask>
+                     <div *ngIf="!isMaxAmount">
+                        <span class="error-msg">{{openAccountMessages.amountShouldGreaterMessage}}</span>
+                     </div>
+                     <label *ngIf="isMaxAmount" class="amount-label" [class.error-msg]="!isValidAmount">{{labels.recurringAmount}} {{minimumAmount | amountTransform  : amountPipeConfig}}</label>
+                  </div>
+                  <div class="alert-msg" *ngIf="note">
+                     <span class="note">{{openAccountMessages.noteHeader}}</span>
+                     <div class="text-msg ">
+                        <span>{{labels.receiveInterest}} {{investmentEndDate | date:'dd MMM yyyy' }}.</span>
+                     </div>
+                  </div>
+                  <div class="gd-form-row">
+                     <label class="gd-sm-label">{{labels.paymentMade}}</label>
+                     <div class="gd-basic-dropdown" dropdown>
+                        <div dropdownToggle class="dropdown-place">
+                           <div class="text">
+                              {{selectedAccount}}
+                           </div>
+                           <div class="icon">
+                              <span class="caret"></span>
+                           </div>
+                        </div>
+                        <ul *dropdownMenu class="dropdown-menu dropdown-height" role="menu">
+                           <li role="menuitem" *ngFor="let account of accountList" (click)="onAccChange(account)">
+                              {{account.nickname}}-{{account.accountNumber}}
+                           </li>
+                        </ul>
+                     </div>
+
+                     <ng-container *ngIf="!isSufficientBalance">
+                        <span class="error-msg">{{labels.insufficientFund}}</span>
+                     </ng-container>
+                  </div>
+               </div>
+               <div class="account-btn">
+                  <button class="gd-primary-btn next" [disabled]="!isValidData" [class.btn-disabled]="!isValidData" (click)="recurringSubmit()">{{labels.next}}</button>
+                  <button class="gd-primary-btn back" (click)="back()">{{labels.back}}</button>
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+   <section class="loader-mask" *ngIf="showLoader">
+      <div id="loaders-spinner" class="loader-spinner">
+         <app-spinner [color]="'green'"></app-spinner>
+      </div>
+   </section>
+</div>

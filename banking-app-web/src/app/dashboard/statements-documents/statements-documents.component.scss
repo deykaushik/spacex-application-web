@@ -1,0 +1,136 @@
+@import '../../../styles/_mixins.scss';
+@import '../../../styles/_base.scss';
+$svg-path: './../../../assets/svg';
+$icon-back-green: 'light-back-green';
+$bg-color-dashboard: $body-bg;
+$success-tick: 'tick';
+$icon-close: 'cross-close';
+
+.statement-documents-container {
+   padding: 18px 87px;
+   background-color: $bg-color-dashboard;
+   min-height: calc(100vh - 170px);
+
+   .back-header {
+      @include flexbox();
+      @include align-items(center);
+
+      .icon {
+         display: block;
+         @include svg-image($icon-back-green, 32px, 32px);
+         margin-right: 15px;
+      }
+
+      .page-header {
+         @include flex(1);
+         text-transform: capitalize;
+         border-bottom: none;
+         font-family: $font-markpro-medium;
+         font-size: $lg-heading-size;
+         font-weight: 500;
+         margin: 0;
+         color: $text-color-secondary;
+      }
+   }
+
+   .account-number {
+      font-size: $font-sm;
+      font-family: $font-markpro;
+      text-align: left;
+      font-weight: normal;
+      color: $text-color-primary;
+      display: block;
+      margin-top: -5px;
+   }
+
+   .message-alert {
+      ::ng-deep {
+         .alertMessage {
+            .alert-container {
+               .message {
+                  &.success {
+                     .successIcon {
+                        @include svg-image-full-path($svg-path, $success-tick, 20px, 20px);
+                     }
+                  }
+
+                  .text {
+                     font-size: $font-default;
+                  }
+
+                  .closeIcon {
+                     @include svg-image-full-path($svg-path, $icon-close, 36px, 36px);
+                     cursor: pointer;
+                  }
+
+                  .icon {
+                     width: 36px;
+                     height: 36px;
+                  }
+               }
+            }
+         }
+      }
+   }
+
+   .container {
+      background-color: $container-bg;
+
+      .title {
+         padding: 21px 19px;
+         color: $text-color-secondary;
+         font-size: $section-title-secondary-size;
+         font-weight: 500;
+      }
+
+      ::ng-deep .tab-border {
+         border-bottom: solid 1px $divider-secondary;
+         padding-top: 30px;
+      }
+   }
+
+   .header-container {
+      background-color: $bg-color-dashboard;
+      padding: 25px 0;
+   }
+}
+
+@media (max-width: $media-sm) {
+   .statement-documents-container {
+      padding: $landing-padding 0;
+
+      .back-header {
+         @include flexbox();
+         @include align-items(center);
+         margin-left: 10px;
+
+         .icon {
+            display: block;
+            @include svg-image($icon-back-green, 32px, 32px);
+            margin-right: 10px;
+         }
+
+         .page-header {
+            @include flex(1);
+            font-size: $section-title-size-sm;
+            margin: 0;
+         }
+
+         .account-number {
+            font-size: $font-xsm;
+            margin-top: 9px;
+         }
+      }
+
+      .header-container {
+         padding: 0;
+      }
+
+      .container {
+         .title {
+            font-size: $font-md;
+            font-weight: 500;
+         }
+      }
+   }
+}

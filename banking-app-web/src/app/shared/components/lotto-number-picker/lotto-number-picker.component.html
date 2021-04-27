@@ -1,0 +1,64 @@
+﻿<div class="gd-basic-dropdown" dropdown id="loto-number-drpdwn" (click)="onLotteryDropdownOpen()" [isOpen]="openLottoPickerOnLoad"
+   (onHidden)="onBoardClose.emit(borderNumber)" #lotteryDropdown>
+   <div dropdownToggle class="dropdown-place openDrp-with-bottom-border" [class.drpdwn-error]="!isValid() && isLotteryDropdownDirty && pickBallErrorMessage !== ''">
+      <div class="text dropdown-hint-text" *ngIf="(selectedLotteryNumbers.length === 0 && selectedPowerBallNumbers.length === 0)">
+         {{lottoLabel}}
+      </div>
+      <div class="selected-balls-container text" *ngIf="(selectedLotteryNumbers.length > 0 || selectedPowerBallNumbers.length > 0)">
+         <div class="single-ball-container" *ngFor="let lotteryNumber of selectedLotteryNumbers">
+            <span class="noCircle" [ngClass]="getBallClass(lotteryNumber, false, false)">
+            {{lotteryNumber}}
+         </span>
+         </div>
+         <div *ngIf="selectedLotteryNumbers?.length > 0 && selectedPowerBallNumbers?.length > 0" class="lotto-ball-separator">
+         </div>
+         <div *ngFor="let powerBall of selectedPowerBallNumbers">
+            <span *ngFor="let powerBall of selectedPowerBallNumbers" class="noCircle {{getBallClass(powerBall, true, false)}}">
+            {{powerBall}}
+         </span>
+         </div>
+      </div>
+      <div>
+         <span class="icon"></span>
+      </div>
+   </div>
+   <ul *dropdownMenu class="dropdown-menu lottery-dropdown-menu" id="loto-menu-drpdwn" role="menu" (click)="$event.stopPropagation();">
+      <li role="menuitem" class="lotteryDropdownDefaultText">
+         <div>{{lottoLabel}}</div>
+         <div class="word-flow">{{lottoLabels.selectDeselectBalls}}</div>
+      </li>
+      <li class="divider"></li>
+      <li [class.isNotPowerBall]="!isPowerBall">
+         <table class="tblLotteryNumber">
+            <tr *ngFor="let lotteryNumberGroup of lotteryNumbers">
+               <td *ngFor="let lotteryNumber of lotteryNumberGroup">
+                  <span (click)="onSelectNumber($event, false);" class="noCircle" [ngClass]="getBallClass(lotteryNumber, false, true)" [id]="'lottry-' + lotteryNumberGroup + '-' + lotteryNumber">
+                     {{lotteryNumber}}
+                  </span>
+               </td>
+            </tr>
+         </table>
+      </li>
+      <li class="divider"></li>
+      <li role="menuitem" class="lotteryDropdownDefaultText">
+         {{lottoLabels.selectPowerBallTitle}}
+      </li>
+      <li class="divider"></li>
+      <li>
+         <table class="tblLotteryNumber">
+            <tr *ngFor="let powerBallNumberGroup of powerBallNumbers;let groupNo=index;">
+               <td *ngFor="let powerBallNumber of powerBallNumberGroup;let ballNo=index">
+                  <span [id]="'board-' + groupNo + '-' + ballNo" (click)="onSelectNumber($event, true);" class="noCircle" [ngClass]="getBallClass(powerBallNumber, true, true)">
+                     {{powerBallNumber}}
+                  </span>
+               </td>
+            </tr>
+         </table>
+      </li>
+   </ul>
+</div>
+<div class="error-msg" *ngIf="!isValid() && isLotteryDropdownDirty && pickBallErrorMessage !== ''">
+   <span>
+      {{pickBallErrorMessage}}
+   </span>
+</div>

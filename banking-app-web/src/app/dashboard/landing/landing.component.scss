@@ -1,0 +1,194 @@
+﻿@import '../../../styles/_base.scss';
+@import '../../../styles/_mixins.scss';
+$bg-color-dashboard: $body-bg;
+$svg-path: './../../../assets/svg/';
+.view-banker-container {
+    height: 35px;
+}
+
+.view-banker {
+    font-size: 16px;
+    font-weight: bolder;
+    margin-top: 10px;
+    text-align: left;
+    padding-left: 35px;
+    cursor: pointer;
+    margin-top: 10px;
+    position: absolute;
+    right: 40px;
+}
+
+.accountsblur{
+    opacity: .3;
+}
+.top-bar /deep/ .apply-btn {
+    margin-top: 0px;
+}
+
+.contact{
+   @include svg-image-full-path($svg-path, 'profile-green', 24px, 24px);
+   margin-right: 5px;
+   display: inline-flex;
+   vertical-align: middle;
+}
+
+.dashboard-container {
+   background-color:$container-bg;
+   padding: $landing-padding 0;
+   @include main-content();
+   .container {
+      padding-left: 0;
+      padding-right: 0;
+      .row {
+         margin-left: 0;
+         margin-right: 0;
+         .gd-dashboard-landing {
+            padding: 20px 0px;
+            overflow: hidden;
+         }
+      }
+   }            
+   .accounts-blocks {
+      padding: 30px 0 20px;
+   }
+   .quick-pay {
+      margin-top: 20px;
+   }
+   .lotto {
+      margin-top: 20px;
+   }              
+   .notification-block{
+            overflow-y: auto;
+            padding-bottom: 80px;
+            scroll-snap-type: none;
+            position: fixed;
+            width: 100%;
+            right: 0;
+            top: 50px;
+            height: calc(100vh - 50px);
+            transform: translateX(100%);
+            transition: transform 400ms ease-in-out;
+            background: $color-white;
+            z-index: 1;
+            &.slider{
+            transform: translateX(0);            
+            }
+   }
+ }
+ 
+
+.apply-button {
+    background-color: $container-bg;
+    height: 70px;
+    border-bottom: 1px solid $divider-secondary
+}
+
+@media (min-width: $media-md) {
+   .dashboard-container {
+       padding: $landing-padding;
+       .container {
+           padding-left: 15px;
+           padding-right: 15px;
+           .row {
+               margin-left: -15px;
+               margin-right: -15px;
+           }
+       }
+       .accounts-blocks {
+           @include flexbox();
+           @include align-items(flex-start);
+           @include transition(transform 400ms ease-in-out);         
+           .quick-pay {
+               @include order(1);
+               margin: 0 30px 0 0;
+           }
+           .lotto {
+               @include order(1);
+               margin: 0 30px 0 0;
+           }
+           .accounts {
+               @include flex(1);
+               @include order(2);
+           }
+           &.slider{
+            @include translate(-300px, 0);  
+           }
+       }
+       .notification-block{
+         top: 80px;
+         width: 280px;
+       }  
+   }
+}
+
+.chat-active {
+   .accounts-blocks {
+       display: inline !important;
+   }
+   .quick-pay {
+       width: 100% !important;
+   }
+   .lotto {
+       width: 100% !important;
+   }
+}
+
+
+@media (min-width: $media-lg) {
+   .dashboard-container {
+       padding: $landing-padding $landing-padding-lg;
+       .accounts-blocks {
+           .quick-pay {
+               width: 400px;
+           }
+           .lotto {
+               width: 400px;
+           }
+           transition: transform 400ms ease-in-out;         
+           &.slider{
+            transform: translateX(-428px);
+       }
+   }
+   .notification-block{
+      top: 80px;
+      width: 440px;
+   }
+}
+}
+@media (max-width:$media-sm) {
+    .accountsblur{
+        opacity: 1;
+    }
+}
+
+
+@media (max-width:$media-xs-down) {
+    .view-banker {
+        right: 0px;
+        left: -12px;
+    }
+    .apply-button {
+        display: none;
+    }
+    .greeting-margin {
+        margin-bottom: 20px;
+    }
+    .apply-button {
+        display: none;
+    }
+    .greeting-margin {
+        margin-bottom: 20px;
+    }
+    .dashboard-container {
+        .container {
+            .row {
+                .gd-dashboard-landing {
+                    padding: 0px 0px;
+                }
+            }
+        }
+        .accounts-blocks {
+            padding-top: 15px;
+        }
+    }
+}

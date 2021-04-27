@@ -1,0 +1,33 @@
+<div class="account-view" [class.is-skeleton-loading]='skeletonMode'>
+   <div class="container">
+      <div class="row">
+         <div class="col-md-4">
+            <div *ngIf="accountContainers && accountId">
+               <app-account-card [accountContainers]="accountContainers" [itemAccountId]="accountId" (accountChange)="onAccountChange($event)"
+                  [skeletonMode]="skeletonMode" [isOptionsVisible]="featureVisible">
+               </app-account-card>
+            </div>
+            <div class="features" *ngIf="isTravelCardActive()">
+               <h4 class="section-title">{{labels.features}}</h4>
+               <ul>
+                  <li *ngIf="showTravelCardTrips || isTravelCardActive()">
+                     <a *ngIf="skeletonMode" [innerHtml]="''| skeletonLoader:skeletonMode"></a>
+                     <a class="icon-link" [routerLink]="['/cards']" (click)="sendEvent('click_on_card_management')">{{labels.cardManagement}}</a>
+                     <span class="icon icon-link"></span>
+                     <span class="icon-skeleton-margin" [innerHtml]="''| skeletonLoader:skeletonMode:'skeleton-icon'"></span>
+                  </li>
+                  <li *ngIf="isTravelCardActive() && showTravelCardTrips">
+                     <a *ngIf="skeletonMode" [innerHtml]="''| skeletonLoader:skeletonMode"></a>
+                     <a class="icon-link" [routerLink]="['/dashboard/account/detail/trip/',accountId]" (click)="sendEvent('click_on_my_trips')">{{labels.mytrips}}</a>
+                     <span class="icon icon-link"></span>
+                     <span class="icon-skeleton-margin" [innerHtml]="''| skeletonLoader:skeletonMode:'skeleton-icon'"></span>
+                  </li>
+               </ul>
+            </div>
+         </div>
+         <div class="col-md-8">
+            <app-my-trips [account]="account"></app-my-trips>
+         </div>
+      </div>
+   </div>
+</div>

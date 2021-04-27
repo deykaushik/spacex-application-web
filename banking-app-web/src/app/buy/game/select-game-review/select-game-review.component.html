@@ -1,0 +1,89 @@
+﻿<div class="pay-review gd-form">
+   <div class="gd-form-row">
+      <div class="col-xs-6 pull-left no-padding">
+         <span>Play: </span>
+      </div>
+      <div class="col-xs-6 pull-left no-padding" id="game-type-name">
+         {{gameTypeName}}
+      </div>
+      <div class="col-xs-6 pull-left no-padding">
+         <span>Amount: </span>
+      </div>
+      <div class="col-xs-6 pull-left no-padding" id="game-total-cost">
+         <span> {{selectNumbers.TotalCost | amountTransform }}</span>
+      </div>
+      <div class="col-xs-6 pull-left no-padding">
+         <span>From account: </span>
+      </div>
+      <div class="col-xs-6 pull-left no-padding">
+         <span class='capitalize' id="game-acc-nickname">{{accountNickName}}</span>
+      </div>
+      <div *ngIf="selectGame.method !== 'a'">
+         <div class="with-padding-top board-section">
+            <div *ngFor="let board of selectNumbers.BoardDetails;let boardNo=index;" class="board-table">
+               <div class="board-column" [id]="'board-' + boardNo">
+                  Board {{board.BoardNumber}}
+               </div>
+               <div class="board-column">
+                  <table>
+                     <tr>
+                        <td *ngFor="let selectedBall of board.SelectedBalls;let ballNo=index;">
+                           <span [id]="'game-ball-' + boardNo + '-' + ballNo" class="noCircle" [ngClass]="selectedBall.className">
+                              {{selectedBall.numberValue}}
+                           </span>
+                        </td>
+                     </tr>
+                  </table>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="col-xs-6 pull-left no-padding with-margin-top">
+         <span>Boards: </span>
+      </div>
+      <div class="col-xs-6 pull-left no-padding with-margin-top">
+         <span id="game-boards-played">{{selectNumbers.BoardsPlayed}}</span>
+      </div>
+      <div *ngIf="selectNumbers.IsLottoPlus || selectNumbers.IsLottoPlusTwo">
+         <div class="col-xs-6 pull-left no-padding">
+            <span>Increased chances: </span>
+         </div>
+         <div class="col-xs-6 pull-left no-padding">
+            <span id="game-increased-chances">{{increasedChances}}</span>
+         </div>
+      </div>
+      <div class="col-xs-6 pull-left no-padding">
+         <span>No of draws: </span>
+      </div>
+      <div class="col-xs-6 pull-left no-padding">
+         <span *ngIf="selectNumbers.DrawsPlayed>1">{{selectNumbers.DrawsPlayed}}  draws (#{{selectNumbers.DrawNumber.drawNumber}} to #{{selectNumbers.DrawNumber.drawNumber + selectNumbers.DrawsPlayed - 1}})</span>
+         <span *ngIf="selectNumbers.DrawsPlayed==1">{{selectNumbers.DrawsPlayed}} draw (#{{selectNumbers.DrawNumber.drawNumber}})</span>
+      </div>
+      <div class="col-xs-6 pull-left no-padding with-margin-top">
+         <span id="game-notify">{{labels.notify}}</span>
+      </div>
+      <div class="col-xs-6 pull-left no-padding with-margin-top">
+         <span id="game-notification-name">{{selectGameFor.notification.name}}</span>
+         <span *ngIf="selectGameFor.notificationInput" id="game-notification-input"> - {{selectGameFor.notification.name === smsNotificationType ? (selectGameFor.notificationInput | mobileNumberMask : 4) : selectGameFor.notificationInput}}</span>
+      </div>
+      <div class="col-xs-6 pull-left no-padding">
+         <span>Your reference: </span>
+      </div>
+      <div class="col-xs-6 pull-left no-padding">
+         <span id="game-your-ref">{{selectGameFor.yourReference}}</span>
+      </div>
+      <div class="col-xs-12 pull-left no-padding with-margin-top with-margin-bottom gd-sm-label">
+         <div class="with-margin-bottom" *ngIf="isNoneNotification">
+            <span class="info-icon"></span>
+            <span>Set a notification on the previous screen to view your {{gameTypeName}} ticket numbers after purchase.</span>
+         </div>
+         <div class="with-margin-bottom" *ngIf="!isNoneNotification">
+            <p>LOTTO and PowerBall ticket numbers can be viewed in the notification you receive after a successful purchase.</p>
+         </div>
+         <p>By clicking below you accept the relevant</p>
+         <p id="game-type-name">{{gameTypeName}}&nbsp;<a class="terms-and-conditions-link" (click)="sendEvent('buy_'+gameTypeName+'_review_click_on_terms_and_conditions')"
+               [attr.href]="termsAndConditionsLink" target="_blank">terms and conditions</a></p>
+      </div>
+   </div>
+</div>
+<app-game-timeout *ngIf="gameTimeOut" (onButtonClick)="hideTimeOutOverlay($event)"></app-game-timeout>

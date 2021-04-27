@@ -1,0 +1,199 @@
+@import './../../../../../styles/_mixins.scss';
+@import './../../../../../styles/_base.scss';
+.account-form {
+   width: 400px;
+   .alert-msg {
+      border-left: solid 2px $secondary-color;
+      padding: 2%;
+      margin: 30px 0 30px;
+      height: 174.4px;
+      background-color: $info-message;
+      .note {
+         width: 103px;
+         height: 23px;
+         font-size: $font-md;
+         font-weight: $weight-bold;
+         color: $secondary-color;
+      }
+      .text-msg {
+         width: 370px;
+         height: 111px;
+         font-size: $font-default;
+         line-height: 1.56;
+         color: $text-color-primary;
+         .text-header {
+            display: block;
+            padding-top: 7px;
+            padding-bottom: 7px;
+         }
+      }
+   }
+   .header {
+      margin: 60px 0 30px 0;
+      font-size: $lg-heading-size;
+      font-weight: $weight-light;
+      line-height: 1.25;
+      color: $text-color-secondary;
+      width:543px;
+   }
+   .investor-number-heading {
+      display: block;
+      width: 223px;
+      height: 31.5px;
+      font-size: $font-sm;
+      font-weight: $weight-light;
+      line-height: 1.94;
+      color: $text-color-secondary;
+   }
+   .investor-number {
+      margin-bottom: 4%;
+      display: block;
+      height: 50px;
+      background-color: $info-message;
+      border: solid 2px $info-message;
+      padding-top: 14px;
+      padding-left: 15px;
+   }
+   .sub-header {
+      margin: 20px 0;
+      height: 35px;
+      font-size: $xlg-descrp-size;
+      font-weight: $weight-light;
+      line-height: 1.59;
+      color: $text-color-secondary;
+   }
+   .investment-amount {
+      height: 50px;
+      background-color: $text-color-highlight;
+      border: solid 2px $text-color-tertiary;
+   }
+   .investment-select-box {
+      height: 50px;
+      background-color: $text-color-highlight;
+   }
+   .withdraw-label {
+      font-size: $font-sm;
+      font-weight: $weight-medium;
+      width: 100%;
+   }
+   .month-duration {
+      .counter-btn {
+         width: 50px;
+         height: 50px;
+         background-color: $text-color-tertiary;
+         border: none;
+         color: $text-color-highlight;
+      }
+      .input-number {
+         height: 50px;
+         text-align: center;
+         background-color: $text-color-highlight;
+         border: solid 2px $text-color-info;
+      }
+   }
+   .month-details {
+      height: 18px;
+      font-size: $font-sm;
+      color: $text-color-info;
+   }
+   .investment-month {
+      display: block;
+   }
+   .error-msg {
+      color: $color-bloodRed-d3 !important;
+      font-size: $font-sm;
+      font-weight:$weight-light;
+   }
+   .invalid-amount {
+      border-color: $color-bloodRed-d3 !important;
+   }
+   .amount-label {
+      display: block;
+      margin-bottom: 30px;
+      font-weight: $weight-light;
+      font-size: $font-sm;
+      line-height: 1.5;
+      text-align: left;
+      color: $footer-reg-color;
+   }
+   .account-btn {
+      margin-top: 60px
+    ;  display: block;
+      .next {
+         margin: 0 0 45px;
+         border-radius: 5px;
+         background-color: $secondary-color;
+         border: solid 2px $secondary-color;
+      }
+      .back {
+         margin-bottom: 120px;
+         background-color: $text-color-highlight;
+         color: $secondary-color;
+      }
+   }
+   .dropdown-height {
+      max-height: 241px;
+      overflow-x: auto;
+      margin-bottom: 10%;
+   }
+}
+
+@media (max-width: $media-sm) {
+   .account-form {
+      width: inherit;
+      .header {
+         margin: 60px 0 30px;
+         width: 364px;
+      }
+      .alert-msg {
+         margin-bottom: 30px;
+      }
+   }
+}
+
+@media (max-width: $media-xxs) {
+   .account-form {
+      width: inherit;
+      .alert-msg {
+         padding: 15px;
+         height: 221px;
+         margin: 20px 0 15px;
+         .note {
+            width: 277px;
+            height: 23px;
+         }
+         .text-msg {
+            width: 258px;
+         }
+      }
+      .header {
+         font-size: $font-lg;
+         line-height: 1.25;
+         margin:40px 0 15px;
+         width:300px;
+      }
+      .amount-label{
+         margin-bottom:20px;
+      }
+      .sub-header {
+         margin-top: 20px;
+      }
+      .investment-select-box {
+         margin-top: 5px;
+         /deep/ .dropdown-place {
+            .text {
+               line-height: 1.5;
+            }
+         }
+      }
+      .account-btn {
+         margin-top:40px;
+         .next {
+            margin-bottom: 40px;
+         }
+         .back {
+            display: none;
+         }
+      }
+   }
+}

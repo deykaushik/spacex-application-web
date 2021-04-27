@@ -1,0 +1,236 @@
+@import '../../../styles/_base.scss';
+@import '../../../styles/_mixins.scss';
+$svg-path: './../../../assets/svg';
+
+.spinner-container {
+   position: fixed;
+   background-color: rgba(255, 255, 255, 0.7);
+   height: 100%;
+   width: 100%;
+   top: 0;
+   left: 0;
+   z-index: 1000;
+   transition: all 0.5s linear;
+   transition-delay: 0s;
+   .spinner {
+      width: 40px;
+      height: 40px;
+      margin: 90% 0 0 40%;
+   }
+}
+
+.container {
+   width: 100%;
+   padding: 40px 0;
+
+   .sub-container {
+      margin: 0px 20px 0 20px;
+
+      @include flexbox();
+      @include flex(1);
+      flex-direction: column;
+
+      .heading {
+         font-size: $page-title-size;
+         color: $color-menuMobileFull;
+         text-transform: capitalize;
+      }
+
+      .content-spacer {
+         @include spacer(30px)
+      }
+
+      .content-list {
+         list-style: none;
+         margin: 0;
+         padding: 0;
+
+         .content-data {
+            font-size: 18px;
+            font-weight: bold;
+            color: $color-menuMobileFull;
+            padding: 2px;
+            padding-left: none;
+         }
+
+         .content-value {
+            font-size: 16px;
+            color: $color-brownishGrey;
+            padding: 4px;
+            padding-left: none;
+            line-height: 1.5;
+
+            .radio-button-spacer {
+               @include spacer(21px)
+            }
+
+            .radio-type-container {
+               .radio-button {
+                  padding-left: initial;
+               }
+            }
+         }
+
+         .data-spacer {
+            @include spacer(15px)
+         }
+      }
+
+      .purpose-options {
+         .dropdown-space {
+            @include spacer(5px);
+         }
+
+         .gd-basic-dropdown {
+            font-size: $font-default;
+            color: $color-menuMobileFull;
+
+            .dropdown-place {
+               .text {
+                  overflow: hidden;
+                  white-space: nowrap;
+                  text-overflow: ellipsis;
+               }
+            }
+         }
+      }
+
+      .email-block {
+         .term-and-conditions {
+            .text-green {
+               color: $color-lightGreen;
+               font-size: 16px;
+               line-height: 1.5;
+            }
+
+            .text-white {
+               font-size: 16px;
+               line-height: 1.5;
+               color: $color-brownishGrey;
+            }
+
+            .va-spacer {
+               @include spacer(10px);
+            }
+         }
+
+         .term-and-conditions-spacer {
+            @include spacer(30px);
+         }
+
+         .email-box {
+            .email-spacer {
+               @include spacer(5px);
+            }
+
+            .email {
+
+               input {
+                  border: solid 2px $coloy-lightGrey-d4;
+               }
+
+               .error {
+                  border: solid 2px $color-bloodRed-d3;
+               }
+
+               .error-text {
+                  color: $color-bloodRed-d4;
+               }
+            }
+         }
+      }
+
+      .email-block-spacer {
+         @include spacer(30px);
+      }
+
+      .dropdown-spacer {
+         @include spacer(30px);
+      }
+
+      .next-button-spacer {
+         @include spacer(60px);
+      }
+
+      .button-spacer {
+         @include spacer(20px);
+      }
+
+      .tooltip-question {
+         .text-green {
+            font-size: 18px;
+         }
+
+         .text-content {
+            font-size: 16px;
+         }
+
+         &.no-after::after {
+            content: none;
+         }
+
+         .tooltip-spacer {
+            @include spacer(6px);
+         }
+      }
+
+      .t-and-c {
+         font-size: 40px;
+         font-weight: 300;
+      }
+   }
+}
+
+@media (max-width: $media-xxs) {
+    ::ng-deep.radio-button {
+        .radio-button-list{
+            li {
+                height: 73px;
+            }
+        }
+    }
+}
+
+@media (min-width: $media-sm) {
+    .container{
+        .sub-container {
+            margin: 0 auto;
+            width: 355px;
+            padding-top: 20px;
+        }
+    }
+}
+
+
+@media (min-width: $media-md) {
+   .spinner-container {
+      .spinner {
+         margin: 20% 0 0 45%;
+      }
+   }
+   .container {
+       widows: 1440px;
+       padding: 61px 0;
+
+       .sub-container {
+          margin: 0 0 0 36%;
+          width: 625px;
+          padding-top: 0;
+         .gd-basic-dropdown {
+            width: 400px;
+         }
+
+         .email {
+            width: 400px;
+         }
+
+         .next-button-container {
+            width: 400px;
+         }
+
+         .tooltip-question {
+            width: 402px;
+         }
+       }
+   }
+}

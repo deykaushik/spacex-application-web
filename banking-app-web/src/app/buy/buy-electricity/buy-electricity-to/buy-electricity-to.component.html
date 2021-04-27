@@ -1,0 +1,60 @@
+﻿<app-search-recipients [isOverlay]="isSearchRecipients" (onBeneficiaryListHidden)="hideSearchRecipients()" (onBeneficiaryDataSelection)="handleBeneficiarySelection($event)" [options]="{ isElectricity: true }" (sendBeneficiaryData)="getContactCards($event)"></app-search-recipients>
+<ng-template #searchBeneficiaryTemplate let-model="item" let-index="index" let-match="match" let-query="query">
+    <div class="benificiary-list" ga-event-name="buy_electricity_recipient_and_meter_num_select_recipient_name">
+        <div class="name" [innerHtml]="model.beneficiaryName | highlight:query:'highlightText'"></div>
+        <div class="details">
+            <div class="icon-type"></div>
+            <div class="account-type">
+                <span [innerHtml]="model.accountNumber | highlight:query:'highlightText'"></span>
+            </div>
+        </div>
+    </div>
+</ng-template>
+<form class="buy-to-section gd-form autocomplete-container" #buyElectricityToForm="ngForm">
+    <div class="gd-form-row">
+        <label class="gd-sm-label active" for="recipient_name">Recipient name</label>
+        <div class="field-with-icon">
+            <div class="field-block clear-field-block">
+               <input appFocus autofocus [readonly]="!processedBeneficiaryData" id="recipient_name" #recipientN type="search" autocomplete="off" class="validate" #recipientname="ngModel" [(ngModel)]="vm.recipientName" (ngModelChange)="onRecipientNameChanged()"
+                    [typeahead]="processedBeneficiaryData" [typeaheadItemTemplate]="searchBeneficiaryTemplate" (typeaheadOnSelect)="selectBeneficiary($event)" typeaheadOptionField="beneficiaryName" name="beneficiaryName" appValidateRequired appClearField appCheckBlur
+                    (onClear)="onRecipientNameClear" [typeaheadOptionsLimit]="processedBeneficiaryData && processedBeneficiaryData.length" ga-event-name="buy_electricity_recipient_and_meter_num_enter_recipient_name" appValidationLatinWord appClipBoardValidation />
+            </div>
+            <div class="icon-block">
+                <div class="icons">
+                    <span class="receipient-search-icon icon" (click)="showSearchRecipients()"></span>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="recipientname.invalid && (recipientname.dirty || recipientname.touched) && recipientname.isBlurred" class="error-msg">
+            <span *ngIf="recipientname.errors.required">
+            Recipient name is required.
+         </span>
+        </div>
+    </div>
+    <div class="gd-form-row">
+        <label class="gd-lg-label" for="">What would you like to do?</label>
+        <div class="payment-options">
+            <div class="payment-option-box" [ngClass]="{'selected': !isFBE}" (click)="purchaseClick();sendEvent('buy_electricity_recipient_and_meter_num_click_on_buy_prepaid_electricity')">
+                <span class="icon mobile-icon" [class.selected]="!isFBE"></span>
+                <p class="text">Buy prepaid electricity</p>
+            </div>
+            <div class="payment-option-box" [ngClass]="{'selected': isFBE}" (click)="fbeClick();sendEvent('buy_electricity_recipient_and_meter_num_click_on_redeem_fbe')">
+                <span class="icon light-bulb-icon-green" [class.selected]="isFBE"></span>
+                <p class="text">Redeem free basic electricity</p>
+            </div>
+        </div>
+    </div>
+    <div class="gd-form-row">
+        <label class="gd-sm-label active" for="meter_number">Meter number</label>
+        <input ga-event-name="buy_electricity_recipient_and_meter_num_enter_meter_number" id="meter_number" autocomplete="off" type="text" [class.error]="showMeterError" class="validate" #meterNumberRef="ngModel" [(ngModel)]="vm.meterNumber" name="meterNumber" appValidateRequired appValidateOnblur appValidateInput appCheckBlur validateFor='alphanumeric'
+            (blur)="onMeterNumberBlur(meterNumberRef.value)" (ngModelChange)="onMeterNumberChange()" [disabled]="meterNumberValidating" [readonly]="(this.vm.isRecipientPicked && vm.meterNumber)" />
+        <div *ngIf="meterNumberRef.invalid && (meterNumberRef.dirty || meterNumberRef.touched) && meterNumberRef.isBlurred" class="error-msg">
+            <span *ngIf="meterNumberRef.errors.required">
+            Meter number is required.
+         </span>
+        </div>
+        <div *ngIf="showMeterError && !meterNumberRef.errors" class="error-msg">
+            <span>Meter number is not valid.</span>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,418 @@
+@import './../../../../styles/_mixins.scss';
+@import './../../../../styles/_base.scss';
+$svg-path: './../../../../assets/svg';
+.title {
+   font-family: $font-markpro-medium;
+   font-weight: 500;
+   color: $text-color-secondary;
+}
+
+.review-section {
+   width: 100%;
+   margin: 0 20px;
+   .title {
+      display: block;
+      margin-bottom: 30px;
+      font-size: $page-title-size;
+      @extend .title;
+   }
+   .status {
+      display: block;
+      margin: 0 110px 65px 0;
+      font-family: $font-markpro;
+      color: $text-color-primary;
+      font-weight: normal;
+      font-size: $font-md;
+   }
+   .section-info {
+      margin-right: 30px;
+      .info-part {
+         @include flexbox();
+         @include flex-direction(column);
+         background-color: $color-greyLightest;
+         margin: 40px 0px 30px 0px;
+         .right-arrow {
+            display: none;
+            width: 0;
+            height: 0;
+            position: relative;
+            margin-left: -3px;
+            margin-top: 70px;
+            border-bottom: 20px solid transparent;
+            border-top: 20px solid transparent;
+            border-left: 20px solid $container-bg;
+         }
+         .right-grey-arrow {
+            display: none;
+            width: 0;
+            height: 0;
+            position: relative;
+            margin-right: -18px;
+            margin-top: 70px;
+            border-bottom: 20px solid transparent;
+            border-top: 20px solid transparent;
+            border-left: 20px solid $color-greyLightest;
+         }
+         .part {
+            border: 1px solid $color-greyLightest;
+            &.white-part {
+               background-color: $container-bg;
+            }
+            .inner-part {
+               @include flexbox();
+               margin: 40px 5px 30px 20px;
+               .circle-tick {
+                  margin-right: 15px;
+                  @include svg-image-full-path($svg-path, 'circle-grey-tick', 70px, 70px);
+                  display: block;
+               }
+               .icon-human {
+                  margin-right: 15px;
+                  margin: 0 15px 0;
+                  @include svg-image-full-path($svg-path, 'icon-contact-person', 50px, 50px);
+                  display: block;
+               }
+               .paper-plane {
+                  margin-right: 15px;
+                  @include svg-image-full-path($svg-path, 'paper-plane', 70px, 54px);
+                  display: block;
+               }
+               .content {
+                  @include flexbox();
+                  @include flex-direction(column);
+                  padding-right: 10px;
+                  .content-head {
+                     @include markpro-bold();
+                     display: block;
+                     font-size: $font-md;
+                  }
+                  .content-message {
+                     display: block;
+                     font-family: $font-markpro;
+                     color: $text-color-primary;
+                     font-weight: normal;
+                     font-size: $font-default;
+                     margin-right: 40px;
+                  }
+               }
+            }
+         }
+      }
+   }
+   .documents {
+      width: 100%;
+      .title {
+         margin-top: 30px;
+         display: block;
+         font-size: $section-title-size;
+         @extend .title;
+      }
+      .section-body {
+         margin-right: 30px;
+         .content-body {
+            @include flexbox();
+            margin-bottom: 30px;
+            &.open-toolotip {
+               margin-bottom: 30px;
+            }
+            .icon-document {
+               display: block;
+               @include svg-image-full-path($svg-path, 'documents-icon', 27px, 34px);
+               margin-right: 25px;
+            }
+            .document-support {
+               display: block;
+               @include svg-image-full-path($svg-path, 'documents-support', 35px, 22px);
+               margin-right: 18px;
+            }
+            .icon-email {
+               display: block;
+               @include svg-image-full-path($svg-path, 'email-icon-grey', 38px, 28px);
+               margin-right: 16px;
+            }
+            .content {
+               @include flexbox();
+               @include flex-direction(column);
+               margin-right: 60px;
+               .content-message {
+                  @include flexbox();
+                  @include flex-direction(column);
+                  width: 230px;
+                  &.payslip {
+                     @include flexbox();
+                  }
+                  display: block;
+                  font-family: $font-markpro;
+                  font-weight: normal;
+                  font-size: $font-default;
+                  .message {
+                     color: $text-color-primary;
+                  }
+                  .icon-info {
+                     @include svg-image-full-path($svg-path, 'information', 17px, 17px);
+                     position: relative;
+                     cursor: pointer;
+                     margin-left: 120px;
+                     margin-top: -20px;
+                  }
+                  .green {
+                     color: $secondary-color;
+                     cursor: pointer;
+                  }
+               }
+            }
+         }
+      }
+      .triangle {
+         width: 0;
+         height: 0;
+         position: relative;
+         display: block;
+         border-left: 10px solid transparent;
+         border-right: 10px solid transparent;
+         border-bottom: 10px solid $tooltip-back-ground;
+         margin-top: 15px;
+         margin-left: 170px;
+      }
+      .tooltip-part {
+         background-color: $tooltip-back-ground;
+         border-left: 2px solid $secondary-color;
+         margin-bottom: 30px;
+         .close {
+            .icon-cross {
+               @include svg-image-full-path($svg-path, 'close-gray', 12px, 12px);
+               position: relative;
+               cursor: pointer;
+               top: 5px;
+               right: 15px;
+            }
+         }
+         .tooltip-section {
+            padding: 10px 20px 0 25px;
+            .section-status {
+               padding: 10px 0px;
+               .head-status {
+                  margin: 0;
+                  font-family: $font-markpro-medium;
+                  color: $text-color-message-block;
+               }
+            }
+            .section-content {
+               color: $text-color-message-block;
+               padding-bottom: 15px;
+               .content-bold {
+                  font-family: $font-markpro-bold;
+               }
+               .content {
+                  color: $text-color-primary;
+                  font-family: $font-markpro;
+               }
+            }
+         }
+      }
+   }
+   .contact-us {
+      width: 100%;
+      .title {
+         display: block;
+         font-size: $lg-heading-size;
+         @extend .title;
+      }
+      .content-body {
+         margin-right: 30px;
+         @include flexbox();
+         .icon-phone {
+            display: block;
+            @include svg-image-full-path($svg-path, 'phone-inactive', 37px, 37px);
+            margin-right: 20px;
+         }
+         .content-message {
+            font-family: $font-markpro;
+            font-weight: normal;
+            font-size: $font-default;
+            width: 213px;
+            .message {
+               color: $text-color-primary;
+            }
+            .green {
+               color: $secondary-color;
+            }
+         }
+      }
+   }
+   .bottom-button {
+      margin: 60px 30px 60px 10px;
+   }
+}
+
+@media(min-width: $media-xs-up) {
+   .review-section {
+      width: auto;
+      margin: 92px 0px 140px 95px;
+      .review {
+         font-size: $main-title-size;
+      }
+      .section-info {
+         max-width: 1248px;
+         margin-right: 100px;
+         .info-part {
+            @include flex-direction(row);
+            margin-bottom: 60px;
+            .right-arrow {
+               display: block;
+            }
+            .right-grey-arrow {
+               display: block;
+            }
+            .part {
+               width: 290px;
+               height: 170px;
+               .inner-part {
+                  margin: 47px 75px 47px 0;
+                  .circle-tick {
+                     margin-top: 2px;
+                  }
+                  .icon-human {
+                     margin-top: 15px;
+                  }
+                  .paper-plane {
+                     margin-top: 2px;
+                  }
+                  .content {
+                     width: 210px;
+                     padding-left: 5px;
+                     .content-head {
+                        width: 210px;
+                        padding-bottom: 10px;
+                        font-size: $font-md;
+                     }
+                     .content-message {
+                        @include flexbox();
+                        @include flex-direction(row);
+                        width: 210px;
+                        font-size: $font-default;
+                     }
+                  }
+               }
+            }
+         }
+      }
+      .documents {
+         .section-body {
+            .content-body {
+               .content {
+                  .content-message {
+                     &.payslip {
+                        margin-left: 20px;
+                     }
+                     margin-bottom: 30px;
+                     margin-left: 15px;
+                     width: 310px;
+                     font-size: $font-default;
+                     .message {
+                        width: 300px;
+                     }
+                     .icon-info {
+                        margin-left: 90%;
+                     }
+                  }
+               }
+            }
+            .triangle {
+               margin-top: -20px;
+               margin-left: 350px;
+            }
+            .tooltip-part {
+               width: 750px;
+               margin-bottom: 30px;
+               .close {
+                  .icon-cross {
+                     @include svg-image-full-path($svg-path, 'close-gray', 12px, 12px);
+                     top: 5px;
+                     right: 25px;
+                  }
+               }
+               .tooltip-section {
+                  padding: 0 20px 0 25px;
+                  .section-status {
+                     padding: 20px 0;
+                     .head-status {
+                        font-size: $font-sm;
+                     }
+                  }
+                  .section-content {
+                     padding-bottom: 15px;
+                     font-size: $font-sm;
+                     &.last {
+                        padding-bottom: 40px;
+                     }
+                  }
+               }
+            }
+         }
+      }
+      .contact-us {
+         .content-body {
+            .content-message {
+               width: 320px;
+               margin-left: 15px;
+               font-size: $font-default;
+            }
+         }
+      }
+   }
+}
+
+@media(min-width: $media-md) {
+   .review-section {
+      max-width: 1248px;
+      margin: 92px 0 140px 95px;
+      .section-info {
+         margin-right: 100px;
+         .info-part {
+            margin-bottom: 60px;
+            .part {
+               max-width: 416px;
+            }
+         }
+      }
+   }
+}
+
+@media(min-width: $media-md + 1) {
+   .review-section {
+      max-width: 1248px;
+      margin: 92px 0px 140px 95px;
+      .section-info {
+         margin-right: 100px;
+         .info-part {
+            margin-bottom: 60px;
+            .part {
+               width: 400px;
+               height: 170px;
+               .inner-part {
+                  margin: 47px 75px 47px 24px;
+                  .content {
+                     width: 252px;
+                     padding-left: 25px;
+                     .content-head {
+                        width: 245px;
+                        padding-bottom: 10px;
+                        font-size: $font-md;
+                     }
+                     .content-message {
+                        width: 245px;
+                        font-size: $font-default;
+                     }
+                  }
+               }
+            }
+         }
+      }
+   }
+   ::ng-deep {
+      .container {
+         width: 100% !important;
+      }
+   }
+}

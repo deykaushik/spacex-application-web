@@ -1,0 +1,104 @@
+﻿<div class="replace-card">
+   <ng-template #sourceListTemplate let-model="item" let-index="index" let-match="match" let-query="query">
+      <span [innerHtml]="model.address | highlight:query:'highlightText'"></span>
+      <br/>
+      <span [innerHtml]="model.suburb | highlight:query:'highlightText'">,</span>
+      <span [innerHtml]="model.province | highlight:query:'highlightText'">,</span>
+      <span [innerHtml]="'South Africa'"></span>
+   </ng-template>
+   <div class="control-container">
+      <form #deliveryForm="ngForm" class="replace-card-container">
+         <div class="row">
+            <div class="col-xs-12">
+               <div class="title text-center">Select location for card collection</div>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col-xs-12">&nbsp;</div>
+         </div>
+         <div class="row">
+            <div class="col-xs-12">
+               <label class="gd-sm-label delivery-label">Delivery</label>
+               <div class="gd-basic-dropdown" tabindex="0" dropdown>
+                  <div dropdownToggle class="dropdown-place">
+                     <div class="text">
+                        {{selectedDeliveryOption.text}}
+                     </div>
+                     <div class="icon">
+                        <span class="caret"></span>
+                     </div>
+                  </div>
+                  <ul *dropdownMenu class="dropdown-menu" role="menu">
+                     <li [class.active]="c.value.text == selectedDeliveryOption.text" role="menuitem" *ngFor="let c of deliveryOptionsDropdown" (click)="onDeliveryChange($event,c.value)">
+                        {{c.value.text}}
+                     </li>
+                  </ul>
+               </div>
+            </div>
+         </div>
+         <div class="row" *ngIf="selectedDeliveryOption.code == deliveryOptions.nedbankBranch.code">
+            <div class="col-xs-12">
+               <label for="source" class="gd-sm-label delivery-label">Location</label>
+               <div class="autocomplete-container">
+                  <input id="source" autocomplete="off" type="text" class="validate" #branchNameRef="ngModel" [(ngModel)]="source.address"
+                     class="location-textbox" [typeahead]="source" (typeaheadOnSelect)="selectSouceType($event)" [typeaheadItemTemplate]="sourceListTemplate"
+                     typeaheadOptionField="fullAddress" name="source"  [typeaheadOptionsLimit]="source && source.length" />
+               </div>
+               <div class="icon-search"></div>
+               <div class="icon-close" (click)="source.address=''"></div>
+            </div>
+         </div>
+         <div class="row" *ngIf="selectedDeliveryOption.code == deliveryOptions.nedbankBranch.code">
+            <div class="col-md-3"></div>
+            <div class="col-xs-12">
+               <div class="info-container">
+                  <label class="info-icon"></label>
+                  <div class="info-label">This is the location of your lost card collection.</div>
+               </div>
+            </div>
+         </div>
+         <div class="row" *ngIf="selectedDeliveryOption.code == deliveryOptions.courier.code">
+            <div class="col-xs-12">
+               <div class="info-container">
+                  <label class="info-icon"></label>
+                  <div class="info-label" *ngIf="!cardInfo.allowBranch">
+                     <strong>Your card will be delivered for free!</strong> You will be contacted by a consultant to arrange delivery.</div>
+                  <div class="info-label"  *ngIf="cardInfo.allowBranch">
+                     <strong>A fee will be charged for delivery of your card.</strong> You will be contacted by a consultant to arrange
+                     delivery.</div>
+               </div>
+            </div>
+         </div>
+         <div class="row margin-top-60">
+            <div class="col-xs-12">
+               <app-bottom-button [showLoader]="showloader" [disableButton]="!isValid || showloader" (clickEmitter)="showReplaceCardStatus()" [text]="'Submit'"></app-bottom-button>
+            </div>
+         </div>
+      </form>
+   </div>
+
+   <div class="row" *ngIf="selectedDeliveryOption.code == deliveryOptions.nedbankBranch.code">
+      <div class="col-xs-12">
+         <agm-map (zoomChange)="zoom=$event" [scrollwheel]="false" [latitude]="currentPosition.latitude" [longitude]="currentPosition.longitude" [zoom]="zoom">
+            <agm-marker-cluster  imagePath="assets/png/gd-round" [styles]="markerClusterStyle">
+            <agm-marker *ngFor="let marker of markers" [latitude]="marker.latitude" [longitude]="marker.longitude" iconUrl="assets/png/NedbankPin.png">
+               <agm-snazzy-info-window maxWidth="300" closeWhenOthersOpen="true" closeOnMapClick="true" placement="right">
+                  <ng-template>
+                     <div class="info-window">
+                        <strong>{{marker.name}}</strong>
+                        <br />
+                        <span>{{marker.address}}</span>
+                        <br />
+                        <br />
+                        <a target="_blank" href="http://maps.google.com/?q={{marker.latitude}},{{marker.longitude}}">
+                           <span> View on Google Maps </span>
+                        </a>
+                     </div>
+                  </ng-template>
+               </agm-snazzy-info-window>
+            </agm-marker>
+            </agm-marker-cluster>
+         </agm-map>
+      </div>
+   </div>
+</div>

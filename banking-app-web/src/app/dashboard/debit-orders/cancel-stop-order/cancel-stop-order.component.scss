@@ -1,0 +1,114 @@
+@import './../../../../styles/_base.scss';
+@import './../../../../styles/_mixins.scss';
+$icon-path: './../../../../assets/svg/';
+.cancel-stop-order-container {
+   padding: 35px 28px;
+   text-align: center;
+   height: calc(100vh - 80px);
+   .title {
+      font-size: $font-md;
+      font-weight: $weight-bold;
+      color: $text-color-secondary;
+      line-height: $para-title-size;
+      padding-bottom: 18px;
+   }
+   .disclaimer-container {
+      @include flexbox();
+      padding: 20px 12px;
+      font-size: $font-sm;
+      line-height: $md-heading-size;
+      color: $text-color-primary;
+      text-align: left;
+      margin-bottom: 20px;
+   }
+   .btn-container {
+      position: absolute;
+      bottom: 0;
+      width: 80%;
+      left: 10%;
+      ::ng-deep .gd-primary-btn {
+         max-width: 100%;
+      }
+   }
+   .successful-cancel {
+      .title {
+         margin-top: 20px;
+         font-size: $font-md;
+         color: $secondary-color;
+      }
+      .disclaimer-container {
+         @include flexbox();
+         background-color: $info-window-color;
+         margin-top: 30px;
+      }
+   }
+   .tick-icon {
+      display: inline-block;
+      margin-right: 10px;
+      vertical-align: bottom;
+      @include svg-image-full-path($icon-path, 'tick_circle', 24px, 24px);
+   }
+   .info-icon {
+      @include svg-image-full-path($icon-path, 'information', 24px, 24px);
+   }
+}
+
+@media (min-width: $media-sm) {
+   .cancel-stop-order-container {
+      height: auto;
+      .disclaimer-container {
+         width: 400px;
+         margin: 0 auto;
+      }
+      .btn-container {
+         position: static;
+         width: 400px;
+         padding-top: 65px;
+         margin: 0 auto;
+      }
+      .successful-cancel {
+         .title {
+            font-size: $font-xlg;
+         }
+         .tick-icon {
+            top: 5px;
+            @include svg-image-full-path($icon-path, 'tick_circle', 32px, 32px);
+         }
+         .disclaimer-container {            
+            margin-top: 55px;
+         }
+      }
+   }
+}
+
+.accept-checkbox {
+   position: absolute; // take it out of document flow
+   opacity: 0; // hide it
+   &+.checkbox-style {
+      position: relative;
+      cursor: pointer;
+      padding: 0;
+      &::before {
+         // Box checked
+         content: '';
+         margin-right: 10px;
+         border-radius: 5px;
+         display: inline-block;
+         vertical-align: text-top;
+         width: 30px;
+         height: 30px;
+         padding-left: 1px;
+         border: 2px solid $divider-primary;
+         background: $container-bg;
+      }
+   } // box
+   &:checked+.checkbox-style {
+      @include svg-image-full-path($icon-path, 'tickCheckbox', 30px, 30px);
+      &::before {
+         background: $tertiary-color;
+         border: 2px solid $tertiary-color;
+         border-radius: 5px;
+         padding: 5px;
+      }
+   }
+}

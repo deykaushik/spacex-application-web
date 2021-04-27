@@ -1,0 +1,22 @@
+﻿@import "./../../../styles/_base.scss";
+
+.gd-form {
+  text-align: center;
+}
+
+.gd-secondary-btn {
+  max-width: 185px;
+  padding: 0;
+}
+
+.navigateClose {
+  text-align: right;
+  margin: 50px 0 20px 0;
+}
+
+.number-text {
+  color: $text-color-link;
+  font-size: $font-sm;
+  font-weight: bold;
+  text-decoration: underline;
+}

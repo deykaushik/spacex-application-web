@@ -1,0 +1,11 @@
+.locate-branch {
+   margin-top: 10px;
+}
+
+::ng-deep.locator {
+   .branch-locator {
+      .control-container {
+         overflow-y: visible;
+      }
+   }
+}

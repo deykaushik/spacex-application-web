@@ -1,0 +1,8 @@
+<app-colored-overlay [template]="locateBranch" [altButtonText]="'Close'" [alternate]='true' [isVisible]="true" [backOption]="false"
+   (onHide)="closeOverlay()">
+   <ng-template #locateBranch>
+      <div class="locate-branch">
+         <app-branch-locator class="locator"></app-branch-locator>
+      </div>
+   </ng-template>
+</app-colored-overlay>

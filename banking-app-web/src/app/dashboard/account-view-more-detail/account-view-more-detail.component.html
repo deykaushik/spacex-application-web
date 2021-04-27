@@ -1,0 +1,20 @@
+<div class="account-view-more-detail-container">
+   <div class="container">
+      <div id="section-header-view-more" class="row">
+         <div class="col-xs-12">
+            <div class="back-header">
+               <a id="icon-back-link" class="icon" [routerLink]="['../']"></a>
+               <div class="page-header">
+                  <span id="lbl-account-name" class="account-name">{{ accountName }}</span>
+                  <span x-ms-format-detection="none" id="lbl-account-number" class="account-number">{{ accountNumber }}</span>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="section-body-view-more" class="row share-details-row bg-white">
+         <div class="col-xs-12">
+            <app-account-share [accountId]="accountId" [accountNumber]=accountNumber [accountType]=accountType></app-account-share>
+         </div>
+      </div>
+   </div>
+</div>

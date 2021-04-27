@@ -1,0 +1,84 @@
+<app-colored-overlay [template]="requestCreditLimit" [altButtonText]="'Exit'" [alternate]='true' [isVisible]="isRequestCreditLimit"
+   (onHide)="onClose($event)">
+   <ng-template #requestCreditLimit>
+      <section class="request-credit-limit">
+         <div class="title-section">
+            <span class="title">{{labels.limitIncrease}}</span>
+         </div>
+         <div class="body-section">
+            <div class="credit-facility">
+               <span class="section-title">{{labels.creditFacility}}</span>
+               <div class="duration">
+                  <span class="icon-clock"></span>
+                  <span class="duration-info add-info">{{labels.durationInfo}}</span>
+               </div>
+            </div>
+            <div class="document-information">
+               <span class="section-title">{{labels.documentInfo}}</span>
+               <div class="document-row">
+                  <div class="document">
+                     <span class="icon-money"></span>
+                     <span class="document-info add-size">{{labels.documentOne}}</span>
+                  </div>
+                  <div class="document add-group">
+                     <span class="icon-payslip"></span>
+                     <div class="document-info">
+                        <div class="info">
+                           <span>{{labels.documentTwo}}</span>
+                        </div>
+                        <span class="icon-info" (click)="openTooltip(!isTooltipOpen)"></span>
+                     </div>
+                  </div>
+               </div>
+               <span *ngIf='isTooltipOpen' class="triangle">
+               </span>
+               <div *ngIf='isTooltipOpen' class="tooltip-part">
+                  <div class="close" (click)='openTooltip(false)'>
+                     <span class="icon-cross"></span>
+                  </div>
+                  <div class="tooltip-section">
+                     <div class="section-status">
+                        <span class="status">{{labels.otherdocumentInfo}}</span>
+                     </div>
+                     <div class="section-content">
+                        <span class="content">{{messages.ifYouAre}}</span>
+                     </div>
+                     <div class="section-content">
+                        <span class="content-bold">{{messages.selfEmployed}}</span>
+                        <span class="content">{{messages.selfEmployedInfo}}</span>
+                     </div>
+                     <div class="section-content">
+                        <span class="content-bold">{{messages.salaryEarner}}</span>
+                        <span class="content">{{messages.salaryEarnerInfo}}</span>
+                     </div>
+                     <div class="section-content">
+                        <span class="content-bold">{{messages.contractWorker}}</span>
+                        <span class="content">{{messages.contractWorkerInfo}}</span>
+                     </div>
+                     <div class="section-content">
+                        <span class="content-bold">{{messages.employed}}</span>
+                        <span class="content">{{messages.employedInfo}}</span>
+                     </div>
+                     <div class="section-content last">
+                        <span class="content-bold">{{messages.salaryEarnerReturn}}</span>
+                        <span class="content">{{messages.salaryEarnerReturnInfo}}</span>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="must-accept">
+               <span class="section-title">{{labels.applyAndAccept}}</span>
+            </div>
+            <div class="declaration">
+               <div (click)='onAccept()' class="square" [ngClass]="{'square-white': !isAccept , 'square-green': isAccept}">
+                  <span class="tick"></span>
+               </div>
+               <p class="declaration-message">{{declaration}}</p>
+            </div>
+            <div class="bottom-btn">
+               <app-bottom-button [text]="'Get started'" (click)="getStarted()" [showLoader]='showLoader' [disableButton]="!isAccept"></app-bottom-button>
+            </div>
+         </div>
+      </section>
+   </ng-template>
+</app-colored-overlay>

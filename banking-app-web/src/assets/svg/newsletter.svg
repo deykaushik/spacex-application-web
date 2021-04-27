@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 38 38" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>newsletter</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Update-preferred-name" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="1440-Update-preferred-name-2" transform="translate(-1088.000000, -481.000000)" stroke="#808080">
+            <g id="Group-13" transform="translate(1089.000000, 482.000000)">
+                <g id="newsletter">
+                    <polyline id="Shape" points="6.54545455 11.3684211 0 16.1624868 0 36 36 36 36 16.1624868 29.4545455 11.3684211"></polyline>
+                    <polyline id="Shape" points="6.63157895 19.8947368 6.63157895 0 29.3684211 0 29.3684211 19.8947368"></polyline>
+                    <path d="M0,16.1052632 L36,36" id="Shape"></path>
+                    <path d="M36,16.1052632 L18,25.5789474" id="Shape"></path>
+                    <path d="M13.2631579,8.52631579 L22.7368421,8.52631579" id="Shape" stroke-linecap="square"></path>
+                    <path d="M13.2631579,15.1578947 L22.7368421,15.1578947" id="Shape" stroke-linecap="square"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

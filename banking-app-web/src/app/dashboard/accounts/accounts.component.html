@@ -1,0 +1,5 @@
+﻿<div>
+   <app-account-widget *ngFor="let ac of accountContainers;" [type]="ac.ContainerName" [allowNavigation]="true" [accounts]="ac.Accounts"
+      [totalVisibleAccounts]="ac.TotalVisibleAccounts" [skeletonMode]="skeletonMode" (accountNameChange)="onAccountNameUpdate($event)">
+   </app-account-widget>
+</div>

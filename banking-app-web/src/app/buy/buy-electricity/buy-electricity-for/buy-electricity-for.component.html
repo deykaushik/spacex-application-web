@@ -1,0 +1,69 @@
+<div class="buy-for-container" id="buy-electricity-for-component">
+    <form #buyElectricityForForm="ngForm" class="gd-form" novalidate>
+        <div class="gd-form-row">
+            <label for="example-text-input" class="gd-sm-label">{{labels.yourReference}}</label>
+            <input ga-event-name="buy_electricity_notification_enter_your_reference" autofocus appFocus id="your_reference" autocomplete="off" class="validate" type="text" [(ngModel)]="vm.yourReference" #yourReference="ngModel" name="yourReference" [maxlength]="referenceMaxLength" appValidateRequired appCheckBlur/>
+            <div *ngIf="yourReference.invalid && (yourReference.dirty || yourReference.touched) && yourReference.isBlurred" class="error-msg">
+                <span *ngIf="yourReference.errors.required">
+               {{messages.requiredReference}}
+            </span>
+            </div>
+        </div>
+        <div class="gd-form-row">
+            <label for="example-search-input" class="gd-sm-label">{{labels.notification}}</label>
+            <div class="gd-basic-dropdown" tabindex="0" dropdown>
+                <div dropdownToggle class="dropdown-place">
+                    <div class="text">
+                        {{this.vm.notificationType}}
+                    </div>
+                    <div class="icon">
+                        <span class="caret"></span>
+                    </div>
+                </div>
+                <ul *dropdownMenu class="dropdown-menu" role="menu">
+                    <li [class.active]="notification.name == vm.notificationType" role="menuitem" *ngFor="let notification of notifications" (click)="onNotificationChange(notification)" ga-event-name="buy_electricity_notification_select_notification_type">
+                        {{notification.name}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="gd-form-row" *ngIf="vm.notificationType=='SMS'">
+            <label for="example-search-input" class="gd-sm-label">{{labels.enterNumber}}</label>
+            <input ga-event-name="buy_electricity_notification_enter_notification_type_sms" id="notificationInput" autocomplete="off" type='tel' name="notificationInput" #notificationInput="ngModel" [(ngModel)]="vm.notificationInput" [pattern]="patterns.mobile" appValidateRequired appValidateOnblur appValidateInput validateFor='mobile' appCheckBlur
+                (ngModelChange)="onMobileNumberChange($event)" />
+            <div *ngIf="notificationInput.invalid && (notificationInput.dirty || notificationInput.touched) && notificationInput.isBlurred" class="error-msg">
+                <div *ngIf="notificationInput.errors.required">
+                    {{messages.enterNumber}}
+                </div>
+                <div *ngIf="notificationInput.errors.pattern">
+                    {{messages.invalidNumber}}
+                </div>
+            </div>
+        </div>
+        <div class="gd-form-row" *ngIf="vm.notificationType=='Fax'">
+            <label for="example-search-input" class="gd-sm-label">{{labels.enterNumber}}</label>
+            <input ga-event-name="buy_electricity_notification_enter_notification_type_fax" id="notificationFaxInput" type='tel' name="notificationFaxInput" #notificationFaxInput="ngModel" [(ngModel)]="vm.notificationInput" [pattern]="patterns.mobile" appValidateRequired appValidateOnblur appValidateInput validateFor='mobile' appCheckBlur (ngModelChange)="onMobileNumberChange($event)"
+            />
+            <div *ngIf="notificationFaxInput.invalid && (notificationFaxInput.dirty || notificationFaxInput.touched) && notificationFaxInput.isBlurred" class="error-msg">
+                <div *ngIf="notificationFaxInput.errors.required">
+                    {{messages.enterNumber}}
+                </div>
+                <div *ngIf="notificationFaxInput.errors.pattern">
+                    {{messages.invalidNumber}}
+                </div>
+            </div>
+        </div>
+        <div class="gd-form-row" *ngIf="vm.notificationType=='Email'">
+            <label for="example-search-input" class="gd-sm-label">{{labels.enterEmail}}</label>
+            <input ga-event-name="buy_electricity_notification_enter_notification_type_email" id="notificationInput" autocomplete="off" [pattern]="patterns.email" type="text" name="notificationInput" #notificationInput="ngModel" [(ngModel)]="vm.notificationInput" appValidateRequired appValidateOnblur appCheckBlur/>
+            <div *ngIf="notificationInput.invalid && (notificationInput.dirty || notificationInput.touched) && notificationInput.isBlurred" class="error-msg">
+                <div *ngIf="notificationInput.errors.required">
+                    {{messages.validEmail}}
+                </div>
+                <div *ngIf="!notificationInput.errors.required && notificationInput.errors.pattern">
+                    {{messages.invalidEmail}}
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,10 @@
+@import '../../../../styles/_mixins.scss';
+@import '../../../../styles/_base.scss';
+$svg-path: './../../../../assets/svg';
+@media (min-width: $media-sm) {
+   .preferences-container
+   {
+        padding-left: 0;
+        padding-right: 0;
+   }
+}

@@ -1,0 +1,244 @@
+@import './../../../styles/_mixins.scss';
+@import './../../../styles/_base.scss';
+$svg-path: './../../../assets/svg';
+$icon-arrow: 'settingsMob';
+$feedback-bg: $body-bg;
+$icon-querygrey: 'Querygrey';
+$icon-complaintgrey: 'Complaintgrey';
+$icon-complimentgrey: 'Complimentgrey';
+$icon-query: 'QuerySuggestion';
+$icon-complaint: 'Complaint';
+$icon-compliment: 'Compliment';
+$icon-contact: '24_contact';
+$icon-contact-blank: 'contact-blank';
+$icon-success: 'tick';
+$icon-cross: 'closeStatus';
+$icon-close-gray: 'close-gray';
+$card-padding: 15px;
+textarea.feedback-box {
+   padding: 15px;
+}
+
+.sub-heading {
+   font-size: $font-lg;
+   font-weight: $weight-medium;
+   color: $text-color-secondary;
+   margin-top: 30px;
+}
+
+.card {
+   margin-top: 10px;
+   padding: $card-padding;
+   min-height: 300px;
+   background: $container-bg;
+}
+
+.feedback {
+   label {
+      font-size: $font-sm;
+      color: $text-color-primary;
+   }
+   .content {
+      @extend .clearfix;
+      .icon {
+         display: inline-block;
+         &.Compliment {
+            @include svg-image-full-path($svg-path, $icon-compliment);
+         }
+         &.QuerySuggestion.grey {
+            @include svg-image-full-path($svg-path, $icon-querygrey);
+         }
+         &.Complaint.grey {
+            @include svg-image-full-path($svg-path, $icon-complaintgrey);
+         }
+         &.Compliment.grey {
+            @include svg-image-full-path($svg-path, $icon-complimentgrey);
+         }
+         &.QuerySuggestion {
+            @include svg-image-full-path($svg-path, $icon-query);
+         }
+         &.Complaint {
+            @include svg-image-full-path($svg-path, $icon-complaint);
+         }
+      }
+      .content-item {
+         margin-top: 25px;
+      }
+      .callback {
+         label {
+            margin: 25px 0px 5px 0px;
+         }
+      }
+      p {
+         margin-top: 5px;
+         margin-bottom: 5px;
+      }
+      >div {
+         margin-top: 20px;
+      }
+      .emoji-icons {
+         min-height: 100px;
+         @extend .clearfix;
+         >div {
+            float: left;
+            margin-top: 10px;
+            width: 33.33%;
+         }
+         label {
+            text-align: center;
+            width: 100%;
+            margin-top: 20px;
+         }
+      }
+      .inline-block,
+      label {
+         display: inline-block !important;
+         vertical-align: middle;
+      }
+      .width-custom {
+         width: 70%;
+      }
+      .minimum-left-spacing {
+         margin-left: 10px;
+      }
+      .float-right {
+         float: right;
+      }
+      textarea {
+         min-height: 110px;
+         letter-spacing: 0.2px;
+         border: solid 1.5px;
+         border-color: $form-element-border;
+      }
+      .feedback-submit {
+         margin: 25px 0 15px 0;
+      }
+      .feedback-info {
+         float: right;
+         color: $text-color-info;
+      }
+      .gd-basic-dropdown {
+         margin-bottom: 45px;
+      }
+   }
+}
+
+.error-msg {
+   color: $text-color-error;
+   font-size: $font-sm;
+   margin: 5px 0 0;
+   position: relative;
+   padding-left: 10px;
+   &::before {
+      content: '* ';
+      position: absolute;
+      left: 0;
+   }
+}
+
+.cellphone-container {
+   position: relative;
+}
+
+.readonly {
+   cursor: pointer;
+}
+
+.input-type-div {
+   position: absolute;
+   top: 0;
+   left: 0;
+}
+
+.feedback-container {
+   text-align: center;
+}
+
+.message {
+   @include flexbox();
+   @include align-items(center);
+   padding: 10px;
+   margin: 0;
+   left: 0;
+   top: 50px;
+   right: 0;
+   z-index: 99;
+   &.error {
+      background: $color-error-bg;
+   }
+   &.success {
+      background: $color-success-bg;
+   }
+   .icon {
+      width: 15px;
+      height: 15px;
+   }
+   .try-again {
+      font-size: $font-xx-sm;
+      cursor: pointer;
+      color: $text-color-error;
+   }
+   .text {
+      @include flex(1);
+      font-size: $font-sm;
+      margin: 0 10px;
+   }
+   .cross {
+      @include svg-image-full-path($svg-path, $icon-cross);
+   }
+   .success {
+      @include svg-image-full-path($svg-path, $icon-success);
+   }
+   .close-gray {
+      @include svg-image-full-path($svg-path, $icon-close-gray);
+   }
+}
+
+.icon-field {
+   position: relative;
+   padding-right: 10px;
+   width: 36px;
+   height: 36px;
+   display: inline-block;
+   vertical-align: middle;
+   .icon {
+      width: 100%;
+      left: 0px;
+      top: -3px;
+      cursor: pointer;
+      display: inline-block;
+      height: 100%;
+      &.warning {
+         @include svg-image-full-path($svg-path, 'Error');
+      }
+      &.close {
+         width: 20px;
+         height: 20px;
+         @include svg-image-full-path($svg-path, 'close-red');
+      }
+   }
+}
+
+.success-border {
+   border-color: $form-element-border-valid !important;
+}
+
+@media (min-width: $media-sm) {
+   .card {
+      display: inline-block;
+      width: 100%;
+      min-height: 655px;
+   }
+   .message {
+      position: static;
+      left: auto;
+      right: auto;
+      top: auto;
+      margin: (-$card-padding) (-$card-padding) $card-padding; // &.error {
+      //     background: $text-color-error;
+      // }
+      &.success {
+         background: $color-success-bg;
+      }
+   }
+}

@@ -1,0 +1,153 @@
+<div class="payfrom-container tableCell container">
+   <div class="row">
+      <div class="payfrom-form-wrapper">
+         <div class="gd-form payfrom-gd-form">
+            <div class="gd-form-row information-container-small">
+               <h4 class="section-title step-title dark-grey-text bold-text">{{autoPay.autopayLabels.payFromTitle}}</h4>
+               <div class="dark-grey-text medium-text">{{autoPay.autopayLabels.wouldYouLikeNedbank}}</div>
+            </div>
+            <div class="gd-form-row nedbank-account-check-wrapper">
+               <div class="nedbank-account-check-btn-group clearfix">
+                  <div class="btn-yes nedbank-acc-yes nedbank-account-check-btn" [ngClass]="{'clicked': isNedBankAccountSelected}" (click)="selectNedBank(true)">
+                     <span>{{autoPay.messages.yes}}</span>
+                  </div>
+                  <div class="btn-no nedbank-acc-no nedbank-account-check-btn" (click)="selectNedBank(false)" [ngClass]="{'clicked': !isNedBankAccountSelected}">
+                     <span>{{autoPay.messages.no}}</span>
+                  </div>
+               </div>
+            </div>
+            <div class="gd-form-row information-container-small" *ngIf="!isNedBankAccountSelected">
+               <div class="dark-grey-text please-note-lbl">{{autoPay.messages.pleaseNote}}</div>
+               <div class="dark-grey-text please-note-msg">{{autoPay.messages.warningMessage}}
+                  <span class="please-note-phoneno">{{autoPay.messages.phoneNumber}}</span>
+               </div>
+            </div>
+            <div class="gd-form-row information-container-small" *ngIf="!isNedBankAccountSelected">
+               <div class="dark-grey-text medium-text">{{autoPay.autopayLabels.specifyYourAccount}}</div>
+            </div>
+            <div class="form-template-wrapper">
+               <div *ngIf="isNedBankAccountSelected" class="nedbank-form">
+                  <form [formGroup]="nedbankForm" autocomplete="off" id="nedBank" novalidate>
+                     <div class="gd-form-row">
+                        <label class="active gd-sm-label">{{autoPay.autopayLabels.chooseNedbankBefore}}</label>
+                        <input formControlName="nedbankAccount" type="hidden" [ngModel]="selectedDropdownAccount? selectedDropdownAccount.accountNumber : ''">
+                        <div class="gd-form-row icon-link">
+                           <app-account-list id="trns-from-account" [insufficientFunds]="insufficientFunds" [selectedAccount]="selectedDropdownAccount"
+                              [accounts]="dropdownAccounts" (onAccountSelection)="onAccountSelection($event)">
+                           </app-account-list>
+                        </div>
+                     </div>
+                     <div class="button-div">
+                        <app-bottom-button [disableButton]="!nedbankForm.valid" [text]="autoPay.messages.next" [class.btn-disabled]="!nedbankForm.valid"
+                           [showLoader]="showLoader" (click)="gotToNextStep()">Next</app-bottom-button>
+                     </div>
+                  </form>
+               </div>
+               <div *ngIf="!isNedBankAccountSelected" id="bank-name-list" class="other-bank-form">
+                  <form #payFromForm="ngForm" autocomplete="off" id="otherBank" novalidate>
+                     <div class="gd-form-row  bank-container autocomplete-container">
+                        <label for="bankName" class="active gd-sm-label">{{autoPay.autopayLabels.bankName}}</label>
+                        <input id="bank" autocomplete="off" type="text" class="validate" #bankNameRef="ngModel" [typeahead]="banks" [(ngModel)]="otherBank"
+                           [typeaheadItemTemplate]="bankListTemplate" (typeaheadOnSelect)="selectBank($event)" (typeaheadOnBlur)="blurBank($event)"
+                           (typeaheadNoResults)="noBankResults($event)" [typeaheadMinLength]="0" (blur)="blurBankInput($event)"
+                           typeaheadOptionField="bankName" name="bankName" appValidateRequired />
+                        <ng-template #bankListTemplate let-model="item" let-index="index" let-match="match" let-query="query">
+                           <span class="bankname-type-ahead" [innerHtml]="model.bankName | highlight:query:'highlightText'"></span>
+                        </ng-template>
+                        <div *ngIf="!isBankOpen() && bankNameRef.invalid && (bankNameRef.dirty || bankNameRef.touched)" class="error-msg">
+                           <span *ngIf="bankNameRef.errors.required">
+                              {{autoPay.errorMessages.noBankName}}
+                           </span>
+                        </div>
+                     </div>
+                     <div class="gd-form-row branch-container autocomplete-container" *ngIf="isBranchVisible">
+                        <label for="branch" class="gd-sm-label active">{{autoPay.autopayLabels.branchOrCode}}</label>
+                        <input id="branch" type="text" class="validate" #branchRef="ngModel" [(ngModel)]="branchName" [typeahead]="branches" [typeaheadItemTemplate]="branchListTemplate"
+                           (typeaheadOnSelect)="selectBranch($event)" (typeaheadOnBlur)="blurBranch($event)" (typeaheadNoResults)="noBranchResults($event)"
+                           (blur)="blurBranchInput($event)" typeaheadOptionField="displayName" name="branch" appValidateRequired
+                           autocomplete="off" />
+                        <ng-template #branchListTemplate let-model="item" let-index="index" let-match="match" let-query="query">
+                           <div class="branch-name" [innerHtml]="model.branchName | highlight:query:'highlightText'"></div>
+                           <div class="branch-code" [innerHtml]="model.branchCode | highlight:query:'highlightText'"></div>
+                        </ng-template>
+                        <div *ngIf="branchRef.invalid && (branchRef.dirty || branchRef.touched)" class="error-msg">
+                           <span *ngIf="branchRef.errors.required">
+                              {{autoPay.errorMessages.noBranchOrCode}}
+                           </span>
+                        </div>
+                     </div>
+                     <div class="gd-form-row">
+                        <label class="gd-sm-label" for="account_type">{{autoPay.autopayLabels.accountType}}</label>
+                        <input type="hidden" appValidateRequired [ngModel]="accountType" name="accountType" #accountTypeRef="ngModel" />
+                        <div class="gd-basic-dropdown" dropdown (click)="onAccountTypeDropdownOpen()">
+                           <div dropdownToggle class="dropdown-place">
+                              <div class="text">
+                                 {{ selectedAccountType }}
+                              </div>
+                              <div class="icon">
+                                 <span class="caret"></span>
+                              </div>
+                           </div>
+                           <ul *dropdownMenu class="dropdown-menu" role="menu">
+                              <li role="menuitem" [class.active]="accountType.value.text == selectedAccountType" *ngFor="let accountType of accountTypes"
+                                 (click)="onAccountTypeChanged(accountType)" ga-event-name="pay_recipient_details_enter_account_type">
+                                 <ng-container *ngIf="accountType.value.code !== creditCardAccountTypeCode || !isNedBankSelected">{{accountType.value.text}}</ng-container>
+                              </li>
+                           </ul>
+                        </div>
+                        <div *ngIf="accountTypeRef.invalid && accountTypeDirty" class="error-msg">
+                           <span *ngIf="accountTypeRef.errors.required">
+                              {{autoPay.errorMessages.noAccountType}}
+                           </span>
+                        </div>
+                     </div>
+                     <div class="gd-form-row">
+                        <label class="gd-sm-label active" for="account_number">{{autoPay.autopayLabels.accountNumber}}</label>
+                        <input id="account_number" autocomplete="off" type="text" class="validate" #accountNumberRef="ngModel" [(ngModel)]="accountNumber"
+                           name="accountNumber" [maxlength]="maxLimit" appValidateRequired appValidateInput validateFor='number'
+                           appCheckBlur>
+                        <div *ngIf="accountNumberRef.invalid && (accountNumberRef.dirty || accountNumberRef.touched) && accountNumberRef.isBlurred"
+                           class="error-msg">
+                           <span *ngIf="accountNumberRef.errors.required">
+                              {{autoPay.errorMessages.noAccountNumber}}
+                           </span>
+                        </div>
+                     </div>
+                     <div id="button-div-two">
+                        <app-bottom-button [text]="autoPay.messages.next" [disableButton]="!payFromForm.valid && !avsValid" [showLoader]="showLoader"
+                           (click)="gotToNextStep()">Next</app-bottom-button>
+                     </div>
+                  </form>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<div class="loader-mask" *ngIf="showLoader">
+   <div class="loader-spinner">
+      <app-spinner [color]="'green'"></app-spinner>
+   </div>
+</div>
+<div *ngIf="isAvsOverlay">
+   <app-small-overlay [template]="avsErrorOverlay" id="avsErrorOverlay" alternate="true">
+      <ng-template #avsErrorOverlay>
+         <div class="overlay-part">
+            <div class="add-autopay">
+               <span class="triangle-icon"></span>
+               <div class="content-autopay">
+                  <span class="text-autopay"> {{autoPay.messages.couldNotAddAccount}}</span>
+                  <div class="text-description ">
+                     <span class="pay-bill">{{autoPay.messages.pleaseNote}}</span>
+                     <span class="set-autopay">{{autoPay.messages.warningMessage}}</span>
+                     <span class="please-note-phoneno">{{autoPay.messages.phoneNumber}}</span>
+                  </div>
+                  <div class="button-container">
+                     <button class="gd-primary-btn" (click)="closeAvsOverlay()">{{autoPay.messages.okay}}</button>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </ng-template>
+   </app-small-overlay>
+</div>

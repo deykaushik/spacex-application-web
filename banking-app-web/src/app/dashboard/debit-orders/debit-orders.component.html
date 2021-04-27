@@ -1,0 +1,303 @@
+<div class="account-debit-orders" [class.is-skeleton-loading]='skeletonMode'>
+   <div class="container">
+      <div class="row">
+         <div class="col-xs-12">
+            <div class="icon-field top-icon">
+               <span class="icon left-arrow" (click)="goToPreviousPage()"></span>
+               <div class="section-heading">
+                  <h4 class="section-title">{{ accountName }}</h4>
+                  <p class="account-number" x-ms-format-detection="none">{{ accountNumber }}</p>
+               </div>
+            </div>
+         </div>
+      </div>
+      <ng-container *ngIf="!showDetailedDebitOrder;then debitOrderList else debitOrderDetails"></ng-container>
+      <ng-template #debitOrderList>
+         <div class="row debit-orders-row to-approve" *ngIf="debitOrdersToApprove && debitOrdersToApprove.length">
+            <div class="debit-orders">
+               <h6 class="card-title">{{labels.debitOrdersToApprove}}</h6>
+
+               <div class="order-header row no-padding no-margin hidden-xs">
+                  <div class="col-xs-8 col-sm-11 no-padding order-fields">
+                     <div class="row no-padding no-margin">
+                        <div class="col-sm-2 no-padding field">
+                           <div class="order-label" [innerHtml]="'Initial Date' | skeletonLoader:skeletonMode"></div>
+                        </div>
+                        <div class="col-sm-4 no-padding field">
+                           <div class="order-label" [innerHtml]="'Creditor Name' | skeletonLoader:skeletonMode"></div>
+                        </div>
+                        <div class="col-sm-4 no-padding field">
+                           <div class="order-label" [innerHtml]="'Reference' | skeletonLoader:skeletonMode"></div>
+                        </div>
+                        <div class="col-sm-2 no-padding field">
+                           <div class="order-label" [innerHtml]="'Amount' | skeletonLoader:skeletonMode"></div>
+                        </div>
+                     </div>
+                     <div class="col-xs-4  col-sm-1  text-center no-padding">
+                     </div>
+                  </div>
+
+               </div>
+               <div class="order-item row no-margin" *ngFor="let orderToApprove of debitOrdersToApprove">
+                  <div class="col-xs-8 col-sm-11 no-padding order-fields">
+                     <div class="row no-padding no-margin">
+                        <div class="col-xs-12 col-sm-2 no-padding field">
+                           <div class="order-label" [innerHtml]="'Initial Date' | skeletonLoader:skeletonMode"></div>
+                           <div class="order-value" [innerHtml]="orderToApprove?.MandateInitiationDate | date:dateformates.ddMMYYYY | skeletonLoader:skeletonMode"></div>
+                        </div>
+                        <div class="col-xs-12 col-sm-4 no-padding field">
+                           <div class="order-label" [innerHtml]="'Creditor Name' | skeletonLoader:skeletonMode"></div>
+                           <div class="order-value" [innerHtml]="orderToApprove?.CreditorName | skeletonLoader:skeletonMode"></div>
+                        </div>
+                        <div class="col-xs-12 col-sm-4 no-padding field">
+                           <div class="order-label" [innerHtml]="'Reference' | skeletonLoader:skeletonMode"></div>
+                           <div class="order-value" [innerHtml]="orderToApprove?.MandateIdentifier | skeletonLoader:skeletonMode"></div>
+                        </div>
+                        <div class="col-xs-12 col-sm-2 no-padding field">
+                           <div class="order-label" [innerHtml]="'Amount' | skeletonLoader:skeletonMode"></div>
+                           <div class="order-value" [innerHtml]="('R'+ orderToApprove?.InstalmentAmount) | skeletonLoader:skeletonMode"></div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-xs-4  col-sm-1  text-center no-padding order-icon">
+                     <div class="row no-margin v-align-row">
+                        <div class="col-xs-12 v-align-cell no-padding padding-top-50per">
+                           <div class="icon-field view-details-icon">
+                              <div *ngIf="skeletonMode" [innerHtml]="''| skeletonLoader:skeletonMode:'skeleton-icon'"></div>
+                              <div *ngIf="!skeletonMode" class="icon details text-center" (click)="showMandateOverlay(orderToApprove)"></div>
+                              <div *ngIf="!skeletonMode" class="view-details-text" (click)="showMandateOverlay(orderToApprove); sendEvent('click_on_view_details_debit_order', 'Debit orders to approve');">View Details</div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="row debit-orders-row existing-orders" *ngIf="activeDebitOrders && activeDebitOrders.length">
+            <div class="debit-orders">
+               <h6 class="card-title">{{labels.activeDebitOrders}}</h6>
+               <div class="order-header row no-padding no-margin hidden-xs">
+                  <div class="col-xs-7 col-sm-12 order-fields no-padding">
+                     <div class="row no-margin">
+                        <div class="col-sm-2 field">
+                           <div class="order-label" [innerHtml]="labels.initialDate | skeletonLoader:skeletonMode"></div>
+                        </div>
+                        <div class="col-sm-6 field">
+                           <div class="order-label" [innerHtml]="labels.description | skeletonLoader:skeletonMode"></div>
+                        </div>
+                        <div class="col-sm-2 field">
+                           <div class="order-label" [innerHtml]="labels.amount | skeletonLoader:skeletonMode"></div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="order-item row no-margin align-item" [class.stopped]="activeDebitOrderItem?.stopped" *ngFor="let activeDebitOrderItem of activeDebitOrders;let ind=index">
+                  <div class="col-xs-12 col-sm-12 order-fields">
+                     <div class="row no-margin align-center">
+                        <div class="col-xs-12 col-sm-2 field">
+                           <div class="order-value" [innerHtml]="activeDebitOrderItem?.lastDebitDate | date: dateFormatDebitOrdersList | skeletonLoader:skeletonMode"></div>
+                        </div>
+                        <div class="col-xs-9 col-sm-6 field">
+                           <div class="order-value" [innerHtml]="activeDebitOrderItem?.contractReferenceNr | skeletonLoader:skeletonMode"></div>
+                        </div>
+                        <div class="col-xs-3 col-sm-2 field amount-field">
+                           <div class="order-value" [innerHtml]="activeDebitOrderItem?.installmentAmount | amountTransform: amountPipeConfig | skeletonLoader:skeletonMode"></div>
+                        </div>
+                        <div class="col-sm-1 field hidden-xs">
+                           <div class="debit-reversed" *ngIf="activeDebitOrderItem?.disputed">
+                              <ng-container *ngIf="skeletonMode; then skeletonLoaderTemplate else reversed"></ng-container>
+                              <ng-template #skeletonLoaderTemplate>
+                                 <div [innerHtml]=" ''| skeletonLoader:skeletonMode: 'skeleton-icon'"></div>
+                              </ng-template>
+                              <ng-template #reversed>
+                                 <span class="reversed-order"></span>
+                                 <span class="text">{{labels.reversed}}</span>
+                              </ng-template>
+
+                           </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-1 field">
+                           <div class="debit-details-container" (click)="showDebitOrderDetails(activeDebitOrderItem)">
+                              <div *ngIf="skeletonMode" [innerHtml]=" ''| skeletonLoader:skeletonMode: 'skeleton-icon'"></div>
+                              <span *ngIf="!skeletonMode" class="view-details"></span>
+                              <span *ngIf="!skeletonMode" class="text">{{labels.viewDetails}}</span>
+                           </div>
+                        </div>
+                        <div class="col-xs-6 field visible-xs">
+                           <div class="debit-reversed" *ngIf="activeDebitOrderItem?.disputed">
+                              <ng-container *ngIf="skeletonMode; then skeletonLoaderTemplate else reversed"></ng-container>
+                              <ng-template #skeletonLoaderTemplate>
+                                 <div [innerHtml]=" ''| skeletonLoader:skeletonMode: 'skeleton-icon'"></div>
+                              </ng-template>
+                              <ng-template #reversed>
+                                 <span class="reversed-order"></span>
+                                 <span class="text">{{labels.reversed}}</span>
+                              </ng-template>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="row debit-orders-row" *ngIf="stoppedDebitOrders && stoppedDebitOrders.length">
+            <div class="debit-orders">
+               <h6 class="card-title">{{labels.stoppedDebitOrders}}</h6>
+               <div class="order-header row no-margin hidden-xs no-padding">
+                  <div class="col-xs-7 col-sm-12 order-fields no-padding">
+                     <div class="row no-margin">
+                        <div class="col-sm-2 field">
+                           <div class="order-label" [innerHtml]="labels.initialDate | skeletonLoader:skeletonMode"></div>
+                        </div>
+                        <div class="col-sm-6 field">
+                           <div class="order-label" [innerHtml]="labels.description | skeletonLoader:skeletonMode"></div>
+                        </div>
+                        <div class="col-sm-2 field">
+                           <div class="order-label" [innerHtml]="labels.amount | skeletonLoader:skeletonMode"></div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="order-item row no-margin align-item" *ngFor="let stoppedDebitItem of stoppedDebitOrders;let ind=index">
+                  <div class="col-xs-12 col-sm-12 order-fields">
+                     <div class="row no-margin align-center">
+                        <div class="col-xs-12 col-sm-2 field">
+                           <div class="order-value" [innerHtml]="stoppedDebitItem?.stoppedDate | date: dateFormatDebitOrdersList | skeletonLoader:skeletonMode"></div>
+                        </div>
+                        <div class="col-xs-9 col-sm-6 field">
+                           <div class="order-value" [innerHtml]="stoppedDebitItem?.contractReferenceNr | skeletonLoader:skeletonMode"></div>
+                        </div>
+                        <div class="col-xs-3 col-sm-2 field amount-field">
+                           <div class="order-value" [innerHtml]="stoppedDebitItem?.installmentAmount | amountTransform: amountPipeConfig | skeletonLoader:skeletonMode"></div>
+                        </div>
+                        <div class="col-sm-1 field"></div>
+                        <div class="col-xs-6 col-sm-1 field">
+                           <div class="debit-details-container" (click)="showDebitOrderDetails(stoppedDebitItem)">
+                              <ng-container *ngIf="skeletonMode; then skeletonLoaderTemplate else viewDetails"></ng-container>
+                              <ng-template #skeletonLoaderTemplate>
+                                 <div [innerHtml]=" ''| skeletonLoader:skeletonMode: 'skeleton-icon'"></div>
+                              </ng-template>
+                              <ng-template #viewDetails>
+                                 <span class="view-details"></span>
+                                 <span class="text">{{labels.viewDetails}}</span>
+                              </ng-template>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="row" *ngIf="!skeletonMode && !debitOrdersToApprove?.length && !activeDebitOrders?.length && !exisitingDebitOrders?.length && !stoppedDebitOrders?.length">
+            <app-small-overlay [template]="noAvailableDebitOrders" alternate='true'>
+               <ng-template #noAvailableDebitOrders>
+                  <div class="no-debit-orders-container">
+                     <span class="red-warning"></span>
+                     <div class="heading-block">
+                        {{messages.noDebitOrders}}
+                     </div>
+                     <div class="descrp-block">
+                        {{messages.noDebitOrdersDescription}}
+                     </div>
+                     <div class="btn-container">
+                        <app-bottom-button id="done-btn" [text]="labels.doneBtnText" (click)="goToPreviousPage()"></app-bottom-button>
+                     </div>
+                  </div>
+               </ng-template>
+            </app-small-overlay>
+         </div>
+      </ng-template>
+      <ng-template #debitOrderDetails>
+         <app-debit-order-detail [selectedAccountDetails]="selectedAccountDetails" (onCloseDebitDetails)="hideDetails($event)" [accountType]="accountType"></app-debit-order-detail>
+      </ng-template>
+   </div>
+</div>
+
+<app-colored-overlay [isVisible]="isMandateOverayVisible" [alternate]="true" [altButtonText]="'Cancel'" [template]="mandateTemplate"
+   [backOption]="false" (onHide)="hideMandateOverlay()">
+   <ng-template #mandateTemplate>
+      <div class="mandate-conatiner">
+         <div [hidden]="showMandateDone || showMandateError">
+            <div class="heading-container">
+               <div class="row">
+                  <div class="col-sm-12">
+                     <span class="heading">
+                        {{selectedMandateOrder?.CreditorName}} will debit your Nedbank Current Account - {{ selectedMandateOrder?.DebtorAccountNumber
+                        }}
+                     </span>
+                  </div>
+                  <div>
+                     <span class="heading">
+                        of {{ selectedMandateOrder?.InstalmentAmount | amountTransform }} on {{ selectedMandateOrder?.MandateInitiationDate | date:
+                        dateFormat }}
+                     </span>
+                  </div>
+               </div>
+            </div>
+            <div class="disclaimer-container">
+               <div class="icon">
+                  <span class="icon glyphicon glyphicon-info-sign"></span>
+               </div>
+               <div class="disclaimer">
+                  Declining this debit order may lead to {{selectedMandateOrder?.CreditorName}} suspending their service to you.This could
+                  also negatively affect your credit score.{{selectedMandateOrder?.CreditorName}} can still set up a debit
+                  order without authorisation using other means.
+               </div>
+            </div>
+            <div class="button-container">
+               <div class="row">
+                  <div class="col-sm-12 col-md-6">
+                     <app-bottom-button (click)="AcceptMandateOrder()" [showLoader]="isAcceptMandateinProgress" [disableButton]="isDeclineMandateinProgress"
+                        [text]="'Authorise'"></app-bottom-button>
+                  </div>
+                  <div class="col-sm-12 col-md-6">
+                     <app-bottom-button alternateTheme="true" (click)="DeclineMandateOrder()" [showLoader]="isDeclineMandateinProgress" [disableButton]="isAcceptMandateinProgress"
+                        [text]="'Decline'"></app-bottom-button>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="debit-approved" [hidden]="!showMandateDone">
+            <div class="row header-row">
+               <div class="col-xs-12 col-sm-2 no-padding text-center">
+                  <div class="icon-field success-icon">
+                     <div class="icon success text-center"></div>
+                  </div>
+               </div>
+               <div class="col-xs-12 col-sm-10 title text-left">
+                  {{ debitOpsSuccess?.message }}
+               </div>
+            </div>
+            <div class="reverse-order-status block-form">
+               <div class="row">
+                  <div class="col-xs-12">
+                     <div class="info-container">
+                        <span class="icon glyphicon glyphicon-info-sign"></span>
+                        <div class="info-msg">
+                           <p>
+                              {{debitOpsSuccess?.infoMsg}}
+                           </p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <app-bottom-button [text]="'Done'" (click)="hideMandateOverlay()"></app-bottom-button>
+
+            </div>
+         </div>
+         <div class="row header-row" [hidden]="!showMandateError">
+            <div class="col-xs-12 col-sm-1 no-padding text-center">
+               <div class="icon-field error-icon">
+                  <div class="icon error text-center"></div>
+               </div>
+            </div>
+            <div class="col-xs-12 col-sm-11 title text-left">
+               Request to Accept/Decline your debit order was unsuccessful, Try Again.
+            </div>
+            <div class="block-form">
+               <app-bottom-button [text]="'Try again'" [disableButton]="false" (click)="onRetryMandate()"></app-bottom-button>
+            </div>
+         </div>
+      </div>
+   </ng-template>
+</app-colored-overlay>

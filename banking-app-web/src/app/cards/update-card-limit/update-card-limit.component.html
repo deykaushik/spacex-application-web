@@ -1,0 +1,36 @@
+﻿
+<div [class.is-skeleton-loading]='skeletonMode' class="outer-container">
+   <div class="row">
+      <div class="col-xs-12 title">Change ATM limit</div>
+   </div>
+   <div class="row">
+      <div class="col-xs-12" *ngIf="!skeletonMode">
+         <app-range-amount-slider class="limit-widget" (change)="onLimitChange($event)" [currentLimit]="currentLimit" [config]="limitSliderConfig"
+          (onEnd)="onLimitChange($event)"  [errorMessages]="errorMessages" [minValue]="100"></app-range-amount-slider>
+      </div>
+      <div class="col-xs-12 text-center" *ngIf="skeletonMode">
+         <div [innerHtml]="'' | skeletonLoader:skeletonMode"></div>
+      </div>
+   </div>
+
+   <div class="row">
+      <div class="col-xs-12" *ngIf="!skeletonMode">
+         <div class="info-container">
+            <span class="icon glyphicon glyphicon-info-sign"></span>
+            <div class="info-msg">
+               <p>I have been made aware of the risk and fraud implications of increasing/decreasing the limit, which I understand.</p>
+               <p>I accept responsibility for the increase/decrease of the limit.</p>
+            </div>
+         </div>
+      </div>
+      <div *ngIf="skeletonMode">
+         <div class="col-xs-12 text-center no-padding">
+            <div class="info-container no-backgound-color" [innerHtml]="'' | skeletonLoader:skeletonMode"></div>
+         </div>
+      </div>
+   </div>
+   <div class="button-center">
+      <app-bottom-button *ngIf="!skeletonMode" [text]="'Change Limit'" [disableButton]="!isSelectedLimitValid || isButtonLoader"
+      (click)="updateAtmLimit()" [showLoader]='isButtonLoader'></app-bottom-button>
+   </div>
+</div>

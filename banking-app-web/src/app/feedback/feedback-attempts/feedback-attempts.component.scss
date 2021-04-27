@@ -1,0 +1,49 @@
+@import './../../../styles/_mixins.scss';
+@import './../../../styles/_base.scss';
+$svg-path: './../../../assets/svg';
+$attemptsIcon: 'grey';
+.feedback-attempts {
+   width: 335px;
+   font-style: normal;
+   font-stretch: normal;
+   .icon-attempts {
+      margin-top: 60px;
+      margin-left: 123px;
+      text-align: center;
+      @include svg-image-full-path($svg-path, $attemptsIcon, 90px, 90px);
+   }
+   .header {
+      font-size: $font-xlg;
+      @include markpro-bold();
+      line-height: 1.11;
+      letter-spacing: -0.2px;
+      text-align: center;
+      color: $text-color-message-block-content;
+      margin-top: 14px;
+   }
+   .sub-header {
+      margin-top: 29px;
+      width: 296px;
+      margin-left: 20px;
+      font-size: $font-default-1;
+      line-height: normal;
+      letter-spacing: normal;
+      text-align: center;
+      color: $text-color-message-block-rs;
+   }
+}
+
+@media (min-width: $media-sm) {
+   .feedback-attempts {
+      width: 355px;
+      margin-left: 41px;
+      .icon-attempts {
+         margin-top: 30px;
+         margin-left: 133px;
+      }
+      .sub-header {
+         width: 327px;
+         margin-left: 14px;
+      }
+   }
+}

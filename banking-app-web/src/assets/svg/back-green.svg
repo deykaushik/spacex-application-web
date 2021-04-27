@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="36px" height="36px" viewBox="0 0 36 36" version="1.1">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>36px/Back</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M16.3806996,13.3996673 L27.6666667,13.3806996 L27.6666667,11.3333333 L14.3587858,11.3556991 L14.3587858,12.0788583 L14.3333333,12.0788583 L14.3333333,24.4644022 L16.3806996,24.4644022 L16.3806996,13.3996673 Z" id="path-1"/>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="36px/Back">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"/>
+            </mask>
+            <use id="Mask" fill="#78BE20" transform="translate(21.000000, 17.898868) rotate(-45.000000) translate(-21.000000, -17.898868) " xlink:href="#path-1"/>
+        </g>
+    </g>
+</svg>

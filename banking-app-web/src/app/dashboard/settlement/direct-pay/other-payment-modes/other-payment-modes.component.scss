@@ -1,0 +1,118 @@
+@import '../../../../../styles/_base.scss';
+@import '../../../../../styles/_mixins.scss';
+$icon-path: '../../../../../assets/svg';
+$icon-cash: 'account-gray';
+$icon-eft: 'eft-home';
+$icon-mail: '24-pxcontact';
+.other-payment-modes-section {
+   margin: 40px 15px 40px;
+   .title {
+      font-family: $font-markpro-medium;
+      font-size: $section-title-size;
+      font-weight: 500;
+      color: $text-color-secondary;
+      line-height: 1.25;
+      letter-spacing: normal;
+      margin: 0 0 30px;
+      text-align: left;
+   }
+   .mode-cash,
+   .mode-eft {
+      margin-bottom: 40px;
+      .icon-text {
+         margin-bottom: 10px;
+         .icon,
+         .text {
+            display: inline-block;
+            vertical-align: middle;
+            font-family: $font-markpro-medium;
+            font-size: $section-title-secondary-size;
+            font-weight: 500;
+            color: $text-color-secondary;
+            line-height: 1.25;
+            letter-spacing: normal;
+            &.icon-cash {
+               @include svg-image-full-path($icon-path, $icon-cash, 36px, 36px);
+            }
+            &.icon-eft {
+               @include svg-image-full-path($icon-path, $icon-eft, 36px, 36px);
+            }
+         }
+      }
+      .para-desc {
+         line-height: 1.5;
+         letter-spacing: normal;
+         margin-bottom: 25px;
+      }
+      .eft-account {
+         .name {
+            @include markpro-medium();
+            color: $text-color-secondary;
+            line-height: 1.5;
+            letter-spacing: normal;
+            margin-bottom: 15px;
+            display: block;
+         }
+         .details {
+            line-height: 1.5;
+            letter-spacing: normal;
+            margin-bottom: 25px;
+            .account-type,
+            .account-number,
+            .account-branch-code {
+               margin-bottom: 15px;
+            }
+         }
+      }
+   }
+   .divider {
+      display: block;
+      border-bottom: 1px solid $divider-quaternary;
+      margin-bottom: 30px;
+   }
+   .contact-info {
+      margin-bottom: 30px;
+      .desc {
+         margin-bottom: 20px;
+         display: block;
+         line-height: normal;
+         letter-spacing: -0.4px;
+         color: $text-color-secondary;
+      }
+      .icon-text {
+         .icon {
+            display: inline-block;
+            vertical-align: middle;
+            &.icon-email {
+               @include svg-image-full-path($icon-path, $icon-mail, 25px, 25px);
+            }
+         }
+         .text-email {
+            letter-spacing: normal;
+            color: $text-color-accent-secondary;
+            line-height: normal;
+            padding-left: 20px;
+         }
+      }
+      .para-desc {
+         display: block;
+         margin-top: 30px;
+      }
+   }
+   .info-text {
+      padding: 20px 15px;
+      .text {
+         line-height: 1.5;
+         .text-process-info {
+            margin-bottom: 10px;
+         }
+      }
+   }
+}
+
+@media (min-width: $media-sm) {
+   .other-payment-modes-section {
+      width: 430px;
+      margin: 50px auto;
+   }
+}

@@ -1,0 +1,252 @@
+@import './../../../styles/_base.scss';
+@import './../../../styles/_mixins.scss';
+$svg-path: './../../../assets/svg/';
+$documents: 'documents-icon';
+$duration: '/duration-icon';
+$interest-icon: '/interest';
+$find: 'find_zoom';
+$money: 'money_cash';
+@mixin dark-font {
+   letter-spacing: normal;
+   color: $primary-color;
+   line-height: normal;
+}
+
+.done-body {
+   margin: 33px 0 50px 87px;
+}
+
+.initiate-done-title {
+   span {
+      @include dark-font;
+      font-size: $main-title-size;
+      line-height: 1.33;
+   }
+}
+
+.initiate-done-subtitle {
+   padding: 15px 0px;
+   padding-bottom: 29px;
+   span {
+      font-size: $font-md;
+      line-height: 1.25;
+      font-family: $font-markpro-medium;
+   }
+}
+
+.initiate-done-info {
+   display: inline-flex;
+   .send-doc-info-1,
+   .send-doc-info-2 {
+      padding-top: 45px;
+      display: inline-block;
+      .content {
+         display: inline-flex;
+         .icon {
+            display: table-row;
+            margin-top: 1.5px;
+            @include svg-image-full-path($svg-path, $duration, 34px, 34px);
+            &::before {
+               margin-top: 4px
+            }
+         }
+         span {
+            margin-left: 15px;
+            max-width: 242px;
+            line-height: 1.38;
+            letter-spacing: 0.2px;
+         }
+      }
+   }
+   .send-doc-info-2 {
+      margin-left: 79px;
+      .content {
+         .icon {
+            @include svg-image-full-path($svg-path, $interest-icon, 28px, 34px);
+            margin-top: 6px;
+            &::before {
+               margin-top: 5px
+            }
+         }
+         span {
+            max-width: 274px;
+         }
+      }
+   }
+}
+
+.initiate-done-send-doc {
+   padding-top: 30px;
+   padding-bottom: 45px;
+   .section-title {
+      padding: 20px 0px;
+      span {
+         @include dark-font;
+         font-size: $font-xlg;
+      }
+   }
+   .send-doc-sec-1,
+   .send-doc-sec-2,
+   .send-doc-sec-3 {
+      display: inline-flex;
+      .content {
+         place-self: center;
+         width: 256px;
+         margin-left: 12px;
+      }
+   }
+   .send-doc-sec-1 {
+      .icon {
+         @include svg-image-full-path($svg-path, $find, 32px, 36px);
+         padding: 5px 0px;
+         display: table-row;
+         &::before {
+            width: 32px;
+            height: 36px;
+            margin-top: 5px;
+         }
+      }
+      .dark-grey-text {
+         font-family: $font-markpro-bold;
+      }
+   }
+   .send-doc-sec-2 {
+      margin-left: 60px;
+      .icon {
+         @include svg-image-full-path($svg-path, $money, 33px, 36px);
+         padding: 5px 0px;
+         display: table-row;
+         &::before {
+            width: 34px;
+            height: 36px;
+            margin-top: 2px;
+         }
+      }
+      .content {
+         margin-top: -7px;
+         margin-left: 16px;
+      }
+   }
+   .send-doc-sec-3 {
+      display: flex;
+      margin-top: 23px;
+      .icon {
+         @include svg-image-full-path($svg-path, $documents, 33px, 36px);
+         padding: 5px 0px;
+         display: table-row;
+         &::before {
+            width: 27px;
+            height: 34px;
+            margin-top: 4px;
+         }
+      }
+      .content {
+         width: 310px;
+         margin-left: 17px;
+      }
+   }
+}
+
+.go-to-acc-btn {
+   padding: 30px 0px;
+}
+
+.initiate-overlay ::ng-deep {
+   .logo-cntnr {
+      padding-left: 80px;
+   }
+   .overlay .btn-cntnr button {
+      border: 0;
+      background: url($svg-path + '/grey-close.svg') no-repeat;
+      &.alternate-button {
+         min-width: fit-content;
+         height: 32px;
+         margin-top: 10px;
+         padding: 16px;
+         margin-right: 60px;
+         outline: none;
+      }
+   }
+   ::ng-deep {
+      .overlay.alternate {
+         max-width: 100%;
+      }
+   }
+}
+
+@media (max-width: $media-sm) {
+   .initiate-done-title {
+      span {
+         font-size: $main-title-size-mob;
+      }
+   }
+   .done-body {
+      margin-top: 42px;
+      margin-left: 20px;
+      margin-right: 15px;
+   }
+   .initiate-done-subtitle {
+      padding-bottom: 24px;
+   }
+   .initiate-done-send-doc {
+      .send-doc-sec-2 {
+         @include flexbox();
+         margin-left: 0px;
+         margin-top: 24px;
+         .icon {
+            &::before {
+               width: 30px;
+            }
+         }
+         .content {
+            margin-left: 15px;
+         }
+      }
+      .send-doc-sec-3 {
+         margin-top: 24px;
+      }
+      .send-doc-sec-1,
+      .send-doc-sec-2,
+      .send-doc-sec-3 {
+         .content {
+            width: 283px;
+         }
+      }
+   }
+   .initiate-done-info {
+      margin-bottom: 19px;
+      display: inline-grid;
+      .send-doc-info-1 {
+         padding-top: 1px;
+      }
+      .send-doc-info-2 {
+         margin-left: 0px;
+      }
+   }
+   .go-to-acc-btn {
+      padding-top: 13px;
+   }
+   .initiate-overlay ::ng-deep {
+      .overlay .btn-cntnr {
+         margin-top: 5px;
+      }
+      .logo-cntnr {
+         padding-left: 0px;
+         .logo.alternate-logo {
+            padding-left: 15px;
+         }
+      }
+      .overlay .btn-cntnr button {
+         border: 0;
+         background: url($svg-path + '/grey-close.svg') no-repeat;
+         &.alternate-button {
+            min-width: fit-content;
+            height: 32px;
+            margin-top: unset;
+            margin-right: unset;
+            outline: none;
+            border: 0;
+         }
+      }
+   }
+}

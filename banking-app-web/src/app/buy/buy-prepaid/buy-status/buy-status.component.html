@@ -1,0 +1,88 @@
+﻿<h1 role="alert" class="visuallyhidden" attr.aria-label="{{heading}}"></h1>
+<div class="buy-status">
+   <div class="work-flow final-status">
+      <app-circle-icon-heading [heading]="this.isNoResponseReceived ?labels.somethingWentWrong : heading" [successful]="successful"></app-circle-icon-heading>
+      <div class="block">
+         <div class="steps-track"></div>
+         <div class="steps-block gd-form">
+            <table class="tabular-data-col-2 gd-form-row">
+               <tbody>
+                  <tr>
+                     <td>{{labels.buyLabels.racipientName}}</td>
+                     <td>{{buyToVm.recipientName + ' - '+ buyToVm.mobileNumber}}</td>
+                  </tr>
+                  <tr>
+                     <td>{{labels.buyLabels.serviceProvider}}</td>
+                     <td>{{buyToVm.serviceProviderName}}</td>
+                  </tr>
+                  <tr>
+                     <td>{{labels.amount}}</td>
+                     <td>{{buyAmountVm?.displayBundle}}</td>
+                  </tr>
+               </tbody>
+            </table>
+            <table class="tabular-data-col-2 gd-form-row">
+               <tbody>
+                  <tr>
+                     <td>{{labels.buyLabels.fromAccount}}</td>
+                     <td>
+                        <span class='capitalize'>{{accountNickName}}</span>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+            <table class="tabular-data-col-2 gd-form-row">
+               <tbody>
+                  <tr *ngIf='buyForVm.notificationType!="None"'>
+                     <td>{{labels.buyLabels.notify}}</td>
+                     <td>{{buyForVm.notificationType +" - "+ buyForVm?.notificationInput}}</td>
+                  </tr>
+                  <tr>
+                     <td>{{labels.buyLabels.yourReference}}</td>
+                     <td>{{buyForVm?.yourReference}}</td>
+                  </tr>
+               </tbody>
+            </table>
+            <table class="tabular-data-col-2 gd-form-row">
+               <tbody>
+                  <tr *ngIf="successful && buyPrepaidDetail.transactionID">
+                     <td>{{labels.paymentDate}}:</td>
+                     <td>{{buyAmountVm?.startDate|date:dateFormat}}</td>
+                  </tr>
+                  <tr *ngIf="successful && (this.buyService.execEngineRef || buyPrepaidDetail.transactionID)">
+                     <td>Transaction no:</td>
+                     <td>{{this.buyService.execEngineRef || buyPrepaidDetail?.transactionID}}</td>
+                  </tr>
+               </tbody>
+            </table>
+            <div class="gd-form-row no-print" *ngIf="successful" (click)="print()">
+               <a class="download">
+                  <span class="icon"></span>
+                  <span class="text">Print proof of Payment</span>
+               </a>
+            </div>
+            <div class="half-btns gd-form-row no-print" *ngIf="successful">
+               <div class="left">
+                  <app-bottom-button (clickEmitter)="newPurchase()" [disableButton]="false" [text]="'New purchase'" ga-event-name="buy_prepaid_confirmation_click_on_new_payment"></app-bottom-button>
+               </div>
+               <div class="right">
+                  <app-bottom-button (clickEmitter)="navigateToDashboard()" [disableButton]="false" [text]="'Go to overview'" [alternateTheme]="true"
+                     ga-event-name="buy_prepaid_confirmation_click_on_go_to_overview"></app-bottom-button>
+               </div>
+            </div>
+            <div class="half-btns gd-form-row no-print" *ngIf="!successful">
+               <div class="left">
+                  <app-bottom-button [disableButton]="disableRetryButton || requestInprogress" [showLoader]='isButtonLoader' (clickEmitter)="retryPayment()"
+                     [text]="'Try again'"></app-bottom-button>
+               </div>
+               <div class="right">
+                  <app-bottom-button [disableButton]="requestInprogress" (clickEmitter)="navigateToDashboard()" [alternateTheme]="true" [text]="this.isNoResponseReceived? labels.cancelText : labels.cancelPurchase"></app-bottom-button>
+               </div>
+            </div>
+            <div class="gd-error no-print" *ngIf="errorMessage">
+               <span>{{errorMessage}}</span>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

@@ -1,0 +1,29 @@
+﻿<div class="transfer-review" id="trns-transfer-review">
+   <table class="tabular-data-col-2">
+      <tbody>
+         <tr>
+            <td>{{labels.transferFrom}}</td>
+            <td>{{vm.selectedFromAccount?.nickname}}</td>
+         </tr>
+         <tr>
+            <td>{{labels.transferTo}}</td>
+            <td>{{vm.selectedToAccount?.nickname}}</td>
+         </tr>
+         <tr>
+            <td>{{labels.amount}}</td>
+            <td>{{vm.amount | amountTransform: amountPipeConfig}}</td>
+         </tr>
+         <tr *ngIf="vm.reoccurrenceItem.reoccurrenceFrequency">
+            <td>{{labels.transferRepeatPayment}}</td>
+            <td class="vertical-bottom">{{vm.repeatStatusText}}</td>
+         </tr>
+         <tr>
+            <td colspan="2">&nbsp;</td>
+         </tr>
+         <tr>
+            <td>{{labels.transferDate}}</td>
+            <td>{{vm.payDate | date:dateFormat}}</td>
+         </tr>
+      </tbody>
+   </table>
+</div>

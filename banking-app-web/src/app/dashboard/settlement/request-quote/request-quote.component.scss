@@ -1,0 +1,217 @@
+@import './../../../../styles/_base.scss';
+@import './../../../../styles/_mixins.scss';
+.loader-mask {
+   background-color: transparent;
+   .loader-spinner {
+      top: 25%;
+      .loader-text {
+         @include flexbox();
+         @include justify-content(center);
+         @include align-items(center);
+         @include flex-direction(column);
+         .loader-text {
+            margin-bottom: 20px;
+            color: $text-color-loading-text;
+         }
+         .loader-text-almost-done {
+            font-family: $font-markpro-medium;
+            font-size: $section-title-size;
+            color: $text-color-accent-secondary;
+            line-height: 1.25;
+            letter-spacing: 0;
+            margin-bottom: 10px;
+            white-space: nowrap;
+         }
+         .loader-text-in-progress {
+            font-size: 20px;
+            font-size: $font-lg;
+            line-height: 1.2;
+            letter-spacing: 0;
+            white-space: nowrap;
+         }
+      }
+   }
+}
+
+.settlement-quote-section {
+   margin: 40px 15px 0;
+   .title {
+      font-family: $font-markpro-medium;
+      font-size: $section-title-size;
+      color: $text-color-secondary;
+      line-height: 1.25;
+      letter-spacing: 0;
+      margin: 0 0 30px;
+      text-align: center;
+   }
+   .checkbox-container {
+      margin-bottom: 30px;
+      padding-top: 15px;
+      .checkbox-label {
+         padding-left: 0;
+         cursor: pointer;
+         .text {
+            text-align: left;
+            font-weight: $weight-medium;
+         }
+         .tick-mark-container {
+            position: relative;
+            border: 2px solid $form-element-border;
+            border-radius: 5px;
+            width: 30px;
+            height: 30px;
+            float: left;
+            margin-right: 15px;
+            margin-bottom: 25px;
+            .tick-mark-icon {
+               color: $text-color-highlight;
+               position: absolute;
+               font-size: $font-default;
+               line-height: 0;
+               top: 50%;
+               left: 20%;
+            }
+         }
+         .checkbox {
+            display: none;
+            &:checked+.tick-mark-container {
+               background-color: $checkbox-bg-active;
+               border-color: $checkbox-bg-active;
+               .tick-mark-icon {
+                  opacity: 1;
+               }
+            }
+            &:disabled+.tick-mark-container {
+               opacity: .5;
+            }
+            &+.tick-mark-container {
+               &>.tick-mark-icon {
+                  opacity: 0;
+               }
+            }
+         }
+      }
+   }
+   .account-number {
+      margin-bottom: 20px;
+      display: block;
+      line-height: 1.5;
+      letter-spacing: 0;
+   }
+   .article {
+      margin-bottom: 20px;
+      display: block;
+      line-height: 1.5;
+      letter-spacing: 0;
+   }
+   .settlement-amount {
+      margin-bottom: 10px;
+      .text {
+         display: block;
+         font-size: $font-sm;
+         margin-bottom: 5px;
+         letter-spacing: 0;
+         line-height: 1.5;
+      }
+      .amount {
+         font-family: $font-markpro-medium;
+         font-size: $section-title-size;
+         color: $text-color-secondary;
+         line-height: 1.25;
+         letter-spacing: 0;
+      }
+   }
+   .validation-time {
+      margin-bottom: 30px;
+      display: block;
+      line-height: 1.5;
+      letter-spacing: normal;
+   }
+   .info-text {
+      margin-bottom: 25px;
+   }
+   .info-text {
+      padding: 20px 15px;
+      .text {
+         line-height: 1.5;
+         .text-process-info {
+            margin-bottom: 10px;
+         }
+      }
+   }
+   .link-send-quote {
+      margin-bottom: 30px;
+      display: block;
+      color: $text-color-link;
+      cursor: pointer;
+      line-height: 0;
+      letter-spacing: 0;
+   }
+   .link-terms {
+      margin-bottom: 60px;
+      display: block;
+      letter-spacing: 0;
+      color: $text-color-message-block-content;
+      cursor: pointer;
+      ::ng-deep .highlightText {
+         font-family: $font-markpro;
+         text-decoration: underline;
+      }
+   }
+   .btn-settle-loan {
+      margin-bottom: 55px;
+   }
+   .sq-secondary-title {
+      text-align: center;
+      display: block;
+      margin-bottom: 30px;
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 1.25;
+      letter-spacing: 0;
+      text-align: center;
+      color: #333333;
+      @include markpro-medium();
+   }
+   .settlement-details {
+      margin-bottom: 30px;
+      .lbl {
+         font-size: 14px;
+         line-height: 1.5;
+         letter-spacing: 0;
+         margin-bottom: 5px;
+      }
+      .val {
+         font-size: 20px;
+         line-height: normal;
+         letter-spacing: 0;
+         &.amount {
+            font-size: 28px;
+            font-weight: 500;
+            line-height: 1.25;
+            color: #333333;
+            @include markpro-medium();
+         }
+      }
+      .quote-date {
+         font-size: 16px;
+         line-height: 1.5;
+         letter-spacing: 0;
+         margin-bottom: 10px;
+      }
+   }
+}
+
+@media(min-width: $media-sm) {
+   .settlement-quote-section {
+      width: 400px;
+      margin: 35px auto 0;
+      .sq-secondary-title {
+         font-size: 28px;
+         margin-bottom: 80px;
+      }
+      .checkbox-container {
+         padding-top: 40px;
+      }
+   }
+}

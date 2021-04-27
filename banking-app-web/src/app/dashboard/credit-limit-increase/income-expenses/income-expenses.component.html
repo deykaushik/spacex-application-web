@@ -1,0 +1,130 @@
+<section class="income-expenses">
+   <div class="income-expenses-container">
+      <span class="section-title">{{labels.finacialDetails}}</span>
+      <span class="section-sub-title">{{labels.specifyDetails}}</span>
+      <form #incomeExpenses="ngForm" class="section-form gd-form">
+         <span class=" income form-head">{{labels.income}}</span>
+         <div *ngIf="tooltipOptions[0].isOpen" class="show-message">
+            <div class="tooltip-part">
+               <div class="section-content">
+                  <span class="content-bold">{{messages.grossIncome}}</span>
+                  <span class="content">{{messages.grossIncomeTip}}</span>
+               </div>
+            </div>
+            <span class="triangle">
+            </span>
+         </div>
+         <div class="gd-form-row">
+            <div class="label-part">
+               <label for="gross-income" class="active label-size gd-sm-label">{{labels.grossIncome}}</label>
+               <span class="tool-tip" (click)="openTooltip(tooltipOptions[0])"></span>
+            </div>
+            <input appFocus autofocus id="gross-income" name="grossIncome" (focus)="onFocus()" #grossIncome="ngModel" type="text" class="validate"
+               validateFor='number' [ngModel]="creditLimitDetails.grossMonthlyIncome | amountTransform" minlength="2" maxlength="12"
+               (input)="onGrossIncomeChange($event)" appCheckBlur appValidateRequired appAmountFormatMask/>
+            <div *ngIf="(grossIncome.invalid && (grossIncome.dirty || grossIncome.touched))" class="error-msg">
+               <span>{{messages.errorMessageForAmount}}</span>
+            </div>
+            <div *ngIf="!grossIncome.invalid && !isValidNetIncome" class="error-msg">
+               <span>{{messages.errorMessageForGrossIncome}}</span>
+            </div>
+         </div>
+         <div *ngIf="tooltipOptions[1].isOpen" class="show-message">
+            <div class="tooltip-part">
+               <div class="section-content">
+                  <span class="content-bold">{{messages.netIncome}}</span>
+                  <span class="content">{{messages.netIncomeTip}}</span>
+               </div>
+            </div>
+            <span class="triangle">
+            </span>
+         </div>
+         <div class="gd-form-row">
+            <div class="label-part">
+               <label for="net-income" class="active label-size gd-sm-label">{{labels.netIncome}}</label>
+               <span class="tool-tip" (click)="openTooltip(tooltipOptions[1])"></span>
+            </div>
+            <input id="net-income" name="netIncome" #netIncome="ngModel" (focus)="onFocus()" type="text" class="validate" validateFor='number'
+               [ngModel]="creditLimitDetails.netMonthlyIncome | amountTransform" minlength="2" maxlength="12" (input)="onNetIncomeChange($event)"
+               appCheckBlur appValidateRequired appAmountFormatMask/>
+            <div *ngIf="(netIncome.invalid && (netIncome.dirty || netIncome.touched))" class="error-msg">
+               <span>{{messages.errorMessageForAmount}}</span>
+            </div>
+         </div>
+
+         <div *ngIf='addSource' class="gd-form-row">
+            <div class="add-source">
+               <span class="add-icon" (click)='addOtherSource()'></span>
+               <span class="add-msg">{{ labels.addOthersources }}</span>
+            </div>
+         </div>
+         <div *ngIf="tooltipOptions[2].isOpen" class="show-message">
+            <div class="tooltip-part">
+               <div class="section-content">
+                  <span class="content-bold">{{labels.addOthersources}}</span>
+                  <span class="content">{{messages.addOthersourcesTip}}</span>
+               </div>
+            </div>
+            <span class="triangle">
+            </span>
+         </div>
+         <div *ngIf='otherSource' class="gd-form-row">
+            <div class="label-part">
+               <label for="other-income" class="active label-size gd-sm-label">{{labels.addOthersources}}</label>
+               <span class="tool-tip" (click)="openTooltip(tooltipOptions[2])"></span>
+            </div>
+            <input id="other-income" name="otherIncome" #otherIncome="ngModel" (focus)="onFocus()" type="text" class="validate" validateFor='number'
+               [ngModel]="creditLimitDetails.otherIncome | amountTransform" maxlength="12" (ngModelChange)="creditLimitDetails.otherIncome = $event"
+               appAmountFormatMask/>
+         </div>
+         <span class=" expenses form-head">{{labels.expenses}}</span>
+         <div *ngIf="tooltipOptions[3].isOpen" class="show-message">
+            <div class="tooltip-part">
+               <div class="section-content">
+                  <span class="content-bold">{{messages.commitments}}</span>
+                  <span class="content">{{messages.commitmentsTip}}</span>
+               </div>
+            </div>
+            <span class="triangle">
+            </span>
+         </div>
+         <div class="gd-form-row">
+            <div class="label-part">
+               <label for="commitments" class="active label-size gd-sm-label">{{labels.commitments}}</label>
+               <span class="tool-tip" (click)="openTooltip(tooltipOptions[3])"></span>
+            </div>
+            <input id="commitments" name="commitments" #commitments="ngModel" (focus)="onFocus()" type="text" class="validate" validateFor='number'
+               [ngModel]="creditLimitDetails.monthlyCommitment | amountTransform" minlength="2" maxlength="12" (ngModelChange)="creditLimitDetails.monthlyCommitment = $event"
+               appCheckBlur appValidateRequired appAmountFormatMask/>
+            <div *ngIf="(commitments.invalid && (commitments.dirty || commitments.touched))" class="error-msg">
+               <span>{{messages.errorMessageForAmount}}</span>
+            </div>
+         </div>
+         <div *ngIf="tooltipOptions[4].isOpen" class="show-message">
+            <div class="tooltip-part">
+               <div class="section-content">
+                  <span class="content-bold">{{messages.debt}}</span>
+                  <span class="content">{{messages.debtTip}}</span>
+               </div>
+            </div>
+            <span class="triangle">
+            </span>
+         </div>
+         <div class="gd-form-row">
+            <div class="label-part">
+               <label for="debt" class="active label-size gd-sm-label">{{labels.debt}}</label>
+               <span class="tool-tip" (click)="openTooltip(tooltipOptions[4])"></span>
+            </div>
+            <input id="debt" name="debt" #debt="ngModel" type="text" (focus)="onFocus()" class="validate" validateFor='number' [ngModel]="creditLimitDetails.monthlyDebt | amountTransform"
+               minlength="2" maxlength="12" (ngModelChange)="creditLimitDetails.monthlyDebt = $event" appCheckBlur appValidateRequired
+               appAmountFormatMask/>
+            <div *ngIf="(debt.invalid && (debt.dirty || debt.touched))" class="error-msg">
+               <span>{{messages.errorMessageForAmount}}</span>
+            </div>
+         </div>
+         <div class="bottom-btn">
+            <app-bottom-button [disableButton]="incomeExpenses.invalid || !isValidNetIncome" [text]="'Next'" (click)="goToDocuments(incomeExpenses.invalid)"></app-bottom-button>
+         </div>
+      </form>
+   </div>
+</section>

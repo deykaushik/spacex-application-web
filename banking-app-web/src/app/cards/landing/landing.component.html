@@ -1,0 +1,100 @@
+<div class="cards-wrapper">
+   <div *ngIf="!!accountId" class="header-container row">
+      <div class="col-xs-12">
+         <div class="back-header">
+            <a class="icon" [routerLink]="['/dashboard/account/detail',accountId]"></a>
+            <div class="page-header">
+               <p>{{ accountName }}</p>
+               <p class="account-number">{{ accountNumber }}</p>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div *ngIf="updateActionItemMessage" class="error-block-success" [class.error-message]="updateActionItemFailed">
+      <div class="icon-container">
+         <span class="success img-step-tick">
+         </span>
+      </div>
+      <div class="message">
+         {{message}}
+      </div>
+      <div class="icon-container">
+         <span class="img-step-close" (click)="closeMessageBlock()">
+         </span>
+      </div>
+   </div>
+   <div class="cards-carousel-container">
+      <div class="container">
+         <div class="row cards-row">
+            <div class="col-xs-12" *ngIf="cards.length">
+               <h2 class="card-title">{{ accountId ? 'Card Management' : 'Cards'}}</h2>
+            </div>
+         </div>
+         <div class="row" *ngIf="cards.length">
+            <div class="col-xs-12 no-padding">
+               <app-card-carousel [cards]="cards" (selected)="cards.length ===1 ?cardSelected(cards[0]): cardSelected($event)"></app-card-carousel>
+            </div>
+         </div>
+         <div class="card-options-section">
+            <div class="row" *ngIf="cards.length && selectedCard && selectedCard.nameLine.trim().length">
+               <div class="col-xs-12 hidden-xs no-padding">&nbsp;</div>
+               <div class="col-xs-12  no-padding text-center">
+                  <div class="card-message-title">
+                     This card is linked to
+                  </div>
+                  <div class="card-message text-capitalize">
+                     {{ (selectedCard && selectedCard.nameLine ? selectedCard.nameLine : '').toLowerCase() }}
+                  </div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-xs-12">
+                  <hr class="card-section-separator" />
+               </div>
+            </div>
+            <div *ngIf="!isCardActivated">
+               <app-activate-card [isCardActivated]="!isCardActivated" [card]="selectedCard" (nextClick)="activateCardMessage($event)" [plasticId]="selectedCard.plasticId"></app-activate-card>
+            </div>
+            <div class="row" *ngIf="cards.length && selectedCard?.plasticStatus !== 'Blocked'">
+               <div class="col-xs-12 hidden-xs no-padding">&nbsp;</div>
+               <div class="col-xs-12">
+                  <app-card-manage [card]="selectedCard" [otherTravelCardBlocked]="isOtherTravelCardBlocked" (statusChange)="statusUpdated($event)"></app-card-manage>
+               </div>
+               <div class="col-xs-12 hidden-xs no-padding">&nbsp;</div>
+            </div>
+            <div class="row" *ngIf="cards.length && selectedCard?.plasticStatus === 'Blocked' && !isTravelAccountCard">
+               <div class="col-xs-12 text-center">
+                  <app-card-manage-blocked [card]="selectedCard"></app-card-manage-blocked>
+               </div>
+            </div>
+         </div>
+      </div>
+      <app-colored-overlay [class.no-card-overlay-height]="!cards.length && !showLoader" [isVisible]="!cards.length && !showLoader"
+         [alternate]="false" [template]="emptyCards" [backOption]="false">
+         <ng-template #emptyCards>
+            <div *ngIf="!!accountId" class="header-container no-cards row">
+               <div class="col-xs-12">
+                  <div class="back-header">
+                     <a class="icon" [routerLink]="['/dashboard/account/detail',accountId]"></a>
+                     <div class="page-header">
+                        <p>{{ accountName }}</p>
+                        <p class="account-number">{{ accountNumber }}</p>
+                     </div>
+
+                  </div>
+               </div>
+            </div>
+            <div class="vertical-overlay-content-wrapper">
+               <div class="icon"></div>
+               <div class="content">
+                  <h6 class="para-title">You don't have any active cards</h6>
+                  <div class="top">
+                     <p>Once you've ordered and activated your cards, they'll appear here. You'll be able to manage your limits,
+                        block and replace your cards.</p>
+                  </div>
+               </div>
+            </div>
+         </ng-template>
+      </app-colored-overlay>
+   </div>
+</div>

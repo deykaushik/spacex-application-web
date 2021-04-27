@@ -1,0 +1,129 @@
+<div class="formInput">
+   <form #getIdentityForm="ngForm" class="gd-form">
+      <div class="gd-form-row">
+         <h4 class="section-title darkText">I need my Nedbank ID username.</h4>
+      </div>
+      <app-message-alert [showAlert]="serviceError != ''" [displayMessageText]="serviceError" [linkDisplayText]="errorLinkText"
+         [action]="alertAction" [alertType]="alertType" (onAlertLinkEmit)="onAlertLinkSelected($event)"></app-message-alert>
+      <div class="gd-form-row">
+         <span>Please use your ID number if you are a SA citizen.</span>
+      </div>
+      <div class="gd-form-row">
+         <div class="payment-options">
+            <div class="payment-option-box" [ngClass]="{'selected': vm.IdDetails.IdType == idTypeRsaId}" (click)="changeIdType(idTypeRsaId)"
+               (touchstart)="changeIdType(idTypeRsaId)">
+               <span class="icon id-icon" [class.selected]="vm.IdDetails.IdType == idTypeRsaId"></span>
+               <p class="text">RSA ID number</p>
+            </div>
+            <div class="payment-option-box" [ngClass]="{'selected': vm.IdDetails.IdType == idTypePassport}" (click)="changeIdType(idTypePassport)"
+               (touchstart)="changeIdType(idTypePassport)">
+               <span class="icon passport-icon" [class.selected]="vm.IdDetails.IdType == idTypePassport"></span>
+               <p class="text">Passport number</p>
+            </div>
+         </div>
+      </div>
+      <div class="top-margin50">
+         <div *ngIf="(vm.IdDetails.IdType == idTypeRsaId)">
+            <div class="gd-form-row">
+               <label for="idnumber" class="gd-sm-label">13-digit RSA ID number</label>
+               <input id="idnumber" autocomplete="off" class="validate form-element" type="tel" [(ngModel)]="vm.IdDetails.IdNumber" #idnumber="ngModel"
+                  (keypress)="onProfileKeyPress($event)" [disabled]="showLoader" [pattern]="patterns.number" name="idnumber"
+                  minlength="13" maxlength="13" required appValidateInput appValidateOnblur validateFor='number' (ngModelChange)="onInputvalueChange($event)"
+                  (blur)="onClearValidationErrors($event)" />
+               <ng-container *ngIf="idnumber.invalid && (idnumber.dirty || idnumber.touched);else checkAlphaProfileInput">
+                  <div class="error-msg">
+                     <ng-container *ngIf="idnumber.errors.required;else patternCheck">
+                        {{messages.requiredField}}
+                     </ng-container>
+                     <ng-template #patternCheck>
+                        <ng-container *ngIf="idnumber.errors.pattern;else lengthCheck">
+                           <span>Must be 13 characters.</span>
+                        </ng-container>
+                     </ng-template>
+                     <ng-template #lengthCheck>
+                        <ng-container *ngIf="idnumber.hasError('minlength') || idnumber.hasError('maxlength');else defaultError">
+                           <span>Must be 13 characters.</span>
+                        </ng-container>
+                     </ng-template>
+                     <ng-template #defaultError>Incorrect format</ng-template>
+                  </div>
+               </ng-container>
+               <ng-template #checkAlphaProfileInput>
+                  <ng-container *ngIf="!idPatternValid">
+                     <div class="error-msg">
+                        {{messages.invalidNumber}}
+                     </div>
+                  </ng-container>
+               </ng-template>
+            </div>
+         </div>
+         <div *ngIf="(vm.IdDetails.IdType == idTypePassport)">
+            <div class="gd-form-row">
+               <label for="profile" class="gd-sm-label">Passport number</label>
+               <input id="profile" autocomplete="off" class="validate form-element" type="text" [(ngModel)]="vm.IdDetails.IdNumber" #profile="ngModel"
+                  [disabled]="showLoader" name="profile" minlength="5" required appValidateInput (ngModelChange)="onInputvalueChange($event)"
+               />
+               <div *ngIf="profile.invalid && (profile.dirty || profile.touched)" class="error-msg">
+                  <ng-container *ngIf="profile.errors.required;else patternCheck">
+                     {{messages.requiredField}}
+                  </ng-container>
+                  <ng-template #patternCheck>
+                     <ng-container *ngIf="profile.errors.pattern;else lengthCheck">
+                        {{messages.invalidNumber}}
+                     </ng-container>
+                  </ng-template>
+                  <ng-template #lengthCheck>
+                     <ng-container *ngIf="profile.hasError('minlength') || profile.hasError('maxlength');else defaultError">
+                        <span>Must be 5 characters.</span>
+                     </ng-container>
+                  </ng-template>
+                  <ng-template #defaultError>Incorrect format</ng-template>
+               </div>
+            </div>
+            <ng-template #sourceListTemplate let-model="item" let-index="index" let-match="match" let-query="query">
+               <span class="country-type-ahead" [innerHtml]="model.name"></span>
+            </ng-template>
+            <div class="gd-form-row autocomplete-container login" id="country-name-list">
+               <label class="gd-sm-label">Country of issue</label>
+               <div class="search-field">
+                  <input id="source" autocomplete="off" [typeaheadMinLength]="0" type="text" class="validate" #countryRef="ngModel" [(ngModel)]="selectedCountryName"
+                     [typeahead]="countryList" [typeaheadItemTemplate]="sourceListTemplate" (typeaheadOnSelect)="selectSouceType($event)"
+                     (typeaheadOnBlur)="blurCountry($event)" (typeaheadNoResults)="noSourceResults($event)" typeaheadOptionField="name"
+                     name="name" autocomplete="off" required [typeaheadOptionsLimit]="countryList && countryList.length" />
+                  <span class="icon"></span>
+                  <div *ngIf="!isCountryOpen() && countryRef.invalid && (countryRef.dirty || countryRef.touched)" class="error-msg">
+                     <span *ngIf="countryRef.errors.required"> Country is required.</span>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="gd-form-row">
+            <label class="gd-sm-label active" for="mobile_number">SA cellphone number</label>
+            <input id="mobile_number" autocomplete="off" type="tel" class="validate" #mobileNumberRef="ngModel" [(ngModel)]="vm.MobileNumber"
+               name="mobileNumber" (keypress)="onCellphonePress($event)" required [pattern]="patterns.mobile" appValidateOnblur
+               appValidateInput validateFor='mobile' (ngModelChange)="onInputvalueChange($event)" (blur)="onClearValidationErrors($event)"
+            />
+            <ng-container *ngIf="mobileNumberRef.invalid && (mobileNumberRef.dirty || mobileNumberRef.touched); else checkAlphaProfileInput">
+               <div class="error-msg">
+                  <span *ngIf="mobileNumberRef.errors.required">
+                        Cellphone number is required.
+                     </span>
+                  <span *ngIf="mobileNumberRef.errors.pattern">
+                        {{messages.cellphoneFormatMessage}}
+                     </span>
+               </div>
+            </ng-container>
+            <ng-template #checkAlphaProfileInput>
+               <ng-container *ngIf="!phonePatternValid">
+                  <div class="error-msg">
+                     {{messages.invalidNumber}}
+                  </div>
+               </ng-container>
+            </ng-template>
+         </div>
+      </div>
+      <div class="gd-form-row">
+         <app-bottom-button [text]="'Next'" [disableButton]='!this.isValid' (clickEmitter)="navigateNext($event)" [showLoader]='showLoader'></app-bottom-button>
+      </div>
+   </form>
+</div>

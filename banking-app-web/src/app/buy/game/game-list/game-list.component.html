@@ -1,0 +1,35 @@
+<div class="row" *ngIf="skeletonMode" [innerHtml]="''| skeletonLoader:skeletonMode"></div>
+<div class="row" *ngIf="!skeletonMode">
+   <div class="col-xs-12">
+      <div class="lotto-header"><a class="icon" [routerLink]="[winningNumberBack]"></a>
+         <span><b>{{winningNumberHeadTitle}}</b></span>
+      </div>
+   </div>
+</div>
+
+<div class="row">
+   <table class="table responsive">
+      <thead *ngIf="skeletonMode" [innerHtml]="''| skeletonLoader:skeletonMode"></thead>
+      <thead *ngIf="!skeletonMode">
+         <tr class="winning-head">
+            <th class="col-sm-4 ">{{winningNumbersLabels.winningNumbersDrawDate}}</th>
+            <th class="col-sm-4 ">{{winningNumbersLabels.lottoGame}}</th>
+            <th class="col-sm-4 ">{{winningNumbersLabels.winningNumber}}</th>
+         </tr>
+      </thead>
+
+      <tbody *ngIf="skeletonMode" [innerHtml]="''| skeletonLoader:skeletonMode"></tbody>
+      <tbody *ngIf="!skeletonMode">
+         <tr *ngFor="let numberInfo of winningNumbersInfo"  [routerLink]="['/game/drawdetail', numberInfo?.drawName, numberInfo.drawNumber]">
+            <td data-th="Draw date">{{ numberInfo?.drawDate | date : formats.ddMMYYYY }}</td>
+            <td class="game-font" data-th="Game" *ngIf="setDrawName(numberInfo?.drawName)">{{gameName}}</td>
+            <td data-th="Winning numbers">
+               <ng-container *ngFor="let numbersPlayed of numberInfo.ballDetails; let i = index;">
+                  <span class="plus-margin" *ngIf="numbersPlayed.sequenceNumber === winningNumbersLabels.winningNumbersBonusBall || numbersPlayed.sequenceNumber === winningNumbersLabels.powerballTitle">+</span>
+                  <li class="noCircle" [ngClass]="getBallClass(numbersPlayed.ballNumber,numberInfo?.drawName,i)"><span>{{numbersPlayed.ballNumber}}</span></li>
+               </ng-container>
+            </td>
+            </tr>
+      </tbody>
+   </table>
+</div>

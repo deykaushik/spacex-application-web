@@ -1,0 +1,42 @@
+<app-message-alert [showAlert]="isNotification" [displayMessageText]="visibilityError" [linkDisplayText]="''" [action]="alertAction"
+   [alertType]="alertType" (onAlertLinkEmit)="onAlertLinkSelected($event)"></app-message-alert>
+<div class="icon-field profile-container" *ngIf="accountsShowHideFeature">
+   <div class="icon-field" [class.message-enable]="isNotification && notificationType === Constants?.visibilityNotification.success">
+      <h4 class="section-title profile-limit-header">{{labels.linkAccountLabels.hideAndShowAccounts}}</h4>
+      <p class="linked-account-message">{{labels.linkAccountLabels.hideAndShowAccountSubHeading}}</p>
+   </div>
+   <div class="widget-container">
+      <div class="limit-widget" *ngIf="skeletonMode" [ngClass]="getAccountTypeStyle(defaultLabel)">
+         <div class="account-details">
+            <div class="account-name-and-number">
+               <div class="account-name" [innerHtml]="'' | skeletonLoader:skeletonMode"></div>
+               <div class="account-number" [innerHtml]="'' | skeletonLoader:skeletonMode"></div>
+            </div>
+         </div>
+      </div>
+      <div *ngIf="accountsShowHide?.length === 0" class="limit-widget no-records-found">
+         {{labels.noRecordsFound}}
+      </div>
+      <div *ngFor="let linkedAccount of accountsShowHide; let currentIndex = index">
+         <div class="limit-widget" [ngClass]="getAccountTypeStyle(linkedAccount.accountType)">
+            <div class="account-details">
+               <div class="account-name-and-number">
+                  <div class="account-name">{{linkedAccount.accountName}}</div>
+                  <div class="account-number">{{linkedAccount.accountNumber}}</div>
+               </div>
+               <div class="account-toggle">
+                  <span class="toggle-label-status">Show</span>
+                  <div class="freeze-toggle">
+                     <label class="switch inline-block minimum-left-spacing">
+                        <input type="checkbox" (change)="saveAccountVisibility(linkedAccount)" [(ngModel)]="linkedAccount.enabled"
+                           [disabled]="linkedAccount?.isFreezed" />
+                        <div class="slider round inline-block"></div>
+                     </label>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="separator"></div>
+</div>

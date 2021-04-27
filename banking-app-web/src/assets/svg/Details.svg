@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="28px" height="30px" viewBox="0 0 28 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>Details</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="80px/Details" transform="translate(-15.000000, -11.000000)">
+            <g id="Details" transform="translate(15.000000, 11.000000)">
+                <path d="M5.649125,4.99475 L5.649125,1.638125 C5.649125,1.092625 6.087375,0.631125 6.633125,0.631125 L21.899,0.631125 C22.1585,0.631125 22.279125,0.742875 22.463625,0.92475 L26.604125,5.010625 C26.792,5.196 26.899,5.366875 26.899,5.631125 L26.899,28.38125 C26.899,28.927 26.4565,29.381125 25.909625,29.381125 L6.633125,29.381125 C6.087375,29.381125 5.649125,28.927 5.649125,28.38125 L5.649125,25.054625" id="Shape" stroke="#666666"></path>
+                <circle id="Oval" stroke="#666666" cx="11.87025" cy="14.306" r="6.16825"></circle>
+                <path d="M7.51125,18.664875 L0.720625,25.455625" id="Shape" stroke="#666666"></path>
+                <rect id="Rectangle-path" x="0" y="0.000125" width="30" height="30"></rect>
+                <polyline id="Shape" stroke="#666666" points="21.899 0.631125 21.899 5.631125 26.899 5.631125"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>

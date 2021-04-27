@@ -1,0 +1,57 @@
+<section class="postal-container">
+   <div class="gd-form-row">
+      <div class="active gd-sm-label">
+         <span>{{labels.postalAddress}}</span>
+      </div>
+      <div *ngIf="statementPreferencesDetails && statementPreferencesDetails.postalAddress && statementPreferencesDetails.postalAddress.addrLines 
+         && statementPreferencesDetails.postalAddress.addrLines.length > 0" class="postal-address-container">
+         <span class="icon glyphicon glyphicon-home"></span>
+         <div class="postal-address" *ngFor="let address of statementPreferencesDetails.postalAddress.addrLines">
+            <span>{{ address | titlecase}}</span>
+         </div>
+         <div class="postal-address">
+            <span>{{ statementPreferencesDetails.postalAddress.city | titlecase}}</span>
+         </div>
+         <div class="postal-address">
+            <span>{{ statementPreferencesDetails.postalAddress.postalCd | titlecase }}</span>
+         </div>
+      </div>
+   </div>
+
+   <div class="gd-form-row" *ngIf="isMfc">
+      <a class="edit-adress" (click)="openEditAddress()">{{ labels.editAddress }}</a>
+   </div>
+
+   <div class="gd-form-row" *ngIf="!isMfc">
+      <div class="info-container">
+        <span class="info-icon"></span>
+         <div class="info-msg">
+            <span>{{informations.postalDisclaimer}}</span>
+            <span class="call-center-number">{{informations.callCenterNumber}}</span>
+         </div>
+      </div>
+   </div>
+   <div class="gd-form-row">
+      <span class="frequency-label"> {{ labels.statementFrequency }}</span>
+      <span class="frequency">{{statementPreferencesDetails.frequency | titlecase}}</span>
+   </div>
+   <div class="gd-form-row" *ngIf="isFrequencyInfo || isdebitOrderPayer">
+      <div class="info-container">
+        <span class="info-icon"></span>
+         <div class="info-msg">
+            <span *ngIf="isFrequencyInfo">{{informations.frequencyDisclaimer}}</span>
+            <span *ngIf="isdebitOrderPayer">{{informations.frequencyDisclaimerMFCOld}}</span>
+            <span *ngIf="isFrequencyInfo" class="call-center-number">{{informations.callCenterNumber}}</span>
+            <span *ngIf="isdebitOrderPayer" class="call-center-number">{{informations.callCenterNumberMFC}}</span>
+         </div>
+      </div>
+   </div>
+   <div class="gd-form-row button-update">
+      <app-bottom-button [text]="buttonName" [class.disable]="isDisable()" [disableButton]="isDisable()" (click)="updateStatementPreferences()"></app-bottom-button>
+   </div>
+</section>
+<section *ngIf="isEditAddress">
+   <app-edit-postal-address [isEditAddress]="isEditAddress" (changeIsEditAddress)="closeEditAddress($event)" (changeStatementPreferencesDetails)="updateStatementPreferencesPostalAddress($event)"
+      [statementPreferencesDetails]="statementPreferencesDetails">
+   </app-edit-postal-address>
+</section>

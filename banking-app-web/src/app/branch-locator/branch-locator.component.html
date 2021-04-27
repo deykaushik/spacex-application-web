@@ -1,0 +1,92 @@
+﻿<div class="branch-locator">
+   <ng-template #sourceListTemplate let-model="item" let-index="index" let-match="match" let-query="query">
+      <span [innerHtml]="model.address | highlight:query:'highlightText'"></span>
+      <br/>
+      <span [innerHtml]="model.suburb | highlight:query:'highlightText'"></span>
+      <span>,</span>
+      <span [innerHtml]="model.province | highlight:query:'highlightText'"></span>
+      <span>,</span>
+      <span [innerHtml]="'South Africa'"></span>
+   </ng-template>
+
+   <div class="container control-container">
+      <div class="row">
+         <div class="col-xs-12 title">
+            ATM and branch locator
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-xs-12">&nbsp;</div>
+      </div>
+      <div class="row">
+         <div class="col-xs-12 col-sm-6">
+            <label class="gd-sm-label">ATM or Branch</label>
+            <div class="gd-basic-dropdown" dropdown>
+               <div dropdownToggle class="dropdown-place" id="locator-typ-drpdwn">
+                  <div class="text">
+                     {{ selectedBranchOption.text }}
+                  </div>
+                  <div class="icon">
+                     <span class="caret"></span>
+                  </div>
+               </div>
+               <ul *dropdownMenu class="dropdown-menu" role="menu">
+                  <li [class.active]="branchoption.value.text == selectedBranchOption.text" role="menuitem" *ngFor="let branchoption of branchLocatorOptions"
+                     (click)="onBranchLocatorOptionChanged(branchoption.value)">
+                     {{branchoption.value.text}}
+                  </li>
+               </ul>
+            </div>
+         </div>
+         <div class="col-xs-12 col-sm-6 ">
+            <label class="gd-sm-label">Location</label>
+            <div class="autocomplete-container location clear-field-block">
+               <input id="source" autocomplete="off" placeholder="Search" type="text" class="validate" #branchNameRef="ngModel" [(ngModel)]="address"
+                  [typeahead]="cloneSource" [typeaheadItemTemplate]="sourceListTemplate" (typeaheadOnSelect)="selectSouceType($event)"
+                  (typeaheadOnBlur)="blurSource($event)" (typeaheadNoResults)="noSourceResults($event)" typeaheadOptionField="fullAddress"
+                  name="name" autocomplete="off" appClearField [typeaheadOptionsLimit]="cloneSource && cloneSource.length" />
+            </div>
+         </div>
+      </div>
+   </div>
+   <agm-map (zoomChange)="zoom=$event" class="margin-full-width" [scrollwheel]="false" [latitude]="currentPosition.latitude" [longitude]="currentPosition.longitude" [zoom]="zoom">
+      <agm-marker-cluster [minimumClusterSize]="4" imagePath="assets/png/gd-round" [styles]="markerClusterStyle" *ngIf="!isBranch">
+         <agm-marker *ngFor="let marker of atmMarkers" [visible]="marker.isVisible" [latitude]="marker.latitude" [longitude]="marker.longitude"
+            iconUrl="assets/png/NedbankPin.png">
+            <agm-snazzy-info-window maxWidth="300" closeWhenOthersOpen="true" closeOnMapClick="true" placement="right">
+               <ng-template>
+                  <div class="info-window">
+                     <strong>{{marker.name}}</strong>
+                     <br />
+                     <span>{{marker.address}}</span>
+                     <br />
+                     <br />
+                     <a target="_blank" id="map-marker" href="http://maps.google.com/?q={{marker.latitude}},{{marker.longitude}}">
+                        <span> View on Google Maps </span>
+                     </a>
+                  </div>
+               </ng-template>
+            </agm-snazzy-info-window>
+         </agm-marker>
+      </agm-marker-cluster>
+      <agm-marker-cluster [minimumClusterSize]="4" imagePath="assets/png/gd-round" [styles]="markerClusterStyle" *ngIf="isBranch">
+         <agm-marker *ngFor="let marker of branchMarkers" [visible]="marker.isVisible" [latitude]="marker.latitude" [longitude]="marker.longitude"
+            iconUrl="assets/png/NedbankPin.png">
+            <agm-snazzy-info-window maxWidth="300" closeWhenOthersOpen="true" closeOnMapClick="true" placement="right">
+               <ng-template>
+                  <div class="info-window">
+                     <strong>{{marker.name}}</strong>
+                     <br />
+                     <span>{{marker.address}}</span>
+                     <br />
+                     <br />
+                     <a target="_blank" id="map-marker" href="http://maps.google.com/?q={{marker.latitude}},{{marker.longitude}}">
+                        <span> View on Google Maps </span>
+                     </a>
+                  </div>
+               </ng-template>
+            </agm-snazzy-info-window>
+         </agm-marker>
+      </agm-marker-cluster>
+   </agm-map>
+</div>

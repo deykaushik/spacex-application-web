@@ -1,0 +1,70 @@
+﻿<div class="buy-review">
+   <table class="tabular-data-col-2">
+      <tbody>
+         <tr>
+            <td>{{labels.buyLabels.racipientName}}</td>
+            <td><span class='capitalize'>{{buyToVm.recipientName + ' - '+ buyToVm.mobileNumber}}</span></td>
+         </tr>
+         <tr>
+            <td>{{labels.buyLabels.serviceProvider}}</td>
+            <td>{{buyToVm.serviceProviderName}}</td>
+         </tr>
+         <tr>
+            <td>{{labels.amount}}</td>
+            <td>{{buyAmountVm?.displayBundle}}</td>
+         </tr>
+         <tr *ngIf="buyAmountVm?.recurrenceFrequency">
+            <td>{{labels.transferRepeatPayment}}</td>
+            <td class="vertical-bottom">{{buyAmountVm?.repeatStatusText}}</td>
+         </tr>
+
+         <tr>
+            <td colspan="2">&nbsp;</td>
+         </tr>
+         <tr>
+            <td>{{labels.buyLabels.fromAccount}}</td>
+            <td>
+               <span class='capitalize'>{{accountNickName}}</span>
+            </td>
+         </tr>
+         <tr>
+            <td colspan="2">&nbsp;</td>
+         </tr>
+         <tr *ngIf='buyForVm?.notificationType!="None"'>
+            <td>{{labels.buyLabels.notify}}</td>
+            <td>{{buyForVm?.notificationType +" - "+ buyForVm?.notificationInput}}</td>
+         </tr>
+         <tr>
+            <td>{{labels.yourReference}}:</td>
+            <td><span class='capitalize'>{{buyForVm?.yourReference}}</span></td>
+         </tr>
+         <tr>
+            <td colspan="2">&nbsp;</td>
+         </tr>
+         <tr>
+            <td>{{labels.paymentDate}}:</td>
+            <td>{{buyAmountVm?.startDate|date:dateFormat}}</td>
+         </tr>
+         <tr>
+            <td colspan="2">&nbsp;</td>
+         </tr>
+         <tr *ngIf="(!this.buyToVm.isRecipientPicked)">
+            <td class="align-vertical-middle">
+               <span>{{labels.saveRecipient}}</span>
+            </td>
+            <td>
+               <label class="switch inline-block minimum-left-spacing">
+                  <input type="checkbox" [(ngModel)]="vm.isSaveBeneficiary" [checked]="vm.isSaveBeneficiary" (change)="sendEvent('buy_prepaid_review_save_recipient_toggle_on',null,vm.isSaveBeneficiary ? 'on' : 'off')">
+               <div class="slider round inline-block"></div>
+               </label>
+            </td>
+         </tr>
+      </tbody>
+   </table>
+</div>
+
+<div class="gd-error">
+   <span>
+      {{ buyError }}
+   </span>
+</div>

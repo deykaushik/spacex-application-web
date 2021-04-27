@@ -1,0 +1,35 @@
+<form #getPaymentDetailsForm="ngForm" class="gd-form" novalidate>
+   <div class="gd-form-row">
+      <div class="field-block">
+         <label class="gd-sm-label" for="currencies">{{labels.fundTripLabels.payingInZarText}}</label>
+        <input appFocus id="amount" [amount]="true" autocomplete="off" [class.warning]="vm.amount>transactionLimit"
+            ngControl="amount" #amount="ngModel" name="amount" class="validate" [disabled]="true"
+               [ngModel]="vm.amount | amountTransform" (ngModelChange)="onAmountChange($event)"
+               [class.error]="!(vm.amount > 0) && (amount.dirty || amount.touched)"
+               type="text" appAmountFormatMask appValidateRequired appCheckBlur/>
+      </div>
+      <div class="transfer-hint" *ngIf="!(vm.amount>0)||vm.amount<=transactionLimit">
+            {{labels.fundTripLabels.RandCurrencySymbol}}{{transactionLimit}} {{labels.fundTripLabels.dailyLimitText}}.
+      </div>
+      <div *ngIf="vm.amount>transactionLimit" class="error-msg">
+            {{labels.fundTripLabels.exceedsDailyLimitText}}.
+      </div>
+   </div>
+   <div class="gd-form-row icon-link">
+      <app-account-list (onAccountSelection)="onAccountSelection($event);" [insufficientFunds]="insufficientFunds" [title]=" 'From account' " [accounts]="accounts" [selectedAccount]="selectedAccount" >
+      </app-account-list>
+   </div>
+   <div class="gd-form-row">
+         <label class="gd-lg-label" for="currencies">{{labels.fundTripLabels.paymentForText}}</label>
+      <div class="field-block">
+         <label class="gd-sm-label" for="currencies">{{labels.fundTripLabels.yourReference}}</label>
+         <input id="reference" autocomplete="off"
+            ngControl="reference" class="validate" [maxlength]="referenceMaxLength" (keypress)="omitSpecialChar($event)"
+            [(ngModel)]="vm.reference" name="reference" #reference="ngModel" 
+             type="text" appValidateRequired appValidateOnblur appCheckBlur/>
+         <div *ngIf="reference.invalid && (reference.dirty || reference.touched) && reference.isBlurred" class="error-msg">
+            {{labels.fundTripLabels.yourReferenceErrorMessage}}.
+         </div>
+      </div>
+   </div>
+   </form>

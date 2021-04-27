@@ -1,0 +1,33 @@
+﻿@import '../../../../styles/_lotto-numbers.scss';
+@import '../../../../styles/_base.scss';
+@import '../../../../styles/_mixins.scss';
+
+$svg-path: './../../../../assets/svg/';
+$game-status-bg: $container-bg;
+
+.margin-bottom-30 {
+   margin-bottom: 30px;
+}
+
+.line-padding {
+    padding: 8px;
+}
+
+.game-status{
+   background: $game-status-bg;
+   @include main-content();
+}
+.download {
+   color: $text-color-link;
+   cursor: pointer;
+
+   .icon, .text {
+      display: inline-block;
+      vertical-align: middle;
+   }
+
+   .icon {
+      @include svg-image-full-path($svg-path,'download', 100%, 100%);
+      width: 30px;
+   }
+}

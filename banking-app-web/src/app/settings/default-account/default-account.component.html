@@ -1,0 +1,90 @@
+<div class="profile-container" [class.is-skeleton-loading]='skeletonMode'>
+   <div *ngIf="showSuccessMsg" aria-live="assertive" role="alert">
+      <span id="msg" class="visuallyhidden">{{successAriaMessage}}</span>
+      <div class="icon-field link-response-msg success-msg" aria-hidden="true">
+         <div class="left">
+            <span class="msg-circle">✓</span>
+         </div>
+         <div class="center">
+            <div>{{labels.defaultAccount.successMessage}}</div>
+            <div class="link" routerLink="/">Go to overview</div>
+         </div>
+         <div class="right" (click)="showSuccessMsg = false">
+            X
+         </div>
+      </div>
+   </div>
+   <div *ngIf="showErrorMsg" aria-live="assertive" role="alert">
+      <span id="msg" class="visuallyhidden">{{errorAriaMessage}}</span>
+      <div class="icon-field link-response-msg error-msg" aria-hidden="true">
+         <div class="left">
+            <span class="msg-circle">X</span>
+         </div>
+         <div class="center">
+            <div>{{labels.defaultAccount.errorMessage}}</div>
+            <div class="link" routerLink="/">Go to overview</div>
+         </div>
+         <div class="right" (click)="showErrorMsg = false">
+            X
+         </div>
+      </div>
+   </div>
+   <div class="container-padding">
+      <div class="icon-field">
+         <h4 class="section-title profile-limit-header">{{labels.defaultAccount.alreadyDefaulAccountsHeading}}</h4>
+         <p class="linked-account-message">{{labels.defaultAccount.alreadyDefaultAccountSubHeading}}</p>
+      </div>
+      <div class="widget-container">
+         <div *ngIf="!selectedDefaultAccount" class="limit-widget no-records-found no-border">
+            {{labels.defaultAccount.nodefaultMessage}}
+         </div>
+         <div *ngIf="selectedDefaultAccount">
+            <div class="limit-widget" [class.no-border]="isSettingDefault" [ngClass]="getAccountTypeStyle(selectedDefaultAccount?.AccountType)">
+               <div class="pull-left">
+                  <app-radio-button-list [radioList]="selectedDefaultAccount.radioList" [selectedValue]="selectedDefaultAccount.AccountNumber"
+                     [groupName]="'group2'">
+                  </app-radio-button-list>
+               </div>
+               <div class="content">
+                  <div class="account-name" [innerHtml]="selectedDefaultAccount?.AccountName | skeletonLoader:skeletonMode"></div>
+                  <div class="account-number" [innerHtml]="selectedDefaultAccount?.AccountNumber | skeletonLoader:skeletonMode"></div>
+               </div>
+               <app-spinner class="widget-loader" *ngIf="isSettingDefault"></app-spinner>
+               <div *ngIf="isSettingDefault" class="overlay-loader">
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="separator"></div>
+      <div class="icon-field">
+         <h4 class="section-title profile-limit-header">{{labels.defaultAccount.eligibleAccountsHeading}}</h4>
+         <p class="linked-account-message">{{labels.defaultAccount.eligibleAccountsSubHeading}}</p>
+      </div>
+      <div class="widget-container">
+         <div *ngIf="eligibleAccounts?.length === 0" class="limit-widget no-records-found no-border">
+            {{labels.defaultAccount.noRecordsFound}}
+         </div>
+         <div *ngIf="eligibleAccounts?.length > 0">
+            <div *ngFor="let eligibleAccount of eligibleAccounts;">
+               <div class="limit-widget linkable-account-card" (click)="onAccountSelect(eligibleAccount)" [ngClass]="getAccountTypeStyle(eligibleAccount?.AccountType)">
+                  <div class="pull-left">
+                     <app-radio-button-list [radioList]="eligibleAccount.radioList" [selectedValue]="accountsToSetDefault?.AccountNumber"
+                        [groupName]="'group1'">
+                     </app-radio-button-list>
+                  </div>
+                  <div class="content">
+                     <div class="account-name" [innerHtml]="eligibleAccount?.AccountName | skeletonLoader:skeletonMode"></div>
+                     <div class="account-number" [innerHtml]="eligibleAccount?.AccountNumber | skeletonLoader:skeletonMode"></div>
+                  </div>
+                  <div *ngIf="isSettingDefault" class="overlay-loader opacity-5">
+                  </div>
+               </div>
+            </div>
+            <div class="limit-widget link-button no-border">
+               <app-bottom-button (clickEmitter)="setDefaultAccount()" [disableButton]="!accountsToSetDefault || isSettingDefault || skeletonMode"
+                  [showLoader]='isSettingDefault' [text]='labels.defaultAccount.defaultButtonText'></app-bottom-button>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

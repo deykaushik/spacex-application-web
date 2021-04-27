@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 25 27" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>24px add recipient</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Recipients-management---ideal-flow" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="1440-Add-recipient-1" transform="translate(-1149.000000, -137.000000)" stroke="#006341">
+            <g id="Group-2-Copy" transform="translate(1150.000000, 138.000000)">
+                <g id="24px-add-recipient">
+                    <g id="Group">
+                        <path d="M10.3409091,14.5731056 C7.09616162,14.5731056 4.21794192,15.2971749 2.32670455,15.9270472 C0.930681818,16.3934931 0,17.6929592 0,19.1490422 L0,23.652345 C0,23.652345 11.4416414,23.652345 11.489899,23.652345" id="Shape"></path>
+                        <path d="M10.5597643,13.9245885 L10.5597643,13.9245885 C7.3874032,13.9245885 4.81481481,10.2486315 4.81481481,7.115159 L4.81481481,5.98025408 C4.81481481,2.8467816 7.3874032,0.305729488 10.5597643,0.305729488 L10.5597643,0.305729488 C13.7321254,0.305729488 16.3047138,2.8467816 16.3047138,5.98025408 L16.3047138,7.115159 C16.3047138,10.2486315 13.7321254,13.9245885 10.5597643,13.9245885 Z" id="Shape" stroke-linecap="square"></path>
+                        <path d="M19.2592593,18.1399496 L19.2592593,24.9493791" id="Shape" stroke-linecap="square"></path>
+                        <path d="M15.6481481,21.7067937 L22.5420875,21.7067937" id="Shape" stroke-linecap="square"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

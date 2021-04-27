@@ -1,0 +1,30 @@
+@import './../../../styles/_mixins.scss';
+@import './../../../styles/_base.scss';
+
+.overlay-template {
+   .para-title{
+       color: $color-overlay;
+   }
+   .content{
+       margin-bottom: 20px;
+   }
+}
+.vertical-overlay-content-wrapper {
+   .icon {
+       @include svg-image('PayIcon-grey');
+       width: 100px;
+    }
+}
+
+@media (min-width: $media-sm) {
+   .overlay-template{
+       @include flex(1);
+       max-width: 700px;
+       .para-title{
+           font-size: $section-title-size;
+       }
+       .content{
+           margin-bottom: 20px;
+       }
+   }
+}

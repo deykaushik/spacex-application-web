@@ -1,0 +1,142 @@
+@import "./../../../../styles/_base.scss";
+@import "./../../../../styles/_mixins.scss";
+$svg-relative-part: "./../../../../assets/svg";
+$phone: 'phone';
+$chat-conversation: 'chat-conversation';
+$font-weight: 500;
+$line-height-header: 1.25;
+$line-height-number: 1.38;
+.success-page-container {
+   .success-wrapper {
+      .contact-no {
+         @include flexbox();
+         @include flex-direction(row);
+         margin: 15px 0 60px 15px;
+         .cell-no {
+            line-height: $line-height-number;
+            letter-spacing: 0.2px;
+            color: $text-color-primary;
+         }
+      }
+      .contact-us {
+         .contact-us-title {
+            font-size: $section-title-size;
+            color: $text-color-secondary;
+            font-family: $font-markpro-medium;
+            font-weight: $font-weight;
+         }
+      }
+      .btn-div {
+         margin-top: 60px;
+         margin-bottom: 30px;
+      }
+      .header-title {
+         font-size: $main-title-size-mob;
+         font-family: $font-markpro-medium;
+         color: $text-color-secondary;
+         line-height: $line-height-header;
+      }
+      .header-msg {
+         font-size: $font-md;
+         font-family: $font-markpro;
+         color: $text-color-primary;
+         margin-top: 30px;
+      }
+      .footer-msg {
+         visibility: hidden;
+      }
+      .what-happens-col-header {
+         position: relative;
+         @include flexbox();
+         @include flex-direction(row);
+      }
+   }
+}
+@media (min-width: $media-xxs) {
+   .success-page-container {
+      .success-wrapper {
+         padding: 0;
+         .what-happens-col-header {
+            margin-left: 15px;
+            .chat-icon {
+               @include svg-image-full-path($svg-relative-part, $chat-conversation, 55px, 55px);
+            }
+            .info {
+               margin-left: 20px;
+               width: 70%;
+            }
+         }
+         .contact-no {
+            margin: 30px 0 0 4px;
+            .phone-icon {
+               @include svg-image-full-path($svg-relative-part, $phone , 42px, 41px);
+            }
+            .cell-no{
+               margin: 0 26px;
+            }
+         }
+      }
+   }
+}
+@media (min-width: $media-sm) {
+   .success-page-container {
+      .success-wrapper {
+         padding: 60px 80px;
+         .contact-no {
+            margin: 30px 0 0 4px;
+         }
+         .btn-div {
+            margin-bottom: 199px;
+         }
+         .header-title {
+            font-size: $main-title-size;
+            line-height: 1.33;
+         }
+         .header-msg {
+            margin-top: 30px;
+         }
+         .footer-msg {
+            font-size: $section-title-size;
+            color: $text-color-secondary;
+            font-family: $font-markpro-medium;
+            margin-top: 60px;
+            visibility: visible;
+         }
+         .notification-content {
+            margin-bottom: 60px;
+            .what-happens-col-header {
+               margin-top: 30px;
+               .chat-icon {
+                  margin: 0;
+                  width: 40px;
+               }
+               .info {
+                  width: 300px;
+               }
+            }
+         }
+      }
+   }
+}
+@media (min-width: $media-xs-up) {
+   .success-page-container {
+      .success-wrapper {
+         .notification-content {
+            margin-bottom: 60px;
+            .what-happens-col-header {
+               .chat-icon {
+                  @include svg-image-full-path($svg-relative-part, $chat-conversation, 40px, 40px);
+                  margin: 15px 0 0;
+                  width: 40px;
+               }
+            }
+         }
+         .contact-no {
+            margin: 30px 0 0 4px;
+            .phone-icon {
+               @include svg-image-full-path($svg-relative-part, $phone , 20px, 20px);
+            }
+         }
+      }
+   }
+}

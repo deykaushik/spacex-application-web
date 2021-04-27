@@ -1,0 +1,95 @@
+<div class="account-form">
+   <div class="header">
+      {{openAccountMessages.yourAccount}} {{productName}}
+   </div>
+   <div class="sub-header">
+      {{openAccountMessages.interestDetails}}
+   </div>
+   <div class="alert-msg" *ngIf="showAlert">
+      <span class="note">{{openAccountMessages.interestRate + interestRate}}%</span>
+      <div class="text-msg">
+         <span class="text-header">{{openAccountMessages.interestValidToday}}</span>
+         <span>{{openAccountMessages.moreMoney}}</span>
+      </div>
+   </div>
+   <form #form="ngForm">
+      <div class="form-group" *ngIf="!isNoticeDeposit">
+         <label class="withdraw-lebel">{{labels.interestDuration}}</label>
+         <div class="gd-basic-dropdown investment-select-box" tabindex="0" dropdown>
+            <div dropdownToggle class="dropdown-place">
+               <div class="text">
+                  {{selectedTerm}}
+               </div>
+               <div class="icon">
+                  <span class="caret"></span>
+               </div>
+            </div>
+            <ul class="dropdown-menu dropdown-height">
+               <li *ngFor="let account of accountDetail" (click)="onAccountChanged(account)">
+                  <span> {{account}} </span>
+               </li>
+            </ul>
+         </div>
+      </div>
+      <div class="form-group">
+         <span class="withdraw-lebel">{{labels.payInterest}}</span>
+         <div class="gd-basic-dropdown investment-select-box" tabindex="0" dropdown>
+            <div dropdownToggle class="dropdown-place">
+               <div class="text">
+                  {{selectAccount}}
+               </div>
+               <div class="icon">
+                  <span class="caret"></span>
+               </div>
+            </div>
+            <ul class="dropdown-menu dropdown-height">
+               <li *ngFor="let account of allAccountsDetails" (click)="onAccountSelect(account)">
+                  <span *ngIf="account.accountNumber; else investmentName"> {{account.nickname + openAccountSymbols.hyphen + account.accountNumber}} </span>
+                  <ng-template #investmentName>
+                     <span> {{account.nickname}}</span>
+                  </ng-template>
+               </li>
+            </ul>
+         </div>
+      </div>
+      <div class="form-group" *ngIf="(isNoticeDeposit || showDay)">
+         <label class="withdraw-lebel">{{labels.receiveInterestDay}}</label>
+         <div class="month-duration">
+            <div class="input-group">
+               <span class="input-group-btn">
+                  <button type="button " class="btn btn-success btn-number counter-btn"
+                     data-type="minus" (click)= "decreaseDay()" [disabled]="!isDecrement">
+                     <span class="glyphicon glyphicon-minus"></span>
+               </button>
+               </span>
+               <input type="number" id="quantity" name="quantity" class="form-control input-number" [(ngModel)]="selectedDay" min="1" max="31"
+                  (ngModelChange)="onDayChange(selectedDay)">
+               <span class="input-group-btn">
+                  <button type="button" class="btn btn-success btn-number counter-btn"
+                     data-type="plus" (click)= "increaseDay()" [disabled]="!isIncrement">
+                        <span class="glyphicon glyphicon-plus"></span>
+               </button>
+               </span>
+            </div>
+         </div>
+         <label class="day-info" [class.error-msg]="!isValidDay">{{labels.selectDay}}</label>
+      </div>
+      <div class="alert-msg footer-alert-msg" *ngIf="(!isNoticeDeposit && note)">
+         <p class="note">{{openAccountMessages.noteHeader}}</p>
+         <div class="text-msg">
+            <p>
+               {{openAccountMessages.receiveInterestNote}} {{investmentEndDate | date:'dd MMM yyyy'}}.
+            </p>
+         </div>
+      </div>
+      <div class="account-btn">
+         <button class="gd-primary-btn next" [disabled]="!isValidData" [class.btn-disabled]="!isValidData" (click)="onSubmit()">{{labels.next}}</button>
+         <button class=" gd-primary-btn back" (click)="back()">{{labels.back}}</button>
+      </div>
+   </form>
+   <section class="loader-mask" *ngIf="showLoader">
+      <div id="loaders-spinner" class="loader-spinner">
+         <app-spinner [color]="'green'"></app-spinner>
+      </div>
+   </section>
+</div>

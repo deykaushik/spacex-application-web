@@ -1,0 +1,18 @@
+﻿<swiper class="swiper" [config]="carouselConfig" #usefulSwiper>
+    <div class="swiper-wrapper">
+        <div class="swiper-slide" *ngFor="let card of carouselCards; let i = index;" [ngClass]="{ 'active' : activeSlide === i, 'previous': i === activeSlide - 1, 'next': i === activeSlide + 1 }">
+            <app-card  [card]="card" [isActive]="activeSlide === i" [toReset]="resetCards" [ngClass]="{
+          'card-container': 1,
+          'active-card' : activeSlide === i,
+          'previous-card': i === activeSlide - 1,
+          'next-card': i === activeSlide + 1 ,
+          'hide-card':!( activeSlide === i ||i === activeSlide - 1||i === activeSlide + 1),
+          'initial-card':(i== 0 && activeSlide=== i)}">
+       </app-card>
+    </div>
+    </div>
+      <div class="swiper-pagination" *ngIf="(carouselCards&&carouselCards.length>1)"></div>
+      <div class="rightRs swiper-button-next"><div class="csright"></div></div>
+      <div class="leftRs swiper-button-prev"><div class="csleft"></div></div>
+  </swiper>
+  

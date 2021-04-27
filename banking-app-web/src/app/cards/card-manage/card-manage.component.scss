@@ -1,0 +1,124 @@
+﻿@import './../../../styles/_base.scss';
+@import './../../../styles/_mixins.scss';
+$svg-path: './../../../assets/svg';
+table {
+   width: 100%;
+   tr {
+      th {
+         padding: 10px 0;
+         object-fit: contain;
+         font-size: $para-title-size;
+         font-weight: $weight-bold;
+         text-align: left;
+         color: $text-color-secondary;
+      }
+
+      td {
+         padding: 10px 0;
+         border-bottom: 1px solid $divider-secondary;
+         .icon-link {
+             display: none;
+         }
+         &.toggle-block-border {
+             border-bottom: 1px solid $divider-secondary;
+             &.disabled-style{
+                 opacity: 0.5;
+                 cursor: not-allowed;
+             }
+         }
+         &.disabled-style{
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+         a {
+            object-fit: contain;
+            font-size: $para-descrp-size;
+            line-height: 1.38;
+            letter-spacing: 0.2px;
+            text-align: left;
+            color: $text-color-primary;
+            cursor: pointer;
+            position: relative;
+            display: block;
+            @include svg-image-full-path($svg-path, 'chevron-right');
+            &:hover {
+               @include markpro-medium();
+               color: $text-color-accent-primary;
+            }
+            &::before {
+               position: absolute;
+               right: 0;
+               width: 20px;
+            }
+            &.no-pointer{
+                pointer-events: none;
+            }
+         }
+      }
+   }
+}
+
+.toggle {
+   max-width: 40px;
+   float: right;
+   .switch {
+       height: 11px;
+       .slider {
+           top: 1px;
+           &::before {
+               height: 16px;
+               width: 16px;
+               left: 2.5px;
+               bottom: 1.6px;
+           }
+           &.round {
+               height: 19px;
+           }
+       }
+       input:checked+.slider:before {
+           transform: translate(20px, 0);
+       }
+       input[type="checkbox"][disabled]+.slider{
+           cursor: not-allowed;
+       }
+   }
+}
+::ng-deep {    
+   app-small-overlay {
+       &.card-toggle-container{
+           .overlay-modal {
+               overflow-x: hidden;
+               .overlay {
+                  padding: 0;
+               }
+           }
+       }
+   }
+}
+
+.icon {
+   @include svg-image-full-path($svg-path, 'Logout', 45px, 37px);
+   float: left;
+   margin-left: -18px;
+   left: 50%;
+   position: relative;
+   margin-bottom: 35px;
+}
+
+.content {
+   padding-left: 110px;
+   padding-right: 110px;
+}
+
+.title {
+   font-weight: $weight-bold;
+}
+
+.margin-top-btn {
+   margin-top: 10px
+}
+
+.sub-text {
+   font-weight: $weight-bold;
+   font-size: $font-lg;
+}

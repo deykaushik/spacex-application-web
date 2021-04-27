@@ -1,0 +1,139 @@
+@import '../../../../styles/_mixins.scss';
+@import '../../../../styles/_base.scss';
+@import '../../../../styles/_lotto-numbers.scss';
+$svg-path: './../../../../assets/svg';
+$no-cards-bg: $container-bg;
+$bg-color-dashboard: $body-bg;
+.lotto-header {
+    margin-bottom: 31px;
+}
+
+.icon-back {
+    width: 13px;
+    height: 13px;
+    cursor: pointer;
+    margin: -5px 15px 10px 0px;
+    display: table;
+    float: left;
+    @include rotate(180deg);
+    @include svg-image-full-path($svg-path, 'right-arrow-cap');
+}
+
+.payouts {
+    height: 615px;
+    margin-bottom: 60px;
+    background-color: $no-cards-bg;
+    float: left;
+    padding: 0 0 0 30px;
+    border-right: 20px solid $bg-color-dashboard;
+}
+
+.draw-details {
+    background-color: $bg-color-dashboard;
+    min-height: calc( 100vh - #{$header-height-mob + $footer-height-mob});
+}
+
+.draw-details-container {
+    padding: 32px 111px 0px 111px;
+    background-color: $bg-color-dashboard;
+}
+
+.total-details-lable {
+    font-size: $label-size;
+    color: $text-color-info;
+}
+
+.detail-blocks {
+    background-color: $bg-color-dashboard;
+}
+
+ul {
+    list-style: none;
+}
+
+.second-header {
+    margin: 14px 0 32px 0;
+    font-size: $xlg-descrp-size;
+    font-weight: $weight-medium;
+    color: $text-color-secondary;
+}
+
+li h6 {
+    font-size: $font-default;
+    color: $text-color-secondary;
+    height: 20px;
+    margin: 0 0 19px 0;
+    line-height: 1.18;
+}
+
+.total-details {
+    height: 615px;
+    margin-bottom: 60px;
+    padding: 0 0 0 30px;
+    background-color: $no-cards-bg;
+    float: right;
+    border-left: 20px solid $bg-color-dashboard;
+}
+
+.gd-form-row {
+    margin-top: 15%;
+}
+
+.lottoerror-icon {
+    @include svg-image-full-path($svg-path, 'grey', 60px, 60px);
+}
+
+.lottoerror-icon::before {
+    margin: 0px auto;
+}
+
+@media (max-width: $media-sm) {
+    .draw-details-container {
+        padding: 0;
+    }
+    .detail-blocks {
+        background-color: $no-cards-bg;
+        margin-bottom: 20px;
+    }
+    .total-details {
+        width: 100%;
+        height: 239px;
+        float: none;
+        border-left: 0px;
+        padding: 0;
+        border-top: 20px solid $bg-color-dashboard;
+    }
+    .second-header {
+        margin: 18px 0 17px 0;
+        padding-left: 35px;
+        font-size: $para-title-size;
+    }
+    ul li {
+        border-bottom: 1px solid $divider-secondary;
+        margin-top: 9px;
+        padding-left: 35px;
+    }
+    li h6 {
+        margin: 0 0 11px 0;
+        font-size: $font-default;
+    }
+    li span {
+        font-size: $font-sm;
+    }
+    li:last-child {
+        border-bottom: 0px !important;
+    }
+    .payouts {
+        width: 100%;
+        float: none;
+        padding-bottom: 20px;
+        margin-bottom: 0px;
+        padding: 0;
+        border-right: 0px;
+    }
+    .payouts,
+    .total-details {
+        display: inline-block;
+        background-color: $no-cards-bg;
+    }
+}

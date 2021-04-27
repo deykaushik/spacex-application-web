@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="44px" height="46px" viewBox="0 0 44 46" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50 (54983) - http://www.bohemiancoding.com/sketch -->
+    <title>card-frozen</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1-Copy" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Android-MyCardState-Frozen" transform="translate(-167.000000, -709.000000)" stroke="#FFFFFF" stroke-width="2">
+            <g id="Group-2" transform="translate(152.000000, 709.000000)">
+                <g id="card-frozen" transform="translate(16.000000, 0.000000)">
+                    <g id="Group">
+                        <path d="M20.9534,45.5532 L20.9534,0.3074" id="Shape"></path>
+                        <polyline id="Shape" points="28.145 3.0562 20.9534 10.2464 13.7654 3.0562"></polyline>
+                        <polyline id="Shape" points="13.7634 42.9014 20.9534 35.7112 28.145 42.9014"></polyline>
+                        <path d="M40.5458,34.2424 L1.3618,11.6196" id="Shape"></path>
+                        <polyline id="Shape" points="7.3382 6.7658 9.9692 16.589 0.1484 19.2188"></polyline>
+                        <polyline id="Shape" points="34.6542 39.1434 32.0224 29.3214 41.845 26.6884"></polyline>
+                        <path d="M40.5466,11.6196 L1.3626,34.2424" id="Shape"></path>
+                        <polyline id="Shape" points="0.1472 26.64 9.97 29.273 7.337 39.093"></polyline>
+                        <polyline id="Shape" points="41.845 19.1722 32.0232 16.5406 34.6542 6.7174"></polyline>
+                    </g>
+
+                </g>
+            </g>
+        </g>
+    </g>
+    </svg>

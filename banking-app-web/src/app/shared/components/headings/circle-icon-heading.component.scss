@@ -1,0 +1,88 @@
+﻿@import './../../../../styles/_mixins.scss';
+@import './../../../../styles/_base.scss';
+
+$icon-work-flow-tick-status: 'tickStatus';
+$icon-step-close-status: 'closeStatus';
+$svg-path: './../../../../assets/svg';
+
+.img-step-tick {
+   @include svg-image-full-path($svg-path, $icon-work-flow-tick-status);
+}
+
+.img-step-close {
+   @include svg-image-full-path($svg-path, $icon-step-close-status);
+}
+
+.heading-block {
+   &.current-steps {
+      .block{
+         padding: 30px 15px;
+      }
+      h4.section-title {
+         padding: 0;
+      }
+      .steps-track, .steps-block {
+         padding: 0;
+         &::before, &::after {
+            display: none;
+         }
+      }
+
+      .steps-track {
+         width: $final-status-heading-size;
+         height: $final-status-heading-size;
+         margin-right: 50px;
+         .step-large {
+            width: $final-status-heading-size;
+            height: $final-status-heading-size;
+            line-height: $final-status-heading-size;
+            .success {
+               width: 32px;
+               height: 32px;
+            }
+         }
+      }
+
+      .succeed {
+         color: $text-color-accent-secondary;
+
+         .step-title {
+            color: $text-color-accent-secondary;
+         }
+
+         .step-large, .step-small {
+            border-color: $text-color-accent-secondary;
+         }
+      }
+
+      .failed {
+         color: $text-color-error;
+
+         .step-title {
+            color: $text-color-error;
+         }
+
+         .step-large, .step-small {
+            border-color: $border-error;
+         }
+      }
+   }
+}
+
+@media (min-width: $media-sm) {
+   .heading-block {
+      &.current-steps {
+         .steps-track, .steps-block {
+            padding: 0;
+         }
+         .block{
+            padding: 30px 15px;
+            .steps-block{
+               .section-title{
+                  margin: 10px 0;
+               }
+            }
+         }
+      }
+   }
+}

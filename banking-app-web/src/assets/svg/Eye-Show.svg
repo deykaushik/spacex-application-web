@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>32px/Eye</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="square">
+        <g id="32px/Eye" stroke="#BBBBBB" stroke-width="1.5">
+            <g id="icon/👁eye" transform="translate(4.000000, 8.000000)">
+                <path d="M0,8.4 C0,8.4 4.8,0 12,0 C19.2,0 24,8.4 24,8.4 C24,8.4 19.2,16.8 12,16.8 C4.8,16.8 0,8.4 0,8.4 Z" id="Stroke-1"></path>
+                <path d="M12,4.8 C13.9884,4.8 15.6,6.4116 15.6,8.4 C15.6,10.3884 13.9884,12 12,12 C10.0116,12 8.4,10.3884 8.4,8.4 C8.4,6.4116 10.0116,4.8 12,4.8 Z" id="Stroke-3"></path>
+            </g>
+        </g>
+    </g>
+</svg>

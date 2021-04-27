@@ -1,0 +1,42 @@
+﻿<div class="row">
+   <div class="col-xs-12">
+      <div class="title">
+         <span>Why are you replacing your Nedbank {{cardInfo.cardType }}</span>
+         <span class="no-break">({{ cardInfo.cardNumber | cardMask:4:4 }})?</span>
+      </div>
+   </div>
+</div>
+<div class="block-form">
+   <div class="gd-form-row">
+      <label class="gd-sm-label label-reason" for="account_type">Reason</label>
+      <div class="gd-basic-dropdown" dropdown>
+         <div dropdownToggle class="dropdown-place">
+            <div class="text">
+               {{ selectedReason ? selectedReason.text : defaultReasonText }}
+            </div>
+            <div class="icon">
+               <span class="caret"></span>
+            </div>
+         </div>
+         <ul *dropdownMenu class="dropdown-menu" role="menu">
+            <li [class.active]="selectedReason?.text == reason.value.text" role="menuitem" *ngFor="let reason of blockingReasons" (click)="onReplaceReasonChanged(reason.value.code)">
+               {{reason.value.text}}
+            </li>
+         </ul>
+      </div>
+   </div>
+   <div class="row agree-container">
+      <div class="col-xs-12">
+         <label class="agree-info">
+            <input class="agreeCheckBox" type="checkbox" [(ngModel)]="isAgree" [checked]="isAgree" (ngModelChange)="enableNextButton($event)">
+            <span class="text">I agree that the card will be blocked automatically.</span>
+         </label>
+      </div>
+   </div>
+   <div class="row next-button">
+      <div class="col-xs-12">
+         <app-bottom-button [text]="'Next'" [disableButton]="!isNextButtonEnabled" (click)="replaceCard()"></app-bottom-button>
+      </div>
+   </div>
+
+</div>

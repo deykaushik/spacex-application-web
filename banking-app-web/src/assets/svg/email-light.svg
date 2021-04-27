@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 50 50" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.2 (57519) - http://www.bohemiancoding.com/sketch -->
+    <title>32px/Email Copy</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="1440-Web" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="1440---You're-done" transform="translate(-700.000000, -517.000000)" stroke="#BBBBBB">
+            <g id="32px/Email" transform="translate(693.000000, 510.000000)">
+                <g id="email" transform="translate(8.000000, 8.000000)">
+                    <polyline id="Shape" stroke-width="1.5" points="8.72727273 15.1578947 0 21.5499823 0 48 48 48 48 21.5499823 39.2727273 15.1578947"></polyline>
+                    <polyline id="Shape" stroke-width="1.5" points="8.84210526 26.5263158 8.84210526 0 39.1578947 0 39.1578947 26.5263158"></polyline>
+                    <path d="M0,21.4736842 L48,48" id="Shape" stroke-width="1.5"></path>
+                    <path d="M48,21.4736842 L24,34.1052632" id="Shape" stroke-width="1.5"></path>
+                    <path d="M17.6842105,11.3684211 L30.3157895,11.3684211" id="Shape" stroke-width="1.5" stroke-linecap="square"></path>
+                    <path d="M17.6842105,20.2105263 L30.3157895,20.2105263" id="Shape" stroke-width="1.5" stroke-linecap="square"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

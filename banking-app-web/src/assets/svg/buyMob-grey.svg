@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 12 13" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+    <title>Icons/BuyIcon</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="square">
+        <g id="Icons/BuyIcon" stroke="#808080">
+            <g id="Buy-Icon">
+                <polygon id="Shape" points="11.1549939 12.9639118 0.30148632 12.9639118 0.30148632 0.30148632 2.11040424 1.5074316 3.91932217 0.30148632 5.72824009 1.5074316 7.53715801 0.30148632 9.34607593 1.5074316 11.1549939 0.30148632"></polygon>
+                <path d="M2.71337688,5.12526745 L5.72824009,5.12526745" id="Shape"></path>
+                <path d="M8.14013065,5.12526745 L8.74310329,5.12526745" id="Shape"></path>
+                <path d="M2.71337688,7.53715801 L5.72824009,7.53715801" id="Shape"></path>
+                <path d="M8.14013065,7.53715801 L8.74310329,7.53715801" id="Shape"></path>
+                <path d="M2.71337688,9.94904857 L5.72824009,9.94904857" id="Shape"></path>
+                <path d="M8.14013065,9.94904857 L8.74310329,9.94904857" id="Shape"></path>
+            </g>
+        </g>
+    </g>
+</svg>

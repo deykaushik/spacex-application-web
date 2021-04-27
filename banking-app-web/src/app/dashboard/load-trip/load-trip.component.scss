@@ -1,0 +1,153 @@
+@import './../../../styles/_base.scss';
+@import './../../../styles/_mixins.scss';
+
+
+$svg-path: './../../../assets/svg/';
+
+
+$account-card-border-left: 4px;
+
+.title {
+   font-size: $md-heading-size;
+   @include markpro-medium();
+   margin: 40px auto;
+   color: $text-color-primary;
+   text-align: center;
+   max-width: $title-width;
+}
+
+.block-form {
+   max-width: 400px;
+   margin: 0 auto;
+}
+.gd-form-row {
+   margin-bottom: 30px;
+}
+.info-container {
+   background-color: $info-lightGreen;
+   margin-top: 30px;
+   margin-bottom: 40px;
+   padding: 22px 14px;
+
+   .info-msg {
+      margin-left: 35px;
+   }
+
+   .icon {
+      float: left;
+      @include svg-image-full-path($svg-path,'information', 23px, 23px);
+   }
+}
+
+.error-info-container {
+   background-color: $error-info-red;
+   margin-top: 30px;
+   margin-bottom: 40px;
+   padding: 22px 14px;
+
+   .info-msg {
+      margin-left: 35px;
+   }
+
+   .icon {
+      float: left;
+      @include svg-image-full-path($svg-path,'close-circle-red', 23px, 23px);
+   }
+}
+
+.reason-warning {
+   margin-top: 15px;
+
+   .btn-replace {
+      color: $secondary-btn-color;
+      cursor: pointer;
+   }
+}
+.btn-group {
+   width: 100%;
+   .btn{
+      &.btn-primary {
+         background-color: $container-bg;
+         border: 2px solid $color-lightGreen;
+         color: $color-lightGreen;
+         padding: 14px; 
+         width: 25%;
+      }
+      &.active {
+         background-color: $color-lightGreen;
+         border: 2px solid $color-lightGreen;
+         color: $container-bg;
+      }
+   }
+} 
+.benificiary-list {
+   .name {
+      color: $text-color-primary;
+      margin-bottom: 5px;
+   }
+
+   .details {
+      @include flexbox();
+      @include align-items(center);
+      color: $text-color-info;
+
+      .icon-type {
+         margin-right: 10px;
+      }
+
+      .account-type {
+         @include flex(1);
+         white-space: normal;
+
+         .text {
+            &::after {
+               content: ' - ';
+            }
+         }
+         .account-type{
+             @include flex(1);
+             white-space: normal;
+             .text{
+                 &::after {
+                     content: ' - ';
+                 }
+             }
+         }
+     }
+     .icon-type{
+        @include svg-image-full-path($svg-path, 'electricity');
+        width: 22px;
+     }
+   }
+}
+@keyframes spinner {
+   to {
+      transform: rotate(360deg);
+   }
+}
+.green-spinner {
+   margin: 100px 0;
+   text-align: center;
+   .g-spinner {
+       display: inline-block;
+       width: 40px;
+       height: 40px;
+       background: none;
+       border: 2px solid $color-spinner-primary;
+       border-bottom-color: transparent;
+       @include border-radius(50%);
+       &.active {
+           animation: spinner 1000ms linear infinite;
+       }
+   }
+}
+
+@media screen and (min-width : $media-md-up) {
+   .title {
+      color: $text-color-secondary;
+      font-size: $md-heading-size;
+      max-width: 400px;
+      text-align: left;
+   }
+}
+

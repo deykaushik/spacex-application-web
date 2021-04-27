@@ -1,0 +1,45 @@
+<div class="view-notices">
+   <div class="container">
+      <div id="section-header-view-notice" class="row">
+         <div class="col-xs-12">
+            <div class="back-header">
+               <div class="icon" (click)="back()"></div>
+               <div class="page-header">
+                  <span id="lbl-account-name" class="account-name">{{investmentType}}</span>
+                  <span x-ms-format-detection="none" id="lbl-account-number" class="account-number">{{accNumber}}</span>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="col-xs-12 table-section" *ngIf="isNoticeAvailable">
+         <table>
+            <caption>{{labels.viewNoticeTitle}}</caption>
+            <tr class="table-heading">
+               <th>{{labels.submitDate}}</th>
+               <th>{{labels.payAccount}}</th>
+               <th>{{labels.payDate}}</th>
+               <th>{{labels.noticeAmount}}</th>
+            </tr>
+            <tr class="table-content" *ngFor="let data of tableData">
+               <td>{{data.submissionDate | date:dateFormat}}</td>
+               <ng-container *ngIf="data.capitalDisposalAccount.accountType === 'BD'; else nonBDF">
+                  <td>{{data.capitalDisposalAccount.accountName}}</td>
+               </ng-container>
+               <ng-template #nonBDF>
+                  <td>{{data.capitalDisposalAccount.accountType}} - {{data.capitalDisposalAccount.accountNumber}}</td>
+               </ng-template>
+               <td>{{data.noticeDate | date:dateFormat}}</td>
+               <td>{{data.noticeAmount | amountTransform  : amountPipeConfig}}</td>
+               <td (click)="noticeDetails(data)">
+                  <div class="view-icon">
+                  </div>
+                  <div class="view-msg">
+                     {{labels.viewDetails}}
+                  </div>
+               </td>
+            </tr>
+         </table>
+      </div>
+      <div *ngIf="!isNoticeAvailable">{{labels.viewNoticeErrorMsg}}</div>
+   </div>
+</div>

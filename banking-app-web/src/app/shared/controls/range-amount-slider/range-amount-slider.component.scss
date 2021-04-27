@@ -1,0 +1,83 @@
+﻿@import './../../../../styles/_base.scss';
+@import './../../../../styles/_mixins.scss';
+
+
+.range-amount-control {
+   display: flex;
+   flex-direction: column;
+
+   .slider-container {
+      flex: 1;
+   }
+
+   .input-container {
+      width: 230px;
+
+      label {
+         display: block;
+         font-size: $label-size;
+         color: $text-color-info;
+         font-weight: normal;
+      }
+
+      input {
+         border-left: none;
+         border-top: none;
+         border-right: none;
+         padding: 0;
+         clear: both;
+         font-size: $section-title-size;
+         @include markpro-medium();
+         margin-bottom: 30px;
+         color: $text-color-primary;
+      }
+   }
+
+   .limit-container {
+      clear: both;
+      text-align: right;
+
+      .limit-value {
+         font-size: $para-title-size;
+         color: $text-color-primary;
+      }
+
+      .limit-type {
+         font-size: $para-title-size;
+         color: $text-color-primary;
+      }
+   }
+}
+
+.header-container {
+   display: flex;
+   .gd-sm-label{
+      @include flex(1);
+   }
+}
+
+.error-msg-amount {
+   color: $text-color-error !important;
+   position: relative;
+   padding-left: 10px;
+   font-size: $font-sm !important;
+   font-weight: normal;
+}
+
+@media screen and (min-width : $media-lg-up) {
+
+   .range-amount-control {
+      flex-direction: row;
+
+      .slider-container {
+         margin-left: 20px;
+         margin-top: 25px;
+      }
+   }
+}
+
+@media (min-width:$media-sm){
+   .amount-field-editor{
+      width: 40%;
+   }
+}

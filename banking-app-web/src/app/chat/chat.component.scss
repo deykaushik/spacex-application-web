@@ -1,0 +1,657 @@
+@import '../../styles/_base.scss';
+@import '../../styles/_mixins.scss';
+@import '../../styles/_tokens.scss';
+@import '../../styles/_theme.scss';
+$default-svg-image-path: "./../../assets/svg/";
+$default-png-image-path: "./../../assets/png/";
+$icon-nedbank: 'nedbank-profile';
+$icon-chat: 'chat';
+$icon-close: 'group-6';
+$icon-chat: 'group-3';
+$icon-send: 'send-arrow';
+$icon-back: 'back-arrow';
+
+.chat-icon {
+   @include svg-image-full-path($default-svg-image-path, $icon-chat, 60px, 60px);
+   right: 440px;
+}
+
+.nedbank-icon {
+   @include svg-image-full-path($default-svg-image-path, $icon-nedbank, 30px, 30px);
+}
+
+.close-icon {
+   @include svg-image-full-path($default-svg-image-path, $icon-close, 26px, 28px);
+}
+
+.send-icon {
+   @include svg-image-full-path($default-svg-image-path, $icon-send, 22px, 22px);
+}
+
+.chatImage {
+   width: 30px;
+   height: 30px;
+}
+
+.closeImage {
+   width: 40px;
+   height: 40px;
+}
+
+.btn-cont {
+   margin-top: 40px;
+   margin-bottom: 50px;
+   max-width: 100%;
+}
+
+.error-msg {
+   color: $text-color-error;
+   font-size: $label-size;
+   margin: 5px 0 0;
+   position: relative;
+   padding-left: 10px;
+
+   &::before {
+      content: '* ';
+      position: absolute;
+      left: 0;
+   }
+}
+
+.chatHead {
+   padding: 0 50px;
+   position: relative;
+   border-bottom: 1px solid $divider-secondary;
+   line-height: 80px;
+   margin-left: -45px;
+   margin-right: -20px;
+   z-index: 10;
+   background: $container-bg;
+}
+
+.no-thanks-btn {
+   border-radius: 20px;
+   border: solid 2px $color-lightGreen;
+   background-color: $container-bg;
+   color: $color-lightGreen;
+   margin-top: 20px;
+   margin-bottom: 20px;
+   width: 121px;
+   height: 40px;
+   font-weight: $weight-bold;
+   font-size: $message-size;
+   float: right;
+   @include appearance(none);
+}
+
+.chat-icon {
+   position: absolute;
+   top: 50%;
+   margin-top: -15px;
+   font-size: $md-heading-size;
+   color: $text-dark;
+   height: 30px;
+}
+
+.chat-header {
+   margin: 0;
+}
+
+.icon {
+   float: left;
+   margin-left: 2%;
+}
+
+.lottie-icon {
+   float: left;
+   margin-left: 4%;
+}
+
+.increase-width {
+   width: 100%;
+}
+
+.chat-message {
+   padding: 5px;
+}
+
+.time-chat {
+   font-size: $time-size !important;
+   font-weight: $weight-bold !important;
+   color: $color-greyLight !important;
+}
+
+.rec-time {
+   margin-left: 2% !important;
+   margin-top: 5% !important;
+}
+
+.wrap-divR {
+   display: block;
+
+   .concierge-live-chat {
+      text-align: right;
+      float: right;
+   }
+}
+
+.wrap-divL {
+   display: inline-grid;
+   float: left;
+}
+
+.close {
+   cursor: pointer;
+   position: absolute;
+   top: 50%;
+   right: 20px;
+   margin-top: -20px;
+}
+
+.close-disconnect {
+   cursor: pointer;
+   position: absolute;
+   top: 50%;
+   right: 50px;
+   margin-top: -31px;
+}
+
+.btn {
+   margin-top: 2%;
+   margin-right: 4%;
+   background: $secondary-color;
+   color: $color-lightGrey-l1;
+   border-color: $secondary-color;
+   width: 45%;
+   max-width: 25rem;
+   height: 5%;
+}
+
+.right-space {
+   padding-right: 46px;
+   min-height: 55px;
+   font-size: $status-size;
+   padding-top: 15px;
+}
+
+textarea {
+   max-width: 100% !important;
+   resize: none;
+   overflow: hidden;
+}
+
+.form-element {
+   box-shadow: none;
+}
+
+.star-align {
+   text-align: center !important;
+}
+
+.chat-minimise {
+   position: absolute;
+   cursor: pointer;
+   top: 50%;
+   right: 15px;
+   margin-top: -34px;
+}
+
+.chat-slide {
+   @include animate(chat 0.5s 1);
+   position: fixed;
+   bottom: 46%;
+   padding-right: 41px;
+   height: 100%;
+}
+
+@-webkit-keyframes chat {
+   0% {
+      left: 100%;
+   }
+
+   100% {
+      right: 4400px;
+   }
+}
+
+@keyframes chat {
+   0% {
+      left: 100%;
+   }
+
+   100% {
+      left: 72.2%;
+   }
+}
+
+.slide-in {
+   @include animate(slide 1s 1);
+}
+
+@-webkit-keyframes slide {
+   0% {
+      left: 100%;
+   }
+
+   100% {
+      left: 0;
+   }
+}
+
+@keyframes slide {
+   0% {
+      left: 100%;
+   }
+
+   100% {
+      left: 0;
+   }
+}
+
+.chat-box-container {
+   height: 100%;
+   background-color: $header-color;
+   position: relative;
+   padding: 0 30px;
+   padding-bottom: 20px;
+   @include animate(anim 0.5s 1);
+}
+
+@-webkit-keyframes anim {
+   0% {
+      left: 100%;
+   }
+
+   100% {
+      left: 0;
+   }
+}
+
+@keyframes anim {
+   0% {
+      left: 100%;
+      transform: 'translateX(0)'
+   }
+
+   100% {
+      left: 0;
+      transform: 'translateX(100%)'
+   }
+}
+
+.line-break {
+   width: 440px;
+   height: 4px;
+   background-color: $tertiary-color;
+}
+
+.concierge-live-chat {
+   font-size: $time-size;
+   font-weight: $weight-bold;
+   text-align: left;
+   color: $color-greyLight;
+   margin-left: 10px;
+   margin-top: 10px;
+}
+
+.section-header {
+   font-size: $font-xlg;
+   text-align: left;
+   color: $color-lightGrey-d3;
+}
+
+.option-btn-wrapper {
+   float: right;
+   width: 385px;
+}
+
+.text {
+   border-radius: 22px;
+   border: solid 1px $divider-secondary;
+   padding: 10px;
+}
+
+.button-margin {
+   margin-bottom: 50px;
+}
+
+.gd-form-row {
+   margin-bottom: 20px;
+
+   .agent-msg {
+      padding-right: 0;
+   }
+}
+
+.client-details {
+   position: absolute;
+   bottom: 0;
+   overflow: auto;
+   margin-left: 0;
+   margin-right: 30px;
+}
+
+.email {
+   margin-bottom: 40px;
+}
+
+.client-msg {
+   display: inline-block;
+   text-align: left;
+   max-width: 80%;
+   border-radius: 22px;
+   background-color: $divider-secondary;
+}
+
+.button {
+   max-width: 180px;
+   height: 40px;
+   margin-bottom: 5px;
+   font-weight: normal;
+}
+
+.text-box::-ms-clear {
+   display: none;
+}
+
+.recieve-msg {
+   display: inline;
+}
+
+.recieve {
+   width: 340px;
+   height: 51px;
+   margin-left: 2%;
+   margin-top: 25%;
+   font-size: $font-xlg;
+   font-weight: bold;
+   text-align: left;
+}
+
+.send {
+   width: 30px;
+   position: absolute;
+   bottom: 13px;
+   z-index: 20;
+   right: 16px;
+   cursor: pointer;
+   top: 32px;
+   padding-left: 5px;
+   background-repeat: no-repeat;
+}
+
+.text {
+   margin-left: 5%;
+}
+
+.Yes-begin {
+   float: left;
+   height: 1%;
+   margin-left: 39%;
+}
+
+.yes-button {
+   width: 151px;
+}
+
+.msg-area {
+   display: none;
+}
+
+.agent-msg {
+   font-size: $font-xlg;
+   text-align: left;
+   color: $primary-color;
+   padding-left: 44px;
+   position: relative;
+   overflow: hidden;
+
+   .icon {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      margin-left: 0;
+   }
+
+   .text {
+      margin-left: 0;
+      margin-top: 3px;
+   }
+}
+
+.nedBankLogo {
+   margin-top: 13%;
+   margin-left: 2%;
+   float: left;
+}
+
+.option-buttons {
+   margin: 20px 0;
+   text-align: left;
+   margin-left: 48px;
+}
+
+a {
+   color: inherit;
+   text-decoration: none
+}
+
+body {
+   height: 400px;
+   position: fixed;
+   bottom: 0;
+}
+
+.col-md-2,
+.col-md-10 {
+   padding: 0;
+}
+
+.msg_receive {
+   padding-left: 0;
+   margin-left: 0;
+}
+
+.msg {
+   color: $text-dark;
+   font-size: $message-size;
+   padding: 15px;
+   word-break: break-word;
+   word-wrap: break-word;
+   -ms-word-break: keep-all;
+}
+
+.msg_sent {
+   padding-bottom: 20px !important;
+   margin-right: 0;
+}
+
+.msg_container {
+   padding: 10px;
+   overflow: hidden;
+   display: flex;
+}
+
+img {
+   display: block;
+   width: 100%;
+}
+
+.btn-group.dropup {
+   position: fixed;
+   left: 0;
+   bottom: 0;
+}
+
+.que-card {
+   text-align: center;
+}
+
+.history-date {
+   text-align: center;
+   color: $color-greyLight;
+   font-size: $time-size;
+   margin-bottom: 20px;
+   margin-top: 15px;
+}
+
+.que-num {
+   color: #9b9b9b;
+   font-size: $time-size;
+}
+
+.rating-head {
+   font-size: $status-size;
+   font-weight: $weight-bold;
+   color: $text-dark;
+   margin-bottom: 25px;
+}
+
+.question {
+   font-size: $label-size;
+   font-weight: 300;
+   margin-bottom: 30px;
+   color: $text-dark;
+}
+
+.chat-message {
+   &.sent {
+      .chat-message-wrap {
+         float: right;
+         text-align: right;
+         width: 100%;
+      }
+   }
+
+   &.recieved {
+      text-align: left;
+
+      .chat-message-wrap {
+         float: left;
+      }
+   }
+}
+
+:host::ng-deep {
+   .ps__rail-x {
+      display: none !important;
+   }
+
+   .ps__thumb-y {
+      width: 10px\0 !important;
+      right: 0\0 !important;
+   }
+
+   .lottie {
+      div {
+         width: 90px !important;
+         height: 30px !important;
+      }
+   }
+}
+
+.chat-margin {
+   margin-bottom: 10px !important;
+}
+
+.chat-message-wrap {
+   margin-top: 10px;
+}
+
+.form-label {
+   font-size: $label-size !important;
+   font-weight: normal !important;
+}
+
+.form-input {
+   font-size: $message-size !important;
+}
+
+.chat-header-label {
+   font-size: $md-heading-size;
+   color: $text-dark;
+}
+
+@supports (-ms-ime-align:auto) {
+   .chat-message-wrap {
+      margin-top: 30px;
+   }
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+
+   /* Safari and Chrome */
+   .message-content {
+      overflow: unset;
+   }
+}
+
+.scroll {
+   height: 498px;
+   overflow: auto;
+}
+
+.message-container {
+   width: 100%;
+   margin-bottom: 15px;
+   padding-right: 15px;
+   @include flex(1);
+   height: 546px;
+}
+
+.chat-bot {
+   position: relative;
+   padding-bottom: 50px;
+}
+
+.chat-inputbox-wrapper {
+   position: relative;
+   width: 100%;
+   bottom: 0;
+   padding-top: 15px;
+   border-top: 1px solid $divider-secondary;
+}
+
+.lottie {
+   margin: 0 !important;
+   float: left;
+}
+
+.lottie-container {
+   display: inline-flex;
+   position: relative;
+}
+
+@media screen and (min-width: $media-xxs) and (max-width: $media-md) {
+   .chat-box-container {
+      width: inherit;
+      height: inherit;
+      position: inherit;
+   }
+
+   textarea {
+      max-width: 100% !important;
+      height: 0 !important;
+   }
+
+   .back-icon {
+      @include svg-image-full-path($default-svg-image-path, $icon-back, 22px, 22px);
+   }
+
+   .chatHead {
+      @include flexbox();
+      padding: 0 25px;
+   }
+
+   .chat-header-label {
+      margin-left: 10px;
+   }
+
+   .chat-minimise {
+      display: none;
+   }
+
+   .close-disconnect {
+      right: 15px;
+   }
+}

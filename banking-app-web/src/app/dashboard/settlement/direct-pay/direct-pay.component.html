@@ -1,0 +1,68 @@
+<app-colored-overlay [alternate]='true' [isVisible]="isOverlayVisible" [template]="selectedTemplate" [altButtonText]="closeBtnText"
+   (onHide)="closeOverlay()">
+   <ng-template #directPayTemplate>
+      <section class="direct-pay-section">
+         <h4 class="title">{{labels.title}}</h4>
+         <span class="sub-title" [ngClass]="{'default-fontsize': isMFCSettlement || isHlSettlement}">{{labels.subTitle}}</span>
+         <ng-container *ngIf="isPlSettlement">
+            <span class="title" [innerHtml]="settlementDetails?.settlementAmt | amountTransform:amountPipeConfig"></span>
+            <div class="fee-info-msg">
+               <span>{{labels.feeInfoMsg}}</span>
+               <span class="link-read-more" (click)="showTerms()">{{labels.readMore}}</span>
+            </div>
+         </ng-container>
+         <div class="ways-to-pay" [ngClass]="{'no-to-pay': !allowTransfer}">
+            <span class="title-ways-to-pay">{{labels.wayToPay}}</span>
+            <div class="pay-options">
+               <div *ngIf="allowTransfer" class="pay-option-box" (click)="showTransferNow()">
+                  <span class="icon" [ngClass]="isMFCSettlement ? 'pay-icon' : 'transfer-icon'"></span>
+                  <span class="text">{{labels.transferNow}}</span>
+               </div>
+               <div class="pay-option-box" (click)="showOtherPaymentModes()">
+                  <span class="icon bank-icon"></span>
+                  <span class="text cash-deposit-text">{{labels.cashDeposit}}</span>
+                  <span class="text eft-text">{{labels.orEFT}}</span>
+               </div>
+            </div>
+         </div>
+         <ng-container *ngIf="isPlSettlement">
+            <span class="divider"></span>
+            <div class="quote" (click)="showQuote()">
+               <div class="icon-text">
+                  <span class="icon icon-quote"></span>
+                  <span class="text">{{labels.getQuote}}</span>
+               </div>
+            </div>
+         </ng-container>
+         <div *ngIf="isMFCSettlement || isHlSettlement" class="info-text">
+            <span class="info-icon"></span>
+            <div class="text">
+               <div *ngIf="isMFCSettlement">
+                  <div class="text-process-info">{{labels.mfc.loanClosure}}</div>
+                  <div>{{labels.mfc.paidUpLetter}}</div>
+               </div>
+               <div *ngIf="isHlSettlement">
+                  <div class="text-process-info">{{labels.hl.loanCancelInfo}}</div>
+               </div>
+            </div>
+         </div>
+      </section>
+      <section class="loader-mask" *ngIf="showLoader">
+         <div id="loaders-spinner" class="loader-spinner">
+            <app-spinner [color]="'green'"></app-spinner>
+         </div>
+      </section>
+   </ng-template>
+   <ng-template #termsTemplate>
+      <app-settlement-terms [settlementDetails]="settlementDetails" (onClose)="onTermsClose($event)"></app-settlement-terms>
+   </ng-template>
+   <ng-template #otherPaymentModesTemplate>
+      <app-other-payment-modes (onClose)="onOtherPaymentModesClose($event)"></app-other-payment-modes>
+   </ng-template>
+   <ng-template #transferNowTemplate>
+      <app-transfer-now [settlementDetails]="settlementDetails" (onClose)="onTransferNowClose($event)"></app-transfer-now>
+   </ng-template>
+   <ng-template #settlementQuoteTemplate>
+      <app-request-quote-email (onClose)="onQuoteClose($event)" [accountId]="accountId" [navigateFrom]="values.navigateFromDirectPay"></app-request-quote-email>
+   </ng-template>
+</app-colored-overlay>

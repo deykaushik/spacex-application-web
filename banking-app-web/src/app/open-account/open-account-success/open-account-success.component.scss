@@ -1,0 +1,213 @@
+@import './../../../styles/_base.scss';
+@import './../../../styles/_mixins.scss';
+$svg-path: './../../../assets/svg';
+$icon-contact: 'contact';
+
+::ng-deep .overlay {
+   z-index: 9999;
+   padding: 0;
+   .container {
+      max-width: 100% !important;
+   }
+}
+
+.success-container {
+   margin-left: 60px;
+   margin-top: 60px;
+   .header {
+      width: 400px;
+      font-size: $main-title-size;
+      font-weight: $weight-light;
+      line-height: 1.25;
+      color: $text-color-secondary;
+   }
+   .sub-header {
+      width: 800px;
+      height: 38px;
+      font-size: $page-title-secondary-size;
+      line-height: 1.25;
+      font-weight: $weight-light;
+      color: $text-color-primary;
+   }
+   .investment-account-btn {
+      margin-top: 60px;
+      width: 400px;
+      height: 50px;
+      border-radius: 5px;
+      background-color: $secondary-color;
+      color: $text-color-highlight;
+      font-size: $font-default;
+      border: solid 2px $secondary-color;
+   }
+   .inv-section {
+      margin-top: 60px;
+      padding-left: 31px;
+      width: 615px;
+      height: 85px;
+      margin-bottom: 2%;
+      background-color: $text-color-highlight;
+      border-left: solid 4px $secondary-color;
+      border-bottom: 1px solid $color-lightGrey-d1;
+      .investment-acc {
+         padding-bottom: 2%;
+         display: block;
+         font-size: $font-default;
+         font-weight: $weight-medium;
+         color: $secondary-color;
+      }
+      .horizontal-line {
+         width: 575px;
+         height: 1px;
+         background-color: $text-color-highlight;
+      }
+   }
+   .content-label {
+      margin-top: 60px;
+      width: 358px;
+      height: 35px;
+      object-fit: contain;
+      font-size: $lg-heading-size;
+      font-weight: $weight-medium;
+      color: $text-color-secondary;
+   }
+   .content {
+      font-weight: $weight-light;
+      margin-top: 62px;
+      width: 358px;
+      height: 35px;
+      font-size: $lg-heading-size;
+      color: $text-color-secondary;
+   }
+   .contact-us {
+      margin-top: 60px;
+      width: 330px;
+      height: 35px;
+      font-size: $lg-heading-size;
+      font-weight: $weight-medium;
+      color: $text-color-secondary;
+      .icon {
+         margin-right: 0.625rem;
+         float: left;
+         @include svg-image-full-path($svg-path, $icon-contact, 20px, 20px);
+         margin-top: 12px;
+      }
+      .contact-number {
+         display: block;
+         font-size: $font-default;
+         font-weight: $weight-light;
+         color: $text-color-primary;
+         padding-top: 20px;
+         padding-left: 30px;
+      }
+   }
+   .more-info-labels {
+      padding-top: 25px;
+      padding-left: 2%;
+      width: 689px;
+      font-size: $font-default;
+      line-height: 1.38;
+      letter-spacing: 0.2px;
+      color: $text-color-primary;
+      .info-msg {
+         margin-top: 1%;
+      }
+      .click-here {
+         color: $secondary-color;
+         cursor: pointer;
+      }
+   }
+   .done-btn {
+      width: 400px;
+      margin-top: 60px;
+      padding-bottom: 146px;
+   }
+}
+
+@media(max-width: $media-sm-down) {
+   .success-container {
+      .container {
+         margin-left: 16px;
+         .header {
+            font-size: $main-title-size;
+         }
+         .sub-header {
+            width: 556px;
+            font-size: 30px;
+            line-height: 1.25;
+         }
+         .inv-section {
+            margin-top: 60px;
+            margin-bottom: 60px;
+         }
+         .content {
+            font-size: $font-xlg;
+            width: 364px;
+         }
+         .more-info-labels {
+            margin-top: 25px;
+            width: 556px;
+            margin-bottom: 60px;
+         }
+         .done-btn {
+            padding-bottom: 120px;
+         }
+         .investment-account-btn {
+            width: 400px;
+         }
+      }
+   }
+}
+
+@media(max-width: $media-xs-down) {
+   .success-container {
+      margin-left: 10px;
+      margin-top: 20px;
+      .container {
+         margin-left: 1px;
+         padding-left: 1px;
+         .header {
+            font-size: $page-title-secondary-size;
+            margin-bottom: 10px;
+         }
+         .sub-header {
+            width: 300px;
+            height: auto;
+            font-size: $xlg-descrp-size;
+            width: 300px;
+         }
+         .inv-section {
+            margin: 20px 0 10px;
+         }
+         .content-label {
+            font-size: $font-lg;
+         }
+         .content {
+            font-size: $font-lg;
+            width: 259px;
+            margin-top: 12px;
+         }
+         .more-info-labels {
+            width: 296px;
+            padding-top: 0;
+            margin: 10px 10px 0 0;
+         }
+         .contact-us {
+            margin-top: 20px;
+            font-size: $font-lg;
+            .icon {
+               margin-top: 20px;
+            }
+         }
+         .inv-section {
+            width: 300px;
+         }
+         .investment-account-btn {
+            margin-top: 20px;
+            width: 300px;
+         }
+         .done-btn {
+            padding-bottom: 40px;
+         }
+      }
+   }
+}

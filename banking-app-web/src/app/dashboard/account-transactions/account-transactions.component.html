@@ -1,0 +1,54 @@
+<div *ngIf="!skeletonMode && showUpliftDormancy && isDormantAccount">
+   <app-uplift-dormancy [transactionDetailsData]="transactionDetailsData" (isDormantAccountUpdated)="isDormantAccountUpdated=$event"
+      (notification)="notification($event)"> </app-uplift-dormancy>
+</div>
+<div class="transactions" [class.is-skeleton-loading]='skeletonMode'>
+   <h6 class="para-title transaction-label" *ngIf="isTravelCardActive() && selectedPocket">{{labels.myCurrencyPocket}}</h6>
+   <div class="selected-currency" *ngIf="isTravelCardActive() && selectedPocket">
+      <span class="pull-left">
+         <span class="gd-lg-label left">{{getCurrencyName(selectedPocket?.currency?.currency)}}</span>
+      <span class="left {{selectedPocket?.currency?.currency}}">
+            <span class="pocket-flag"></span>{{selectedPocket?.currency?.currency}}</span>
+      </span>
+      <span class="pull-right">
+         <span class="right">{{labels.availableBal}}</span>
+      <span class="right">{{selectedPocket?.currency?.amount| amountTransform: amountPipeConfig:getCurrencySymbol(selectedPocket?.currency?.currency) }}</span>
+      </span>
+   </div>
+   <h6 class="para-title transaction-label" *ngIf="!isTravelCardActive()">{{labels.transactions}}
+      <span *ngIf="isTransactionSearchApplicable()" class="search-icon" [class.active]="searchEnabled" (click)="setSearchView()"></span>
+   </h6>
+   <div class="para-title transaction-graph" [hidden]="!(visibleTransactions && visibleTransactions.length !== 0 && !isDormantAccount && !searchEnabled)"
+      *ngIf="!isTravelCardActive() || (selectedPocket && selectedPocket?.currency?.currency) else accountPockets">
+      <app-transaction-graph [transactions]="graphTransactions" [accountType]="accountType" [currency]="currency" [containerName]="containerName"></app-transaction-graph>
+   </div>
+   <ng-template #accountPockets>
+      <h6 class="para-title transaction-label">{{labels.myCurrencyPockets}}</h6>
+      <app-account-pockets [pockets]="pockets" [accountNumber]="accountNumber" [accountType]="accountType" [itemAccountId]="itemAccountId"></app-account-pockets>
+   </ng-template>
+   <ng-container *ngIf="searchEnabled; then searchTemplate else mainTemplate"></ng-container>
+   <ng-template #mainTemplate>
+      <div class="empty-state hidden-xs" *ngIf="!skeletonMode && visibleTransactions && visibleTransactions.length === 0 && !isDormantAccount">
+         <div class="descrp-block">
+            <div class="descrp">{{labels.transactionGraphNoDataMessage}}</div>
+         </div>
+         <div class="icon-block">
+            <div class="icon"></div>
+         </div>
+      </div>
+      <div class="list-wrapper" *ngIf="transactions">
+         <app-transaction-list [accountDetails]="accountDetails" [transactions]="visibleTransactions"></app-transaction-list>
+      </div>
+      <div class="empty-state history" *ngIf="!skeletonMode && visibleTransactions && visibleTransactions.length === 0">
+         <div class="heading-block">
+            <h2 class="heading">You have no transactions yet.</h2>
+         </div>
+         <div class="descrp-block">
+            <div class="descrp">Once you have transacted on this account, you can view your transaction history here.</div>
+         </div>
+      </div>
+   </ng-template>
+   <ng-template #searchTemplate>
+      <app-transaction-search [accountDetails]="accountDetails" [transactions]="visibleTransactions"></app-transaction-search>
+   </ng-template>
+</div>

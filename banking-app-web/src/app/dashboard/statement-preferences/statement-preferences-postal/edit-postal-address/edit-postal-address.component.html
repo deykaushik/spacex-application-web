@@ -1,0 +1,99 @@
+<app-colored-overlay [template]="sucessOverdraft" [altButtonText]="'Close'" [alternate]='true' [isVisible]="isEditAddress"
+   [backOption]="false" (onHide)="onClose($event)">
+   <ng-template #sucessOverdraft>
+      <section class="edit-postal-address">
+         <div class="edit-postal-address-body">
+            <form class="gd-form" #mfcEditaddress="ngForm">
+               <h1 class="section-title">{{ labels.editAddress }}</h1>
+               <div class="gd-form-row">
+                  <label for="addressLine1" class="active gd-sm-label">{{ labels.addressLine1 }}</label>
+                  <input autocomplete="off" type="text" id="addressLine1" #addressLineOne="ngModel" name="addressLine1" class="address-line-one"
+                     [ngModel]="addressLine0 | titlecase" (ngModelChange)="validateAddressLine0($event)" appValidateRequired
+                     appValidateOnblur appCheckBlur/>
+                  <div *ngIf="(addressLineOne.dirty || addressLineOne.touched)" class="error-msg">
+                     <div *ngIf="isAddressLine0Valid">
+                        {{ labels.errorMessage }}
+                     </div>
+                  </div>
+               </div>
+               <div class="gd-form-row">
+                  <label for="addressLine2" class="active gd-sm-label">{{ labels.addressLine2 }}</label>
+                  <input autocomplete="off" type="text" class="address-line-two" id="addressLine2" name="addressLine2" #addressLineTwo="ngModel"
+                     [ngModel]="addressLine1 | titlecase" appValidateOnblur appCheckBlur (ngModelChange)="validateAddressLine1($event)"
+                  />
+                  <div *ngIf="addressLineTwo.invalid && (addressLineTwo.dirty || addressLineTwo.touched) && addressLineTwo.isBlurred" class="error-msg">
+                     <div *ngIf="addressLineTwo.errors.required">
+                        {{ labels.addressLine2RequiredText }}
+                     </div>
+                  </div>
+               </div>
+               <div class="gd-form-row bank-container autocomplete-container">
+                  <label for="suburb" class="active gd-sm-label suburb-label">{{ labels.addressLineThreeText }}</label>
+                  <div class="search-block">
+                     <div class="search-field">
+                        <span *ngIf="isSuburbFocus" class="cross-icon" (click)="clearField()" (mouseup)="clearField()" (mousedown)="clearField()"></span>
+                        <input id="suburb" autocomplete="off" type="text" [ngModel]="addressLine2 | titlecase" #suburbRef="ngModel" name="suburb"
+                           [typeahead]="postalCodes" [typeaheadItemTemplate]="suburbListTemplate" typeaheadOptionField="suburb"
+                           (typeaheadOnSelect)="selectSuburb($event);" [typeaheadMinLength]="0" (typeaheadOnBlur)="blurSuburb($event)"
+                           (typeaheadNoResults)="clearSuburbSuggestion($event)" (blur)="blurSuburbInput()" (input)="getPostalCodes($event)"
+                           appValidateRequired class="validate input" />
+                        <ng-template #suburbListTemplate let-model="item" let-index="index" let-match="match" let-query="query">
+                           <span class="sd-suburb-type-ahead" [innerHtml]="model.suburb | highlight:query:'highlightText'"></span>{{values.comma}}
+                           <span class="sd-suburb-type-ahead" [innerHtml]="model.city"></span>
+                        </ng-template>
+                        <div *ngIf="showLoader" class="loader">
+                           <app-spinner [color]="'green'"></app-spinner>
+                        </div>
+                        <div *ngIf="showLoader" class="overlay-loader"></div>
+                     </div>
+                  </div>
+                  <div *ngIf="suburbRef.invalid && (suburbRef.dirty || suburbRef.touched)" class="error-msg">
+                     <div *ngIf="suburbRef.errors.required">
+                        {{ labels.errorMessage }}
+                     </div>
+                  </div>
+               </div>
+               <div class="gd-form-row city-div">
+                  <label for="city" class="active gd-sm-label">{{ labels.cityText }}</label>
+                  <div class="gd-basic-dropdown" dropdown [class.disable-mode]="isCityDisable()">
+                     <div dropdownToggle class="dropdown-place" id="city" (click)="onCityClicked()">
+                        <div class="text">
+                           {{city | titlecase}}
+                        </div>
+                        <div class="icon" *ngIf="!isCityDisable()">
+                           <span class="caret"></span>
+                        </div>
+                     </div>
+                     <ul *dropdownMenu class="dropdown-menu" role="menu">
+                        <li role="menuitem" *ngFor="let city of cities" (click)="onCitySelect(city)">
+                           <ng-container *ngIf="isdropdownOpen">{{city}}</ng-container>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+               <div class="gd-form-row">
+                  <label for="postal-code" class="active gd-sm-label">{{ labels.postalCode }}</label>
+                  <input class="disable-mode" autocomplete="off" type="text" id="postal-code" name="postalCode" [(ngModel)]="this.postalCode"
+                     [readonly]="true" appValidateRequired/>
+               </div>
+               <div class="gd-form-row">
+                  <label class="frequency-label">{{ labels.statementFrequency }}</label>
+                  <span class="frequency">{{statementPreferencesDetails.frequency | titlecase}}</span>
+               </div>
+               <div class="gd-form-row" *ngIf="isdebitOrderPayer">
+                  <div class="info-container">
+                     <span class="icon glyphicon glyphicon-info-sign"></span>
+                     <div class="info-msg">
+                        <span>{{informations.frequencyDisclaimerMFCOld}} </span>
+                        <span class="call-center-number">{{informations.callCenterNumberMFC}}</span>
+                     </div>
+                  </div>
+               </div>
+               <div class="gd-form-row">
+                  <app-bottom-button [text]="'Update'" (click)="updateStatementPreferencesPostalAddress(mfcEditaddress.invalid)" [disableButton]="isDisable(mfcEditaddress.invalid && (mfcEditaddress.dirty || mfcEditaddress.touched))"></app-bottom-button>
+               </div>
+            </form>
+         </div>
+      </section>
+   </ng-template>
+</app-colored-overlay>

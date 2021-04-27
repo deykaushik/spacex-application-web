@@ -1,0 +1,351 @@
+﻿@import './../../styles/_mixins.scss';
+@import './../../styles/_base.scss';
+
+$setting-nav-bg: $container-bg;
+$path: './../../assets/svg/';
+
+
+.hideTryAgain{
+    display: none;
+}
+.messagedecoration{    
+    font-family: $font-markpro;
+}
+.contentPosition{
+    margin-top: 66px;
+}
+.floatingResponse{   
+   position: fixed;
+   margin-left: 0px !important;
+   height: 66px;
+}
+.floatingNotification{    
+    position: fixed;
+    height: 72px;
+}
+.postionHeaderBtnGrp{
+    margin-top: 10px;
+}
+.postionMobileButton{
+    text-align: center;
+}
+.postionWebCancelButton{
+    text-align: right;
+}
+.postionWebUpdateButton{
+    text-align: left;
+}
+.settings-top{
+    z-index: 2;
+}
+.icontext{
+    margin-left:20px;   
+}
+.tryAgain{
+   cursor: pointer;
+   color: $color-bloodRed-d3;
+}
+.limitHeader{
+   width:100%;
+   z-index: 2;
+   font-family: $font-markpro;
+   margin-left: -1px;
+}
+.showProfileHeader{
+    margin-top: 66px;       
+}
+.shiftRow{
+    margin-top: -1px;
+    margin-left: 0px;
+}
+.top-alert{
+    position: fixed;
+    width:110%;
+    padding: 20px;
+
+    .icon{
+        position: relative;
+          display: inline-block;
+         padding-right: 20px;
+     }
+
+    &.success {
+        background-color: $color-success-bg;
+       
+        .icon{
+           @include svg-image-full-path($path, 'tick', 20px, 20px);
+        } 
+     }
+
+    &.partial {
+        background-color:#fceecc;
+        .icon{
+            @include svg-image-full-path($path, 'Error-Yellow', 20px, 20px);
+        }
+     }
+     &.error {
+        background-color:#fceecc;
+        .icon{
+           @include svg-image-full-path($path, 'Error-Yellow', 20px, 20px);
+        }
+    }
+    .hide-mobile{
+        display: none;
+    }
+    .retry-mob{
+        text-align: center;
+        padding-top: 20px;
+    }
+    .message{
+       top: 25%;
+       position: absolute;
+       font-size: 14px;
+    }
+    .retry{
+       border-right:#fff solid;
+       text-align: right;
+       cursor: pointer;
+    }
+    .margin-down-10{
+       margin-top:10px;
+    }
+    .retry-icon{
+       color: $text-color-secondary;
+       @include svg-image-full-path($path, 'Retry-Black', 22px, 22px);
+       display: inline-flex;
+       font-size: 16px;
+       font-weight: bold;
+    }
+    .retry-icon::before{
+       margin-right: 10px;
+    }
+    .retry-container{
+        margin-top: 10px;
+        padding-right:0px;
+    }
+    .hide-web{
+        display: initial;
+    }
+    .close-icon{
+        @include svg-image-full-path($path, 'Cross-Black',20px, 20px);
+        cursor: pointer;
+        display: inline-block;
+     }
+ }
+.submitRow{
+   background: $setting-nav-bg;
+   margin-top: -1px;
+   .textSubmit{
+      vertical-align: middle;
+      align-content: left;
+       padding:10px 18px;
+       display: none;
+       margin-top: 10px;
+     
+      .rename-icon {
+         @include svg-image-full-path($path, 'rename_icon', 22px, 13px);
+         display: inline-block;
+         padding-left: 8%;
+         cursor: pointer;
+      }
+   }
+   .hideIn-Mobile{
+       display: none;
+   }
+   .hideIn-web{
+       display: initial;
+   }
+}
+.submitRowResponse{
+    background: $setting-nav-bg;
+}
+.button-width{
+   max-width:80%;
+}
+.settings {
+   .blocks {
+      @include flexbox();
+      @include align-items(stretch);
+
+      .settings-left-nav {
+         background: $setting-nav-bg;
+         width: 250px;
+         display: none;
+         padding: 30px;
+         @include box-sizing(border-box);
+      }
+
+      .settings-content {
+         @include flex(1);
+         background-color: $body-bg;
+         @include main-content();
+      }
+      
+      ::ng-deep .container-padding {
+         padding: 30px 0;
+      }
+   }
+}
+@media screen and (min-width:$media-xxs)
+{
+    .btnGroup{
+        position: fixed;
+        width: 100%;
+        bottom: 0%;
+        z-index: 1;
+        padding: 30px;
+        background: #FFF;
+        margin-top: 10px;
+    }
+    .top-alert{
+        &.partial{
+            height:95px;
+        }
+        &.error{
+            height:91px;
+        }
+        &.success{
+            height:71px;
+        }
+    }
+    .alignContent{
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+    .showProfileHeader{
+        margin-top: 0px;       
+    }
+    .floatingNotification{ 
+        height: 0px;
+    }
+}
+
+@media (min-width: $media-xs) {
+    .top-alert{
+        .closeIcon{
+            margin-right:100px;
+        }       
+    }
+    .showProfileHeader{
+        margin-top: 0px;       
+}
+.floatingNotification{ 
+    height: 0px;
+}
+}
+
+@media (min-width: $media-sm) {
+    ::ng-deep{
+        .gd-primary-btn{
+            max-width: 80%;
+        }
+    }
+    .floatingNotification{ 
+        height: 72px;
+    }
+   .btnGroup {
+      position: relative;
+      top:10%;
+      padding: 0px;
+   }
+   .alignContent{
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  .showProfileHeader{
+    margin-top: 66px;       
+}
+   .top-alert{
+   
+    .hide-mobile{
+        display: inline;
+    }
+    .hide-web{
+        display: none;
+    }
+    &.partial{
+        height: 70px;
+    }
+    &.error{
+        height: 70px;
+    }
+    &.success{
+        height: 70px;
+    }
+   }
+   .submitRow{
+        .textSubmit{
+            height:81px;
+            display: inline-block;
+        }
+        .hideIn-Mobile{
+            display: inline;
+        }
+        .hideIn-web{
+            display: none;
+        }
+    }
+    .submitRowResponse{
+        padding-left: 240px;
+    }
+  
+   .settings {
+      .blocks {
+         .settings-left-nav {
+            display: block;
+         }
+
+         ::ng-deep .container-padding{
+            padding: 30px;
+         }
+      }
+   }
+}
+
+@media (min-width: $media-md) {
+    .btnGroup{
+        z-index: 2
+    }
+    .floatingNotification{ 
+        height: 72px;
+    }
+    .showProfileHeader{
+        margin-top: 66px;       
+}
+    .submitRowResponse{
+        padding-left:321px;
+    }
+    .top-alert{
+        .retry-container{
+            padding-right:initial;
+            .retry{
+                text-align:right;
+                padding-right: 25px;
+            }
+        }
+        .close-icon{
+            margin-left: -9px;
+        }
+    }
+   .settings {
+      .blocks {
+         .settings-left-nav {
+            width: 320px;
+         }
+      }
+   }
+}
+
+@media (min-width: $media-lg) {
+    .showProfileHeader{
+        margin-top: 66px;       
+}
+       .top-alert{
+        .close-icon{
+            margin-left: 0px;
+        }
+    }
+    .floatingNotification{ 
+        height: 72px;
+    }
+}

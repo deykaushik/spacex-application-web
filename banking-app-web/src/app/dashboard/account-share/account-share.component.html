@@ -1,0 +1,48 @@
+<div class="account-share">
+   <div id="title" class="title">
+      <span id="icon-account-detail" class="icon account-detail icon-link"></span>
+      <h2 id="lbl-title" class="page-title">{{labels.accountDetails}}</h2>
+   </div>
+   <h4 id="lbl-section-title" *ngIf="isShareAccount" class="section-title">{{labels.shareDetails}}</h4>
+   <div id="section-share-details" class="share-details">
+      <div class="account-details">
+         <div class="left-align">
+            <span id="lbl-account-name" class="field">{{labels.accountName}}</span>
+         </div>
+         <div class="right-align">
+            <span id="val-account-name" [innerHtml]="sharedAccountDetails?.accountName | skeletonLoader:isSkeletonMode"></span>
+         </div>
+      </div>
+      <div class="account-details">
+         <div class="left-align">
+            <span id="lbl-account-number" class="field">{{labels.accountNumber}}</span>
+         </div>
+         <div x-ms-format-detection="none" class="right-align">
+            <span id="val-account-number" class="val" [innerHtml]="sharedAccountDetails?.accountNumber | skeletonLoader:isSkeletonMode"></span>
+         </div>
+      </div>
+      <div class="account-details">
+         <div class="left-align">
+            <span id="lbl-account-type" class="field">{{labels.accountType}}</span>
+         </div>
+         <div class="right-align">
+            <span id="val-account-type" class="val" [innerHtml]="sharedAccountDetails?.accountType | skeletonLoader:isSkeletonMode"></span>
+         </div>
+      </div>
+      <div class="account-details" *ngIf="isShareAccount">
+         <div class="left-align">
+            <span id="lbl-branch-code" class="field">{{labels.branchCode}}</span>
+         </div>
+         <div class="right-align">
+            <span id="val-branch-code" class="val" [innerHtml]="sharedAccountDetails?.branchCode | skeletonLoader:isSkeletonMode"></span>
+         </div>
+      </div>
+   </div>
+   <span id="link-share" *ngIf="isShareAccount" class="link-share" [innerHtml]="labels.emailShareLink | skeletonLoader:isSkeletonMode" (click)="openAccountShareModal()"></span>
+</div>
+<app-colored-overlay [isVisible]="isOverlayView" [alternate]="true" [altButtonText]="buttonText" [template]="accountShareTemplate"
+   (onHide)="closeAccountShareModal()">
+   <ng-template #accountShareTemplate>
+      <app-add-recipients [sharedAccountDetails]="sharedAccountDetails" [clientDetails]="clientDetails" (onStatus)="onStatus($event)"></app-add-recipients>
+   </ng-template>
+</app-colored-overlay>

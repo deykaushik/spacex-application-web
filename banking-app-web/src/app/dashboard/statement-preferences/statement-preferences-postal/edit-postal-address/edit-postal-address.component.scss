@@ -1,0 +1,173 @@
+@import '../../../../../styles/_mixins.scss';
+@import '../../../../../styles/_base.scss';
+$svg-path: '../../../../../assets/svg';
+.equal-container {
+   margin-top: 10px;
+   margin-bottom: 30px;
+   padding: 22px 14px;
+}
+
+.edit-postal-address {
+   @include flexbox();
+   @include justify-content(center);
+   .edit-postal-address-body {
+      @include flex-direction(row);
+      width: 400px;
+      .gd-form {
+         .section-title {
+            font-family: $font-markpro-medium;
+            font-size: 22px;
+            color: $text-color-secondary;
+            padding-bottom: 15px;
+         }
+         .address-line-one {
+            &.ng-valid {
+               border-color: $form-element-border;
+            }
+         }
+         .address-line-two {
+            &.ng-valid {
+               border-color: $form-element-border;
+            }
+         }
+         .suburb-label {
+            margin-bottom: -15px;
+         }
+         .disable-mode {
+            background-color: $container-bg !important;
+            cursor: not-allowed;
+            &.open {
+               .dropdown-menu {
+                  border-color: $form-element-border;
+               }
+               .dropdown-place {
+                  border-color: $form-element-border !important;
+               }
+            }
+         }
+         .dropdown-place {
+            border-color: $form-element-border;
+         }
+         .search-input {
+            margin-left: -15px;
+            &.search-box {
+               width: 100%;
+            }
+         }
+         .search-block {
+            .search-field {
+               position: relative;
+               margin-top: 20px;
+               .input::-ms-clear, .input::-ms-reveal{
+                  display: none;
+                  width: 0;
+                  height: 0;
+               }
+               .cross-icon {
+                  @include svg-image-full-path($svg-path, 'search-close', 32px, 32px);
+                  position: absolute;
+                  cursor: pointer;
+                  top: 8px;
+                  right: 3px;
+               }
+               input {
+                  &.ng-valid {
+                     border-color: $form-element-border;
+                  }
+               }
+               .overlay-loader {
+                  position: absolute;
+                  left: 0;
+                  bottom: 0;
+                  right: 0;
+                  top: 0;
+                  z-index: 99;
+                  width: 100%;
+                  height: 100%;
+                  border-radius: inherit;
+                  cursor: not-allowed;
+               }
+               .loader {
+                  position: absolute;
+                  top: 50%;
+                  z-index: 100;
+                  @include translate(-50%, -50%);
+                  left: 50%;
+                  line-height: 1;
+                  width: 24px;
+               }
+            }
+         }
+         .cross {
+            position: absolute;
+            right: 0;
+         }
+         .close-icon {
+            width: 10%;
+            margin-right: 0;
+            position: relative;
+            top: 0;
+            right: -30px;
+         }
+         .gd-lg-label {
+            font-family: $font-markpro-medium;
+            font-size: 18px;
+            color: $text-color-secondary;
+            margin-bottom: 0;
+         }
+         .frequency-label {
+            font-family: $font-markpro-medium;
+            font-size: 18px;
+            color: $text-color-secondary;
+            font-weight: 500;
+            margin-bottom: 0;
+         }
+         .frequency {
+            font-family: $font-markpro;
+            font-size: $font-md-1;
+            color: $text-color-primary;
+            display: block;
+         }
+         .call-center-number {
+            color: $text-color-link;
+            font-size: $font-default-1;
+         }
+         .info-container {
+            @extend .equal-container;
+            background-color: $color-no-records-background;
+            .info-msg {
+               margin-left: 35px;
+               font-size: $font-sm;
+               .call-center-number {
+                  color: $text-color-link;
+                  font-size: $font-default-1;
+               }
+            }
+            .icon {
+               float: left;
+               @include svg-image-full-path($svg-path, 'information', 24px, 24px);
+            }
+         }
+         .gd-form-row {
+            .error-msg {
+               padding-left: 0px;
+            }
+            .error-msg::before {
+               content: none;
+            }
+         }
+      }
+   }
+}
+
+@media (max-width: $media-xs-down) {
+   .edit-postal-address {
+      @include flexbox();
+      @include justify-content(center);
+      .edit-postal-address-body {
+         @include flex-direction(row);
+         width: 400px;
+         padding: 0 15px;
+      }
+   }
+}

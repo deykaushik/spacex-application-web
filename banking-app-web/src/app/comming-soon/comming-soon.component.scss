@@ -1,0 +1,17 @@
+﻿@import '../../styles/_base.scss';
+@import '../../styles/_mixins.scss';
+
+
+$image-path: './../../assets/svg/';
+
+
+.para-title {
+   color: $color-overlay;
+   font-size: $font-xlg;
+}
+
+.overlay-content-wrapper {
+   .icon {
+      @include svg-image-full-path($image-path, 'no-transfer-grey');
+   }
+}

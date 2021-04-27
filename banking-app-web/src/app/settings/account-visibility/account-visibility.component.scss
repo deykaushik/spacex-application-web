@@ -1,0 +1,357 @@
+@import './../../../styles/_base.scss';
+@import './../../../styles/_mixins.scss';
+$icon-path: '../../../assets/svg/';
+$account-card-border-left: 4px;
+$icon-tick: 'tickStatus';
+$icon-close: 'close-light-gray';
+$icon-close-red: 'close-red';
+$icon-warning-red: 'Error';
+.switch {
+   height: 11px;
+   .slider::before {
+      height: 16px;
+      width: 16px;
+      left: 1px;
+      bottom: 2px;
+   }
+   .slider.round {
+      width: 38px;
+      height: 20px;
+   }
+   input:checked+.slider:before {
+      transform: translate(20px, 0);
+   }
+}
+
+.account-details {
+   width: 100%;
+   .account-name-and-number {
+      width: 70%;
+      float: left;
+      .account-name {
+         font-weight: 500;
+         text-align: left;
+         color: $text-color-secondary;
+      }
+      .account-number {
+         letter-spacing: 1px;
+         text-align: left;
+         color: $text-color-info;
+         padding-top: 5px;
+      }
+   }
+   .account-toggle {
+      width: 30%;
+      float: left;
+      .freeze-toggle {
+         margin-right: auto;
+         float: right;
+         padding-top: 16px;
+      }
+   }
+}
+
+.toggle-label-status {
+   letter-spacing: 1px;
+   text-align: left;
+   color: $toggle-off-bg;
+   padding-top: 5px;
+   float: left;
+   padding-top: 13px;
+}
+
+.link-response-msg {
+   position: absolute;
+   left: 0;
+   top: 0;
+   font-weight: bold;
+   padding: 15px;
+   width: 100%;
+   @include flexbox();
+   @include align-items(flex-start);
+   .left {
+      width: 50px;
+   }
+   .right {
+      margin-top: 10px;
+      cursor: pointer;
+   }
+   .center,
+   .right {
+      @include flex(auto);
+      padding: 0 5px;
+   }
+   .right {
+      text-align: right;
+      white-space: nowrap;
+   }
+   &.success-msg {
+      background-color: $color-success-bg;
+      color: $text-color-secondary;
+   }
+   &.error-msg {
+      background-color: $color-error-bg;
+      .right {
+         text-decoration: underline;
+      }
+   }
+}
+
+.empty-record {
+   font-size: $label-size;
+   color: $text-color-primary;
+   padding: 0 20px;
+   margin-bottom: 20px;
+}
+
+.linkable-account-card {
+   min-height: 150px;
+   @include flexbox();
+   @include align-items(flex-start);
+   .icon {
+      width: 30px;
+      height: 30px;
+      margin-right: 20px;
+   }
+   .content {
+      @include flex(1);
+   }
+}
+
+.separator {
+   height: 15px;
+   clear: both;
+}
+
+.limit-widget {
+   &.savings {
+      border-left: $account-card-border-left solid $color-savings;
+      .account-color {
+         color: $color-savings;
+      }
+   }
+   &.current {
+      border-left: 4px solid $color-current;
+      .account-color {
+         color: $text-color-secondary;
+      }
+   }
+   &.credit-card {
+      border-left: 4px solid $color-credit-card;
+      .account-color {
+         color: $text-color-error;
+      }
+   }
+   &.loan {
+      border-left: 4px solid $color-loan;
+      .account-color {
+         color: $text-color-warning;
+      }
+   }
+   &.investment,
+   &.foreign {
+      border-left: 4px solid $color-investment;
+      .account-color {
+         color: $color-investment;
+      }
+   }
+   &.default {
+      border-left: 4px solid $divider-tertiary;
+      .account-color {
+         color: $text-color-primary;
+      }
+   }
+}
+
+.linked-account-message {
+   margin-left: 10px;
+   padding-right: 15px;
+}
+
+.linked-account-validate-message {
+   margin-left: 10px;
+   font-weight: bold;
+}
+
+.notify-message {
+   margin-top: 0px;
+   z-index: 10000;
+   margin-bottom: 10px;
+}
+
+.profile-container {
+   .profile-limit-header {
+      font-weight: bold;
+      text-align: left;
+      color: $text-color-secondary;
+      padding: 0;
+      margin: 0 0 30px 10px;
+   }
+   .profile-limit-subheader {
+      width: 100%;
+      height: 35px;
+      font-size: $page-title-secondary-size-mob;
+      font-weight: bold;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: 1.25;
+      letter-spacing: normal;
+      text-align: left;
+      margin: 0 0 0px 10px;
+   }
+   .icon-field {
+      margin-bottom: 15px;
+      margin-top: 20px;
+      &.message-enable {
+         margin-top: 30px;
+      }
+      .icon {
+         width: 30px;
+         height: 30px;
+         display: inline-block;
+         right: 5px;
+         top: 10px;
+         cursor: pointer;
+      }
+   }
+}
+
+.limit-widget {
+   float: left;
+   border-bottom: 1px solid $divider-secondary;
+   width: 100%;
+   min-height: 81px;
+   padding: 15px;
+   background-color: $container-bg;
+   &.no-records-found {
+      text-align: center;
+      padding-top: 27px;
+   }
+   &.linkable-account-card {
+      min-height: 130px;
+   }
+   .widget-content {
+      padding: 20px 25px;
+   }
+}
+
+.limit-widget {
+   &.link-button {
+      clear: both;
+      background-color: transparent;
+   }
+}
+
+.success-msg-line {
+   padding-left: 10px;
+}
+
+@media (max-width: $media-sm) {
+   .limit-widget {
+      width: 100%;
+      &.no-records-found {
+         text-align: center;
+         padding-top: 27px;
+      }
+   }
+   .account-toggle {
+      width: 30%;
+      float: left;
+      display: inline-flex;
+      margin-top: 12px;
+   }
+}
+
+@media (min-width: $media-xs-up) {
+   .link-error {
+      width: 94%;
+      margin: 10px;
+   }
+   .limit-widget {
+      width: 94%;
+      margin: 10px;
+      &.no-records-found {
+         text-align: center;
+         padding-top: 27px;
+      }
+   }
+   .empty-record {
+      padding: 0 10px;
+      font-size: $status-size;
+   }
+   .freeze-toggle {
+      margin-left: 15px;
+      margin-right: auto;
+      float: right;
+      padding-top: 16px;
+   }
+   .account-toggle {
+      width: 30%;
+      float: left;
+      display: inline-flex;
+   }
+}
+
+@media (min-width: $media-md) {
+   .link-error {
+      width: 96%;
+      margin: 10px;
+   }
+   .limit-widget {
+      width: 47%;
+      &.no-records-found {
+         width: 96.5%;
+         text-align: center;
+         padding-top: 27px;
+      }
+   }
+   .linked-account-validate-message {
+      margin-left: 10px;
+      font-weight: bold;
+   }
+   .account-toggle {
+      width: 30%;
+      float: left;
+      display: inline-flex;
+   }
+}
+
+@media (max-width: $media-xs-down) {
+   .link-error {
+      width: 100%;
+   }
+   .center {
+      padding-left: 5px;
+   }
+   .link-response-msg {
+      width: 100%;
+   }
+   .freeze-toggle {
+      margin-left: 15px;
+      margin-right: auto;
+      float: right;
+      padding-top: 16px;
+   }
+   .account-toggle {
+      width: 30%;
+      float: left;
+      display: inline-flex;
+   }
+}
+
+@media (min-width: $media-lg) {
+   .toggle-label-status[_ngcontent-c31] {
+      letter-spacing: 1px;
+      text-align: left;
+      color: $text-color-info;
+      padding-top: 5px;
+      float: left;
+      padding-top: 13px;
+      margin-left: 12px;
+   }
+   .account-toggle {
+      width: 30%;
+      float: left;
+      display: inline-flex;
+   }
+}

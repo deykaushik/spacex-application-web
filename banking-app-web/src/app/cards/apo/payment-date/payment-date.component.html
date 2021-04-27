@@ -1,0 +1,35 @@
+<div class="payment-date-container tableCell container">
+   <div class="row">
+      <div class="payment-date-form-wrapper">
+         <div class="gd-form payment-date-gd-form">
+            <div class="gd-form-row information-container-small">
+               <h4 class="section-title step-title dark-grey-text">{{paymentDateLabels.paymentDateTitle}}</h4>
+               <div class="gd-form-row date-container">
+                  <label class=" mediumText">{{paymentDateLabels?.latestStatementDate}}</label>
+                  <div class="date-text">{{statementDate | date: "d MMMM y"}}</div>
+               </div>
+               <div class="gd-form-row date-container">
+                  <label class="mediumText">{{paymentDateLabels.latestDueDate}}</label>
+                  <div class="date-text">{{inrangeDateSelector.maxDate | date: "d MMMM y"}}</div>
+               </div>
+               <div class="dark-grey-text margin-31">{{paymentDateLabels.whenWouldYouLikeToPay}}</div>
+            </div>
+            <form autocomplete="off" class="paymentDateForm" novalidate>
+               <div class="gd-form-row">
+                  <app-inrange-date-selector [isAutoPayTerm]="isAutoPayTerm" (dayClicked)="handleDayClickEvent($event)" [inrangeDateSelector]="inrangeDateSelector"
+                     [selectedDate]="selectedDate" [title]="paymentDateLabels?.selectPreferredDate"></app-inrange-date-selector>
+               </div>
+               <div *ngIf="isPaymentOrder" class="info-text">
+                  <span class="info-icon"></span>
+                  <div class="text">
+                     <div class="text-process-info">{{paymentOrder}}</div>
+                  </div>
+               </div>
+               <div class="buttonDiv">
+                  <app-bottom-button [text]="autoPay.messages.next" [disableButton]="!isValidDaySelected" [class.btn-disabled]="!isValidDaySelected" (click)="gotToNextStep()"></app-bottom-button>
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+</div>

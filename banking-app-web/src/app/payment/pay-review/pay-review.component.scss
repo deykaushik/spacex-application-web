@@ -1,0 +1,104 @@
+﻿@import './../../../styles/_mixins.scss';
+@import './../../../styles/_base.scss';
+
+.pay-review {
+   margin-bottom: 30px;
+   font-size: $label-size;
+   margin-top: 32px;
+    .tabular-data-col-2 {
+      tr {
+         td {
+            &:last-child{
+               word-break: normal!important;
+            }
+         }
+      }
+   }
+}
+
+.align-vertical-middle {
+   vertical-align: middle;
+}
+
+.pad-left {
+   padding-left: 10px;
+}
+
+:host::ng-deep {
+   .pay-review .repeat-block {
+      display: inline-flex;
+      width: 100%;
+
+      .repeat-frequency {
+         align-items: flex-end;
+         display: flex;
+      }
+   }
+}
+.detail-title {
+   padding: 0px !important;
+   color: $text-color-secondary;
+}
+.payment-declaration{
+      .template-content .ovelay-text{
+      font-size: $font-sm;
+      padding: 12px;
+      text-align: left;
+      display: block;
+   }
+   .logo-cntnr{
+      text-align: center;
+      padding: 0 0 30px 0;
+   }
+   .logo-lightbulbgreen {
+      @include svg-image-full-path($default-svg-image-path, 'lightbulbgreen', 35px, 35px);
+      display: inline-block;
+   }
+   .template-content{
+      margin-top: 0px; 
+      padding: 10px 30px 10px 30px;
+   }
+}
+@media (min-width: $media-xs) {
+   .pay-review {
+      margin-top: 26px;
+   }
+}
+
+@media (min-width: $media-sm) {
+   .pay-review {
+      font-size: $status-size;
+      margin-top: 21px;
+   }
+}
+
+@media (min-width: $media-lg) {
+   .pay-review {
+      margin-top: 7px;
+   }
+}
+
+@media (min-width: $media-xlg) {
+   .pay-review {
+      margin-top: 10px;
+   }
+}
+
+.cell-no{
+   vertical-align: bottom;
+}
+
+.linkTermsCondition {
+   text-decoration: none;
+   display: inline-block;
+   color: $text-color-link;
+   text-decoration: underline;
+   font-size: $font-sm;
+}
+
+.linkTermsCondition:hover {
+   cursor: pointer;
+}
+.left-padding-0{
+  padding-left: 0px !important;
+}

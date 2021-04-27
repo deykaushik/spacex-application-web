@@ -1,0 +1,37 @@
+@import './../../../../styles/_mixins.scss';
+@import './../../../../styles/_base.scss';
+
+.charges-fee-status {
+   font-size: $label-size;
+   background:  $container-bg;
+
+   .notice {
+      text-align: center;
+      color: $text-color-notice-block;
+      max-width: 370px;
+      line-height: 1.13;
+      font-size: $font-default-1;
+   }
+   @include main-content();
+   
+   @media (min-width: $media-sm) {
+      .charges-fee-status {
+         font-size: $status-size;
+      }
+      .half-btns{
+         .left{
+            width: 33%;
+         }
+         .right{
+            width: 33%;
+            margin-left: 30px;
+         }
+      }
+      .half-btns {
+         &.gd-form-row{
+            justify-content:normal;
+         }
+      }
+         
+   }
+}

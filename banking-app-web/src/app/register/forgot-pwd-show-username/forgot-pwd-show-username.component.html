@@ -1,0 +1,70 @@
+<div class="forgotContainer">
+   <div class="formInput">
+      <form #showUsernameForm="ngForm" class="gd-form">
+         <div *ngIf="hasUserName;else noUserName">
+            <div class="gd-form-row">
+               <h4 class="section-title darkText">Here's your Nedbank ID username.</h4>
+            </div>
+            <app-message-alert [showAlert]="serviceError != ''" [displayMessageText]="serviceError" [linkDisplayText]="errorLinkText"
+               [action]="alertAction" [alertType]="alertType" (onAlertLinkEmit)="onAlertLinkSelected($event)"></app-message-alert>
+            <div class="gd-form-row">
+               <div>Your Nedbank ID username is:</div>
+               <div class="boldText userText">{{userName}}</div>
+            </div>
+            <div class="half-btns gd-form-row">
+               <div class="left">
+                  <app-bottom-button [disableButton]="false" (clickEmitter)="navigateResetPassword($event)" [text]="'Reset your password'"
+                     [showLoader]='showLoader'></app-bottom-button>
+               </div>
+               <div class="right">
+                  <app-bottom-button [cssClass]="'btnWithBorder'" [disableButton]="false" (clickEmitter)="navigateLogon($event)" [text]="'Log in'"
+                     [alternateTheme]="true" [showLoader]='showLoaderLogin'></app-bottom-button>
+               </div>
+            </div>
+         </div>
+
+         <ng-template #noUserName>
+            <div class="gd-form-row">
+               <h4 class="section-title darkText">Nedbank ID username.</h4>
+            </div>
+            <app-message-alert [showAlert]="serviceError != ''" [displayMessageText]="serviceError" [linkDisplayText]="errorLinkText"
+               [action]="alertAction" [alertType]="alertType" (onAlertLinkEmit)="onAlertLinkSelected($event)"></app-message-alert>
+            <div class="gd-form-row">
+               An SMS with your Nedbank ID username has been sent to
+               <span class="boldText">{{ displayNumber | formatMobileNumber }}</span>. Please enter it below.</div>
+            <div class="gd-form-row">
+               <label for="username" class="active gd-sm-label">Nedbank ID Username</label>
+               <input id="username" name="username" autocomplete="off" [disabled]="showLoader || showLoaderLogin" minlength="7" maxlength="100"
+                  #username="ngModel" type="text" class="validate form-element" (ngModelChange)="onInputChanged($event)" [(ngModel)]="userName"
+                  appValidateInput />
+               <div *ngIf="username.invalid && (username.dirty || username.touched)" class="error-msg">
+                  <ng-container *ngIf="username.errors.required;else patternCheck">
+                     {{messages.requiredField}}
+                  </ng-container>
+                  <ng-template #patternCheck>
+                     <ng-container *ngIf="username.errors.pattern;else lengthCheck">
+                        <span>Incorrect format.</span>
+                     </ng-container>
+                  </ng-template>
+                  <ng-template #lengthCheck>
+                     <ng-container *ngIf="username.hasError('minlength') || username.hasError('maxlength');else defaultError">
+                        <span>Must be between 7 and 100 characters.</span>
+                     </ng-container>
+                  </ng-template>
+                  <ng-template #defaultError>Incorrect format</ng-template>
+               </div>
+            </div>
+            <div class="half-btns gd-form-row">
+               <div class="left">
+                  <app-bottom-button [disableButton]="!this.isValid || showLoaderLogin" (clickEmitter)="navigateResetPassword($event)" [text]="'Reset your password'"
+                     [showLoader]='showLoader'></app-bottom-button>
+               </div>
+               <div class="right">
+                  <app-bottom-button [cssClass]="'btnWithBorder'" [disableButton]="!this.isValid || showLoader" (clickEmitter)="navigateLogon($event)"
+                     [text]="'Log in'" [alternateTheme]="true" [showLoader]='showLoaderLogin'></app-bottom-button>
+               </div>
+            </div>
+         </ng-template>
+      </form>
+   </div>
+</div>

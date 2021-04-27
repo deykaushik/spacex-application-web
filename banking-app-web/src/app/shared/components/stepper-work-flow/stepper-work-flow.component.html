@@ -1,0 +1,15 @@
+<div (window:resize)="onResize()" class="overlay-modal">
+   <div class="overlay">
+      <app-navigation-bar [showErrorOnInvalidSteps]="showErrorOnInvalidSteps" [steps]="restructureSteps" [isVisible]="true" [currentStep]="currentStepIndex" (clickedStep)="onStepClick($event)"
+         (exit)="exitStepper()" [isMobile]="isMobile" [alternateExitButton]="alternateExitButton"></app-navigation-bar>
+         <div class="content">
+            <app-system-error [type]='sysErrorInstanceType.Modal'></app-system-error>
+         </div>
+      <div class="step-container" [class.hideStep]="hideStepContainer && isMobile">
+         <ng-template #stepViewRef appStepHost>
+         </ng-template>
+      </div>
+      <app-navigation-mobile [showMobileNav]="hideStepContainer" [currentStep]="currentStepIndex" (currentStepEmitter)="mobileStepClick($event)"
+         [steps]="restructureSteps"></app-navigation-mobile>
+   </div>
+</div>

@@ -1,0 +1,354 @@
+@import './../../../styles/_base.scss';
+@import './../../../styles/_mixins.scss';
+
+
+$icon-path: '../../../assets/svg/';
+$account-card-border-left: 4px;
+$success-bg: $color-success-bg;
+
+.link-response-msg {
+   font-weight: normal;
+   padding: 15px 10px;
+   width: 100%;
+   @include flexbox();
+   @include align-items(flex-start);
+
+   .left {
+      width: 50px;
+   }
+
+   .right {
+      margin-top: 10px;
+      cursor: pointer;
+      text-align: right;
+      white-space: nowrap;
+   }
+
+   .center, .right {
+      @include flex(auto);
+      padding: 0 5px;
+   }
+   .link{
+      color: $text-color-link;
+      cursor: pointer;
+   }
+   &.success-msg {
+      background-color: $success-bg;
+      color: $text-color-secondary;
+   }
+
+   &.error-msg {
+      background-color: $color-error-bg;
+   }
+}
+.empty-record{
+   font-size: $font-sm;
+   color: $text-color-primary;
+   padding: 0 20px;
+   margin-bottom: 20px;
+}
+
+.overlay-loader {
+   position: absolute;
+   left: 0px;
+   bottom: 0px;
+   right: 0px;
+   top: 0px;
+   z-index: 99;
+   width: 100%;
+   height: 100%;
+   color: $loader-color;
+   background: $color-no-records-background;
+   border-radius: inherit;
+   cursor: not-allowed;
+   &.opacity-5{
+      opacity: 0.46;
+   }
+}
+.msg-circle {
+   cursor: pointer;
+   border-radius: 50%;
+   height: 40px;
+   width: 40px;
+   font-size: 25px;
+   text-align: center;
+   display: inline-block;
+   line-height: 40px;
+   color: $text-color-accent-secondary;
+}
+
+.gd-checkbox label {
+   margin-top: 6px;
+}
+
+.balance-title {
+   color: $text-color-info;
+}
+
+.balance {
+   padding: 15px 0 0 0;
+   @include flexbox();
+   @include align-items(flex-start);
+
+   .left, .right {
+      @include flex(1);
+   }
+
+   .right {
+      text-align: right;
+   }
+
+   .type {
+      font-size: $font-sm;
+      color: $text-color-info;
+      margin-bottom: 5px;
+   }
+
+   .bal {
+      color: $text-color-primary;
+      margin-bottom: 0;
+   }
+
+   .dark {
+      font-weight: bold;
+   }
+}
+
+.linkable-account-card {
+   min-height: 150px;
+   @include flexbox();
+   @include align-items(flex-start);
+
+   .icon {
+      width: 30px;
+      height: 30px;
+      margin-right: 20px;
+   }
+
+   .content {
+      @include flex(1);
+   }
+}
+
+.separator {
+   height: 55px;
+   clear: both;
+}
+
+.account-name {
+   font-weight: $weight-medium;
+   text-align: left;
+   color: $text-color-secondary;
+   font-weight: bold;
+}
+
+.account-number {
+   letter-spacing: 1px;
+   text-align: left;
+   color: $text-color-info;
+   padding-top: 5px;
+}
+
+.limit-widget {
+   cursor: pointer;
+   position: relative;
+   .widget-loader{
+      width: 100%;
+      position: absolute;
+      left: 0px;
+      right: 0px;
+      top: 0px;
+      text-align: center;
+      z-index: 999;
+      bottom: 0px;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      padding-top: 2px;
+
+   }
+   &.active{
+      border-color: $form-element-border-active;
+      border-left-color: $container-bg;
+      border-right-color: $container-bg;
+   }
+   &.no-border{
+      border:none!important;
+   }
+   &.savings {
+      border-left: $account-card-border-left solid $color-savings;
+
+      .account-color {
+         color: $color-savings;
+      }
+   }
+
+   &.current {
+      border-left: 4px solid $color-current;
+
+      .account-color {
+         color: $text-color-accent-secondary;
+      }
+   }
+
+   &.credit-card {
+      border-left: 4px solid $color-credit-card;
+
+      .account-color {
+         color: $text-color-error;
+      }
+   }
+
+   &.loan {
+      border-left: 4px solid $color-loan;
+
+      .account-color {
+         color: $text-color-warning;
+      }
+   }
+
+   &.investment {
+      border-left: 4px solid $color-investment;
+
+      .account-color {
+         color: $color-investment;
+      }
+   }
+
+   &.default {
+      border-left: 4px solid $color-account-default;
+
+      .account-color {
+         color: $color-account-default;
+      }
+   }
+}
+
+.linked-account-message {
+   padding-left: 10px;
+   padding-right: 15px;
+}
+
+.profile-container {
+   .profile-limit-header {
+      font-weight: bold;
+      text-align: left;
+      color: $text-color-primary;
+      padding: 0;
+      margin: 0 0 10px 10px;
+   }
+
+   .icon-field {
+      margin-bottom: 15px;
+
+      .icon {
+         width: 30px;
+         height: 30px;
+         display: inline-block;
+         right: 5px;
+         top: 10px;
+         cursor: pointer;
+      }
+   }
+}
+
+.limit-widget {
+   float: left;
+   margin: 10px 0;
+   width: 100%;
+   min-height: 81px;
+   padding: 15px;
+   background-color: $container-bg;
+
+   &.no-records-found {
+      text-align: center;
+      padding-top: 27px;
+      background-color: $color-no-records-background;
+      cursor: default;
+   }
+
+   .widget-content {
+      padding: 20px 25px;
+   }
+}
+
+.limit-widget {
+   &.link-button {
+      clear: both;
+      background-color: transparent;
+      padding: 0px;
+      margin-top: 60px;
+   }
+}
+
+.success-msg-line {
+   padding-left: 10px;
+}
+
+@media (min-width: $media-sm) {
+   .link-error {
+      width: 94%;
+      margin: 10px;
+   }
+   .limit-widget {
+      width: 94%;
+      margin: 10px;
+      &.active{
+         border-color: $form-element-border-active;
+      }
+      &.no-records-found {
+         text-align: center;
+         padding-top: 27px;
+      }
+   }
+   .empty-record{
+      padding: 0 10px;
+      font-size: $status-size;
+   }
+}
+
+@media (min-width: $media-md) {
+   .link-error {
+      width: 96%;
+      margin: 10px;
+   }
+
+   .limit-widget {
+      width: 47%;
+
+      &.no-records-found {
+         width: 47%;
+         text-align: center;
+         padding-top: 27px;
+      }
+   }
+}
+
+@media (max-width: $media-sm - 1) {
+   .link-error {
+      width: 100%;
+   }
+
+   .center {
+      padding-left: 5px;
+   }
+
+   .link-response-msg {
+      width: 100%;
+   }
+}
+:host::ng-deep{
+   .radio-button-list{
+      padding: 5px 0px 0px 0px;
+   }
+   .widget-loader{
+      .spinner-container{
+         width: 64px;
+         margin-top: 6px;
+         circle{
+            stroke-width: 2px!important;
+            stroke: $text-color-info !important;
+        }
+      }
+   }
+}

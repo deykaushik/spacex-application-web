@@ -1,0 +1,113 @@
+@import '../../../../styles/_base.scss';
+@import '../../../../styles/_mixins.scss';
+
+$svg-relative-part: '../../../../assets/svg';
+
+.app-greenbacks-confirmation {
+   .overlay.header-fixed {
+      .container-header {
+         padding: 8px 4px;
+         .btn-cntnr {
+            #ovrly-cancel {
+              display: none;
+            } 
+          }
+      }
+      .logo-cntnr {
+         .logo {
+            padding-top: 5%;
+            width: 30px;
+         }
+      }
+   }
+   .confirmation-container {
+      height: 100%;
+      margin-top: 40px;
+      text-align: left;
+      .header {
+         color: $text-color-accent-secondary;
+         font-weight: $weight-bold;
+         font-size: $font-md;
+         margin: auto;
+         max-width: 610px;
+         .success {
+            @include svg-image-full-path($svg-relative-part,'green-success');
+            width: 24px;
+            height: 24px;
+         }
+         .message {
+            margin-left: 34px;
+            margin-right: 15px;
+            .block-text:nth-child(2) {
+               margin-top: 10px;
+            }
+         }
+      }
+      .main-section {
+         color: $text-color-primary;
+         font-size: $font-default;
+         letter-spacing: 0;
+         line-height: 1.5;
+         margin: auto;
+         margin-top: 16px;
+         max-width: 400px;
+         .block-text:nth-child(2) {
+            margin-top: 42px;
+         }
+         .card-number {
+            margin-top: 10px;
+         }
+         .block-text {
+            display: block;
+            &.disclaimer {
+               padding-top: 1.5rem;
+               font-weight: $weight-bold;
+            }
+         }
+      }
+      .bottom {
+         max-width: 400px;
+         margin: auto;
+         margin-top: 40px;
+      }
+   }
+   @media (min-width: $media-sm) {
+      .overlay.header-fixed {
+         .container-header {
+            padding: 20px 10px;
+         }        
+         .logo-cntnr {
+            .logo {
+               width: 40px;
+               height: 40px;
+               padding-top: 0;
+            }
+         }
+      }  
+      .confirmation-container {
+         margin-top: 62px;
+         .header {
+            font-size: $font-xlg;
+            .success {
+               display: inline-block;
+               margin-left: 15px;
+               width: 32px;
+               height: 32px;
+            } 
+            .message {
+               margin-left: 62px;
+               margin-right: 58px;
+               .block-text:nth-child(2) {
+                  margin-top: 5px;
+               }
+            }
+         }
+         .main-section {
+            margin-top: 22px;
+         }
+         .bottom {
+            margin-top: 60px;
+         }
+      }
+   }
+}

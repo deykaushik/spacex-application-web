@@ -1,0 +1,30 @@
+﻿<div class='trans-container' [class.is-skeleton-loading]='skeletonMode' [ngClass]="{'showBorder':showBorder}">
+    <div class="row">
+        <div *ngIf="skeletonMode" class="col-md-1">
+            <span [innerHtml]="''| skeletonLoader:skeletonMode:'skeleton-icon'"></span>
+        </div>
+        <div *ngIf="skeletonMode" class="col-md-8" [innerHTML]="''| skeletonLoader:skeletonMode">
+        </div>
+        <div class="col-md-12" *ngIf="!skeletonMode">
+            <div class="re-pay">
+                <div class="flex-display" (click)="openTransaction();sendEvent('click_on_specific_scheduled_payment');">
+                    <div class="icon icon-link">
+                        <span [class]="scheduleTransactionDetail?.iconClass"></span>
+                    </div>
+                    <div class="trans-description">
+                        <span [innerHTML]="scheduleTransactionDetail | formatSchedulePayment"></span>
+                        <div *ngIf="scheduleTransactionDetail.transaction.reoccurrenceItem">
+                            <span class="recurrence-msg" [innerHTML]="scheduleTransactionDetail | formatSchedulePayment:true | skeletonLoader:skeletonMode"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="re-pay-btn" *ngIf="showEditButton">
+                    <button class="btn gd-ghost-btn" (click)="editSchedule.emit(scheduleTransactionDetail)">
+                     <span class="icon edit-icon"></span>
+                     <span class="text">Edit</span>
+                 </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

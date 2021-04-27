@@ -1,0 +1,61 @@
+<div class="buy-status">
+   <div class="work-flow final-status">
+      <app-circle-icon-heading [heading]="this.isNoResponseReceived ?labels.somethingWentWrong : heading" [successful]="successful"></app-circle-icon-heading>
+      <div class="block">
+         <div class="steps-track"></div>
+         <div class="steps-block gd-form">
+            <table class="tabular-data-col-2 gd-form-row">
+               <tbody>
+                  <tr>
+                     <td>{{labels.fundTripLabels.paymentDate}}</td>
+                     <td>{{paymentDate|date:dateFormat}}</td>
+                  </tr>
+                  <tr>
+                     <td colspan="2">&nbsp;</td>
+                  </tr>
+                  <tr>
+                     <td>{{labels.fundTripLabels.fromAccount}}</td>
+                     <td>{{paymentDetailsVm.toAccount.nickname}}-{{paymentDetailsVm.toAccount.accountNumber}}</td>
+                  </tr>
+                  <tr>
+                     <td>{{labels.fundTripLabels.toAccount}}</td>
+                     <td>{{getQuoteVm.clientDetails.fromAccount.AccountName}}-{{getQuoteVm.clientDetails.fromAccount.AccountNumber}}</td>
+                  </tr>
+                  <tr>
+                     <td colspan="2">&nbsp;</td>
+                  </tr>
+                  <tr>
+                     <td>{{labels.fundTripLabels.amount}}</td>
+                     <td>{{paymentReviewVm.totalAmount.amount | amountTransform: amountPipeConfig}}</td>
+                  </tr>
+                  <tr>
+                     <td>{{labels.fundTripLabels.yourReference}}</td>
+                     <td>{{paymentReviewVm.senderReference}}</td>
+                  </tr>
+                  <tr>
+                     <td>{{labels.fundTripLabels.referenceNumber}}</td>
+                     <td>{{refId}}</td>
+                  </tr>
+               </tbody>
+            </table>
+            
+            <div class="gd-form-row no-print" *ngIf="successful">
+            
+                  <app-bottom-button (clickEmitter)="navigateToTrips()" [disableButton]="false" [text]="'Done'"></app-bottom-button>
+            </div>
+            <div class="half-btns gd-form-row no-print" *ngIf="!successful">
+               <div class="left">
+                  <app-bottom-button [disableButton]="disableRetryButton || requestInprogress" [showLoader]='isButtonLoader' (clickEmitter)="retryPayment()"
+                     [text]="'Try again'"></app-bottom-button>
+               </div>
+               <div class="right">
+                  <app-bottom-button [disableButton]="requestInprogress" (clickEmitter)="navigateToTrips()" [alternateTheme]="true" [text]="this.isNoResponseReceived? labels.cancelText : labels.cancelPurchase"></app-bottom-button>
+               </div>
+            </div>
+            <div class="gd-error no-print" *ngIf="errorMessage">
+               <span>{{errorMessage}}</span>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

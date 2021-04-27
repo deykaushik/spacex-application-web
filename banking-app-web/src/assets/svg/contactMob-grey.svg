@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 25 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+    <title>Icons/ContactIcon</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="square">
+        <g id="Icons/ContactIcon" stroke="#808080">
+            <g id="Contact-Icon">
+                <path d="M17.5611814,16.4864156 L14.2684599,19.7791371 L5.4878692,10.9985464 L8.78059072,7.7058249 L3.29272152,2.2179557 L0,5.51067722 C0,16.4216588 8.84534758,25.2670063 19.7563291,25.2670063 L23.0490506,21.9742848 L17.5611814,16.4864156 Z" id="Shape" fill="none"></path>
+                <path d="M14.6150622,0.889313678 C20.0711017,0.889313678 24.4932267,5.31143868 24.4932267,10.7674782" id="Shape"></path>
+                <path d="M14.6150622,6.20388175 C17.6454636,6.20388175 20.1029314,8.66134957 20.1029314,11.6917509" id="Shape"></path>
+            </g>
+        </g>
+    </g>
+</svg>

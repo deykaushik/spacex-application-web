@@ -1,0 +1,78 @@
+<div class="detail-debit-order">
+   <ng-container *ngIf="selectedAccountDetails?.creditorName">
+      <p id="lbl-creditor-name" class="label-do-detail">{{labels.creditorName}}</p>
+      <p id="val-creditor-name" class="value-do-detail" [innerHtml]="selectedAccountDetails?.creditorName | skeletonLoader:isSkeletonMode"></p>
+   </ng-container>
+
+   <ng-container *ngIf="selectedAccountDetails?.installmentAmount">
+      <p id="lbl-installment-amount" class="label-do-detail">{{labels.installmentAmount}}</p>
+      <p id="val-installment-amount" class="value-do-detail" [innerHtml]="selectedAccountDetails?.installmentAmount | amountTransform: amountPipeConfig | skeletonLoader:isSkeletonMode"></p>
+   </ng-container>
+
+   <ng-container *ngIf="selectedAccountDetails?.accountDebited">
+      <p id="lbl-account-debited" class="label-do-detail">{{labels.accountDebited}}</p>
+      <p id="val-account-debited" class="value-do-detail" x-ms-format-detection="none" [innerHtml]="selectedAccountDetails?.accountDebited | skeletonLoader:isSkeletonMode"></p>
+   </ng-container>
+
+   <ng-container *ngIf="selectedAccountDetails?.lastDebitDate">
+      <p id="lbl-last-debit-date" class="label-do-detail">{{labels.lastDebitDate}}</p>
+      <p id="val-last-debit-date" class="value-do-detail" [innerHtml]="selectedAccountDetails?.lastDebitDate| date: dateFormat | skeletonLoader:isSkeletonMode"></p>
+   </ng-container>
+
+   <ng-container *ngIf="selectedAccountDetails?.stoppedDate && selectedAccountDetails?.debitOrderType === debitOrder.orderType.stopped">
+      <p id="lbl-last-debit-date" class="label-do-detail">{{labels.stoppedDate}}</p>
+      <p id="val-last-debit-date" class="value-do-detail" [innerHtml]="selectedAccountDetails?.stoppedDate| date: dateFormat | skeletonLoader:isSkeletonMode"></p>
+   </ng-container>
+
+   <ng-container *ngIf="selectedAccountDetails?.frequency">
+      <p id="lbl-frequency" class="label-do-detail">{{labels.frequency}}</p>
+      <p id="lbl-frequency" class="value-do-detail" [innerHtml]="selectedAccountDetails?.frequency | skeletonLoader:isSkeletonMode"></p>
+   </ng-container>
+
+   <ng-container *ngIf="selectedAccountDetails?.contractReferenceNr">
+      <p id="lbl-contract-reference-nr" class="label-do-detail">{{labels.contractRefNr}}</p>
+      <p id="val-contract-reference-nr" class="value-do-detail" [innerHtml]="selectedAccountDetails?.contractReferenceNr | skeletonLoader:isSkeletonMode"></p>
+   </ng-container>
+
+   <ng-container *ngIf="showReverseLink">
+      <div class="action-link">
+         <div class="link" (click)="openReverseDebitOrderOverlay(); sendEvent('click_on_reverse_icon_debit_order', 'Existing Debit orders');">{{labels.reverseDebitOrderLink}}</div>
+      </div>
+   </ng-container>
+
+   <ng-container *ngIf="showStopOrderLink && stopDebitFeatureAvailable">
+      <div class="action-link">
+         <div class="link" (click)="openStopDebitOrderOverlay()">{{labels.stopDebitOrderLink}}</div>
+      </div>
+   </ng-container>
+
+   <ng-container *ngIf="showCancelStopOrderLink && cancelStopOrderFeatureAvailable">
+      <div class="action-link">
+         <div class="link" (click)="openCancelStopOverlay()">{{labels.cancelStopLink}}</div>
+      </div>
+   </ng-container>
+</div>
+
+<app-colored-overlay [isVisible]="cancelStopDebitOrderVisible" [alternate]="true" [altButtonText]="overlayText" [template]="cancelStopDebitOrderTemplate"
+   (onHide)="hideCancelStopDebitOrderPopup()">
+   <ng-template #cancelStopDebitOrderTemplate>
+      <app-cancel-stop-order [orderDetails]="selectedAccountDetails" (changeButtonText)="changeBtnText($event)" (onHide)="hideCancelStopDebitOrderPopup($event)"
+         [accountType]="accountType"></app-cancel-stop-order>
+   </ng-template>
+</app-colored-overlay>
+
+<app-colored-overlay [isVisible]="stopDebitOrderVisible" [alternate]="true" [altButtonText]="overlayText" [template]="stopDebitOrderTemplate"
+   (onHide)="hideStopDebitOrderPopup()">
+   <ng-template #stopDebitOrderTemplate>
+      <app-stop-debit-order [orderDetails]="selectedAccountDetails" (changeButtonText)="changeBtnText($event)" (onHide)="hideStopDebitOrderPopup($event)"
+         [accountType]="accountType"></app-stop-debit-order>
+   </ng-template>
+</app-colored-overlay>
+
+<app-colored-overlay [isVisible]="reverseDebitOrderVisible" [alternate]="true" [altButtonText]="overlayText" [template]="disputeOrderTemplate"
+   (onHide)="hideDisputeOrderPopup(); sendEvent('reverse_debit_order_click_on_cancel');">
+   <ng-template #disputeOrderTemplate>
+      <app-reverse-order [orderInfo]="selectedAccountDetails" (onHide)="hideDisputeOrderPopup($event)" (changeButtonText)="changeBtnText($event)"
+         (stopDebitOrderClicked)="goToStopDebitOrder($event)" [accountType]="accountType"></app-reverse-order>
+   </ng-template>
+</app-colored-overlay>

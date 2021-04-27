@@ -1,0 +1,139 @@
+@import './../../../../styles/_mixins.scss';
+@import './../../../../styles/_base.scss';
+.summary{
+   @include flexbox();
+   @include justify-content(center);
+   .summary-section{
+      margin-top: 60px;
+      width: 90%;
+      .section-title{
+         font-family: $font-markpro-medium;
+         font-weight: $weight-medium;
+         font-size: $lg-heading-size;
+         color: $text-color-secondary;
+      }
+      .section-body-1{
+         margin-top: 30px;
+         .section-part-title{
+            font-family: $font-markpro-medium;
+            font-weight: $weight-medium;
+            font-size: $font-md;
+            color: $text-color-secondary;
+            display: none;
+         }
+         .section {
+            margin-top: 31px;
+            .section-head {
+               @include flexbox();
+               .head {
+                  font-family: $font-markpro-medium;
+                  font-weight: $weight-medium;
+                  font-size: $font-md;
+                  color: $text-color-primary;
+                  width: 90%;  
+               }
+               .edit {
+                  font-family: $font-markpro;
+                  font-weight: normal;
+                  font-size: $font-default;
+                  color: $secondary-color;
+                  border-bottom: solid 1px $color-greenMedium;
+                  cursor: pointer;
+               }
+            }
+            .section-body {
+               width: 128%;
+               .content {
+                  width: 90%;
+                  @include flexbox();
+                  font-family: $font-markpro;
+                  font-weight: normal;
+                  color: $text-color-primary;
+                  border-bottom: 1px solid $divider-secondary;
+                  padding: 25px 0px 16px 0px;;
+                  .content-name {
+                     text-align: left;
+                     font-size: $font-default;
+                     width: 43%;
+                  }
+                  .content-value {
+                     text-align: right;
+                     font-size: $font-sm;
+                     width: 43%;
+                     @include flexbox();
+                     @include flex-direction(column);
+                     .value{
+                        display: block;
+                        padding-bottom: 6px;
+                        &.email {
+                           word-wrap: break-word;
+                        }
+                     }
+                     .value &.plastic-desc {
+                        font-family: $font-markpro-medium;
+                     }
+                     .value &.country {
+                        @include flex-direction(row);
+                     }
+                     &.countries {
+                        @include flex-direction(row);
+                        flex-flow: wrap;
+                        justify-content: flex-end;
+                     }
+                  }
+               }
+            }
+         }
+      }
+      .bottom-btn {
+         margin-top: 60px;
+         margin-bottom: 35px;
+      }
+   }
+}
+
+@media (min-width: $media-xs-up) {
+   .summary{
+      .summary-section{
+         margin-top: 60px;
+         width: 400px;
+         .section-title{
+            font-size: $lg-heading-size;
+         }
+         .section-body-1{
+            margin-top: 30px;
+            .section-part-title{
+               display: inline;
+            }
+            .section {
+               margin-top: 61px;
+               .section-head {
+                  width: 100%;
+                  .edit {
+                   width: 9%;
+                   margin-left: 42%;
+                   position: relative;
+                  }
+                  .head {
+                     width: 50%;
+                  }
+               }
+               .section-body {
+                  .content {
+                     width: 460px;
+                     .content-name {
+                        width: 43%;
+                     }
+                     .content-value {
+                        width: 43%;
+                     }
+                     &.countries {
+                        margin-left: 7%;
+                     }
+                  }
+               }
+            }
+         }
+      }
+   }
+}

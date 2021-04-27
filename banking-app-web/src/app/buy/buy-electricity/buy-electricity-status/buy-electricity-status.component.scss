@@ -1,0 +1,47 @@
+﻿@import './../../../../styles/_mixins.scss';
+@import './../../../../styles/_base.scss';
+
+
+$svg-path: './../../../../assets/svg/';
+$pay-status-bg: $container-bg;
+
+
+.pay-status {
+   font-size: $label-size;
+   background: $pay-status-bg;
+   @include main-content();
+   .work-flow {
+      .downlaod-icon {
+         @include svg-image-full-path($svg-path,'green-download', 100%, 100%);
+      }
+
+      .download {
+         color: $text-color-link;
+         cursor: pointer;
+
+         .icon, .text {
+            display: inline-block;
+            vertical-align: middle;
+         }
+
+         .icon {
+            @include svg-image-full-path($svg-path,'green-download', 100%, 100%);
+            width: 30px;
+         }
+      }
+   }
+
+   .share-receipt-padding {
+      padding: 20px 0px;
+   }
+}
+
+.message-margin-bottom {
+   margin-bottom: 30px;
+}
+
+@media (min-width: $media-sm) {
+   .pay-status {
+      font-size: $status-size;
+   }
+}

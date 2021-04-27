@@ -1,0 +1,117 @@
+﻿@import './../../../../styles/_base.scss';
+@import './../../../../styles/_mixins.scss';
+
+$svg-path: './../../../../assets/svg/';
+
+.block-form {
+   max-width: 400px;
+   margin: 0 auto;
+   padding: 0 20px;
+   .title {
+      font-size: $md-heading-size;
+      @include markpro-medium();
+      margin: 40px auto;
+      color: $text-color-secondary;
+      text-align: center;
+   }
+
+   .gd-basic-dropdown {
+      .dropdown-place {
+         .text {
+            line-height: 15px;
+         }
+
+         .reason-loader {
+            position: absolute;
+            height: 20px;
+            top: 12px;
+            cursor: not-allowed;
+         }
+      }
+      .dropdown-menu {
+         li {
+            cursor: pointer;
+            padding: 10px 15px;
+            line-height: 20px;
+         }
+      }
+   }
+   .info-container {
+      background-color: $info-container-bg;
+      margin-top: 30px;
+      margin-bottom: 40px;
+      padding: 22px 14px;
+
+      .info-msg {
+         margin-left: 35px;
+
+         .dispute-notes {
+            padding-left: 18px;
+
+            li {
+               span {
+                  position: relative;
+                  left: 10px;
+               }
+            }
+         }
+      }
+
+      .icon {
+         float: left;
+         @include svg-image-full-path($svg-path, 'information', 23px, 23px);
+      }
+   }
+
+   .reason-warning {
+      margin-top: 15px;
+
+      .btn-replace {
+         color: $secondary-btn-color;
+      }
+   }
+
+   .description-row {
+      padding-top: 20px;
+
+      .description {
+         line-height: 20px;
+         resize: none;
+         height: auto;
+         padding: 10px 15px 15px 10px;
+      }
+
+      .feedback-info {
+         float: right;
+         color: $text-color-info;
+      }
+
+      .error-msg {
+         color: $text-color-error;
+         font-size: $font-sm;
+         margin: 5px 0 0;
+         position: relative;
+         padding-left: 10px;
+         
+         &::before {
+            content: '* ';
+            position: absolute;
+            left: 0;
+         }
+      }
+   }
+}
+
+@media screen and (min-width: $media-sm) {
+   .block-form {
+      max-width: 450px;
+   }
+}
+
+@media screen and (min-width: $media-md-up) {
+   .block-form {
+      .title {
+         font-size: $md-heading-size;
+      }
+   }
+}

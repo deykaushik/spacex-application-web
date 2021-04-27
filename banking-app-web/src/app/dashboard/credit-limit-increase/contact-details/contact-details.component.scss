@@ -1,0 +1,61 @@
+@import './../../../../styles/_mixins.scss';
+@import './../../../../styles/_base.scss';
+.contact-details {
+   @include flexbox();
+   @include justify-content(center);
+   .section-parts {
+      width: 100%;
+      margin: 20px;
+      .section-title {
+         margin-bottom: 30px;
+         .main {
+            display: block;
+            font-family: $font-markpro-medium;
+            font-weight: 500;
+            font-size: $font-md;
+            color: $text-color-secondary;
+         }
+         .sub {
+            font-family: $font-markpro;
+            font-size: $font-md;
+            color: $text-color-secondary;
+            margin-right: 70px;
+            display: block;
+         }
+      }
+      .section-form {
+         .contact-number {
+            margin-bottom: 60px;
+            .gd-sm-label {
+               font-family: $font-markpro;
+               font-weight: 400;
+               font-size: $label-size;
+               color: $text-color-primary;
+            }
+         }
+      }
+   }
+}
+
+@media(min-width: $media-xs-up) {
+   .contact-details {
+      .section-parts {
+         width: 400px;
+         margin: 60px 0;
+         .section-title {
+            .main {
+               font-size: $lg-heading-size;
+            }
+            .sub {
+               width: 400px;
+               font-size: $para-title-size;
+            }
+         }
+         .section-form {
+            .bottom-button {
+               margin-top: 60px;
+            }
+         }
+      }
+   }
+}

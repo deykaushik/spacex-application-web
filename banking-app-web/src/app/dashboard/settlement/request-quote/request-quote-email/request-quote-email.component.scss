@@ -1,0 +1,158 @@
+@import './../../../../../styles/_base.scss';
+@import './../../../../../styles/_mixins.scss';
+$icon-path: '../../../../../assets/svg';
+$icon-trash: 'Trash';
+$icon-add: 'Add';
+$icon-tick: 'tick_circle';
+$icon-error: 'close-circle-red';
+.quote-container {
+   padding: 0 20px;
+   .info-container {
+      margin: 40px 0 20px 0;
+      text-align: center;
+      .section-title {
+         @include markpro-medium();
+         font-size: $section-title-secondary-size-mob;
+         line-height: 1.25;
+         color: $text-color-secondary;
+         margin-bottom: 30px
+      }
+      .section-sub-title {
+         line-height: 1.2;
+         font-size: 20px;
+         letter-spacing: 0
+      }
+   }
+   .input-container {
+      .input-email-container {
+         margin-bottom: 40px;
+      }
+      .input-email {
+         color: $text-color-secondary;
+         line-height: 1.5;
+      }
+      .icon-block {
+         margin-left: 18px;
+      }
+      .ng-valid {
+         border-color: $form-element-border;
+      }
+   }
+}
+
+.header-row {
+   margin: 0 auto;
+   .status-block {
+      margin: 20px;
+      display: flex;
+      flex-direction: column;
+      .status-icon-text {
+         margin-bottom: 30px;
+         .icon-field {
+            width: auto;
+            .icon {
+               display: inline-block;
+               &.success {
+                  @include svg-image-full-path($icon-path, $icon-tick, 24px, 24px);
+               }
+               &.error {
+                  @include svg-image-full-path($icon-path, $icon-error, 24px, 24px);
+               }
+            }
+         }
+         .title {
+            font-size: $section-title-secondary-size-mob;
+            @include markpro-medium();
+            padding: 0 0 0 10px;
+            line-height: normal;
+            letter-spacing: normal;
+            &.success {
+               color: $text-color-accent-secondary;
+            }
+            &.error {
+               color: $text-color-error;
+            }
+         }
+      }
+      .status-info-block {
+         margin-bottom: 40px;
+         .status-info-msg {
+            margin: 0 0 20px 0;
+            line-height: 1.5;
+            letter-spacing: normal;
+         }
+         .recipients-list {
+            font-size: $section-title-secondary-size-mob;
+            color: $text-color-message-block-content;
+            .recipient-lbl {
+               @include markpro-bold();
+               margin-bottom: 20px;
+            }
+            .recipient-email {
+               display: block;
+            }
+         }
+      }
+   }
+}
+
+@media (min-width: $media-sm) {
+   .quote-container {
+      float: none;
+      margin: 0 auto;
+      padding: 0;
+      max-width: 485px;
+      .info-container {
+         margin-top: 56px;
+         margin-bottom: 31px;
+         .section-title {
+            font-size: $page-title-size-mob;
+            margin-bottom: 66px;
+         }
+      }
+      .input-container {
+         margin: 0 42px;
+         .input-email-container {
+            margin-bottom: 60px;
+         }
+      }
+   }
+   .header-row {
+      max-width: 666px;
+      .status-block {
+         margin: 34px 15px;
+         .status-icon-text {
+            margin-bottom: 43px;
+            .icon-field {
+               width: auto;
+               .icon {
+                  &.success {
+                     @include svg-image-full-path($icon-path, $icon-tick, 32px, 32px);
+                  }
+                  &.error {
+                     @include svg-image-full-path($icon-path, $icon-error, 32px, 32px);
+                  }
+               }
+            }
+            .title {
+               padding: 0 0 0 15px;
+               font-size: $section-title-size;
+            }
+         }
+         .status-info-block {
+            margin: 0px 118px 40px;
+            .status-info-msg {
+               margin-bottom: 30px;
+            }
+            .recipients-list {
+               .recipient-email {
+                  display: inline;
+               }
+            }
+         }
+         .btn-try-again {
+            margin: 0 118px 30px
+         }
+      }
+   }
+}

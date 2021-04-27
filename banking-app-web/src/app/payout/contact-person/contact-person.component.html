@@ -1,0 +1,63 @@
+<div class="contact-person-container">
+   <div class="inner-container">
+      <section class="row">
+         <div class="page-title page-padding">
+            <span class="title-label" [innerHtml]="contactConstants.title"></span>
+         </div>
+         <div class="divider"></div>
+         <div class="page-sub-title page-padding">
+            <span class="subtitle-label" [innerHtml]="contactConstants.subtitle"></span>
+         </div>
+         <div class="type page-padding">
+            <app-radio-button-list [radioList]="contactPersonType" [isVertical]="true" [selectedValue]="selectedVal" [groupName]="contactPersonDetail.contactType"
+               (onSelectionChange)="onContactTypeChange($event)">
+            </app-radio-button-list>
+            <div class="me-block">
+               <span class="my-registered-email">{{registeredEmail}}</span>
+            </div>
+         </div>
+         <form #contactPersonForm="ngForm" id="contact-person-form" class="gd-form contact-person-form page-padding" [class.is-skeleton-loading]='skeletonMode'>
+            <fieldset [disabled]="isMyselfSelected">
+               <div class="gd-form-row">
+                  <label for="contact-person-name" class="active gd-sm-label" [innerHtml]="contactConstants.nameAndSurName"></label>
+                  <input type="text" id="contact-person-name" minlength="1" autocomplete="off" name="name" class="validate" [(ngModel)]="contactPersonName"
+                     (ngModelChange)="onContactPersonNameChange($event)" [class.error]="!isContactPersonNameValid" #name="ngModel"
+                     appValidateRequired appCheckBlur [disabled]="isMyselfSelected">
+                  <div *ngIf="(name.invalid && (name.dirty || name.touched) && name.isBlurred)" class="error-form-msg">
+                     <span *ngIf="name.errors.required" [innerHtml]="contactMessages?.enterName">
+                     </span>
+                  </div>
+               </div>
+               <div class="gd-form-row">
+                  <label class="gd-sm-label" for="contact-number" [innerHtml]="contactConstants.contactNumber"></label>
+                  <input id="contact-number" autocomplete="off" type="tel" class="validate" #contactNo="ngModel" [(ngModel)]="contactPersonNumber"
+                     name="contactNo" minlength="12" maxlength="12" [pattern]="mobilePattern" appValidateRequired appCheckBlur
+                     [class.error]="!isContactPersonNumberValid" (keydown)="onContactNumberKeyDown($event)" (input)="onContactNumberChange($event.target.value)" [disabled]="isMyselfSelected">
+                  <div *ngIf="(contactNo.invalid && (contactNo.dirty || contactNo.touched) && contactNo.isBlurred)" class="error-form-msg">
+                     <span *ngIf="contactNo.errors?.required" [innerHtml]="contactMessages?.enterContactNumber"></span>
+                     <span *ngIf="contactNo.errors?.minlength" [innerHtml]="contactMessages?.enterValidContactNumber"></span>
+                  </div>
+               </div>
+               <div class="gd-form-row">
+                  <label class="gd-sm-label" for="contact-email" [innerHtml]="contactConstants.emailAddress"></label>
+                  <input id="contact-email" type="text" class="validate" #contactEmail="ngModel" [(ngModel)]="contactPersonEmail" name="contactEmail"
+                     minlength="1" [pattern]="patterns.email" appValidateRequired [class.error]="!checkEmailValid(contactPersonForm, 'contactEmail')"
+                     [class.error]="!checkEmailValid(contactPersonForm, 'contactEmail')" [disabled]="isMyselfSelected">
+                  <div *ngIf="(contactEmail.invalid && (contactEmail.dirty || contactEmail.touched))" class="error-form-msg">
+                     <span *ngIf="contactEmail.errors?.required" [innerHtml]="contactMessages?.enterContactEmail"></span>
+                     <span *ngIf="contactEmail.errors?.pattern">*{{constantMessages?.invalidEmail}}</span>
+                  </div>
+               </div>
+            </fieldset>
+         </form>
+         <div class="nextBtn">
+            <button class="gd-primary-btn btn-replace gd-sm-label" (click)="validateContactPersonForm(contactPersonForm)">{{contactConstants.next}}</button>
+         </div>
+      </section>
+   </div>
+</div>
+<app-small-overlay [template]="discardOverlay" alternate='true' *ngIf="isDiscardChangesPopup">
+   <ng-template #discardOverlay>
+      <app-popup-discard-stepper [showPopup]="isDiscardChangesPopup" (userActionClick)="discardChangesPopup($event)"></app-popup-discard-stepper>
+   </ng-template>
+</app-small-overlay>

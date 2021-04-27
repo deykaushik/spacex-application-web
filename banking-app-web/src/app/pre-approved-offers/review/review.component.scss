@@ -1,0 +1,329 @@
+@import '../../../styles/_base.scss';
+@import '../../../styles/_mixins.scss';
+$svg-path: './../../../assets/svg';
+
+.spinner-container {
+   position: fixed;
+   background-color: rgba(255, 255, 255, 0.7);
+   height: 100%;
+   width: 100%;
+   top: 0;
+   left: 0;
+   z-index: 1000;
+   transition: all 0.5s linear;
+   transition-delay: 0s;
+   .spinner {
+      width: 40px;
+      height: 40px;
+      margin: 90% 0 0 40%;
+   }
+}
+
+.container{
+   width: 100%;
+   padding: 40px 0;
+   .sub-conatiner{
+       margin: 0px 20px 0 20px;
+       @include flexbox();
+       @include flex(1);
+       flex-direction: column;
+      .heading {
+         font-size: $main-title-size-mob;
+         color: $color-menuMobileFull;
+      }
+
+      .sub-heading {
+         font-size: $message-size;
+         font-weight: 300;
+      }
+        .divider-spacer {
+            @include spacer(10px)
+      }
+
+      .monthly-repayment-container{
+         .repayment-title{
+            font-size: 18px;
+            font-weight: bold;
+            color: $color-menuMobileFull;
+         }
+      }
+      .monthly-repayment-container{
+
+         .repayment-total-spacer{
+            @include spacer(27px)
+         }
+         table{
+             width: 100%;
+         }
+            .tooltip-question{
+
+               .tooltip-header-container {
+                  @include flexbox();
+
+                  .close-icon-container {
+                     @include flex(1);
+                     text-align: right;
+
+                   .close-icon {
+                        cursor: pointer;
+                        color: $color-greyLightDark;
+                     }
+                  }
+               }
+
+               .tooltip-spacer{
+                  @include spacer(6px);
+               }
+            }
+
+            .tooltip-question::after {
+               content: "";
+               position: absolute;
+               border-left: 12px solid transparent;
+               border-right: 12px solid transparent;
+               border-bottom: 11px solid $tooltip-border-bottom;
+               transform: rotate(180deg);
+               left: 170px;
+               bottom: -9px;
+            }
+
+            .plan-detail-info-name {
+               font-size: 16px;
+               padding-top: 14px;
+               color: $color-brownishGrey;
+
+               .tooltip-icon {
+                  @include svg-image-full-path($svg-path, '/help-gray', 24px, 24px);
+                  float: right;
+                padding-right: 35px;
+                  cursor: pointer;
+               }
+            }
+
+            .plan-detail-info-value {
+            float: right;
+               font-size: 16px;
+            width: 100px;
+               text-align: right;
+               padding-top: 14px;
+               color: $color-brownishGrey;
+            }
+
+        .total-repayment {
+            font-size: 22px;
+            font-weight: bold;
+            color: $color-menuMobileFull;
+            text-align: right;
+        }
+        .divider {
+            hr {
+                height: 1px;
+                background-color: $horizontal-line-color
+            }
+         }
+      }
+
+      .life-insurance{
+         .text-spacer {
+            @include spacer(15px)
+         }
+         .life-insurance-title{
+            font-size: 18px;
+            font-weight: bold;
+            color: $color-menuMobileFull;
+         }
+         .life-insurance-text{
+            p{
+            font-size: 16px;
+            line-height: 1.5;
+            color: $color-brownishGrey;
+            span{
+               color: $color-lightGreen;
+            }
+            }
+         }
+      }
+      .accept-credit{
+         .accept-credit-title {
+            font-size: 22px;
+            font-weight: bold;
+            max-width: 185px;
+            padding-left: 0px;
+         }
+         table{
+             width: 100%;
+
+         }
+         .col-right{
+             float: right;
+         .accept-credit-button {
+            display: inline-block;
+            a {
+               text-decoration: none;
+               font-size: 16px;
+               float: left;
+               font-weight: bold;
+               padding: 8px 10px;
+                  border: solid 1px $coloy-lightGrey-d4;
+                  color: $coloy-lightGrey-d4;
+            }
+
+            .active {
+                  background-color: $color-parrotGreen;
+               color: white;
+                  border: 1px solid $color-parrotGreen;
+            }
+
+            .left {
+               border-top-left-radius: 4px;
+               border-bottom-left-radius: 4px;
+               border-right: none;
+            }
+
+            .right {
+               border-top-right-radius: 4px;
+               border-bottom-right-radius: 4px;
+               border-left: none;
+            }
+
+         }
+         }
+
+
+      }
+      .tooltip-div-spacer{
+          @include spacer(16px)
+      }
+      .toolTip{
+         .tooltip-question {
+            .text-green{
+               font-size: 18px;
+            }
+            &.no-after::after {
+               content: none;
+            }
+            .toolTipText{
+               font-size: 16px;
+            }
+            .tooltip-spacer {
+               @include spacer(9px);
+            }
+         }
+      }
+
+      .next-button-spacer{
+         @include spacer(50px);
+      }
+   }
+}
+
+@media (min-width: $media-sm) {
+    .container{
+        .sub-conatiner {
+            margin: 0 0 0 27%;
+            width: 447px;
+            padding-top: 20px;
+            .heading{
+                width: 353px;
+            }
+            .sub-heading{
+                width: 353px;
+            }
+            .monthly-repayment-container {
+                width: 353px;
+            }
+            .next-button-container{
+                width: 353px;
+            }
+            .divider{
+                hr{
+                    width: 447px; 
+                }
+            }
+        }
+    }
+}
+
+
+@media (min-width: $media-md) {
+    .spinner-container {
+        .spinner{
+            margin: 20% 0 0 45%;
+        }
+    }
+    .container {
+        widows: 1440px;
+        padding: 61px 0;
+      .sub-conatiner {
+         margin: 0 0 0 36%;
+         padding-top: 0;
+         width: 625px;
+        .heading {
+            font-size: $page-title-size;
+            color: $color-menuMobileFull;
+        }
+        .sub-heading {
+            font-size: $para-title-size;
+            width: 625px;
+        }
+        .monthly-repayment-container {
+            width: 625px;
+            .tooltip-question {
+                width: 423px;
+            }
+            .tooltip-question::after {
+                left: 180px;
+                bottom: -9px;
+            }
+
+            .plan-detail-info-name {
+                width: 345px;
+                .tooltip-icon {
+                    padding-right: 100px;
+                }
+            }
+
+            .plan-detail-info-value {
+                width: 320px;
+                padding-right: 203px;
+            }
+            .total-repayment {
+                padding-right: 203px;
+            }
+            .divider {
+                hr {
+                    width: 624px;
+                }
+            }
+        }
+
+        .life-insurance {
+            .life-insurance-text{
+                 width: 615px;
+            }
+        }
+        .accept-credit {
+           width: 625px;
+           .accept-credit-title {
+                padding: 30px;
+                max-width: none;
+                padding-left: 0px;
+           }
+            table {
+                width: 625px;
+            }
+
+            .accept-credit-button {
+               padding-top: 30px;
+               padding-right: 10px;
+            }
+        }
+
+        .toolTip {
+           .tooltip-question {
+              width: 618px;
+           }
+        }
+      }
+   }
+}

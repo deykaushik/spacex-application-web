@@ -1,0 +1,76 @@
+<app-colored-overlay [template]="viewOverdraft" [altButtonText]="'Close'" [alternate]='true' [isVisible]="true" [backOption]="false"
+   (onHide)="closeOverlay()">
+   <ng-template #viewOverdraft>
+      <div class="maintain-overdraft-wrapper">
+         <div class="maintain-overdraft-carousel-container">
+            <div class="row">
+               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <div id="lbl-header" class="title" [innerHtml]="labels.header |skeletonLoader:skeletonMode"></div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                  <div id="lbl-current-limit" class="current-limit-label" [innerHtml]="labels.currentLimit |skeletonLoader:skeletonMode"></div>
+                  <div id="val-current-limit" class="current-limit-amt" [innerHtml]="accountBalanceDetails?.overdraftLimit | amountTransform: amountPipeConfig | skeletonLoader:isSkeletonMode">
+                  </div>
+               </div>
+               <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                  <div id="lbl-debit-interest" class="debit-interest-label" [innerHtml]="labels.debitInterest |skeletonLoader:skeletonMode"></div>
+                  <div id="val-debit-interest" class="debit-interest-amt" [innerHtml]="accountBalanceDetails?.dbInterestRate+' %' | skeletonLoader:isSkeletonMode">
+                  </div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="!skeletonMode">
+                  <div class="progress-bar-bg">
+                     <div class="progress-bar-fill" [style.width.%]="progressBar">
+                     </div>
+                  </div>
+               </div>
+               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" [innerHtml]="'' |skeletonLoader:skeletonMode"></div>
+            </div>
+            <div class="row">
+               <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                  <div id="val-used-amount" class="overdraft-limit-amt text-left" [innerHtml]="usedAmount | amountTransform: amountPipeConfig | skeletonLoader:isSkeletonMode"></div>
+                  <div id="lbl-used-amount" class="overdraft-limit-label text-left">{{labels.usedAmount}}</div>
+               </div>
+               <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                  <div id="val-available-limit" class="overdraft-limit-amt text-right" [innerHtml]="availableOverdraftBalance | amountTransform: amountPipeConfig | skeletonLoader:isSkeletonMode"></div>
+                  <div id="lbl-available-limit" class="overdraft-limit-label text-right">{{labels.availableLimit}}</div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="overdraft-info" *ngIf="overdraftAttempt && !skeletonMode">
+                  <div class="overdraft-limit-icon"></div>
+                  <div class="overdraft-info-msg" id="lbl-overdraft-info-msg">
+                     {{overdraftAttemptMsg}}
+                  </div>
+               </div>
+            </div>
+            <div class="row" [innerHtml]="'' | skeletonLoader:isSkeletonMode"></div>
+            <div class="row button-margin">
+               <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                  <button class="btn-green gd-primary-btn" [disabled]="overdraftAttempt || isSkeletonMode" (click)="overdraftChangeLimit(labels.changeLimit)"
+                     [ngClass]="overdraftAttempt || isSkeletonMode ? 'btn-green-disabled' : 'btn-green'">
+                     <div id="lbl-change-limit" class="btn-green-name">{{labels.changeLimit}}</div>
+                  </button>
+               </div>
+               <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" *ngIf="!skeletonMode">
+                  <button class="btn-white gd-ghost-btn" [disabled]="overdraftAttempt || isSkeletonMode" (click)="overdraftChangeLimit(labels.cancelLimit)"
+                     [ngClass]="overdraftAttempt || isSkeletonMode ? 'btn-white-disabled' : 'btn-green'">
+                     <div id="lbl-cancel-limit" class="btn-white-name">{{labels.cancelLimit}}</div>
+                  </button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </ng-template>
+</app-colored-overlay>
+<div *ngIf="isChangeLimit">
+   <app-overdraft-limit-change [accountBalanceDetails]="accountBalanceDetails" [itemAccountId]="itemAccountId" [isVisible]="isChangeLimit"
+      (backToCard)="closeOverlay($event)"></app-overdraft-limit-change>
+</div>
+<div *ngIf="isCancelLimit">
+   <app-overdraft-limit-cancel [accountBalanceDetails]="accountBalanceDetails" [itemAccountId]="itemAccountId" [isVisible]="isCancelLimit"
+      (backToCard)="closeOverlay($event)"></app-overdraft-limit-cancel>
+</div>

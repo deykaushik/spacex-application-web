@@ -1,0 +1,91 @@
+<section class="summary-step-container  tableCell container">
+   <div class="row">
+      <div class="col-xs-12 summary-step-form-wrapper">
+         <div class="gd-form summary-step-gd-form">
+            <div class="gd-form-row information-container-small">
+               <h4 class="section-title step-title dark-grey-text bold-text">{{autoPay.autopayLabels.summaryFormTitle}}</h4>
+            </div>
+            <div class="gd-form-row information-container-small">
+               <div class="dark-grey-text bold-text">{{autoPay.autopayLabels.youAutoPaymentOrderDetailsText}}</div>
+            </div>
+            <div class="gd-form-row">
+               <div class="gd-form-col">{{autoPay.autopayLabels.payTo}}</div>
+               <div class="gd-form-col">
+                  <div class="bank-name">{{card.plasticDescription | titlecase}}</div>
+                  <div class="acc-no">{{card.plasticNumber}}</div>
+               </div>
+            </div>
+            <div class="gd-form-row">
+               <div class="gd-form-col">{{autoPay.autopayLabels.payFrom}}</div>
+               <div class="gd-form-col">
+                  <div class="bank-name">{{payFromBankType}}</div>
+                  <div class="acc-no">{{autoPayModelDetails.payFromAccount}}</div>
+               </div>
+            </div>
+            <div class="gd-form-row">
+               <div class="gd-form-col">{{autoPay.autopayLabels.paymentAmount}}</div>
+               <div class="gd-form-col">
+                  <div class="amountText">{{paymentAmountText}}</div>
+                  <div *ngIf="autoPayModelDetails?.autoPayAmount">{{autoPayModelDetails?.autoPayAmount | amountTransform}}</div>
+               </div>
+            </div>
+            <div class="gd-form-row">
+               <div class="gd-form-col">{{autoPay.autopayLabels.paymentDate}}</div>
+               <div class="gd-form-col">
+                  <div>{{monthlyPaymentDay | daySelectionText :minDate:maxDate:isAutoPayTerm}}</div>
+                  <div>{{startingMonth}}</div>
+               </div>
+            </div>
+            <div class="gd-form-row">
+               <div class="terms-condition-wrapper">
+                  <div [class.checked]="termAndConditionCheck" (click)="toggleTermsCondition()" class="checkbox-wrapper">
+                     <span class="checkmark"></span>
+                  </div>
+                  <div for="autopay-summary-accept" class="terms-condition">
+                     <span>{{autoPay.messages.termsAndConditions1}}</span>
+                     <span class="green" (click)="showTermsAndConditions()">{{autoPay.messages.termsAndConditions2}}</span>
+                     <span>{{autoPay.messages.termsAndConditions3}}</span>
+                  </div>
+               </div>
+            </div>
+            <div id="buttonDiv ">
+               <app-bottom-button [disableButton]="!termAndConditionCheck" [text]="autoPay.messages.submit"
+                  [showLoader]='showLoader' (click)="goToSuccess()"></app-bottom-button>
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
+<div class="loader-mask" *ngIf="pageLoader">
+   <div class="loader-spinner">
+      <app-spinner [color]="'green'"></app-spinner>
+   </div>
+</div>
+<section>
+   <app-colored-overlay class="initiate-overlay" [template]="termsAndConditionsOverlay" [altButtonText]="''" [alternate]='true'
+      [isVisible]="showTermsAndConditionsOverlay" (onHide)="closeTermsAndConditions()" [backOption]="false" [headerFixed]="true">
+      <ng-template #termsAndConditionsOverlay>
+         <div class="terms-container">
+            <div class="modal-header">
+               <div class="col-sm-10 header">
+                  <h2 class="modal-title pull-left">{{autoPay.messages.apoTerms}}</h2>
+                  <div class="time">
+                     <time>{{autoPay.messages.lastUpdate}} {{termsAndConditions?.acceptedDateTime | date: 'yyyy/MM/dd'}}</time>
+                  </div>
+               </div>
+               <div class="col-sm-10 col-xs-12 print-icon no-print padding-top-20 text-left">
+                  <a class="download" (click)="print()">
+                     <span class="icon"></span>
+                     <span class="text">{{autoPay.messages.print}}</span>
+                  </a>
+               </div>
+            </div>
+            <div class="modal-body print-section">
+               <div class="noticeContainer">
+                  <div class="noticeContent" *ngIf="termsAndConditions?.noticeDetails?.noticeContent" innerHtml="{{ termsAndConditions?.noticeDetails?.noticeContent}}"></div>
+               </div>
+            </div>
+         </div>
+      </ng-template>
+   </app-colored-overlay>
+</section>

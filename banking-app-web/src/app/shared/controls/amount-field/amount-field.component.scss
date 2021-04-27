@@ -1,0 +1,38 @@
+﻿@import './../../../../styles/_mixins.scss';
+@import './../../../../styles/_base.scss';
+
+
+.amount-container {
+   position: relative;
+}
+
+.amount-initial {
+   position: absolute;
+   padding: 4px 0 0;
+   top: 0;
+   font-size: 1.75rem;
+}
+
+.amount-initial + input {
+   padding-left: 32px;
+}
+
+.amount-input-alternate {
+   border-left: none;
+   border-top: none;
+   border-right: none;
+   padding: 0;
+   clear: both;
+   font-size: 1.75rem;
+   @include markpro-medium();
+   margin-bottom: 30px;
+   color: $text-color-primary;
+}
+
+.error-msg-amount {
+   color: $text-color-error;
+   font-size: $font-sm;
+   margin: 5px 0 0;
+   position: relative;
+   padding-left: 10px;
+}

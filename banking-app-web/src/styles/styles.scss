@@ -1,0 +1,69 @@
+﻿@import "../assets/bootstrap-sass/variables";
+@import '~bootstrap-sass/assets/stylesheets/_bootstrap';
+@import '~ngx-bootstrap/datepicker/bs-datepicker.css';
+@import './_base.scss';
+@import './_common-chunks.scss';
+@import './_buttons.scss';
+@import './_form-inputs.scss';
+@import './_form-layout.scss';
+@import './_switch.scss';
+@import './_workflow.scss';
+@import './_tooltip.scss';
+@import './_utilities.scss';
+@import './_carousel.scss';
+@import './_colored-overlay-template.scss';
+@import './_pop-over.scss';
+@import './_small-overlay.scss';
+@import './_loader.scss';
+
+// Fonts
+@font-face {
+   font-family: MarkPro;
+   src: url('../assets/fonts/FF Mark/FontFont - MarkPro.otf');
+}
+
+@font-face {
+   font-family: MarkProMedium;
+   src: url('../assets/fonts/FF Mark/FontFont - MarkPro-Medium.otf');
+}
+
+@font-face {
+   font-family: MarkProBold;
+   src: url('../assets/fonts/FF Mark/FontFont - MarkPro-Bold.otf');
+}
+
+html {
+   height: 100%;
+   font-size: $font-default;
+}
+
+body {
+   min-height: 100%;
+   font-size: $font-base;
+   font-family: $font-markpro;
+   color: $text-color-primary;
+   letter-spacing: 0.2px;
+   background: $body-bg;
+}
+
+.container {
+   width: 100%;
+}
+
+@media (min-width: $media-md) {
+   .container {
+      // width: 950px !important;
+   }
+}
+
+@media (min-width: $media-lg) {
+   .container {
+     // width: 1400px !important;
+   }
+}
+
+@media (min-width: $media-xlg) {
+   .container {
+      max-width: 1500px !important;
+   }
+}

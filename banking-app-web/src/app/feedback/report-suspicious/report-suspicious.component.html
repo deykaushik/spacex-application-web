@@ -1,0 +1,129 @@
+<section class="report-suspicious card" *ngIf="!attemptsCompletedFlag && !showSpinner">
+   <header class="sub-heading">{{label.header}}</header>
+   <span>{{label.fraudReport}}</span>
+   <section class="content">
+      <div class="gd-form">
+         <div class="gd-form-row ">
+            <label class="gd-sm-label active">{{label.dateOfFraud}}</label>
+            <app-custom-date-picker [config]="calendarConfig" [date]="maxEndDate" [minDate]="minEndDate" [maxDate]="maxEndDate" (dateChanged)="setDate($event)"></app-custom-date-picker>
+         </div>
+         <div class="col-xs-12 pull-left no-padding">
+            <label class="inline-block width-custom">{{label.includeAccount}}</label>
+            <label class="switch inline-block minimum-left-spacing float-right">
+               <input type="checkbox" [(ngModel)]="thirdPartyDetail" checked="thirdPartyDetail">
+               <div class="slider round inline-block" (click)="sendEvent(GAEvent.toggleOn, GALabel.toggleOn, 'true',GACategory);"></div>
+            </label>
+            <section *ngIf="thirdPartyDetail">
+               <label class="gd-sm-label active">{{label.whichAccount}}</label>
+               <div class="gd-dropdown" tabindex="0" *ngIf="dropdownAccounts?.length > 1" dropdown>
+                  <div class="discrp-block" [ngClass]="getAccountTypeStyle(selectedAccount?.AccountType)" dropdownToggle dropdown-open>
+                     <div class="fields">
+                        <div class="field">
+                           <h6 class="left para-title account-para-weight">{{ selectedAccount?.AccountName }}</h6>
+                        </div>
+                        <div class="field">
+                           <div class="left" *ngIf="selectedAccount?.AccountNumber !== 0">{{ selectedAccount?.AccountNumber }}</div>
+                           <div class="left" *ngIf="selectedAccount?.AccountNumber === 0">&nbsp;</div>
+                        </div>
+                     </div>
+                     <div *ngIf="dropdownAccounts?.length > 1" class="icon-field" id="account-list-arrow">
+                        <span class="icon toggle-icon down"></span>
+                     </div>
+                  </div>
+                  <ul *dropdownMenu class="dropdown-menu">
+                     <li *ngFor="let account of dropdownAccounts;" [ngClass]="getAccountTypeStyle(account.AccountType)" class="dropdown-item discrp-block"
+                        [class.active]="account.AccountNumber === selectedAccount?.AccountNumber" (click)="onAccountSelect(account)">
+                        <div class="fields">
+                           <div class="field">
+                              <h6 class="left para-title">{{ account?.AccountName }}</h6>
+                           </div>
+                           <div class="field" *ngIf="account?.AccountNumber">
+                              <div class="left" x-ms-format-detection="none">{{ account?.AccountNumber }}</div>
+                           </div>
+                        </div>
+                     </li>
+                  </ul>
+               </div>
+               <label>{{label.totalAmount}}</label>
+               <div class="account-container">
+                  <input id="total_amount" type="text" appAmountFormatMask [noDecimal]="false" class="validate" #totalAmount="ngModel" [ngModel]="totalAmount | amountTransform"
+                     [maxLength]="maxLimit.totalAmount+5" name="totalAmount" (ngModelChange)="totalAmountChange(totalAmount)"
+                     [placeholder]="placeholder.totalAmount" />
+                  <div class="report-suspicious-info">{{totalAmountInfo}}</div>
+               </div>
+               <label>{{label.TPAccountNum}}</label>
+               <div class="account-container">
+                  <input id="account_number" type="text" class="validate" #accountNumberRef="ngModel" [(ngModel)]="accountNumber" [maxLength]="maxLimit.accountNumber"
+                     name="accountNumber" [placeholder]="placeholder.accountNumber" (ngModelChange)="accountNumberChange()"
+                     [pattern]="pattern.alphaNumeric" />
+                  <div class="report-suspicious-info">{{accountNumberInfo}}</div>
+                  <div class="error-msg">
+                     <span *ngIf="accountNumberRef.errors">
+                        {{message.invalidDetail}}
+                     </span>
+                  </div>
+               </div>
+               <label>{{label.TPBankName}}</label>
+               <div class="account-container">
+                  <input id="bank_name" type="text" class="validate" #bankNameRef="ngModel" [(ngModel)]="bankName" [maxLength]="maxLimit.bankName"
+                     name="bankName" [placeholder]="placeholder.bankName" (ngModelChange)="bankNameChange()" [pattern]="pattern.alphaNumericWithSpace"
+                  />
+                  <div class="report-suspicious-info">{{bankNameInfo}}</div>
+                  <div class="error-msg">
+                     <span *ngIf="bankNameRef.errors">
+                        {{message.invalidDetail}}
+                     </span>
+                  </div>
+               </div>
+            </section>
+            <label>{{label.tellUs}}</label>
+            <textarea class="report-suspicious-box validate" [class.success-border]="reportSuspiciousText.length>=1" autofocus appFocus
+               [maxLength]="maxLimit.reason" appValidateRequired ga-event-name="enter_report-suspicious_from_web" [(ngModel)]="reportSuspiciousText"
+               (ngModelChange)="reportSuspiciousInfoChange()"></textarea>
+            <div class="report-suspicious-info">{{reportSuspiciousInfo}}</div>
+            <label>{{label.email}}</label>
+            <div class="account-container">
+               <input id="email" type="text" class="validate" #emailRef="ngModel" [(ngModel)]="email" name="email" appValidateRequired
+                  [pattern]="pattern.email" validateFor="email" (ngModelChange)="emailChange()" />
+            </div>
+            <div *ngIf="emailRef.invalid && (emailRef.dirty || emailRef.touched)" class="error-msg">
+               <span *ngIf="emailRef.errors.required || emailRef.errors.pattern">
+                  {{message.emailRequired}}
+               </span>
+            </div>
+            <div class="report-suspicious-message">
+               <div class="row">
+                  <div class="col-sm-1 col-xs-1 icon-card"></div>
+                  <div class="col-sm-10 col-xs-10 fraud-message">{{label.cardInfo}}
+                     <a class="number"> {{label.cardInfoNumber}}</a> {{label.cardMoreInfo}}</div>
+               </div>
+               <div class="row">
+                  <div class="col-sm-1 col-xs-1 icon-bank"></div>
+                  <div class="col-sm-10 col-xs-10 fraud-message">{{label.cardMessage}}</div>
+               </div>
+               <div class="row">
+                  <div class="col-sm-1 col-xs-1 icon-info"></div>
+                  <div class="col-sm-10 col-xs-10 fraud-message">{{label.info}}
+                     <a class="number">{{label.infoNumber}}</a>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-xs-12 pull-left no-padding">
+            <div class="report-suspicious-submit">
+               <app-bottom-button [showLoader]="showLoader" [disableButton]="showLoader || !isFormValid  || !reportSuspiciousText.length"
+                  [text]="label.header" (click)="sendSuspiciousReport();sendEvent(GAEvent.reportSubmitted, GALabel.reportSubmitted, null, GACategory);"></app-bottom-button>
+            </div>
+         </div>
+      </div>
+   </section>
+</section>
+<div *ngIf="attemptsCompletedFlag">
+   <app-feedback-attempts [remainingTime]="attempt.remainingTime"></app-feedback-attempts>
+</div>
+<div *ngIf="tryAgain">
+   <app-feedback-try-again [feedbackDetails]="feedbackDetails" (alertMessage)="setAlertMessage($event);"></app-feedback-try-again>
+</div>
+<div class="loader" *ngIf="showSpinner">
+   <app-spinner [color]="'green'"></app-spinner>
+</div>

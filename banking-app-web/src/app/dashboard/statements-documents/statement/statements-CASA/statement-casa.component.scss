@@ -1,0 +1,286 @@
+@import '../../../../../styles/_mixins.scss';
+@import '../../../../../styles/_base.scss';
+$svg-path: '../../../../../assets/svg/';
+$icon-pay: 'back-green';
+$icon-info: 'info-grey';
+$icon-download: 'normal';
+$bg-color-dashboard: $body-bg;
+$cards-bg: $body-bg;
+
+::ng-deep .dp-current-location-btn {
+   display: none;
+}
+
+.no-statements-available {
+   width: 280px;
+   text-align: center;
+   height: 34px;
+   opacity: 0.7;
+   font-size: $font-sm-1;
+   color: $text-color-message-block-content;
+   @include flexbox;
+   @include align-items(center);
+   @include flex-direction(column);
+}
+
+.mb-30 {
+   margin-bottom: 30px;
+}
+
+.error {
+   ::ng-deep dp-date-picker .dp-input-container .dp-picker-input {
+      border-color: $warning-primary !important;
+   }
+}
+
+.no-error {
+   ::ng-deep dp-date-picker .dp-input-container .dp-picker-input {
+      border-color: $coloy-lightGrey-d4 !important;
+   }
+
+   ::ng-deep dp-date-picker .dp-popup {
+      border-color: $coloy-lightGrey-d4 !important;
+   }
+}
+
+.statement-details-container {
+   padding: $landing-padding 0;
+   min-height: 300px;
+
+   .container {
+      background-color: $container-bg;
+      clear: both;
+      border-top: 1px solid $color-lightGrey-d1;
+      padding: 0;
+
+      &.csv-download {
+         padding: 15px;
+
+         label {
+            font-weight: normal;
+         }
+      }
+
+      .download-statement {
+         @include svg-image-full-path($svg-path, $icon-download, 24px, 24px);
+         align-content: center;
+         display: inline-block;
+         margin-left: auto;
+         margin-right: auto;
+         padding-right: 10px;
+         cursor: pointer;
+         vertical-align: bottom;
+      }
+
+      .information {
+         display: inline-block;
+         @include svg-image-full-path($svg-path, $icon-info, 64px, 64px);
+      }
+
+      .information-align {
+         height: 280px;
+         padding-top: 100px;
+         color: $divider-primary;
+         border-bottom: 1px solid $divider-secondary;
+         @include flexbox;
+         @include align-items(center);
+         @include flex-direction(column);
+      }
+
+      .loader {
+         z-index: 100;
+         line-height: 1;
+         width: 35px;
+         margin: 0 50%;
+      }
+
+      .title {
+         font-size: $font-x-lg;
+         font-weight: bold;
+         padding-bottom: 10px;
+      }
+
+      .data-align {
+         text-align: left;
+      }
+
+      .loader-align {
+         height: 280px;
+         display: block;
+         padding-top: 100px;
+         display: block;
+         border-bottom: 1px solid $divider-secondary;
+         border-top: 1px solid $divider-secondary;
+      }
+
+      .content-align {
+         text-align: right;
+
+         .content-color {
+            color: $secondary-color;
+         }
+      }
+
+      table {
+         width: 100%;
+
+         tr {
+            th {
+               padding: 10px 0;
+               object-fit: contain;
+            }
+
+            td {
+               padding: 30px 20px;
+               border-bottom: 1px solid $divider-secondary;
+
+               &.download {
+                  cursor: pointer;
+                  color: $secondary-color;
+               }
+            }
+         }
+      }
+
+      .table-head {
+         opacity: 0.5;
+      }
+   }
+
+   .date-Error {
+      color: $warning-primary;
+      margin-top: 5px;
+      display: inline-block;
+   }
+
+   .from-date {
+      padding-top: 20px;
+      padding-left: 0;
+      color: $divider-primary;
+   }
+
+   .date-content {
+      display: block;
+      clear: both;
+   }
+
+   .btn-display {
+      padding-left: 18px;
+   }
+
+   .download-btn {
+      margin-top: 20px;
+      margin-left: -18px;
+   }
+
+   .note-container {
+      font-size: $label-size;
+      text-align: center;
+      color: $divider-primary;
+      padding-top: 20px;
+      text-transform: uppercase;
+   }
+
+   .gd-form {
+      .gd-form-row {
+         .custom-item-field {
+            width: 100%;
+            display: block;
+
+            .icon.calendar {
+               &.custom-calendar {
+                  top: -38px;
+                  cursor: not-allowed;
+               }
+            }
+         }
+      }
+   }
+}
+
+.date {
+   width: 386px;
+   height: 18px;
+   font-size: $font-sm;
+   text-align: right;
+   color: $coloy-lightGrey-d4;
+}
+
+@media (max-width: $media-sm) {
+   ::ng-deep .last-of-type {
+      padding-top: 0 !important;
+   }
+
+   ::ng-deep .first-of-type {
+      padding-top: 1px !important;
+   }
+
+   .statement-details-container {
+      padding: $landing-padding 0px;
+
+      .margin-top-left {
+         margin-left: -15px;
+      }
+
+      .container {
+         .title {
+            font-size: $font-md;
+            font-weight: bold;
+         }
+
+         table {
+            tr {
+               td {
+                  &.download {
+                     width: 230px;
+                  }
+               }
+            }
+         }
+
+         .table-head {
+            display: none;
+         }
+      }
+   }
+
+   @media (min-width: $media-lg) {
+      .statement-details-container {
+         padding: $landing-padding $landing-padding-lg;
+
+         .container {
+            .table-head {
+               display: none;
+            }
+
+            table {
+               tr {
+                  td {
+                     height: 35px;
+                  }
+               }
+            }
+         }
+      }
+   }
+
+   @media (min-width: $media-md) {
+      .statement-details-container {
+         padding: $landing-padding $landing-padding-lg;
+
+         .container {
+            .table-head {
+               display: none;
+            }
+
+            table {
+               tr {
+                  td {
+                     height: 35px;
+                  }
+               }
+            }
+         }
+      }
+   }
+}

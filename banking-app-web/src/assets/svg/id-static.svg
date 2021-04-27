@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>icons/RSA ID/static</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="square">
+        <g id="icons/RSA-ID/static" stroke="#666666">
+            <g id="education-24px-outline_book-open" transform="translate(10.000000, 11.000000)">
+                <polygon id="Shape" points="0.434782609 0.434782609 10 3.04347826 19.5652174 0.434782609 19.5652174 15.2173913 10 17.826087 0.434782609 15.2173913"></polygon>
+                <path d="M3.91304348,12.5217391 L7.39130435,13.4782609" id="Shape"></path>
+                <path d="M7.39130435,5.91304348 L3.91304348,4.95652174" id="Shape"></path>
+                <path d="M7.39130435,9.56521739 L3.91304348,8.69565217" id="Shape"></path>
+                <path d="M16.0869565,12.5217391 L12.6086957,13.4782609" id="Shape"></path>
+                <path d="M12.6086957,5.91304348 L16.0869565,4.95652174" id="Shape"></path>
+                <path d="M12.6086957,9.56521739 L16.0869565,8.69565217" id="Shape"></path>
+            </g>
+        </g>
+    </g>
+</svg>

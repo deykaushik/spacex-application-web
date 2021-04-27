@@ -1,0 +1,111 @@
+﻿@import './_mixins.scss';
+@import './_base.scss';
+
+$tblLottery-bg: $highlight-dark-bg;
+$noCircle-bg: $container-bg;
+
+.tblLotteryNumber {
+   width: 100%;
+   margin-bottom: 15px;
+}
+
+.tblLotteryNumber td {
+   font-size: $font-sm;
+   text-align: center;
+   padding: 0;
+   color: $text-color-primary;
+}
+
+.tblLotteryNumber td span:hover {
+   cursor: pointer;
+   background-color: $tblLottery-bg;
+}
+
+.noCircle {
+   border-radius: 50%;
+   width: 27px;
+   height: 27.2px;
+   line-height: 26px;
+   padding: 0;
+   background: $noCircle-bg;
+   text-align: center;
+   font-size: $font-sm;
+   font-weight: bold;
+   display: inline-block;
+   vertical-align: middle;
+   margin: 5px 15px 8px 0px;
+   color: $text-color-secondary;
+}
+
+.error-message {
+   text-align: center;
+   font-size: $font-sm;
+}
+
+.group1 {
+   border: 1.8px solid $color-lottery-number-group-1;
+   &.already-selected-ball{
+      background-color: $color-lottery-number-group-1;
+      color: $color-lottery-number-color-light;
+   }
+}
+
+.group2 {
+   border: 1.8px solid $color-lottery-number-group-2;
+   &.already-selected-ball{
+      background-color: $color-lottery-number-group-2;
+      color: $color-lottery-number-color-dark;
+   }
+}
+
+.group3 {
+   border: 1.8px solid $color-lottery-number-group-3;
+   &.already-selected-ball{
+      background-color: $color-lottery-number-group-3;
+      color: $color-lottery-number-color-light;
+   }
+}
+
+.group4 {
+   border: 1.8px solid $color-lottery-number-group-4;
+   &.already-selected-ball{
+      background-color: $color-lottery-number-group-4;
+      color: $color-lottery-number-color-light;
+   }
+}
+
+.board-table {
+   .board-column {
+      &:nth-of-type(1) {
+         width: 150px;
+      }
+   }
+}
+
+.isNotPowerBall ~ li {
+   display: none;
+}
+
+.powerball-board-1 {
+   border: 1px solid $color-lottery-power-ball;
+   color: $color-lottery-power-ball;
+   line-height: 28px;
+}
+
+.powerball-board-2 {
+   background-color: $color-lottery-power-ball;
+   color: $color-lottery-number-color-light;
+   line-height: 28px;
+}
+
+@media (min-width: $media-sm) {
+   .board-table {
+      display: table;
+      width: 100%;
+
+      .board-column {
+         display: table-cell;
+         vertical-align: middle;
+      }
+   }
+}

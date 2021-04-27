@@ -1,0 +1,20 @@
+﻿<app-small-overlay [template]="unsaveOvelayTemplate" alternate='true' *ngIf="isVisible" id="usv-overlay">
+   <ng-template #unsaveOvelayTemplate>
+      <span class="overlay-cross" (click)="close('cross')"></span>
+      <div class="template-content">
+         <div class="logo-cntnr">
+            <span class="logo1"></span>
+         </div>
+         <div class="overlay-title">{{labels.title}}</div>
+         <div class="overlay-text">{{labels.text}}</div>
+         <div class="btns">
+            <div class="cancel-button">
+               <app-bottom-button id="unsv-overlay-cancel" (clickEmitter)="close('cancel')" [disableButton]='false' [text]='labels.cancelbutton'></app-bottom-button>
+            </div>
+            <div class="ok-button">
+               <app-bottom-button id="unsv-overlay-ok" (clickEmitter)="close('ok')" [disableButton]='false' alternateTheme='true' [text]='labels.okbutton'></app-bottom-button>
+            </div>
+         </div>
+      </div>
+   </ng-template>
+</app-small-overlay>

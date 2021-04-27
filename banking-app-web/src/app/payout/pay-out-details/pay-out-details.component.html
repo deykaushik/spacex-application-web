@@ -1,0 +1,88 @@
+<div class="payout-details-container">
+   <div class="inner-container">
+      <div class="row">
+         <h4 class="section-title" [class.tooltip-margin]="isTooltip" [innerHtml]="payoutDetailLabels.title"></h4>
+         <span class="title-divider"></span>
+         <form #payOutDetailsForm="ngForm" id="pay-out-details-form" class="gd-form pay-out-details-form">
+            <div class="tooltip-question" *ngIf="isTooltip" [innerHtml]="payoutDetailMessages.tooltipMessage"></div>
+            <div class="amount-title-tooltip">
+               <span class="amount-label" [innerHtml]="payoutDetailLabels.amount"></span>
+               <span class="tooltip-icon" (click)="isTooltip = !isTooltip"></span>
+            </div>
+            <div class="type page-padding amount-type">
+               <app-radio-button-list [radioList]='amountPaymentType' [class.error]="!isAmountTypeSelected"
+                  [selectedValue]="selectedAmountType" [groupName]="'amount-group'" (onSelectionChange)="onAmountTypeChange($event)">
+               </app-radio-button-list>
+            </div>
+            <div class="gd-form-row amount-div">
+               <label for="payout-details-amount" class="active gd-sm-label" [innerHtml]="payoutDetailLabels.amount"></label>
+               <input type="text" minlength="2" id="payout-details-amount" autocomplete="off" name="amount" class="validate"
+                  [ngModel]="payoutDetailsAmount | amountTransform" (ngModelChange)="onPayoutAmountChange($event)"
+                  [class.error]="isPayoutAmountEmpty" #amount="ngModel" appAmountFormatMask appValidateRequired
+                  appCheckBlur [disabled]="isMaxValue || selectedAmountType === ''">
+               <div class="error-form-msg">
+                  <span *ngIf="isPayoutAmountEmpty || (amount.invalid && (amount.dirty || amount.touched) && amount.isBlurred)"
+                     [innerHtml]="payoutDetailErrorMessages.enterAmount">
+                  </span>
+                  <span *ngIf="isTransferLimitExceeded" [innerHtml]="payoutDetailErrorMessages.amountExceed">
+                  </span>
+                  <span class="amount-error-div" *ngIf="!isAmountTypeSelected" [innerHtml]="payoutDetailErrorMessages.selectAmountType">
+                  </span>
+               </div>
+            </div>
+
+            <div class="gd-form-row">
+               <label for="payout-details-name" class="active gd-sm-label" [innerHtml]="payoutDetailLabels.recipientName"></label>
+               <input type="text" id="payout-details-name" autocomplete="off" name="name" class="validate" [ngModel]="payoutDetailsName"
+                  (ngModelChange)="onPayoutNameChange($event)" [class.error]="!isPayoutNameValid" #name="ngModel"
+                  appValidateRequired appCheckBlur>
+               <span *ngIf="isPayoutNameEmpty || (name.invalid && (name.dirty || name.touched) && name.isBlurred)"
+                  class="error-form-msg" [innerHtml]="payoutDetailErrorMessages.enterRecipientName">
+               </span>
+            </div>
+
+            <div class="gd-form-row">
+               <label class="gd-sm-label" for="payoutDetailsBank" [innerHtml]="payoutDetailLabels.bank"></label>
+               <input type="hidden" id="payoutDetailsBank" [(ngModel)]="payoutDetailsBank" name="payoutBank"
+                  #payoutBank="ngModel" />
+               <div class="gd-basic-dropdown" dropdown tabindex="0" id="payoutDetailsBankDropdown">
+                  <div dropdownToggle class="dropdown-place" [class.drpdwn-error]="!isPayoutBankValid">
+                     <div class="text" [innerHtml]="displayPayoutDetailsSelectedBank">
+                     </div>
+                     <div class="icon">
+                        <span class="caret"></span>
+                     </div>
+                  </div>
+                  <ul *dropdownMenu class="dropdown-menu bank-dropdown" role="menu">
+                     <li role="menuitem" *ngFor="let bank of listPayoutDetailsBank" (click)="onPayoutDetailsBankChanged(bank.bankName)">
+                        <ng-container>{{bank.bankName}}</ng-container>
+                     </li>
+                  </ul>
+               </div>
+               <span *ngIf="isPayoutBankEmpty || (payoutBank.invalid && (payoutBank.dirty || payoutBank.touched) && payoutBank.isBlurred)"
+                  class="error-form-msg" [innerHtml]="payoutDetailErrorMessages.selectBank"></span>
+            </div>
+            <div class="gd-form-row">
+               <label class="gd-sm-label" for="payout-details-account-no" [innerHtml]="payoutDetailLabels.accountNumber"></label>
+               <input id="payout-details-account-no " autocomplete="off" type="text" class="validate" #payoutAccNo="ngModel"
+                  [(ngModel)]="payoutDetailsAccNum" name="payoutAccNo" minlength="1" maxlength="13" appValidateRequired
+                  validateFor="number" maxLimit='13' [class.error]="!isPayoutAccNumValid" (keydown)="onAccountNumberKeyDown($event.key)"
+                  appCheckBlur>
+               <span *ngIf="payoutAccNo.invalid && (payoutAccNo.dirty || payoutAccNo.touched) && payoutAccNo.isBlurred"
+                  class="error-form-msg" [innerHtml]="payoutDetailErrorMessages.enterAccountNumber">
+               </span>
+            </div>
+
+            <div class="next-button">
+               <button type="button" class="gd-primary-btn btn-max btn-replace gd-sm-label" (click)="validatePayDetailsForm(payOutDetailsForm);goToContactPerson()">{{payoutDetailLabels.nextBtn}}</button>
+            </div>
+
+         </form>
+      </div>
+   </div>
+</div>
+<app-small-overlay [template]="discardOverlay" alternate='true' *ngIf="isDiscardChangesPopup">
+   <ng-template #discardOverlay>
+      <app-popup-discard-stepper (userActionClick)="discardChangesPopup($event)"></app-popup-discard-stepper>
+   </ng-template>
+</app-small-overlay>

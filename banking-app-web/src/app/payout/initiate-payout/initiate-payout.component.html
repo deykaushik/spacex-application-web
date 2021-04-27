@@ -1,0 +1,64 @@
+<app-colored-overlay class="initiate-overlay" [isVisible]="true" [alternate]="true" [altButtonText]="''" [template]="initiatePayment"
+   [backOption]="false" (onHide)="exitAction()">
+   <ng-template #initiatePayment>
+      <div class="done-body">
+         <div class="title-section">
+            <div class="initiate-done-title">
+               <span [innerHtml]="initiatePaymentLabels.title"></span>
+            </div>
+            <div class="initiate-done-subtitle">
+               <span [innerHtml]="initiatePaymentLabels.subtitle"></span>
+            </div>
+         </div>
+         <div class="initiate-done-info">
+            <div class="send-doc-info-1">
+               <div class="content">
+                  <div class="icon"></div>
+                  <span [innerHtml]="initiatePaymentMessages.applicationDuration">
+                  </span>
+               </div>
+            </div>
+            <div class="send-doc-info-2">
+               <div class="content">
+                  <div class="icon"></div>
+                  <span [innerHtml]="initiatePaymentMessages.interestDate">
+                  </span>
+               </div>
+            </div>
+         </div>
+         <div class="initiate-done-send-doc">
+            <div class="initiate-done-subtitle">
+               <span [innerHtml]="initiatePaymentLabels.pleaseNote">
+               </span>
+            </div>
+            <div class="send-doc-sec-1">
+               <div class="icon">
+               </div>
+               <div class="content">
+                  <span [innerHtml]="initiatePaymentMessages.inspectProperty">
+                  </span>
+               </div>
+            </div>
+            <div class="send-doc-sec-2">
+               <div class="icon">
+               </div>
+               <div class="content">
+                  <span [innerHtml]="initiatePaymentMessages.maximumPayment">
+                  </span>
+               </div>
+            </div>
+            <div class="send-doc-sec-3">
+               <div class="icon">
+               </div>
+               <div class="content">
+                  <span [innerHtml]="initiatePaymentMessages.certificates">
+                  </span>
+               </div>
+            </div>
+         </div>
+         <div class="go-to-acc-btn">
+            <button class="gd-primary-btn" (click)="getStarted()" [innerHtml]="initiatePaymentLabels.getStarted"></button>
+         </div>
+      </div>
+   </ng-template>
+</app-colored-overlay>

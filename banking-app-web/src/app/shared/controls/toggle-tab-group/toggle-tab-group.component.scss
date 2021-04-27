@@ -1,0 +1,65 @@
+@import './../../../../styles/_mixins.scss';
+@import './../../../../styles/_base.scss';
+$white: $container-bg;
+
+.button-group {
+   display: block;
+   position: relative;
+   margin: 0 5px;
+}
+
+.input-box {
+   position: absolute !important;
+   clip: rect(0, 0, 0, 0);
+   height: 1px;
+   width: 1px;
+   border: 0;
+   overflow: hidden;
+}
+
+.button-group label {
+   float: left;
+}
+
+.button-group label {
+   display: inline-block;
+   background-color: $white;
+   font-weight: normal;
+   color: $toggle-label;
+   text-shadow: none;
+   @include transition(all 0.1s ease-in-out);
+   span {
+      text-decoration: none;
+   }
+}
+
+.button-group label:hover {
+   cursor: pointer;
+}
+
+.button-group input:checked+label {
+   background-color: $white;
+   color: $toggle-label;
+   font-weight: bold;
+   @include box-shadow(none);
+   span {
+      padding-bottom: 8px;
+      text-decoration: none;
+      border-bottom: solid 4px $tab-border;
+   }
+}
+
+.button-group input[disabled]:checked+label {
+   background-color: $highlight-dark-bg;
+   color: $toggle-label;
+   font-weight: normal;
+   @include box-shadow(none);
+}
+
+.button-group input:disabled+label {
+   background-color: $white;
+   font-weight: normal;
+   border-color: $highlight-dark-bg;
+   color: $highlight-dark-bg;
+   @include box-shadow(none);
+}

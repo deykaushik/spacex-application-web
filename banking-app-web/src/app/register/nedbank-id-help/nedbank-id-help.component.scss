@@ -1,0 +1,51 @@
+﻿@import './../../../styles/_base.scss';
+
+.formInput {
+  &.modalForm {
+    max-width: 580px;
+    margin: auto;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+  }
+}
+
+.gd-form {
+  text-align: center;
+  color: $text-color-primary;
+}
+
+.gd-secondary-btn,
+.gd-ghost-btn {
+  max-width: 185px;
+  padding: 0;
+}
+
+.gd-primary-btn {
+  max-width: 300px;
+}
+
+.navigateCloseDiv {
+  text-align: right;
+  margin: 20px 10px 20px 0;
+}
+
+.number-text {
+  color: $text-color-link;
+  font-size: $font-sm;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+@media screen and (max-width: ($media-sm)) {
+  .formInput {
+    &.modalForm {
+      max-width: auto;
+      padding: 10px;
+    }
+  }
+  .navigateCloseDiv {
+    padding: 10px;
+  }
+}

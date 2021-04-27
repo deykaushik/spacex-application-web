@@ -1,0 +1,65 @@
+<div class="banker-container  content-container-padding">
+      <div class="icon-field">
+            <span class="icon left-arrow" (click)="openProfileMenu(profileMenu)"></span>
+            <h4 class="section-title banker-detail-header">Your banker</h4>
+      </div>
+      <div class="row top-alert" *ngIf="apiFailed && !noBanker && !isFailedBlockClose">
+            <div class="col-lg-9 col-md-7 col-sm-7 col-xs-12 alert-detail">
+                  <span class="warning-icon"></span>
+                  <span class="message">{{labels.bankerFailed}}</span>
+                  <span class="close-icon-black pull-right hide-web" (click)="showWarning=false"></span>
+            </div>
+            <div class="col-lg-3 col-md-5 col-sm-5 col-xs-1 retry-container hide-mobile">
+                  <div class="col-sm-9 retry" (click)="retryService()">
+                        <span class="retry-icon-top">Try again</span>
+                  </div>
+                  <div class="col-sm-3"><span class="close-icon-black pull-right" (click)="isFailedBlockClose=true"></span></div>
+            </div>
+            <div class="col-xs-12 hide-web retry-mob">
+                  <span class="retry-icon-top" (click)="retryService()">Try again</span>
+            </div>
+      </div>
+      <div class="profile-container" *ngIf="!apiFailed">
+            <div class="warning-block" *ngIf="noBanker">
+                  <div class="green-warning-div">
+                        <span class="green-warning"></span>
+                  </div>
+                  <div class="warning-text">
+                        <p>
+                              {{labels.warningMsg}}
+                        </p>
+                  </div>
+            </div>
+            <div class="profile-detail-container" *ngIf="!noBanker">
+                  <div class="user-pic-container">
+                        <a class="user" [innerHtml]="getBankerInitials(bankerName)"></a>
+                  </div>
+                  <div class="user-name-container">
+                        <p class="user-name" [innerHtml]="bankerName | skeletonLoader:skeletonMode:'skeleton-icon'"></p>
+                        {{preferredName}}
+                  </div>
+            </div>
+      </div>
+</div>
+
+<div class="banker-container  content-container-padding">
+      <div class="icon-field">
+            <h4 class="section-title banker-detail-header"> Contact details</h4>
+      </div>
+      <div class="profile-container contact-detail container-fluid">
+            <div class="fullWidth">
+                  <div class="row fullWidth">
+                        <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                              <span class="telephone-icon"></span>
+                              <span class="telephon-text" [innerHtml]="telephoneNumber | skeletonLoader:skeletonMode:'skeleton-icon'"></span>
+                              <span class="line-divider"></span>
+                        </div>
+                        <div class="full-line-divider"></div>
+                        <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+                              <span class="mail-icon"></span>
+                              <span class="mail-text" [innerHtml]="bankerEmail | skeletonLoader:skeletonMode:'skeleton-icon'" (click)="sendMail()"></span>
+                        </div>
+                  </div>
+            </div>
+      </div>
+</div>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 36 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>phone-call</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Update-preferred-name" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="square">
+        <g id="1440-Update-preferred-name-2" transform="translate(-769.000000, -482.000000)" stroke="#808080">
+            <g id="Group-12" transform="translate(769.000000, 482.000000)">
+                <g id="phone-call">
+                    <path d="M25.826087,22.6956522 L21.1304348,27.3913043 L8.60869565,14.8695652 L13.3043478,10.173913 L5.47826087,2.34782609 L0.782608696,7.04347826 C0.782608696,22.6033043 13.3966957,35.2173913 28.9565217,35.2173913 L33.6521739,30.5217391 L25.826087,22.6956522 Z" id="Shape"></path>
+                    <path d="M21.1304348,0.782608696 C28.9111304,0.782608696 35.2173913,7.08886957 35.2173913,14.8695652" id="Shape"></path>
+                    <path d="M21.1304348,7.04347826 C25.452,7.04347826 28.9565217,10.548 28.9565217,14.8695652" id="Shape"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

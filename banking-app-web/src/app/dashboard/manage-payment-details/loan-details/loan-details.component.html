@@ -1,0 +1,30 @@
+<ng-container *ngIf="status; then showMessage else showDetails"></ng-container>
+<ng-template #showMessage>
+   <app-message-alert class="message-alert" [showAlert]="isShowAlert" [displayMessageText]="message" [linkDisplayText]="''"
+      [action]="alertAction" [alertType]="alertType"></app-message-alert>
+</ng-template>
+<ng-template #showDetails>
+<div class="show-details">
+   <div>
+      <span>{{labels.mfcName}}</span>
+      <span [innerHtml]="loanDebitOrder?.accountNumber"></span>
+   </div>
+   <div [innerHtml]="loanAssetDetails?.description"></div>
+   <div>
+      <span>{{labels.chassisNumber + symbols.colon}}</span>
+      <span [innerHtml]="loanAssetDetails?.chassisNumber | numberFormat"></span>
+   </div>
+   <div>
+      <span>{{labels.engineNumber + symbols.colon}}</span>
+      <span [innerHtml]="loanAssetDetails?.engineNumber | numberFormat"></span>
+   </div>
+   <div>
+      <span>{{labels.interestRate + symbols.colon}}</span>
+      <span [innerHtml]="(loanDebitOrder?.interestRate | number : '.2') + symbols.percentage"></span>
+   </div>
+   <div>
+      <span>{{labels.frequency + symbols.colon}}</span>
+      <span [innerHtml]="loanDebitOrder?.paymentFrequency"></span>
+   </div>
+</div>
+</ng-template>

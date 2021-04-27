@@ -1,0 +1,59 @@
+<app-colored-overlay [template]="cancelOverdraft" [altButtonText]="'Cancel'" [alternate]='true' [isVisible]="isVisible" [backOption]="false"
+   (onHide)="closeOverlay($event)">
+   <ng-template #cancelOverdraft>
+      <section class="maintain-overdraft-wrapper">
+         <section class="maintain-overdraft-carousel-container">
+            <div class="row">
+               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <div class="title" [innerHtml]="label.changeOverdraftTitle |skeletonLoader:skeletonMode"></div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <div class="reason-input-label" [innerHtml]="label.changeOverdraftReason |skeletonLoader:skeletonMode"></div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <textarea class="reason-input-border" appFocus appValidateRequired [maxLength]="reasonLimit" [(ngModel)]="reasonText" (ngModelChange)="odChangeReason()"></textarea>
+                  <div class="reason-text-count" [innerHtml]="reasonInfo |skeletonLoader:skeletonMode"></div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <div class="sub-title" [innerHtml]="label.contact |skeletonLoader:skeletonMode"></div>
+                  <div class="maintain-overdraft-info-msg" [innerHtml]="label.contactMsg |skeletonLoader:skeletonMode"></div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="!skeletonMode">
+                  <app-phone-number-validator [phoneNumberValue]="cellNumber" (returnPhoneNumber)="getPhoneNumber($event)"></app-phone-number-validator>
+               </div>
+               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" [innerHtml]=" ''|skeletonLoader:skeletonMode"></div>
+            </div>
+            <div class="row">
+               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="!skeletonMode">
+                  <div class="email-address-label">{{label.email}}</div>
+                  <input class="input-email" autocomplete="off" type="text" name="overdraftInputEmail" #overdraftInputEmail="ngModel"
+                     [(ngModel)]="emailAddress" (ngModelChange)="onEmailChange()" appValidateRequired required appValidateOnblur
+                     [ngClass]="{'maintain-overdraft-input-border' : isEmailValid , 'maintain-overdraft-input-border-error' : !isEmailValid}"
+                  />
+                  <div *ngIf="!isEmailValid" class="error-msg">
+                     {{message.invalidEmail}}
+                  </div>
+               </div>
+
+               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" [innerHtml]=" ''|skeletonLoader:skeletonMode"></div>
+            </div>
+            <div class="row">
+               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 button-margin">
+                  <app-bottom-button [text]="label.submitBtn" [disableButton]='!isPhoneNumberValid || !isEmailValid || showLoader' (click)="cancelAccountOverdraftLimit($event)"
+                     [showLoader]='showLoader'></app-bottom-button>  
+               </div>
+            </div>
+         </section>
+      </section>
+   </ng-template>
+</app-colored-overlay>
+<app-overdraft-limit-fica [isVisible]="isFicaNotCompliant" (backToCard)="closeOverlay($event)"></app-overdraft-limit-fica>
+<app-overdraft-limit-success [isVisible]="isOverdraftSuccess" (backToCard)="closeOverlay($event)"></app-overdraft-limit-success>

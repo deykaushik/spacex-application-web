@@ -1,0 +1,63 @@
+@import '../../../../../styles/_base.scss';
+@import '../../../../../styles/_mixins.scss';
+$icon-path: '../../../../../assets/svg/';
+.settlement-terms-section {
+   margin: 40px 15px 40px;
+   .title {
+      font-family: $font-markpro-medium;
+      font-size: $section-title-size;
+      font-weight: 500;
+      text-align: left;
+      color: $text-color-secondary;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: 1.25;
+      letter-spacing: normal;
+      margin: 0 0 20px 0;
+   }
+   .term-list {
+      padding-left: 25px;
+      li {
+         margin-bottom: 30px;
+         text-align: justify;
+         span {
+            font-family: $font-markpro;
+            line-height: 1.5;
+            color: $text-color-message-block-content;
+            &.terms-bold {
+               @include markpro-bold();
+            }
+            ::ng-deep {
+               span.highlightTextInBold {
+                  white-space: nowrap;
+               }
+               b {
+                  white-space: nowrap;
+               }
+            }
+         }
+      }
+   }
+   .terms-info {
+      line-height: 1.5;
+      letter-spacing: normal;
+      .terms-bold {
+         @include markpro-bold();
+      }
+   }
+   .link-website {
+      color: $secondary-color;
+      text-decoration: underline;
+      cursor: pointer;
+   }
+}
+
+@media (min-width: $media-sm) {
+   .settlement-terms-section {
+      max-width: 834px;
+      margin: 50px auto;
+      .title {
+         margin-bottom: 30px;
+      }
+   }
+}

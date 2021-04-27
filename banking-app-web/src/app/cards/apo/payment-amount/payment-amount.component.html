@@ -1,0 +1,34 @@
+<div class="payment-amount-container tableCell container">
+   <div class="row">
+      <div class="payment-amount-form-wrapper form-wrapper">
+         <div class="gd-form">
+            <div class="information-container-small gd-form-row">
+               <h4 class="section-title step-title  bold-text">{{autoPay.autopayLabels.paymentAmountTitle}}</h4>
+               <div class=" medium-text">{{autoPay.autopayLabels.howMuchWouldYouLikeToPay}}</div>
+            </div>
+            <div class="radio-group">
+               <app-radio-button-list [isToolTipEnabled]="isToolTipEnabled"  [radioList]="paymentAmountOptions" [selectedValue]="selectedAmountOption"
+                  (onSelectionChange)="onPaymentAmountOptionChange($event)"></app-radio-button-list>
+            </div>
+            <div *ngIf="isPreferredSelected">
+               <form #preferredAmountForm="ngForm" autocomplete="off" id="preferredAmountForm" novalidate>
+                  <div class="gd-form-row">
+                     <input [ngClass]="preferredAmount.invalid && (preferredAmount.dirty || preferredAmount.touched) && preferredAmount.isBlurred ? 'error-msg' : 'valid' "
+                        appValidateRequired appAmountFormatMask appCheckBlur [ngModel]="model.preferredAmount | amountTransform"
+                        (input)="inputKeyPress($event)" #preferredAmount="ngModel" id="preferredAmount" name="preferredAmount"
+                        autocomplete="off" [maxlength]="maxLimit" type="text" class="validate form-element preferred-inputbox" (ngModelChange)="onAmountChange($event)"
+                        required>
+                     <div *ngIf="!isAmountValid || (preferredAmount.invalid && (preferredAmount.dirty || preferredAmount.touched) && preferredAmount.isBlurred)" class="error-msg">
+                        {{autoPay.autopayLabels.preferredAmountErrorMsg}}
+                     </div>
+                     <div class="preferred-notice-msg">{{autoPay.messages.minimumAmountDue}}</div>
+                  </div>
+               </form>
+            </div>
+            <div class="buttonDiv">
+               <app-bottom-button [text]="autoPay.messages.next" (click)="goToNextStep()" [disableButton]="(isPreferredSelected ? !isFormValid : !isValidSelection) || !isAmountValid"></app-bottom-button>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

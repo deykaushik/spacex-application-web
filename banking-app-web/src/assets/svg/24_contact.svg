@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="25px" height="25px" viewBox="0 0 25 25" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>24pxcontact</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Feedback" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="1440-Feedback-1" transform="translate(-298.000000, -441.000000)" stroke="#808080">
+            <g id="24pxcontact" transform="translate(298.000000, 441.000000)">
+                <polyline id="Shape" points="4.89130435 8.26086957 0.543478261 11.4130435 0.543478261 24.4565217 24.4565217 24.4565217 24.4565217 11.4130435 20.1086957 8.26086957"></polyline>
+                <polyline id="Shape" points="4.89130435 13.8043478 4.89130435 0.543478261 20.1086957 0.543478261 20.1086957 13.8043478"></polyline>
+                <path d="M0.543478261,11.4130435 L24.4565217,24.4565217" id="Shape"></path>
+                <path d="M24.4565217,11.4130435 L12.5,17.9347826" id="Shape"></path>
+                <path d="M9.23913043,5.97826087 L15.7608696,5.97826087" id="Shape" stroke-linecap="square"></path>
+                <path d="M9.23913043,10.326087 L15.7608696,10.326087" id="Shape" stroke-linecap="square"></path>
+            </g>
+        </g>
+    </g>
+</svg>

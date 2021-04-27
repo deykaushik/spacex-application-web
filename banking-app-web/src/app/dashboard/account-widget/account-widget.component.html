@@ -1,0 +1,229 @@
+<div class="account-widget" *ngIf="(totalVisibleAccounts !== 0 && visibleAccounts.length) || skeletonMode" [ngClass]="accountConfig.type"
+   [class.is-skeleton-loading]='skeletonMode'>
+   <div class="header">
+      <div class="row">
+         <div class="col-lg-9 custom_padding">
+            <div class="row v-align-row no-margin">
+               <div class="v-align-cell no-right-padding col-xs-12 custom_display" [ngClass]="{'col-sm-4': !hasNgiInvestments}">
+                  <div class="account-type-icon-container">
+                     <span [innerHtml]="''| skeletonLoader:skeletonMode:'skeleton-icon'"></span>
+                     <span class="account-type-icon icon-link"></span>
+                  </div>
+                  <div class="account-type-text text-icon-width" [innerHtml]=" accountConfig.title | skeletonLoader:skeletonMode"></div>
+               </div>
+               <ng-container *ngIf="!hasNgiInvestments">
+                  <div class="v-align-cell col-sm-4 hidden-xs balance" [innerHtml]="accountConfig.currentBalance | skeletonLoader:skeletonMode"></div>
+                  <div class="v-align-cell col-sm-4 hidden-xs balance" [innerHtml]="accountConfig.availableBalance | skeletonLoader:skeletonMode"></div>
+               </ng-container>
+            </div>
+         </div>
+         <div class="col-lg-3 visible-lg">
+            &nbsp;
+         </div>
+      </div>
+
+      <div *ngIf="isShowMessageBlock" [ngClass]="{'error-block-success': isSuccess, 'error-block-failure': !isSuccess}">
+         <div class="icon-container">
+            <span [ngClass]="{'success': isSuccess, 'img-step-tick': isSuccess, 'img-step-close-red': !isSuccess}" (click)="!isSuccess ? closeMessageBlock() : false"></span>
+         </div>
+         <div class="error-message">{{statusMessage}}</div>
+         <div class="icon-container">
+            <span class="img-step-close" (click)="closeMessageBlock()">
+            </span>
+         </div>
+      </div>
+
+   </div>
+   <div class="account-list">
+      <ng-container *ngFor="let account of accounts; let i=index">
+         <div class="account-row" [class.hide-account-block]="!account?.IsShow && !skeletonMode">
+            <div *ngIf="hasNgiInvestments && (i===insertHeaderAt || i===0)" class="hidden-xs">
+               <div class="no-margin market-value" [ngClass]="getAccountTypeStyle(unitTrustInvestmentAccountType)">
+                  <div *ngIf="i===insertHeaderAt" class="col-sm-8 col-md-6">{{labels.marketValue}}</div>
+                  <div *ngIf="i===0">
+                     <div class="col-sm-8 col-md-6">{{labels.currentBalance}}</div>
+                     <div class="col-sm-4 col-md-3">{{labels.availableBalance}}</div>
+                  </div>
+               </div>
+            </div>
+            <ng-container *ngIf="!account.isPreApprovedOffer; else preApprovedOfferPresent">
+            <div class="row no-margin account-details-row" [class.bg-grey]="account.AccountType === rewardsAccountType && !account.AccountNumber" [ngClass]="getAccountTypeStyle(account.AccountType)"
+               *ngIf="(!account.isEditInProcess && account.IsShow) || skeletonMode">
+               <div class="col-md-11 col-lg-9">
+                  <div class="row">
+                     <div (click)="onAccountClick(account?.ItemAccountId);sendEvent('click_on_'+ getTitle() +'_account')">
+                        <div class="data-block col-xs-12 col-sm-4">
+                           <div class="account-name" [innerHtml]=" '' | skeletonLoader:skeletonMode"></div>
+                           <div *ngIf="!skeletonMode" class="account-name">{{account.AccountName}}
+                              <span class="rename-icon" *ngIf="account.IsProfileAccount && account.AccountType!==labels.travelCardAccountTypeShortName"
+                                 (click)="onEditBtnClick(account)"></span>
+                           </div>
+                           <div x-ms-format-detection="none" class="account-number" [innerHtml]="account.AccountNumber | skeletonLoader:skeletonMode"></div>
+                        </div>
+                        <div *ngIf="account.AccountType!==labels.travelCardAccountTypeShortName && account.AccountType!==forexAccountType" class="data-block col-xs-6 col-sm-4">
+                           <div class="current-balance-header">
+                              &nbsp;
+                              <span *ngIf="account.RewardsProgram!==labels.amextype; else amexTitle" class="visible-xs" [innerHtml]="(account.AccountType !== unitTrustInvestmentAccountType ? accountConfig.currentBalance : labels.marketValue) | skeletonLoader:skeletonMode"></span>
+                           </div>
+                           <div *ngIf="!(account?.RewardsProgram); else rewardsBalance" class="current-balance" [innerHtml]="account.Balance | amountTransform: amountPipeConfig: account.Currency | skeletonLoader:skeletonMode"></div>
+                           <ng-template #rewardsBalance>
+                              <div class="current-balance" [innerHtml]="account.AvailableBalance| amountTransform: amountPipeConfigRewards: account?.RewardsProgram+' ': true"></div>
+                           </ng-template>
+                        </div>
+                        <div *ngIf="account.AccountType!==labels.travelCardAccountTypeShortName && account.AccountType!==forexAccountType" class="data-block col-xs-6 col-sm-4"
+                           [ngClass]="{'remove-header': account.RewardsProgram===labels.amextype || account.AccountType === unitTrustInvestmentAccountType}">
+                           <div class="available-balance-header">
+                              &nbsp;
+                              <span class="visible-xs" x-ms-format-detection="none" [innerHtml]="accountConfig.availableBalance | skeletonLoader:skeletonMode"></span>
+                           </div>
+                           <div *ngIf="!(account?.RewardsProgram); else randValue" [ngClass]="{'remove-header': account.AccountType === personalLoanAccountType || account.AccountType === mfcvafLoanAccountType}"
+                              class="available-balance" [innerHtml]="account.AvailableBalance | amountTransform: amountPipeConfig: account.Currency | skeletonLoader:skeletonMode"></div>
+                           <ng-template #randValue>
+                              <div class="available-balance" [innerHtml]="account.RandBalance | amountTransform: amountPipeConfig | skeletonLoader:skeletonMode"></div>
+                           </ng-template>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-3" *ngIf="account.AccountStatusCode === upliftDormancyValues.dormantAccountStatus && showUpliftDormancy"
+                  (click)="onAccountClick(account?.ItemAccountId, account?.AccountStatusCode);sendEvent('click_on_'+ getTitle() +'_account')">
+                  <div class="text-center actions col-xs-12 no-padding">
+                     <div class="no-margin v-align-row">
+                        <div class="col-xs-4 v-align-cell no-padding" *ngIf="skeletonMode" [innerHtml]="''| skeletonLoader:skeletonMode:'skeleton-icon'"></div>
+                        <a class="col-xs-4 v-align-cell no-padding icon-link">
+                           <div class="dormant">
+                              <div class="dormant-icon">
+                                 <span class="icon"></span>
+                                 <span class="text-style">{{labels.upliftDormancy.dormant}}</span>
+                              </div>
+                           </div>
+                        </a>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-1 col-lg-3" *ngIf='!isVisible && !(account.AccountStatusCode === upliftDormancyValues.dormantAccountStatus && showUpliftDormancy) && !isMyPocketsAccount(account.AccountType ,account.ProductType)'>
+                  <div class="row">
+                     <div class="text-center actions col-xs-12 no-padding actions-kebab" *ngIf="!skeletonMode">
+                        <hr class="visible-xs visible-sm divider-margin" />
+                        <div class="kebab-symbol" [ngClass]="{'nav-in': !!account.kebabOpen, 'nav-out': (account.kebabOpen === false) ? true : false}">
+                              <div class="kebab-icon" (click)="onKebabClick(account)"></div>
+                        </div>
+                        <div class="row no-margin v-align-row actions-wrapper" [class.open]="!!account.kebabOpen">
+                           <div class="col-xs-4 v-align-cell no-padding" *ngIf="skeletonMode" [innerHtml]="''| skeletonLoader:skeletonMode:'skeleton-icon'"></div>
+                           <a class="col-xs-4 v-align-cell no-padding icon-link" routerLink="/payment/{{account?.ItemAccountId}}" (click)="sendEvent('click_on_pay_'+getTitle()+'_account')">
+                              <div class="icon">
+                                 <span class="pay-icon"></span>
+                              </div>
+                              <div class="text">
+                                 <span>{{ labels.pay }}</span>
+                              </div>
+                           </a>
+                           <div class="col-xs-4 v-align-cell no-padding icon-load" *ngIf="skeletonMode" [innerHtml]="''| skeletonLoader:skeletonMode:'skeleton-icon'"></div>
+                           <a class="col-xs-4 v-align-cell no-padding icon-link" routerLink="/transfer/{{account?.ItemAccountId}}" (click)="sendEvent('click_on_transfer_'+getTitle()+'_account')">
+                              <div class="icon">
+                                 <span class="transfer-icon"></span>
+                              </div>
+                              <div class="text">
+                                 <span>{{ labels.transfer }}</span>
+                              </div>
+                           </a>
+                           <div class="col-xs-4 v-align-cell no-padding" *ngIf="skeletonMode" [innerHtml]="''| skeletonLoader:skeletonMode:'skeleton-icon'"></div>
+
+                           <a class="col-xs-4 v-align-cell no-padding pop-over-container" *ngIf="!skeletonMode" (click)="sendEvent('click_on_buy_'+getTitle()+'_account')"
+                              dropdown>
+                              <div dropdownToggle>
+                                 <div class="icon">
+                                    <span class="buy-icon"></span>
+                                 </div>
+                                 <div class="text">
+                                    <span>{{ labels.buy }}</span>
+                                 </div>
+                              </div>
+                              <app-submenu [options]="buySubMenuOptions" [urlParam]="account?.ItemAccountId" class="pop-over arrow-right grey horizontal"></app-submenu>
+                           </a>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-3 action-container" *ngIf="account.AccountType === rewardsAccountType && !account.AccountNumber">
+                  <button *ngIf="canShowJoinGreenbacksEnrolment(); else inprogresscontent" class="gd-primary-btn button-block" id="enroll"
+                     (click)="showEnrolmentPopup()">Join</button>
+                  <ng-template #inprogresscontent>
+                     <span class="text-block">In Progress</span>
+                  </ng-template>
+               </div>
+
+            </div>
+            </ng-container>
+            <div class="row no-margin" [ngClass]="getAccountTypeStyle(account.AccountType)+ ' ' + getAccountEditableStyle(account)" *ngIf="account.isEditInProcess && accountDescriptionRename">
+               <div *ngIf="!editSkeletonMode; else editSkeletonModeLoader">
+                  <div class="data-block col-md-6 col-xs-12 col-sm-4">
+                     <label class="edit-account-header" for="acc_name">{{renameLabels.preferredName}}</label>
+
+                     <input id="acc_name" name="accname" maxlength="21" #accNameRef="ngModel" type="text" [ngClass]="{'input-red': !editedAccountName || isAccountNameInvalid}"
+                        [(ngModel)]="editedAccountName" (ngModelChange)="onInputChanged($event)" appValidateInput/>
+
+                     <span *ngIf="isAccountNameInvalid && editedAccountName">{{renameLabels.validSpecialCharacter}}</span>
+
+                     <div class="message-lable">
+                        <div class="edit-account-header">
+                           <span class="label-img"></span>
+                           <span class="label-text">{{renameLabels.maximumCharacter}}</span>
+                        </div>
+                        <div class="edit-account-header">
+                           <span class="label-img"></span>
+                           <span class="label-text">{{renameLabels.beAlphanumeric}}</span>
+                        </div>
+                        <div class="edit-account-header">
+                           <span class="label-img"></span>
+                           <span class="label-text">{{renameLabels.noSpecialCharacter}}</span>
+                        </div>
+                     </div>
+                  </div>
+
+                  <div class="data-block col-md-3 col-xs-12 col-sm-4">
+                     <button class="gd-primary-btn" [disabled]="!editedAccountName || isAccountNameInvalid" [ngClass]="{'confirm-success': editedAccountName && !isAccountNameInvalid, 'confirm-error': !editedAccountName || isAccountNameInvalid}"
+                        (click)="onConfirmBtnClick(editedAccountName,account)">{{renameLabels.confirmBtn}}</button>
+                  </div>
+                  <div class="data-block col-md-3 col-xs-12 col-sm-4">
+                     <button class="gd-secondary-btn cancelBtn" (click)="onCancelBtnClick(account)">{{renameLabels.cancelBtn}}</button>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <ng-template #preApprovedOfferPresent>
+            <div class="account-row">
+               <div class="row no-margin loan offer">
+                  <div class="col-md-9 offer-margin-top text-light">
+                     <div class="row">
+                        <div class="col-xs-12 col-sm-4">
+                           <div class="">{{ account.AccountName }}
+                           </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-4">
+                           <div class="current-balance" [innerHtml]="account.Balance | amountTransform"></div>
+                        </div>
+                        <div class="col-xs-6 col-sm-4">
+                           <div class="current-balance" [innerHtml]="'R0'"></div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-3 offer-margin-top view-offer">
+                     <div class="row" (click)="viewLoanOffer()">
+                        <div _ngcontent-c18="" class="text-center actions col-xs-12 no-padding">
+                           <hr _ngcontent-c18="" class="visible-xs visible-sm divider-margin"> {{viewOffer}}</div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </ng-template>
+      </ng-container>
+   </div>
+</div>
+<ng-template #amexTitle>
+   <span class="visible-xs width-max-content" [innerHtml]="labels.amexrewardsBalance | skeletonLoader:skeletonMode"></span>
+</ng-template>
+<ng-template #editSkeletonModeLoader>
+   <div class="editSkeletonModeHeight" *ngIf="editSkeletonMode" [innerHtml]="'' | skeletonLoader:editSkeletonMode">
+   </div>
+</ng-template>

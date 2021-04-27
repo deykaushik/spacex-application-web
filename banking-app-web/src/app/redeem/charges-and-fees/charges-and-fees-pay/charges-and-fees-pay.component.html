@@ -1,0 +1,74 @@
+
+
+<form class="buy-to-section gd-form autocomplete-container" #buyAmountForm="ngForm" novalidate>
+      <div class="gd-form-row" [innerHtml]="''| skeletonLoader:skeletonMode"></div>
+      <div class="gd-form-row icon-link from-account">
+            <app-account-list id="from-accounts" [title]=" 'From account' " [accounts]="accounts" [insufficientFunds]="vm.costPoints > vm.fromAccount?.availableBalance"
+                  (onAccountSelection)="onAccountSelection($event)" [selectedAccount]="vm.fromAccount"></app-account-list>
+      </div>
+   <div class="gd-form-row">
+      <label class="gd-lg-label" for="">{{constantChargesAndFees.selectChargesAndFees}}</label>
+      <div class="payment-options">
+         <div class="payment-option-box" [ngClass]="{'selected': (vm.productCategory === productCategoriesConst.bankCharges.code)}"
+            (click)="setProductChargesOrFeesCost(productCategoriesConst.bankCharges.code, true)" [class.disabled]="!bankAccounts || bankAccounts.length === 0">
+            <span class="icon bank-icon-green" [ngClass]="{'selected': (vm.productCategory === productCategoriesConst.bankCharges.code)}"></span>
+            <p class="text">{{constantChargesAndFees.bankCharges}}</p>
+         </div>
+         <div class="payment-option-box" [ngClass]="{'selected': (vm.productCategory === productCategoriesConst.linkageFees.code)}"
+            (click)="setProductChargesOrFeesCost(productCategoriesConst.linkageFees.code, true)" [class.disabled]="true">
+            <span class="icon card-icon-green" [ngClass]="{'selected': (vm.productCategory === productCategoriesConst.linkageFees.code)}"></span>
+            <p class="text">{{constantChargesAndFees.linkageFees}}</p>
+         </div>
+         <div class="payment-option-box" [ngClass]="{'selected': (vm.productCategory === productCategoriesConst.cardFees.code)}"
+            (click)="setProductChargesOrFeesCost(productCategoriesConst.cardFees.code, true)" [class.disabled]="true">
+            <span class="icon card-icon-green" [ngClass]="{'selected': (vm.productCategory === productCategoriesConst.cardFees.code)}"></span>
+            <p class="text">{{constantChargesAndFees.cardFees}}</p>
+         </div>
+      </div>
+   </div>
+   <div class="gd-form-row" [innerHtml]="''| skeletonLoader:skeletonMode"></div>
+   <div class="gd-form-row">
+      <label class="gd-lg-label" for="">{{constantChargesAndFees.toWhichAccount}}</label>
+      <app-account-list id="to-accounts" [title]=" 'To account' " [accounts]="bankAccounts" [selectedAccount]="vm.forAccount" (onAccountSelection)="onForAccountSelection($event)"
+         *ngIf="vm.productCategory == productCategoriesConst.bankCharges.code"></app-account-list>
+      <app-account-list id="to-accounts" [title]=" 'To account' " [accounts]="cardAccounts" [selectedAccount]="vm.forAccount" (onAccountSelection)="onForAccountSelection($event)"
+         *ngIf="vm.productCategory != productCategoriesConst.bankCharges.code"></app-account-list>
+   </div>
+    <div class="gd-form-row" [innerHtml]="''| skeletonLoader:skeletonMode"></div>
+   <div class="gd-form-row" *ngIf="vm.productCategory != productCategoriesConst.linkageFees.code">
+      <label class="gd-lg-label" for="">{{constantChargesAndFees.amount}}</label>
+      <label class="gd-sm-label">{{constantValues.randValue}}</label>
+      <div id="amount" class="gd-basic-dropdown" tabindex="0" dropdown [(isOpen)]="isOpen">
+         <div dropdownToggle class="dropdown-place" [class.drpdwn-error]="productRef.invalid && (productRef.dirty || productRef.touched)">
+            <div class="text"  [class.grayText]="!vm.costPoints">
+               {{vm.costRands | amountTransform }}
+            </div>
+         </div>
+         <ul *dropdownMenu class="dropdown-menu" role="menu">
+            <li role="menuitem" [class.active]= "product.productCostRands === vm.costRands"
+             *ngFor="let product of products" (click)="onProductSelection(product)">
+               <div class="text">{{product.productCostRands | amountTransform : amountPipeConfig}} pm - {{product.productCostPoints | amountTransform
+                  : rewardsAmountPipeConfig : constantValues.gbtype}}</div>
+            </li>
+         </ul>
+         <input type="hidden" name="InputProduct" [(ngModel)]="vm.costRands" #productRef="ngModel" required appCheckBlur />
+         <div *ngIf="!isOpen && productRef.invalid && (productRef.dirty || productRef.touched) && productRef.isBlurred" class="error-msg">
+            <span *ngIf="productRef.errors.required">
+              {{constantChargesAndFees.randRequired}}
+            </span>
+         </div>
+         <div class="error-msg" *ngIf="!isOpen && vm.costPoints > vm.fromAccount?.availableBalance">
+            <span>{{constantValues.accountListStatus.insufficient}}</span>
+         </div>
+      </div>
+   </div>
+   <div class="gd-form-row" *ngIf="vm.productCategory === productCategoriesConst.linkageFees.code">
+      <label class="gd-lg-label" for="">{{constantChargesAndFees.amount}}</label>
+      <label class="gd-sm-label" *ngIf="vm.costPoints">{{constantValues.randValue}}</label>
+      <span *ngIf="vm.costPoints">{{vm.costPoints | amountTransform : amountPipeConfig}}</span>
+   </div>
+   <div class="gd-form-row">
+      <label class="gd-sm-label">{{constantValues.gbValue}}</label>
+      <span [class.grayText]="!vm.costPoints">{{vm.costPoints | amountTransform : rewardsAmountPipeConfig : constantValues.gbtype : setEmptyToZero}}</span>
+   </div>
+</form>

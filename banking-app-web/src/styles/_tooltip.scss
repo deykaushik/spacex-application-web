@@ -1,0 +1,90 @@
+﻿@import './_base.scss';
+@import './_mixins.scss';
+
+.tooltip {
+   font-size: $font-sm;
+   z-index: 99;
+
+   &.in {
+      opacity: 1;
+   }
+
+   .tooltip-inner {
+      background: $tooltip-color;
+      @include border-radius(0);
+      padding: 10px;
+      color: $tooltip-text-color;
+      text-align: left;
+      width: 100%;
+      min-width: 150px;
+   }
+
+   .tooltip-template {
+      @include flexbox();
+      @include align-items(center);
+
+      .tip {
+         @include flex(1);
+      }
+
+      .icon {
+         font-size: $base-size;
+         margin-right: 10px;
+      }
+   }
+}
+
+@media (min-width: $media-sm) {
+   .tooltip {
+      &.pay-tip {
+         &.right {
+            padding: 0;
+            margin: 0 0 0 20px;
+
+            .tooltip-arrow {
+               border-width: 10px 10px 10px 0;
+               margin-top: -10px;
+               right: 100%;
+               left: auto;
+               top: 50% !important;
+               border-bottom-color: transparent;
+               border-right-color: $tooltip-color;
+            }
+         }
+      }
+   }
+}
+
+@media (max-width: $media-xs-down) {
+   .tooltip {
+      &.pay-tip {
+         &.right {
+            padding: 0;
+            margin: 10px 0 0;
+            left: 15px !important;
+            right: 15px !important;
+            top: auto !important;
+
+            .tooltip-arrow {
+               border-bottom-color: $tooltip-color;
+               border-right-color: transparent;
+               border-width: 0 10px 10px 10px;
+               margin-top: -10px;
+               right: 20px;
+               left: auto;
+               top: 0 !important;
+            }
+         }
+
+         .tooltip-inner {
+            max-width: none;
+         }
+      }
+
+      &.quick {
+         &.right {
+            margin: 50px 0 0;
+         }
+      }
+   }
+}

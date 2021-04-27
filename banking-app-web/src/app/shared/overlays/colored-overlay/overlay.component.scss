@@ -1,0 +1,226 @@
+﻿@import './../../../../styles/_base.scss';
+@import './../../../../styles/_mixins.scss';
+
+$overlay-alternate-color: $text-color-primary;
+$overlay-alternate-bg: $container-bg;
+$overlay-inner-bg: $container-bg;
+$svg-path: './../../../../assets/svg';
+$icon-grey: 'close-gray';
+
+.overlay {
+   height: calc( 100vh - #{$header-height-mob});
+   width: 100%;
+   position: fixed;
+   z-index: 999;
+   left: 0;
+   top: 0;
+   background: $overlay-inner-bg;
+   margin-top: $header-height-mob;
+   overflow-x: hidden;
+   @include box-sizing(border-box);
+   padding: 30px 0;
+   color: $color-overlay;
+   .container {
+      height: 100%;
+      background: $overlay-inner-bg;
+      padding: 20px 30px;
+      &.alternate-container {
+         padding: 0;
+         overflow-x: hidden;
+      }
+      .alternate-row {
+         padding: 10px 15px;
+         border-bottom: 1px solid $color-overlay-header-box;
+      }
+   }
+   .close-btn {
+      right: 30px;
+      z-index: 1011;
+      float: right;
+      position: relative;
+      top: 10px;
+
+      @include flexbox();
+      .closeIcon{
+         @include svg-image-full-path($svg-path, $icon-grey, 32px, 32px);
+         cursor: pointer;
+      }
+   }
+   .logo-cntnr {
+      .logo {
+         @include svg-image-full-path($svg-path, 'NedbankIcon');
+         width: 24px;
+         cursor: pointer;
+         display: block;
+         &.alternate-logo {
+            padding: 5px 0;
+            @include svg-image-full-path($svg-path, 'NedbankIcon', 30px, 30px);
+         }
+      }
+   }
+   .btn-cntnr {
+      text-align: right;
+      .cross-container{
+         @include flexbox();
+         .left-div{
+            @include flex(1);            
+          }
+         .right-div{
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         height: 44px;
+         width: 94px;
+         margin: 3px 0;
+         border-left: 1px solid $tooltip-border-bottom;
+         color: $color-brownishGrey;
+         cursor: pointer;
+          }
+   }
+      button {
+         color: $secondary-btn-color;
+         border: $secondary-btn-border;
+         @include markpro-bold();
+         font-size: #{ $font-default + 1px };
+         background-color: $secondary-btn-bg;
+         border-radius: $btn-border-radius;
+         padding: 13px 22px 9px 22px;
+         margin: 6px 0;
+         &.alternate-button {
+            min-width: 185px;
+            padding: 15px 30px;
+            font-size: $font-default;
+            margin: 0px;
+         }
+      }
+   }
+   
+   .back {
+      color: $color-overlay;
+      display: inline-block;
+      cursor: pointer;
+      
+      .icon, .text {
+         display: inline-block;
+         vertical-align: middle;
+      }
+
+      .icon {
+         @include svg-image-full-path($svg-path, 'back-arrow');
+         width: 16px;
+         height: 16px;
+         margin-right: 10px;
+      }
+   }
+   &.header-fixed {
+      padding: 0px;
+      .container {
+         overflow: hidden;
+         padding: 0px 10px;
+         .container-content {
+            height: calc(100vh - 51px);
+            overflow: auto;
+         }
+         .container-header {
+            border-bottom: 1px solid $divider-secondary;
+            padding: 10px;
+         }
+         .btn-cntnr {
+            text-align: right;
+            button {
+               color: $text-color-primary;
+               font-weight: normal;
+               border: none;
+               padding: 5px 10px 0px 0px;
+               margin: 0px;
+               font-family: inherit;
+               font-size: $font-default;
+            }
+         }
+      }
+   }
+   &.alternate-header {
+      padding: 0;
+   }
+}
+
+.overlay.alternate {
+   margin-top: 0;
+   height: 100vh;
+   background-color: $overlay-alternate-bg;
+   z-index: 9999;
+   color: $overlay-alternate-color;
+   text-align: left;
+}
+
+@media (min-width: $media-sm) {
+   .overlay {
+      height: calc( 100vh - #{$header-height});
+      margin-top: $header-height;
+      background: $overlay-bg;
+      padding: 30px 70px;
+      .container {
+         overflow-y: auto;
+         .alternate-row {
+            padding: 12px 20px;
+         }
+      }
+      .close-btn{
+         right: 18px;
+         top: 8px;
+      }
+      .logo-cntnr {
+         .logo {
+            @include svg-image-full-path($svg-path, 'NedbankLogo');
+            width: 166px;
+            &.alternate-logo {
+               @include svg-image-full-path($svg-path, 'NedbankIcon', 40px, 40px);
+            }
+         }
+      }
+      &.header-fixed {
+         .logo-cntnr {
+            .logo {
+               @include svg-image-full-path($svg-path, 'NedbankIcon');
+               width: 24px;
+               cursor: pointer;
+               display: block;
+            }
+         }
+      }
+      &.alternate-header {
+         padding: 0;
+      }
+   }
+}
+
+@media (max-width: $media-sm + 1) {
+   .overlay {
+      .container {
+         .btn-cntnr {
+            button {
+               color: $text-color-primary;
+               font-weight: normal;
+               border: none;
+               padding: 0px 10px 0px 0px;
+               margin: 0px;
+               font-family: inherit;
+               font-size: $font-default;
+               &.alternate-button {
+                  color: $secondary-btn-color;
+                  border: $secondary-btn-border;
+                  @include markpro-bold();
+                  background-color: $secondary-btn-bg;
+                  border-radius: $btn-border-radius;
+                  min-width: 123px;
+                  padding: 10px 20px;
+               }
+            }
+         }
+      }
+      .close-btn{
+         right: 14px;
+         top: 4px;
+      }
+   }
+}

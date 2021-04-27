@@ -1,0 +1,148 @@
+@import './../../../../styles/_mixins.scss';
+@import './../../../../styles/_base.scss';
+$svg-path: './../../../../assets/svg';
+$icon-tick: 'tickCheckbox';
+.section-title {
+   font-family: $font-markpro-medium;
+   font-weight: $weight-medium;
+   color: $text-color-secondary;
+   font-size: $font-default;
+}
+
+.square{
+   margin: 15px 29px 0 0;
+   width: 30px;
+   height: 30px;
+   border: 2px solid $form-element-border;
+   border-radius: 5px;
+}
+
+.cards-list {
+   @include flexbox();
+   padding: 0 10px 20px 10px;
+   .white {
+      @extend .square;
+      margin: 15px 13px 0 0;
+   }
+   .green{
+      @extend .square;
+      margin: 15px 13px 0 0;
+      background-color: $tertiary-color;
+      .tick {
+         @include svg-image-full-path($svg-path, $icon-tick, 17px, 13px);
+         top: 4px;
+         left: 4px;
+      }
+   }
+   .active-card-details {
+      font-family: $font-markpro;
+      width: 90%;
+      @include flexbox();
+      @include flex-direction(column);
+      .property-left {
+         width: 100%;
+         @include flexbox();
+         @include flex-direction(row);
+         .account-type {
+            font-family: $font-markpro-bold;
+            margin-top: 11px;
+            width: 90%;
+            text-align: left;
+            font-size: $label-size;
+         }
+         .account-name {
+            margin-top: 11px;
+            width: 69%;
+            text-align: right;
+            font-size: $font-default;
+         }
+      }
+      .property-right {
+         width: 100%;
+         @include flexbox();
+         @include flex-direction(row);
+         float: right;
+         text-align: right;
+         .account-number {
+            color: $color-greyLight;
+            width: 90%;
+            text-align: left;
+            font-size: $label-size;
+         } 
+         .available-balance {
+            color: $color-greyLight;
+            width: 94%;
+            text-align: right;
+            font-size: $font-default;
+         }
+      }
+   }
+}
+
+.select-cards {
+   @include flexbox();
+   @include flex-direction(column);
+   @include align-items(center);
+   margin: 0 21px 0 20px;
+   .section-header-mob {
+      font-family: $font-markpro-medium;
+      font-size: $section-title-size-mob;
+      display: block;
+      margin-top: 21px;
+      width: 100%;
+   }
+   .section-header {
+      margin-top: 20px;
+      width: 100%;
+      margin-bottom: 36px;
+      @extend .section-title;
+      font-family: $font-markpro;
+      font-size: $para-title-size-mob;
+   }
+   .section-body {
+      width: 100%;
+      .active-card {
+         margin-bottom: 28px;
+         .section-title {
+            @extend .section-title;
+            font-size: $section-title-size-mob;
+         }
+         .cards {
+            margin-top: 15px;
+            .cards-list {
+               @extend .cards-list;
+               &.no-last-child {
+                  border-bottom: 1px solid $highlight-bg;
+               }
+            }
+         }
+      }
+   }
+}
+
+@media (min-width: $media-xs-up) {
+   .select-cards {
+      margin-top: 58px;
+      .section-header-mob {
+         display: none;
+      }
+      .section-header {
+         font-size: $section-title-size;
+         width: 420px;
+         margin-bottom: 58px;
+         font-family: $font-markpro-medium;
+         margin-left: 20px; 
+      }
+      .section-body {
+         width: 420px;
+         .active-card {
+            .section-title {
+               font-size: $section-title-secondary-size;
+            }
+         }
+         .bottom-btn {
+            margin-left: 10px;
+         }
+      }
+   } 
+} 

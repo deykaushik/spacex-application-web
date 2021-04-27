@@ -1,0 +1,41 @@
+@import '../../../../../../styles/_mixins.scss';
+@import '../../../../../../styles/_base.scss';
+$svg-path: '../../../../../../assets/svg';
+$add-icon: 'green';
+.section-title {
+   font-family: $font-markpro-medium;
+   font-weight: 500;
+   color: $text-color-secondary;
+}
+
+.driver-information {
+   margin-top: 60px;
+   @include flexbox();
+   @include flex-direction(column);
+   @include align-items(center);
+   .section {
+      width: 425px;
+      .section-title {
+         @extend .section-title;
+         font-size: $section-title-size;
+      }
+      .section-body {
+         width: 400px;
+         margin: 60px 0;
+         .add {
+            .add-icon {
+               position: absolute !important;
+               @include svg-image-full-path($svg-path, $add-icon, 32px, 32px);
+            }
+            .add-driver {
+               font-size: $para-title-size;
+               margin-left: 40px;
+               margin-top: 5px;
+            }
+         }
+         .ng-valid {
+            border-color: $form-element-border;
+         }
+      }
+   }
+}

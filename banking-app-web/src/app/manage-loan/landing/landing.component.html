@@ -1,0 +1,25 @@
+<app-colored-overlay [alternate]="true" [isVisible]="isOverlayVisible" [template]="manageLoanTemplate" [altButtonText]="btnText"
+   (onHide)="closeOverlay()">
+   <ng-template #manageLoanTemplate>
+      <section class="manage-loan-section">
+         <span class="title">{{labels.manageYourLoan}}</span>
+         <div class="row">
+            <div class="content">
+               <div *ngIf="isNinetyDaysNoticeEnabled" class="col-sm-3 col-sm-offset-3">
+                  <div class="icon-container" (click)="onClickPlaceNotice()">
+                     <span class="icon icon-notice"></span>
+                     <span class="icon-title">{{labels.place}}</span>
+                     <span class="icon-title">{{labels.ninetyDayNotice}}</span>
+                  </div>
+               </div>
+               <div [ngClass]="isNinetyDaysNoticeEnabled ? 'col-sm-3 col-sm-offset-0' : 'col-sm-3 col-sm-offset-5 col-md-4 col-md-offset-4'">
+                  <div class="icon-container" (click)="onClickCancelLoan()">
+                     <span class="icon icon-home"></span>
+                     <span class="icon-title">{{labels.cancelLoan}}</span>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+   </ng-template>
+</app-colored-overlay>

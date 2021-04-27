@@ -1,0 +1,13 @@
+<div class="draw-details" [class.is-skeleton-loading]='skeletonMode'>
+   <div *ngIf="!isLottoError" class="draw-details-container container">
+      <app-game-list [winningNumbersInfo]="winningNumbersInfo" [winningNumberBack]="winningNumberBackBtn" [winningNumberHeadTitle]="winningNumbersLabels.winningNumbersTitle"
+         [skeletonMode]="skeletonMode"></app-game-list>
+   </div>
+      <div *ngIf="isLottoError" class="draw-details-container container">
+         <div class="gd-form-row">
+            <span class="lottoerror-icon"></span>
+            <div class="error-message"> {{lottoErrorText}}
+            </div>
+         </div>
+      </div>
+</div>

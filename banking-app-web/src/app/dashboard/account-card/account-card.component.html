@@ -1,0 +1,165 @@
+<div class="account-card">
+   <div class="account-card" [ngClass]="getAccountTypeStyle(accountInfo?.AccountType, accountContainer.ContainerName)" [class.is-skeleton-loading]='skeletonMode'>
+      <div class="card-details">
+         <div class="title" [ngClass]="accountConfig?.type">
+            <span *ngIf="skeletonMode" [innerHtml]="'' | skeletonLoader:skeletonMode:'skeleton-icon'"></span>
+            <span class="icon account-type-icon icon-link"></span>
+            <p class="text account-color" [innerHtml]="accountConfig?.title | skeletonLoader:skeletonMode"></p>
+         </div>
+         <div class="dropdown-container" [innerHtml]="'' | skeletonLoader:skeletonMode"></div>
+         <div *ngIf="dropdownAccounts && dropdownAccounts.length > 1" class="dropdown-container icon-link">
+            <div class="gd-basic-dropdown" dropdown>
+               <div dropdownToggle class="dropdown-place">
+                  <div class="text account-dropdown-option-label">
+                     <h4 class="section-title account-name-dropdown">{{ selectedAccountName || accountInfo?.AccountName}}</h4>
+                  </div>
+                  <div class="icon">
+                  </div>
+               </div>
+               <ul *dropdownMenu class="dropdown-menu" [class.dropdown-scroll]="dropdownAccounts && dropdownAccounts.length > 5" role="menu">
+                  <ng-container *ngFor="let account of dropdownAccounts">
+                     <li *ngIf="account.IsShow" [class.active]="account.AccountNumber == selectedAccount.AccountNumber || (accountInfo?.AccountNumber == account.AccountNumber)"
+                        role="menuitem" (click)="onAccountChange(account);sendEvent('change_account_from_dropdown')" class="account-card dropdown-option"
+                        [ngClass]="getAccountTypeStyle(account.AccountType, accountContainer?.ContainerName)">
+                        <h4 class="section-title account-name-dropdown">
+                           {{account.AccountName}}
+                        </h4>
+                        <p x-ms-format-detection="none" class="account-no account-num-dropdown">
+                           {{account.AccountNumber}}
+                        </p>
+                     </li>
+                  </ng-container>
+               </ul>
+            </div>
+         </div>
+         <h4 *ngIf="dropdownAccounts && dropdownAccounts.length === 1" class="section-title" [innerHtml]="accountInfo?.AccountName | skeletonLoader:skeletonMode"></h4>
+         <p class="account-no" x-ms-format-detection="none" [innerHtml]="accountInfo?.AccountNumber | skeletonLoader:skeletonMode"></p>
+         <div class="balance" *ngIf="isBuildingLoan()">
+            <table class="payout-balances-section">
+               <tr>
+                  <td class="left">
+                     <p class="type" [innerHtml]="accountConfig?.outstandingBalance | skeletonLoader:skeletonMode"></p>
+                     <h6 class="para-title bal" [innerHtml]="buildingLoanAccount?.outstandingBalance | amountTransform: amountPipeConfig | skeletonLoader:skeletonMode"></h6>
+                  </td>
+                  <td class="right">
+                     <p class="type" [innerHtml]="accountConfig?.balanaceNotPaid | skeletonLoader:skeletonMode"></p>
+                     <h6 class="para-title bal" [innerHtml]="buildingLoanAccount?.balanceNotPaidOut | amountTransform: amountPipeConfig | skeletonLoader:skeletonMode"></h6>
+                  </td>
+               </tr>
+               <tr>
+                  <td class="left">
+                     <p class="type" [innerHtml]="accountConfig?.registeredAmount | skeletonLoader:skeletonMode"></p>
+                     <h6 class="para-title bal" [innerHtml]="buildingLoanAccount?.registeredAmount | amountTransform: amountPipeConfig | skeletonLoader:skeletonMode"></h6>
+                  </td>
+                  <td class="right">
+                     <p class="type" [innerHtml]="accountConfig?.interimInterest | skeletonLoader:skeletonMode"></p>
+                     <h6 class="para-title bal" [innerHtml]="buildingLoanAccount?.accruedInterest | amountTransform: amountPipeConfig | skeletonLoader:skeletonMode"></h6>
+                  </td>
+               </tr>
+            </table>
+         </div>
+         <div class="balance" *ngIf="accountInfo.AccountType!==labels.travelCardAccountTypeShortName && !isBuildingLoan()">
+            <div class="left">
+               <p class="type" [innerHtml]="accountConfig?.currentBalance | skeletonLoader:skeletonMode"></p>
+               <h6 *ngIf="!(accountInfo?.RewardsProgram); else rewardsBalance" class="para-title bal" [innerHtml]="accountInfo?.Balance | amountTransform: amountPipeConfig: accountInfo.Currency | skeletonLoader:skeletonMode"></h6>
+               <ng-template #rewardsBalance>
+                  <h6 class="para-title bal" [innerHtml]="accountInfo.Balance | amountTransform: amountPipeConfigRewards: accountInfo?.RewardsProgram+symbols.spaceString : true | skeletonLoader:skeletonMode"></h6>
+               </ng-template>
+            </div>
+            <div class="right" *ngIf="accountInfo.RewardsProgram !== labels.amextype && hideAvailableBalance(accountInfo?.AccountType)">
+               <p class="type" [innerHtml]="accountConfig?.availableBalance | skeletonLoader:skeletonMode"></p>
+               <h6 *ngIf="!(accountInfo?.RewardsProgram); else randValue" class="para-title bal" [innerHtml]="accountInfo?.AvailableBalance | amountTransform: amountPipeConfig: accountInfo.Currency | skeletonLoader:skeletonMode"></h6>
+               <ng-template #randValue>
+                  <h6 class="para-title bal" [innerHtml]="accountInfo?.RandBalance | amountTransform: amountPipeConfig | skeletonLoader:skeletonMode"></h6>
+               </ng-template>
+            </div>
+            <div class="right" *ngIf="handleSettlementProps()">
+               <p class="type" [innerHtml]="accountConfig?.settlementAmount | skeletonLoader:skeletonMode"></p>
+               <h6 *ngIf="!(settlementFeatureProps.showError)" class="para-title bal" [innerHtml]="accountInfo?.settlementAmt | amountTransform: amountPipeConfig | skeletonLoader:skeletonMode"></h6>
+               <div class="settlement-error" *ngIf="settlementFeatureProps.showError">
+                  <span class="icon-error"></span>
+                  <h6 class="settlement-bal-error" [innerHtml]="unableToLoad"></h6>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div *ngIf="showBalanceDetail && isBalanceDetailAvailable && !isBuildingLoan()">
+      <app-account-balance-detail [balanceDetailProps]="balanceDetailProps">           
+      </app-account-balance-detail>
+   </div>
+   <div *ngIf="(isWithdrawBtnShow && isNoticeFlag)">
+      <div class="account-notice" (click)="noticeWithdrawal()">
+         <span class="icon icon-dropdown">
+             <span class="icon dropdown-large-icon"></span>
+         </span>
+         <span class="submit-title" [innerHtml]="labels.nowLabels.submitNotice"></span>
+      </div>
+   </div>   
+   <div class="controls" *ngIf='isDormantAccount && showUpliftDormancy'>
+      <ul>
+         <li>
+            <div class="dormant">
+               <div class="dormant-icon">
+                  <span class="icon"></span>
+                  <span class="text-style">{{labels.upliftDormancy.accountIsDormant}}</span>
+               </div>
+            </div>
+         </li>
+      </ul>
+   </div>
+   <div class="controls" *ngIf='isOptionsVisible && !isMyPocketsAccount(accountInfo.AccountType, accountInfo.ProductType) && !(isDormantAccount && showUpliftDormancy)'>
+      <ul>
+         <li>
+            <a *ngIf="skeletonMode" [innerHtml]="'' | skeletonLoader:skeletonMode:'skeleton-icon'"></a>
+            <a class="icon-link" routerLink="/payment/{{itemAccountId}}" (click)="sendEvent('click_on_pay_account_detail')">
+               <span class="pay-icon icon"></span>
+               <span class="text">{{ labels.pay }}</span>
+            </a>
+         </li>
+         <li>
+            <a *ngIf="skeletonMode" [innerHtml]="'' | skeletonLoader:skeletonMode:'skeleton-icon'"></a>
+            <a class="icon-link" routerLink="/transfer/{{itemAccountId}}" (click)="sendEvent('click_on_transfer_account_detail')">
+               <span class="transfer-icon icon"></span>
+               <span class="text">{{ labels.transfer }}</span>
+            </a>
+         </li>
+         <li>
+            <a *ngIf="skeletonMode" [innerHtml]="'' | skeletonLoader:skeletonMode:'skeleton-icon'"></a>
+            <a class="pop-over-container" *ngIf="!skeletonMode" (click)="sendEvent('click_on_buy_account_detail')" dropdown>
+               <div dropdownToggle>
+                  <div class="icon">
+                     <span class="buy-icon"></span>
+                  </div>
+                  <div class="text">
+                     <span>{{ labels.buy }}</span>
+                  </div>
+               </div>
+               <app-submenu [options]="buySubMenuOptions" [urlParam]="itemAccountId" class="pop-over arrow-right grey horizontal"></app-submenu>
+            </a>
+         </li>
+      </ul>
+   </div>
+   <div class="controls" *ngIf="showSettleLoan()">
+      <ul>
+         <li>
+            <a *ngIf="skeletonMode" [innerHtml]="'' | skeletonLoader:skeletonMode:'skeleton-icon'"></a>
+            <a class="icon-link" (click)="onSettleLoanClick()">
+               <span class="settle-loan-icon icon icon-margin-pl"></span>
+               <span class="text-loan">Settle loan</span>
+            </a>
+         </li>
+      </ul>
+   </div>
+</div>
+<app-colored-overlay [isVisible]="true" [closeText]="false" [alternate]="true" [template]="nonFicaTemplate" [backOption]="false"
+   *ngIf="showReasonError" (onHide)="closeOverlay($event)">
+   <ng-template #nonFicaTemplate>
+      <div class="non-fica">
+         <span class="fica-icon"></span>
+         <p class="header-message">{{noticeWithdrawalMessages.nonFica}}</p>
+         <p class="sub-header"> {{noticeWithdrawalMessages.visitFica}} </p>
+         <button class="gd-primary-btn  back-to-overview" (click)="backToOverview()">{{labels.nowLabels.backToOverview}}</button>
+      </div>
+   </ng-template>
+</app-colored-overlay>

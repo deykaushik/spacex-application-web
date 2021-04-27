@@ -1,0 +1,186 @@
+<form class="pay-amount-section gd-form" #repeatPayForm="ngForm">
+
+   <div class="container">
+      <div class="row">
+         <div class="col-xs-12">
+            <div class="work-flow can-canceled">
+               <div class="current-steps">
+                  <div class="block">
+                     <div class="steps-track" [ngClass]="{'less': true }">
+                        <span class="step-large"> 1 of 1</span>
+                     </div>
+                     <div class="steps-block">
+                        <div class="mob">
+                           <span class="step-large">1 of 1</span>
+                           <h4 class="section-title step-title">Payment Review
+                              <button (click)="goBack()" class="btn gd-secondary-btn cancel-btn">Cancel</button>
+                           </h4>
+                        </div>
+                        <div class="gd-form-row" *ngIf="showNotificationMsg">
+                           <div class="info-text warning-error">
+                              <span class="info-icon"></span>
+                              <div class="text">
+                                 <div>{{notifyMsg}}</div>
+                                 <div>
+                                    <span class="link" (click)="goBack()">Cancel</span>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="gd-form-row icon-link">
+                           <app-account-list [insufficientFunds]="insufficientFunds" [title]=" 'From account' " [accounts]="accounts" [selectedAccount]="payAmountVm.selectedAccount"
+                              (onAccountSelection)="onAccountSelection($event);">
+                           </app-account-list>
+                        </div>
+                        <div class="gd-form-row">
+                           <label for="amount" class="gd-sm-label">Amount</label>
+                           <input appFocus id="amount" [amount]="true" [readonly]="isTryAgain"  autocomplete="off" ngControl="amount" #amount="ngModel" class="validate" [class.warning]="isMinimumViolated || (isTransferAmountValid && !amount.invalid) && payAmountVm.isTransferLimitExceeded"
+                              [class.error]="(!isTransferAmountValid || amount.invalid)" [ngModel]="payAmountVm.transferAmount | amountTransform: {prefixValue: payAmountVm.selectedCurrency}"
+                              (ngModelChange)="onAmountChange($event)" type="text" name="amount" [prefixValue]="payAmountVm.selectedCurrency"
+                              appValidateRequired appAmountFormatMask appCheckBlur />
+                           <div *ngIf="(amount.invalid || payAmountVm.isTransferLimitExceeded || !payAmountVm.isValid)">
+                              <div *ngIf="payAmountVm.isTransferLimitExceeded" class="info-text amount-top-padding">
+                                 <span class="info-icon"></span>
+                                 <span>Daily limit exceeded.</span>
+                              </div>
+
+                              <div *ngIf="!payAmountVm.isValid && !payAmountVm.isTransferLimitExceeded && amount.errors && !isMinimumViolated &&  amount.isBlurred"
+                                 class="error-msg">
+                                 <span>
+                                    Please enter an amount.
+                                 </span>
+                              </div>
+                           </div>
+                           <div *ngIf="isMinimumViolated" class="info-text amount-top-padding">
+                              <span class="info-icon"></span>
+                              <span> A minimum payment of {{allowedMinimumValue | amountTransform: amountPipeConfig}} is allowed.</span>
+                           </div>
+                        </div>
+                        <div class="gd-form-row">
+                           <label for="example-text-input" class="gd-sm-label">{{labels.yourReference}}</label>
+                           <input id="your_reference" autocomplete="off" class="validate" type="text" [(ngModel)]="payForVm.yourReference" (blur)="validate()"
+                              #yourReference="ngModel" name="yourReference" [maxlength]="referenceMaxLength" appValidateRequired
+                              appCheckBlur/>
+                           <div *ngIf="yourReference.invalid && (yourReference.dirty || yourReference.touched) && yourReference.isBlurred" class="error-msg">
+                              <span *ngIf="yourReference.errors.required">
+                                 Please enter a reference for your account.
+                              </span>
+                           </div>
+                        </div>
+                        <div class="gd-form-row">
+                           <label for="example-search-input" class="gd-sm-label">{{ labels.theirReference}}</label>
+                           <input class="validate" autocomplete="off" [(ngModel)]="payForVm.theirReference" type="text" (blur)="validate()" #theirReference="ngModel"
+                              name="theirReference" appValidateRequired appCheckBlur [maxlength]="referenceMaxLength" />
+                           <div *ngIf="theirReference.invalid && (theirReference.dirty || theirReference.touched) && theirReference.isBlurred" class="error-msg">
+                              <span *ngIf="theirReference.errors.required">
+                                 Please enter a reference for your recipient.
+                              </span>
+                           </div>
+                        </div>
+                        <div class="gd-form-row">
+                           <label for="example-search-input" class="gd-sm-label">{{labels.notification}}</label>
+                           <div class="gd-basic-dropdown" tabindex="0" dropdown>
+                              <div dropdownToggle class="dropdown-place">
+                                 <div class="text">
+                                    {{payForVm.notification?.name}}
+                                 </div>
+                                 <div class="icon">
+                                    <span class="caret"></span>
+                                 </div>
+                              </div>
+                              <ul *dropdownMenu class="dropdown-menu" role="menu">
+                                 <li role="menuitem" [class.active]="payForVm.notification.name == c.name" *ngFor="let c of notifications" (click)="onNotificationChange($event,c)">
+                                    {{c.name}}
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                        <div class="gd-form-row" *ngIf="payForVm.notification?.value=='SMS'">
+                           <label for="example-search-input" class="gd-sm-label">{{labels.enterNumber}}</label>
+                           <input id="notificationInput" type='tel' name="notificationInput" #notificationInput="ngModel" [(ngModel)]="payForVm.notificationInput"
+                              [pattern]="patterns.mobile" appValidateRequired appValidateOnblur appValidateInput appCheckBlur
+                              validateFor='mobile' (ngModelChange)="validate()" />
+                           <div *ngIf="notificationInput.invalid && (notificationInput.dirty || notificationInput.touched) && notificationInput.isBlurred"
+                              class="error-msg">
+                              <div *ngIf="notificationInput.errors.required">
+                                 {{messages.enterNumber}}
+                              </div>
+                              <div *ngIf="notificationInput.errors.pattern">
+                                 {{messages.invalidNumber}}
+                              </div>
+                           </div>
+                        </div>
+                        <div class="gd-form-row" *ngIf=" payForVm.notification?.value=='Fax'">
+                           <label for="example-search-input" class="gd-sm-label">{{labels.enterNumber}}</label>
+                           <input id="notificationFaxInput" type='tel' name="notificationFaxInput" #notificationFaxInput="ngModel" [(ngModel)]="payForVm.notificationInput"
+                              [pattern]="patterns.mobile" appValidateRequired appValidateOnblur appValidateInput validateFor='mobile'
+                              appCheckBlur (ngModelChange)="validate()" />
+                           <div *ngIf="notificationFaxInput.invalid && (notificationFaxInput.dirty || notificationFaxInput.touched) && notificationFaxInput.isBlurred"
+                              class="error-msg">
+                              <div *ngIf="notificationFaxInput.errors.required">
+                                 {{messages.enterNumber}}
+                              </div>
+                              <div *ngIf="notificationFaxInput.errors.pattern">
+                                 {{messages.invalidFaxNumber}}
+                              </div>
+                           </div>
+                        </div>
+                        <div class="gd-form-row" *ngIf=" payForVm.notification?.value=='Email'">
+                           <label for="example-search-input" class="gd-sm-label">{{labels.enterEmail}}</label>
+                           <input id="notificationInput" [pattern]="patterns.email" type="text" name="notificationInput" #notificationInput="ngModel"
+                              [(ngModel)]="payForVm.notificationInput" (blur)="validate()" appValidateRequired appValidateOnblur
+                              appCheckBlur />
+                           <div *ngIf="notificationInput.invalid && (notificationInput.dirty || notificationInput.touched) && notificationInput.isBlurred"
+                              class="error-msg">
+                              <div *ngIf="notificationInput.errors.required">
+                                 {{messages.validEmail}}
+                              </div>
+                              <div *ngIf="!notificationInput.errors.required && notificationInput.errors.pattern">
+                                 {{messages.invalidEmail}}
+                              </div>
+                           </div>
+                        </div>
+                        <div class="pay-review">
+                           <table class="tabular-data-col-2">
+                              <tbody>
+                                 <tr>
+                                    <td>Recipient: </td>
+                                    <td>{{ payToVm.recipientName }}</td>
+                                 </tr>
+                                 <tr>
+                                    <td>Bank:</td>
+                                    <td>
+                                       <span *ngIf="payToVm.bankName">{{payToVm.bankName}} - </span>{{payToVm.accountNumber}}</td>
+                                 </tr>
+                                 <tr>
+                                    <td>Payment date:</td>
+                                    <td>{{ payAmountVm.paymentDate | date : dateFormat}}</td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </div>
+                        <div class="gd-error">
+                           <span>
+                              {{ paymentError }}
+                           </span>
+                        </div>
+                        <div class="next-button-container">
+                           <div class="half-btns">
+                              <div class="left">
+                                 <app-bottom-button [text]="retryCount > 0 ? 'Try Again' : 'Pay'" (click)="makePaymentClick();" [showLoader]='isPayInProcess'
+                                    [disableButton]='disablepayButton || (!isValid || retryCount > 4)'></app-bottom-button>
+                              </div>
+                              <div class="right">
+                                 <app-bottom-button alternateTheme="true" text="Go back" (click)="goBack();"></app-bottom-button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+</form>

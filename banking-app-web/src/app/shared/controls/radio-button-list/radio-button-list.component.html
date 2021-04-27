@@ -1,0 +1,15 @@
+﻿<div class="radio-button-list" id="radio-btn-list">
+   <ul class="row">
+      <li *ngFor="let radioItem of radioList;let i = index;">
+         <div *ngIf="radioItem?.isTooltipActive" class="tooltip-question">{{radioItem?.tooltip}}</div>
+         <span *ngIf="isToolTipEnabled" class="tooltip-icon" (click)="showSelectedItemTooltip(radioItem)"></span>
+         <div [class.show-tooltip]="radioItem?.isTooltipActive" class="radio-item-wrapper" (click)="onRadioItemSelection(radioItem)">
+            <input type="radio" id="{{groupName+'-f-option-'+(i+1)}}" [name]="groupName" [checked]='selectedValue && radioItem.value==selectedValue'>
+            <label [class.label-sub-title-1]="isVertical && radioItem.subTitle" for="{{groupName+'f-option-'+(i+1)}}">{{radioItem.label}}</label>
+            <label class="label-sub-title-2" *ngIf='isVertical && radioItem.subTitle'>{{radioItem.subTitle}}</label>
+            <span class="sub-title" *ngIf='radioItem.subTitle && !isVertical'>{{radioItem.subTitle}}</span>
+            <div class="check"></div>
+         </div>
+      </li>
+   </ul>
+</div>

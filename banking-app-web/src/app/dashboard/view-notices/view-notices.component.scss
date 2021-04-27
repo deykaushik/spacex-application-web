@@ -1,0 +1,80 @@
+@import '../../../styles/_mixins.scss';
+@import '../../../styles/_base.scss';
+$svg-path: './../../../assets/svg/';
+$icon-pay: 'back-green';
+.view-notices {
+   padding: $landing-padding 0;
+   @include main-content();
+   .back-header {
+      @include flexbox();
+      @include align-items(center);
+      .icon {
+         @include svg-image($icon-pay, 32px, 32px);
+         margin-right: 20px;
+         margin-bottom: 10px;
+      }
+      .page-header {
+         @include flex(1);
+         text-transform: capitalize;
+         border-bottom: none;
+         font-size: $lg-heading-size;
+         font-weight: $weight-bold;
+         margin: 0;
+         color: $text-color-secondary;         
+         line-height: 1.25;
+         .account-name {
+            display: block;
+            height: 35px;
+            font-size:$size-28;
+            font-weight: $weight-medium;
+         }
+         .account-number {
+            font-size: $size-20;
+            text-align: left;
+            display: block;
+            color: $text-color-primary;
+            font-weight: $weight-medium;
+         }
+      }
+   }
+   .table-section {
+      height: 100%;
+      background: $text-color-highlight;
+      table {
+         width: 100%;
+         margin: 15px;
+         caption {
+            margin-top: 10px;
+            width: 356px;
+            height: 28px;
+            font-size: $font-lg;
+            font-weight: $weight-medium;
+            color: $text-color-secondary;
+            margin-bottom: 10px;
+         }
+         tr {
+            height: 40px;
+         }
+         .table-heading {
+            font-size: $font-sm;
+            color: $text-color-info;
+         }
+         .table-content {
+            font-size: $font-default;
+            color: $text-color-primary;
+         }
+         .view-icon {
+            display: block;
+            padding-left: 20px;
+            @include svg-image-full-path($svg-path, 'green-details', 20px, 35px);
+            cursor: pointer;
+         }
+         .view-msg {
+            font-size: $font-sm;
+            color: $secondary-color;
+            margin-bottom: 15px;
+            cursor: pointer;
+         }
+      }
+   }
+}

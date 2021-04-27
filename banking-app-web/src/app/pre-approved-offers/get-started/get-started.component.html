@@ -1,0 +1,47 @@
+<app-colored-overlay [template]="getStartedTemplate" altButtonText="Cancel" alternate='true' [closeText]='false' [isVisible]="true"
+   (onHide)="exit()"></app-colored-overlay>
+<ng-template #getStartedTemplate>
+   <div class="main-container" *ngIf="getStartedVm.screen.length > 0">
+      <span class="heading">{{heading}} </span>
+      <div class="sub-conatiner">
+         <ng-container *ngFor="let item of getStartedVm.screen" [ngSwitch]="item.type">
+            <div class="element" *ngSwitchCase="'text'">
+               <span *ngFor="let content of item.content">
+                {{ content }}
+                </span>
+            </div>
+            <ng-container *ngSwitchCase="'checkbox'">
+               <div class="element" *ngFor="let content of item.content; let i=index">
+                  <div class="options-container">
+                     <div class="icon gd-checkbox">
+                        <input type="checkbox" id="options-check-{{i}}" [(ngModel)]="getStartedVm.options[i]" (change)="onOptionSelect()">
+                        <label for="options-check-{{i}}"></label>
+                     </div>
+                     <div class="container-items">
+                        <div>{{ content }}</div>
+                     </div>
+                  </div>
+               </div>
+            </ng-container>
+         </ng-container>
+      </div>
+      <div class="next-button-container">
+         <app-bottom-button [class.btn-disabled]="isButtonDisabled" [disableButton]="isButtonDisabled" text="Next" (click)="confirmLetsGetStarted($event)"
+            [showLoader]='IsNextInProgress'></app-bottom-button>
+            <div class="back-button-spacer"></div>  
+            <app-bottom-button text="Back" (click)="goBack($event)" [alternateTheme]="true"></app-bottom-button>
+      </div>
+   </div>
+    <div class="spinner-container"  *ngIf="getStartedVm.screen.length <= 0">
+        <div class="spinner">
+            <app-spinner class="spinner" [color]="'green'"></app-spinner>
+        </div>
+    </div>
+</ng-template>
+
+<ng-container *ngIf="showFeedbackScreen">
+   <app-colored-overlay alternate='true' [closeText]='false' [isVisible]="showFeedbackScreen" (onHide)="cancel()" [template]="feedbackTemplate" [cancelable]="false"></app-colored-overlay>
+</ng-container>
+<ng-template #feedbackTemplate>
+   <app-feedback [offerId]="offerId" (hideOverlay)="cancel()"></app-feedback>
+</ng-template>

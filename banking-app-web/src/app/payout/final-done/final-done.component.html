@@ -1,0 +1,135 @@
+<app-colored-overlay class="done-overlay" [isVisible]="true" [alternate]="true" [altButtonText]="''" [template]="donePayment"
+   [backOption]="false" (onHide)="goToAccounts()">
+   <ng-template #donePayment>
+      <div class="done-body">
+         <div class="title-section">
+            <div class="final-done-title">
+               <span class="title-label" *ngIf="payoutType === doneLabels?.final">{{doneLabels.youAreAlmostDone}}</span>
+               <span class="title-label" *ngIf="payoutType !== doneLabels?.final">{{doneLabels.youAreDone}}</span>
+            </div>
+            <div class="final-done-subtitle">
+               <span class="subtitle-label" *ngIf="payoutType === doneLabels?.final">{{doneMessages.needDocuments}}</span>
+               <span class="subtitle-label" *ngIf="payoutType !== doneLabels?.final">{{doneMessages.receivedPayment}}</span>
+            </div>
+         </div>
+         <div class="final-done-stepper">
+            <div class="col-md-4 col-sm-12 grey-border-box arrow_box">
+               <div class="stepper-main-content content-online-app">
+                  <div class="icon">
+                  </div>
+                  <div class="stepper-content">
+                     <div class="stepper-sub-title">
+                        <span class="sub-title-label">
+                           {{doneLabels.onlineApplication}}
+                        </span>
+                     </div>
+                     <div class="stepper-sub-content">
+                        <span class="sub-content-label">
+                           {{doneMessages.completedApplication}}
+                        </span>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-md-4 col-sm-12 grey-border-box arrow_box" *ngIf="payoutType === doneLabels?.final">
+               <div class="stepper-main-content content-submit-doc">
+                  <div class="icon">
+                  </div>
+                  <div class="stepper-content">
+                     <div class="stepper-sub-title">
+                        <span class="sub-title-label">
+                           {{doneLabels.submitDocuments}}
+                        </span>
+                     </div>
+                     <div class="stepper-sub-content">
+                        <span class="sub-content-label">
+                           {{doneLabels.emailUsDocuments}}
+                        </span>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-md-4 col-sm-12 grey-border-box">
+               <div class="stepper-main-content content-contact-you">
+                  <div class="icon" [ngClass]="{'icon': payoutType === doneLabels?.final, 'icon-green': payoutType !== doneLabels?.final}">
+                  </div>
+                  <div class="stepper-content">
+                     <div class="stepper-sub-title">
+                        <span class="sub-title-label">
+                           {{doneMessages.weContactYou}}
+                        </span>
+                     </div>
+                     <div class="stepper-sub-content">
+                        <span class="sub-content-label">
+                           {{doneMessages.weContactProcessed}}
+                        </span>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="final-done-send-doc" *ngIf="payoutType === doneLabels?.final">
+            <div class="section-title">
+               <span class="send-documents">
+                  {{doneLabels.howToSendDocuments}}
+               </span>
+            </div>
+            <div class="send-doc-sec-1 send-doc-content">
+               <div class="wrapper">
+                  <div class="icon">
+                  </div>
+               </div>
+               <div class="content">
+                  <p>
+                     {{doneLabels.weNeedYour}}
+                     <span class="dark-grey-text ">{{doneMessages.subjectLine3}}</span>
+                  </p>
+               </div>
+            </div>
+            <div class="send-doc-sec-2 send-doc-content">
+               <div class="wrapper">
+                  <div class="icon">
+                  </div>
+               </div>
+               <div class="content">
+                  <p>
+                     {{doneLabels.sendDocuments}}
+                     <span class="green-text" (click)="sendMail()">{{doneContact.email}}</span>
+                  </p>
+               </div>
+            </div>
+            <div class="send-doc-sec-3 send-doc-content">
+               <div class="wrapper">
+                  <div class="icon">
+                  </div>
+               </div>
+               <div class="content">
+                  <p>
+                     {{this.subject}}
+                  </p>
+               </div>
+            </div>
+         </div>
+         <div class="final-done-contact-us" [class.done-contact-margin]=" payoutType !== doneLabels?.final">
+            <div class="section-title">
+               <span class="section-contact">
+                  {{doneLabels.contactUs}}
+               </span>
+            </div>
+            <div class="contact-us-sec-1">
+               <div class="icon">
+               </div>
+               <div class="content">
+                  <p>
+                     {{doneMessages.trackRequest}}
+                     <span class="green-text">{{doneContact.phoneNumber}}</span>
+                  </p>
+               </div>
+            </div>
+         </div>
+         <div class="go-to-acc-btn" [class.done-button-margin]="payoutType !== doneLabels?.final">
+            <button class="gd-primary-btn" (click)="goToAccounts()">{{doneLabels.gotToAccount}}</button>
+         </div>
+      </div>
+   </ng-template>
+</app-colored-overlay>

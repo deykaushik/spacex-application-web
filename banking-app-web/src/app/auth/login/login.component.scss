@@ -1,0 +1,562 @@
+﻿@import './../../../styles/_mixins.scss';
+@import './../../../styles/_base.scss';
+$svg-path: './../../../assets/svg';
+$png-path: './../../../assets/png';
+
+.component-container {
+  margin: auto;
+  font-family: $font-markpro;
+  width: 100%;
+  background: $login-bg;
+}
+
+.content-container {
+  display: table;
+  width: 100%;
+  font-size: $font-default;
+  vertical-align: top;
+  text-align: left;
+  height: calc( 100vh - #{$header-height-mob + $footer-height-xs});
+
+  .left-margin {
+    margin-left: 40px;
+  }
+}
+
+.tableRow {
+  display: table-row;
+}
+
+.tableCell {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.information-container {
+   margin: 0;
+   padding: 0;
+   overflow: hidden;
+}
+
+.information-container-small {
+  display: none;
+}
+
+.login-container {
+  font-size: $font-default;
+  vertical-align: middle;
+  text-align: left;
+  padding: 1em 1em 0 1em;
+  width: 45%;
+
+  .formInput {
+    max-width: 400px;
+    margin: auto;
+  }
+
+  .registerText {
+    font-size: $font-sm;
+    margin-bottom: 10px;
+  }
+}
+
+.entrustContainer {
+  margin-left: 50px;
+  padding: 0 10px 10px 10px;
+  display: table;
+
+  .iconEntrust {
+    width: 48px;
+    height: 48px;
+  }
+
+  .entrustText {
+    font-size: $font-sm;
+    color: $text-color-primary;
+    padding-left: 20px;
+  }
+}
+
+.iconCardPin {
+  @include svg-image-full-path($svg-path, 'CardPIN', 30px, 30px);
+}
+
+.iconPPP {
+  @include svg-image-full-path($svg-path, 'PPP');
+}
+
+.iconImg {
+  position: absolute !important;
+  display: inline-block;
+  // top: -8px;
+  cursor: pointer;
+}
+
+.icon-field {
+  .registerHeadingText {
+    font-size: $font-default;
+    color: $text-color-primary;
+    margin-left: 60px;
+    text-decoration: none;
+  }
+
+  .registerText {
+    margin: 0 0 0 60px;
+    font-size: $font-sm;
+    color: $text-color-primary;
+  }
+}
+
+::-ms-reveal {
+  display: none;
+}
+
+::-ms-clear {
+  display: none;
+}
+
+a:active,
+a:visited,
+a:hover {
+  text-decoration: none;
+}
+
+.link-text {
+  color: $text-color-link;
+  font-size: $font-sm;
+  margin: 18px 0;
+  font-weight:  $weight-bold;
+  text-decoration: none;
+  cursor: pointer;
+
+  &.assistance {
+     float: right;
+     margin: 1px 0 0 0;
+  }
+}
+
+.link-text:active,
+.link-text:visited,
+.link-text:hover {
+  text-decoration: none;
+}
+
+.registerBlock {
+  color: $text-color-secondary;
+  font-size: $font-lg;
+  padding-bottom: 0px;
+}
+.login-title {
+  color: $text-color-secondary;
+  font-size: $font-lg;
+}
+
+.boldText {
+  font-family: $font-markpro-bold, $font-markpro-medium;
+}
+
+.mediumText {
+  font-family: $font-markpro-medium, $font-markpro;
+}
+
+
+.input-container {
+  position: relative;
+}
+
+.input-img {
+  position: absolute;
+  bottom: 36%;
+  right: 12px;
+  width: 25px;
+  height: 25px;
+}
+
+.top-margin30 {
+  margin-top: 30px;
+}
+
+.top-margin50 {
+  margin-top: 50px;
+}
+
+.helpText {
+  font-size: $font-sm;
+  color: $form-helper-text;
+  margin: 5px 0 0;
+}
+
+
+@media screen and (max-width: $media-md)
+{
+    .headingText {
+      font-size: $font-lg;
+      font-weight:  $weight-bold;
+      margin: 0;
+      color: $text-color-secondary;
+      line-height: 1;
+  }
+}
+
+@media screen and (max-width: ($media-sm)) {
+  .information-container {
+    display: none;
+  }
+
+  .content-container {
+    background-image: none;
+    height: auto;
+  }
+
+  .link-text {
+      &.assistance {
+         float: none;
+         display: block;
+         margin-top: 20px;
+      }
+  }
+
+  .information-container-small {
+    padding: 0;
+    width: 100%;
+    display: block;
+
+    .registerText {
+      margin: 0;
+      padding: 10px;
+      font-size: $font-sm;
+      color: $text-color-primary;
+    }
+
+    .img-Container {
+      display: none;
+    }
+
+    .linkButtons {
+      margin: 10px 0 10px 0;
+    }
+
+    .anchorDiv {
+      background-color: $highlight-bg;
+      padding: 15px;
+      margin: 20px 0 20px 0;
+      font-size: $font-sm;
+
+      .link-text {
+        margin: 0;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+
+      .link-text:active,
+      .link-text:visited,
+      .link-text:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .left-margin {
+    margin-left:10px;
+  }
+
+  .login-container {
+    width: 100%;
+
+    .formInput {
+      max-width: initial;
+    }
+  }
+
+  .entrustContainer {
+    margin: 0 15px 0 15px;
+
+    .entrustText {
+      font-size: $font-xsm;
+      padding-left: 10px;
+    }
+  }
+}
+
+.animated { 
+  -webkit-animation-duration: 5s;
+  animation-duration: 5s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+@keyframes fadeAndScaleIn {
+  0% {
+     opacity: 0;
+     transform: scale(1.1);
+  }
+  100% {
+     opacity: 1;
+     transform: scale(1.0)
+  }
+}
+
+@-webkit-keyframes fadeAndScaleIn {
+  0% {
+     opacity: 0;
+     transform: scale(1.1);
+  }
+  100% {
+     opacity: 1;
+     transform: scale(1.0);
+  }
+}
+
+@-moz-keyframes fadeAndScaleIn {
+  0% {
+    opacity: 0;
+    transform: scale(1.1);
+ }
+ 100% {
+    opacity: 1;
+    transform: scale(1.0)
+ }
+}
+
+@-ms-keyframes fadeAndScaleIn {
+  0% {
+    opacity: 0;
+    transform: scale(1.1);
+ }
+ 100% {
+    opacity: 1;
+    transform: scale(1.0)
+ }
+}
+
+@-o-keyframes fadeAndScaleIn {
+  0% {
+    opacity: 0;
+    transform: scale(1.1);
+ }
+ 100% {
+    opacity: 1;
+    transform: scale(1.0)
+ }
+}
+
+.fadeAndScaleIn {
+  -webkit-animation-name: fadeAndScaleIn;
+  animation-name: fadeAndScaleIn;
+}
+
+.fadeAndScaleIn {
+  -webkit-animation-name: fadeAndScaleIn;
+  animation-name: fadeAndScaleIn;
+}
+
+@keyframes fadeAndScaleIn {
+  0% {
+     opacity: 0;
+     transform: scale(1.1);
+  }
+  100% {
+     opacity: 1;
+     transform: scale(1.0)
+  }
+}
+
+@-webkit-keyframes fadeAndScaleIn {
+  0% {
+     opacity: 0;
+     transform: scale(1.1);
+  }
+  100% {
+     opacity: 1;
+     transform: scale(1.0);
+  }
+}
+
+@-moz-keyframes fadeAndScaleIn {
+  0% {
+    opacity: 0;
+    transform: scale(1.1);
+ }
+ 100% {
+    opacity: 1;
+    transform: scale(1.0)
+ }
+}
+
+@-ms-keyframes fadeAndScaleIn {
+  0% {
+    opacity: 0;
+    transform: scale(1.1);
+ }
+ 100% {
+    opacity: 1;
+    transform: scale(1.0)
+ }
+}
+
+@-o-keyframes fadeAndScaleIn {
+  0% {
+    opacity: 0;
+    transform: scale(1.1);
+ }
+ 100% {
+    opacity: 1;
+    transform: scale(1.0)
+ }
+}
+
+.fadeAndScaleIn {
+  -webkit-animation-name: fadeAndScaleIn;
+  animation-name: fadeAndScaleIn;
+}
+
+@keyframes fadeIn {
+   0% {
+      opacity: 0;
+   }
+   100% {
+      opacity: 1;
+   }
+ }
+ 
+ @-webkit-keyframes fadeIn {
+   0% {
+      opacity: 0;
+   }
+   100% {
+      opacity: 1;
+   }
+ }
+ 
+ @-moz-keyframes fadeIn {
+   0% {
+     opacity: 0;
+  }
+  100% {
+     opacity: 1;
+  }
+ }
+ 
+ @-ms-keyframes fadeIn {
+   0% {
+     opacity: 0;
+  }
+  100% {
+     opacity: 1;
+  }
+ }
+ 
+ @-o-keyframes fadeIn {
+   0% {
+     opacity: 0;
+  }
+  100% {
+     opacity: 1;
+  }
+ }
+ 
+ .fadeIn {
+   -webkit-animation-name: fadeIn;
+   animation-name: fadeIn;
+ }
+ 
+.stealthy {
+   left: 0;
+   top: 0;
+   margin: 0;
+   max-height: 1px;
+   max-width: 1px;
+   opacity: 0;
+   outline: none;
+   overflow: hidden;
+   pointer-events: none;
+   position: absolute;   
+   z-index: -1;
+ }
+
+/* New UX */
+
+ .vertical-align {
+   position: relative;
+   top: 50%;
+   -webkit-transform: translateY(-50%);
+   -ms-transform: translateY(-50%);
+   transform: translateY(-50%);
+ }
+ 
+ .key {
+   width: 100%;
+ }
+ 
+ @media screen and (max-width: ($media-md)) {
+   .key-img-container {
+     display: none
+   }
+   .key-content {
+      width: 85% !important;
+      padding: 0 0 0 3vw !important;
+   }
+ }
+ 
+ .key-img-container, .key-content {
+   height: 100%;
+   float: left;
+ }
+ 
+ .key-img-container {
+   width: 50%;
+ }
+ 
+ .key-img-container img {
+   height: 100%;
+   width: auto;
+   opacity: 1;
+ }
+ 
+@media screen and (min-width: ($media-sm)) {
+   .key-img-container img {
+     height: auto;
+     width: 100%;
+     opacity: 1;
+   }
+ }
+ 
+ .key-content {
+   width: 50%;
+   padding: 3vw 0 0 3vw;
+ }
+ 
+ .key-content-icons {
+   margin: 30px 0;
+   width: 100%;
+   height: auto;
+ }
+ 
+ .key-content-icon {
+   display: inline-block;
+ }
+ 
+ .key-content-icon small{
+   font-size: 75%;
+   color: $text-color-primary;
+   margin-right: 20px;
+ }
+ 
+ .key-content-icon img {
+   width: 40px;
+   height: 40px;
+ }
+ 
+ .key-content h3 {
+   font-size: 2.4vw;
+   font-weight: $weight-light;
+   margin: 0;
+   color: $text-color-secondary;
+   line-height: 1;
+ }
+ 
+ .key-content p {
+   font-size: $font-sm;
+   margin-bottom: 20px
+ }
+

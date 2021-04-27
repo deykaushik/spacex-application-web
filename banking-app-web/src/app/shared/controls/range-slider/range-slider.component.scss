@@ -1,0 +1,276 @@
+﻿/*! nouislider - 10.1.0 - 2017-07-28 13:09:54 */
+@import './../../../../styles/_base.scss';
+@import '../../../../styles/_mixins.scss';
+
+$range-base: $highlight-bg;
+$noUi-connect-bg: $range-slider-base-active;
+$noUi-handle-bg: $container-bg;
+$noUi-connect-bg-disabled: $highlight-dark-bg;
+$noUi-marker-bg: $highlight-dark-bg;
+
+:host::ng-deep {
+   .noUi-target, .noUi-target * {
+      -webkit-touch-callout: none;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-user-select: none;
+      -ms-touch-action: none;
+      touch-action: none;
+      -ms-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box
+   }
+
+   .noUi-target {
+      position: relative;
+      direction: ltr;
+   }
+
+   .noUi-base {
+      width: 100%;
+      height: 4px;
+      position: relative;
+      z-index: 1
+   }
+
+   .noUi-connect {
+      position: absolute;
+      right: 0;
+      top: 0;
+      left: 0;
+      bottom: 0
+   }
+
+   .noUi-origin {
+      position: absolute;
+      height: 0;
+      width: 0
+   }
+
+   .noUi-handle {
+      position: relative;
+      z-index: 1
+   }
+
+   .noUi-state-tap .noUi-connect, .noUi-state-tap .noUi-origin {
+      -webkit-transition: top .3s,right .3s,bottom .3s,left .3s;
+      transition: top .3s,right .3s,bottom .3s,left .3s
+   }
+
+   .noUi-state-drag * {
+      cursor: inherit !important
+   }
+
+   .noUi-base, .noUi-handle {
+      -webkit-transform: translate3d(0,0,0);
+      transform: translate3d(0,0,0);
+      background-color: $range-slider-base;
+      border-radius: 10px;
+   }
+
+   .noUi-horizontal {
+      height: 18px
+   }
+
+   .noUi-horizontal .noUi-handle {
+      border-radius: 17px;
+      width: 30px;
+      height: 30px;
+      left: -17px;
+      top: -13px;
+      outline: none;
+      cursor: pointer;
+   }
+
+   .noUi-vertical {
+      width: 18px
+   }
+
+   .noUi-vertical .noUi-handle {
+      width: 28px;
+      height: 34px;
+      left: -6px;
+      top: -17px
+   }
+
+   .noUi-target {
+      border-radius: 10px;
+      height: 4px;
+      top: 5px;
+   }
+
+   .noUi-connect {
+      background: $noUi-connect-bg;
+      border-radius: 10px;
+      height: 4px;
+      top: 0;
+      box-shadow: inset 0 0 3px rgba(51,51,51,.45);
+      @include transition(background 450ms linear);
+   }
+
+   .noUi-draggable {
+      cursor: ew-resize
+   }
+
+   .noUi-vertical .noUi-draggable {
+      cursor: ns-resize
+   }
+
+   .noUi-handle {
+      border: 1px solid $form-element-border;
+      border-radius: 3px;
+      background: $noUi-handle-bg;
+      cursor: default;
+      box-shadow: $range-slider-box-shadow;
+   }
+
+   .noUi-active {
+      box-shadow: $range-slider-box-shadow;
+   }
+
+   .noUi-handle:before {
+      position: absolute;
+      content: "<";
+      display: block;
+      top: 5px;
+      left: 6px;
+      font-size: $font-default-1;
+      font-family: Consolas;
+      color: $text-color-primary;
+   }
+
+   .noUi-handle:after {
+      position: absolute;
+      position: absolute;
+      content: ">";
+      display: block;
+      top: 5px;
+      left: 18px;
+      color: $text-color-primary;
+      font-size: $font-default-1;
+      font-family: Consolas;
+   }
+
+   [disabled] .noUi-connect {
+      background: $noUi-connect-bg-disabled;
+   }
+
+   [disabled] .noUi-handle, [disabled].noUi-handle, [disabled].noUi-target {
+      cursor: not-allowed
+   }
+
+   .noUi-pips, .noUi-pips * {
+      -moz-box-sizing: border-box;
+      box-sizing: border-box
+   }
+
+   .noUi-pips {
+      position: absolute;
+      color: $text-color-info;
+   }
+
+   .noUi-value {
+      position: absolute;
+      white-space: nowrap;
+      text-align: center
+   }
+
+   .noUi-value-sub {
+      color: $text-color-info;
+      font-size: 10px
+   }
+
+   .noUi-marker {
+      position: absolute;
+      background: $range-slider-marker-bg;
+   }
+
+   .noUi-marker-large, .noUi-marker-sub {
+      background: $noUi-marker-bg;
+   }
+
+   .noUi-pips-horizontal {
+      padding: 10px 0;
+      height: 80px;
+      top: 100%;
+      left: 0;
+      width: 100%
+   }
+
+   .noUi-value-horizontal {
+      -webkit-transform: translate3d(-50%,50%,0);
+      transform: translate3d(-50%,50%,0)
+   }
+
+   .noUi-marker-horizontal.noUi-marker {
+      margin-left: -1px;
+      width: 2px;
+      height: 5px
+   }
+
+   .noUi-marker-horizontal.noUi-marker-sub {
+      height: 10px
+   }
+
+   .noUi-marker-horizontal.noUi-marker-large {
+      height: 15px
+   }
+
+   .noUi-pips-vertical {
+      padding: 0 10px;
+      height: 100%;
+      top: 0;
+      left: 100%
+   }
+
+   .noUi-value-vertical {
+      -webkit-transform: translate3d(0,50%,0);
+      transform: translate3d(0,50%,0);
+      padding-left: 25px
+   }
+
+   .noUi-marker-vertical.noUi-marker {
+      width: 5px;
+      height: 2px;
+      margin-top: -1px
+   }
+
+   .noUi-marker-vertical.noUi-marker-sub {
+      width: 10px
+   }
+
+   .noUi-marker-vertical.noUi-marker-large {
+      width: 15px
+   }
+
+   .noUi-tooltip {
+      display: block;
+      position: absolute;
+      border: 1px solid $tooltip-color;
+      border-radius: 3px;
+      background: $container-bg;
+      color: $text-color-secondary;
+      padding: 5px;
+      text-align: center;
+      white-space: nowrap
+   }
+
+   .noUi-horizontal .noUi-tooltip {
+      -webkit-transform: translate(-50%,0);
+      transform: translate(-50%,0);
+      left: 50%;
+      bottom: 120%
+   }
+
+   .noUi-vertical .noUi-tooltip {
+      -webkit-transform: translate(0,-50%);
+      transform: translate(0,-50%);
+      top: 50%;
+      right: 120%
+   }
+}
+
+.slider-padding {
+   padding: 50px 0;
+}

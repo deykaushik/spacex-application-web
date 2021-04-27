@@ -1,0 +1,207 @@
+@import '../../../styles/_mixins.scss';
+@import '../../../styles/_base.scss';
+$svg-path: './../../../assets/svg/';
+$list-padding-sm: 10px;
+$list-padding: 20px;
+.transactions-list-container {
+   background: $text-color-highlight;
+   table {
+      width: 100%;
+      thead {
+         display: none;
+      }
+      td,
+      div {
+         &.amount {
+            &.debits {
+               color: $color-debit;
+            }
+            &.credits {
+               color: $color-credit;
+            }
+         }
+      }
+      tbody {
+         .sel-trns-header {
+            td {
+               border-top: 1px solid $secondary-color;
+            }
+         }
+         td {
+            display: none;
+            padding: $list-padding-sm;
+            position: relative;
+            &:nth-child(2) {
+               display: table-cell;
+            }
+         }
+      }
+      .date {
+         color: $text-color-info;
+         font-size: $font-sm;
+      }
+      .descrp-block {
+         @include flexbox();
+         @include align-items(center);
+         .icon {
+            width: 22px;
+            height: 22px;
+            margin-right: $list-padding-sm;
+         }
+         .descrp {
+            @include flex(1);
+            .title-block {
+               margin-top: 5px;
+               font-size: $font-sm;
+               @include flexbox();
+               @include align-items(center);
+               .title {
+                  @include flex(1);
+                  word-break: break-all;
+                  font-size: $font-default;
+               }
+            }
+         }
+      }
+   }
+   .sel-trns-header {
+      td,
+      div {
+         color: $text-color-primary;
+         font-weight: bold;
+      }
+      .date {
+         color: $text-color-secondary;
+         font-size: $font-xsm;
+      }
+      .descrp-block {
+         .descrp {
+            .title-block {
+               .title {
+                  color: $text-color-secondary;
+               }
+               .amount {
+                  font-size: $font-default;
+               }
+            }
+         }
+      }
+   }
+   .sel-trns-detail {
+      @include markpro-medium();
+      font-size: $font-default;
+      .sel-trns-detail-xs {
+         display: block;
+         border-bottom: 1px solid $secondary-color;
+      }
+   }
+   .selectable {
+      cursor: pointer;
+      border-bottom: 1px solid $color-no-records-background;
+   }
+   .no-matched-trans {
+      height: 160px;
+      @include flexbox();
+      @include justify-content(center);
+      @include align-items();
+      @include flex-direction(column);
+      padding-bottom: 47px;
+      .icon-warning {
+         margin-bottom: 25px;
+         @include svg-image-full-path($svg-path, 'warning-error', 60px, 60px);
+      }
+      .text {
+         font-size: $font-default;
+         color: $text-color-warmGrey;
+         line-height: 1.16;
+      }
+   }
+}
+
+@media (min-width: $media-sm) {
+   .transactions-list-container {
+      table {
+         width: 100%;
+         thead {
+            display: table-header-group;
+            th {
+               font-size: $font-sm;
+               color: $text-color-info;
+               padding: $list-padding;
+               border-bottom: 1px solid $divider-primary;
+               &:nth-child(3),
+               &:nth-child(4) {
+                  text-align: right;
+               }
+            }
+         }
+         tbody {
+            td {
+               padding: $list-padding;
+               display: table-cell;
+               &:nth-child(3),
+               &:nth-child(4) {
+                  text-align: right;
+               }
+            }
+         }
+         .sel-trns-detail {
+            .sel-trns-detail-xs {
+               display: table-cell;
+            }
+         }
+         .date {
+            color: $text-color-primary;
+            font-size: $font-sm;
+         }
+         .descrp-block {
+            @include flexbox();
+            @include align-items(center);
+            .icon {
+               width: 22px;
+               height: 22px;
+               margin-right: $list-padding;
+            }
+            .descrp {
+               @include flex(1);
+               .date {
+                  display: none;
+               }
+               .title-block {
+                  color: $text-color-secondary;
+                  margin-top: 0;
+                  display: block;
+                  .amount {
+                     display: none;
+                  }
+               }
+            }
+         }
+      }
+      .sel-trns-header {
+         .date {
+            font-size: $font-sm;
+         }
+         .descrp-block {
+            .descrp {
+               .title-block {
+                  .title {
+                     color: $text-color-primary;
+                  }
+                  .amount {
+                     font-size: $font-default;
+                  }
+               }
+            }
+         }
+      }
+      .no-matched-trans {
+         height: 400px;
+         padding: 40px;
+         padding-bottom: 90px;
+         .text {
+            font-size: $font-lg;
+         }
+      }
+   }
+}

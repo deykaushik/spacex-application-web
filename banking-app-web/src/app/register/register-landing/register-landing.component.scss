@@ -1,0 +1,312 @@
+﻿@import "../../../styles/_mixins.scss";
+@import "../../../styles/_base.scss";
+
+
+$svg-path: '../../../assets/svg';
+$enrol-container-bg: $container-bg;
+
+
+.enrol-container {
+  margin: auto;
+  display: table;
+  width: 100%;
+  height: calc( 100vh - #{$header-height + $footer-height-lg});
+  position:relative;
+  overflow: hidden;
+  background: $enrol-container-bg;
+  padding: 0 5%;
+  .left-container {
+    font-size: $font-default;
+    vertical-align: top;
+    text-align: left;
+    padding: 30px 15px 15px 15px;
+    display: table-cell;
+    width: 50%;
+
+    &.img-container {
+      overflow: hidden;
+      background-origin: padding-box, content-box;
+      background-repeat: no-repeat;
+      background-position: right center;
+      background-size: contain;
+    }
+  }
+
+  .component-container {
+    font-size: $font-default;
+    vertical-align: top;
+    text-align: left;
+    padding: 30px 0px 15px 0px;
+    display: table-cell;
+    width: 50%;
+
+    .formInput {
+      max-width: 400px;
+      margin: auto;
+      margin-top: 2rem;
+    }
+
+    .gd-form .gd-form-row:last-of-type {
+      margin-bottom: 30px;
+    }
+  }
+
+  .iconCardPin {
+    @include svg-image-full-path($svg-path, 'CardPIN', 30px, 30px);
+  }
+  
+  .iconPPP {
+    @include svg-image-full-path($svg-path, 'PPP');
+  }
+  
+  .iconImg {
+    position: absolute !important;
+    display: inline-block;
+    // top: -8px;
+    cursor: pointer;
+  }
+  
+  .icon-field {
+    .registerHeadingText {
+      font-size: $font-default;
+      color: $text-color-secondary;
+      margin-left: 60px;
+      text-decoration: none;
+    }
+  
+    .registerText {
+      margin-left: 60px;
+      font-size: $font-sm;
+      color: $text-color-primary;
+    }
+  }
+  
+  .password-Container {
+    position: relative;
+  
+    .eye-container {
+      position: relative;
+      width: 100%;
+  
+      .eye-img {
+        position: absolute;
+        bottom: 36%;
+        right: 12px;
+        width: 25px;
+        height: 25px; 
+      }
+  
+      .fa-fa-eye {
+        @include svg-image-full-path($default-svg-image-path, 'PasswordIcon');
+      }
+    }
+  }
+ 
+  ::-ms-reveal {
+    display: none;
+  }
+
+  ::-ms-clear {
+    display: none;
+  }
+
+  .boldText {
+    font-family: $font-markpro-bold, $font-markpro-medium;
+  }
+
+  .mediumText {
+    font-family: $font-markpro-medium, $font-markpro;
+  }
+
+  .darkText {
+    color: $text-color-secondary;
+  }
+
+  .secondaryText {
+    color: $text-color-accent-secondary;
+  }
+
+  .userText {
+    color: $text-color-secondary;
+    font-size: $font-md;
+  }
+
+  .top-margin50 {
+    margin-top: 50px;
+  }
+
+   .helpText {
+    font-size: $font-sm;
+    color:  $text-color-info;
+    margin: 5px 0 0;
+  }  
+
+  .textPlaceholder {
+       color: transparent;
+       font-size: $font-sm;
+       margin: 5px 0 0;
+  }
+
+  .link-text {
+    color: $text-color-link;
+    font-size: $font-sm;
+    margin: 18px 0;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .link-text:active,
+  .link-text:visited,
+  .link-text:hover {
+    text-decoration: none;
+  }
+
+  .gd-primary-btn,
+  .gd-secondary-btn,  
+  .gd-ghost-btn {
+    min-width: 160px;
+  }
+
+  .btnWithBorder
+  {
+      &.gd-ghost-btn {
+         color: $secondary-btn-color;
+         background: $secondary-btn-bg;
+         border: $secondary-btn-border;
+      
+         &:hover,
+         &:active,
+         &:focus,
+         &:active:focus {
+            color: $secondary-btn-color-hover;
+            background: $secondary-btn-bg-hover;
+            border-color: $secondary-btn-border-hover;
+         }
+         &[disabled]{
+            color: $secondary-btn-color-disabled;
+            background: $secondary-btn-bg-disabled;
+            border-color: $secondary-btn-border-disabled;
+         }
+
+         .overlay-loader {
+            background: $secondary-btn-color;
+            border-radius: initial;
+            cursor: not-allowed;
+         }
+    }
+  }
+
+  .fade { 
+   -webkit-animation-duration: 3s;
+    animation-duration: 3s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+  }
+
+  .slide {
+    -webkit-animation: slideIn 2s forwards;
+    -moz-animation: slideIn 2s forwards;
+    animation: slideIn 2s forwards;
+  }
+  
+  @keyframes fadeIn {
+    0% {
+       opacity: 0;
+    }
+    100% {
+       opacity: 1;
+    }
+  }
+  
+  @-webkit-keyframes fadeIn {
+    0% {
+       opacity: 0;
+    }
+    100% {
+       opacity: 1;
+    }
+  }
+  
+  @-moz-keyframes fadein {
+    0% {
+      opacity: 0;
+   }
+   100% {
+      opacity: 1;
+   }
+  }
+  
+  @-ms-keyframes fadein {
+    0% {
+      opacity: 0;
+   }
+   100% {
+      opacity: 1;
+   }
+  }
+  
+  @-o-keyframes fadein {
+    0% {
+      opacity: 0;
+   }
+   100% {
+      opacity: 1;
+   }
+  }
+  
+  .fadeIn {
+    -webkit-animation-name: fadeIn;
+    animation-name: fadeIn;
+  }
+  
+  .slideIn {
+    -webkit-animation-name: slideIn;
+    animation-name: slideIn;
+  }
+
+  @-webkit-keyframes slideIn {
+    0% {
+      transform: translateX(-900px);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+  @-moz-keyframes slideIn {
+    0% {
+      transform: translateX(-900px);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+  @keyframes slideIn {
+    0% {
+      transform: translateX(-900px);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+}
+
+@media screen and (max-width: ($media-sm)) {
+  .enrol-container {
+    height: auto;
+
+    .left-container {
+      display: none;
+    }
+
+    .component-container {
+      width: 100%;
+      padding: 15px;
+
+      .formInput {
+        max-width: initial;
+        margin-top: initial;
+      }
+    }
+  }
+}

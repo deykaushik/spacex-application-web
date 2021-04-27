@@ -1,0 +1,315 @@
+﻿@import './_tokens.scss';
+
+// *********-------- Nedbank Theme --------**********
+
+// Theme colors
+$primary-color: $color-greenDark;
+$secondary-color: $color-greenMedium;
+$tertiary-color: $color-greenLight;
+$warning-primary: $color-red;
+$warning-secondary: $color-orange;
+
+$primary-80: $color-greenDark-80;
+$primary-50: $color-greenDark-50;
+$primary-20: $color-greenDark-20;
+$primary-darker-color: $color-greenDarker;
+
+// Dividers
+$divider-primary: $color-greyLight;
+$divider-secondary: $color-greyLightest;
+$divider-tertiary: $color-greyMedium;
+$divider-quaternary: $color-lightGainsboro;
+
+// Text colors
+$text-color-primary: $color-greyMedium;
+$text-color-secondary: $color-greyDark;
+$text-color-tertiary: $tertiary-color;
+$text-color-link: $secondary-color;
+$text-color-error: $warning-primary;
+$text-color-warning: $warning-secondary;
+$text-color-success: $text-color-tertiary;
+$text-color-accent-primary: $primary-color;
+$text-color-accent-secondary: $secondary-color;
+$text-color-info: $color-greyLight;
+$text-color-highlight: $color-white;
+$text-color-empty-state: $color-greyLightMedium;
+$text-color-message-block: $color-greyDark;
+$text-color-address-block: $color-purpleGrey;
+$text-color-disable-button: $color-pinkishGrey;
+$text-color-message-block-content: $color-greyCharcoal;
+$text-color-notice-block: $color-warmGrey;
+$text-color-message-block-rs: $color-greyLightDark;
+$text-color-warmGrey: $color-warmGrey;
+$text-color-loading-text: $color-silver;
+$text-color-account-number: $color-gray-60;
+
+// Backgrounds
+$body-bg: $color-almostWhite;
+$container-bg: $color-white;
+$login-bg: $container-bg;
+$modal-bg: $container-bg;
+$highlight-bg: $color-greyLightest;
+$highlight-dark-bg: $color-greyLight;
+$info-container-bg: $body-bg;
+$color-success-bg: lighten($tertiary-color, 40%);
+$color-error-bg: lighten($warning-primary, 45%);
+$color-error-block: $color-GreyishRed;
+$color-success-block: $color-yellowLighter;
+$color-tile-done-block: lighten($color-gainsboro, 12%);
+
+// Form inputs
+$form-element-bg: $color-white;
+$form-element-border: $color-greyLight;
+$form-element-border-focus: $secondary-color;
+$form-element-border-valid: $tertiary-color;
+$form-element-border-active: $tertiary-color;
+$form-element-border-size: 2px;
+$form-element-input-text: $text-color-primary;
+$form-element-height: 50px; //3.125rem
+$form-label: $text-color-primary;
+$form-helper-text: $color-greyLight;
+$form-warning-text: $warning-secondary;
+$form-warning-field: $form-warning-text;
+$form-warning-bg: $warning-secondary;
+$form-error-text: $warning-primary;
+$form-error-field: $form-error-text;
+$form-element-bg-disabled: $highlight-bg;
+$form-element-text-disabled: $color-greyLight;
+$form-element-bg-readonly: $form-element-bg-disabled;
+$form-element-padding: 0 15px;
+$textarea-text-color: $color-greyDark;
+$box-border-radius: $size-6;
+$form-element-max-width: $size-400;
+$color-border-light-grey: $color-greyNeutral;
+$dropdown-border: $color-cyanDarkMedium;
+$form-content-border: $color-greyBrighter;
+$form-element-disabled: $color-lightestNeutralGrey;
+
+// Checkbox colors
+$checkbox-bg: $form-element-bg;
+$checkbox-bg-active: $form-element-border-active;
+$checkbox-border: $form-element-border;
+$checkbox-border-disabled: $form-element-bg-disabled;
+
+// Radio colors
+$radio-bg: $form-element-bg;
+$radio-border: $form-element-border;
+$radio-border-active: $form-element-border-active;
+$radio-label-color: $form-label;
+
+// Dropdowns
+$drp-color: $form-label;
+$drp-bg: $form-element-bg;
+$drp-border: $form-element-border;
+$drp-options-color-hover: $color-greyDark;
+$drp-options-bg-hover: $highlight-bg;
+$drp-options-color-active: $drp-color;
+$drp-options-bg-active: $highlight-bg;
+$drp-autocomplete-border: $secondary-color;
+$drp-options-selected: $color-greenLighter;
+
+// Buttons
+$primary-btn-bg: $secondary-color;
+$primary-btn-bg-hover: $primary-50;
+$primary-btn-bg-disabled: $primary-20;
+
+$primary-btn-color: $color-white;
+$primary-btn-color-hover: $primary-btn-color;
+$primary-btn-color-disabled: $primary-btn-color;
+
+$primary-btn-border: none;
+$primary-btn-border-hover: transparent;
+$primary-btn-border-disabled: transparent;
+
+$secondary-btn-bg: $color-white;
+$secondary-btn-bg-hover: $secondary-color;
+$secondary-btn-bg-disabled: $secondary-btn-bg;
+
+$secondary-btn-color: $secondary-color;
+$secondary-btn-color-hover: $color-white;
+$secondary-btn-color-disabled: $color-greyLightest;
+
+$secondary-btn-border: 2px solid $secondary-color;
+$secondary-btn-border-hover: $secondary-color;
+$secondary-btn-border-disabled: $color-greyLightest;
+
+$ghost-btn-bg: transparent;
+$ghost-btn-bg-hover: $color-greyLightest;
+$ghost-btn-bg-disabled: transparent;
+
+$ghost-btn-color: $secondary-color;
+$ghost-btn-color-hover: $secondary-color;
+$ghost-btn-color-disabled: $color-greyLightest;
+
+$ghost-btn-border: none;
+$ghost-btn-border-hover: transparent;
+$ghost-btn-border-disabled: transparent;
+
+$btn-border-radius: $size-4;
+$btn-height: $form-element-height;
+$btn-max-width: $size-400;
+$success-btn-border: $color-offWhite;
+
+$link-color-blueDark: $color-blueDark;
+
+// Loader button
+$loader-color: $color-white;
+$loader-bg: $primary-btn-bg;
+$loader-mask-bg: rgba($color-white, 0.7);
+
+// Toggle
+$toggle-label: $color-greyDark;
+$toggle-off-bg: $color-greyLight;
+$toggle-on-bg: $tertiary-color;
+$toggle-ball-bg: $form-element-bg;
+
+// range slider
+$range-slider-base: $color-greyLight;
+$range-slider-base-active: $color-greenAccent;
+$range-slider-ball-bg: $form-element-bg;
+$range-slider-ball-border: $tertiary-color;
+$range-slider-marker-bg: $color-greyLight;
+$range-slider-box-shadow: inset 0 0 1px #FFF,inset 0 1px 7px #EBEBEB,0 3px 6px -3px #BBB;
+
+//User Pic
+$user-container-bg: $primary-80;
+$user-pic-bg: $highlight-dark-bg;
+$user-pic-border: $color-greyLightest;
+
+//Lottery
+$color-lottery-power-ball: $color-blue;
+$color-lottery-number-group-1: $color-redCherry;
+$color-lottery-number-group-2: $color-yellow;
+$color-lottery-number-group-3: $color-greenApple;
+$color-lottery-number-group-4: $color-blue;
+$color-lottery-number-color-light: $color-white;
+$color-lottery-number-color-dark: $color-greyDark;
+$lotto-selected-bg: #fddc24;
+$powerball-selected-bg: $color-blueDarker;
+$border-lottery-card: $warning-secondary;
+$color-lotto-replay-time-out-title: $color-greyDark;
+
+//Translucent Colors
+$color-warn-msg-background: rgba(245, 166, 35, 0.2);
+$color-shadow-background: rgba(74, 74, 74, 0.75);
+$color-no-records-background:rgba(240, 240, 240, 1); //#f0f0f0;
+$color-opague-background:rgba(255,255,255, 0.9);
+$color-Frostee:rgba(120,190,32,.2);// #DFECCE
+$color-nero-black: rgba(24, 24, 24, 1); //#181818
+$color-new-account-background: rgba(187, 187, 187, 0.31);
+
+// Footer
+$footer-bg: $highlight-bg;
+$footer-color: $color-greyDark;
+$footer-color-hover: $color-greyDark;
+
+// Header
+$header-bg: $primary-color;
+$header-color: $color-white;
+$header-color-hover: $color-white;
+$header-color-active: $color-white;
+
+$un-auth-header-bg: $color-white;
+$un-auth-header-color: $primary-color;
+$un-auth-header-color-hover: $primary-color;
+
+// Carousel
+$carousel-button-gradient: $color-white;
+$carousel-point-color: rgba(0, 0, 0, 0.17);
+$carousel-point-color-active: #6b6b6b;
+
+// Cards
+$card-bg: linear-gradient(to bottom, rgba($secondary-color, 1), rgba($primary-darker-color, 1));
+$card-status-bg: linear-gradient(to bottom,rgba(#003A16,1),rgba(#062219,1));
+$card-text-color: $text-color-highlight;
+$card-blocked-bg: $highlight-bg;
+$card-blocked-text-color: $text-color-secondary;
+
+$card-freezed-bg: linear-gradient(to bottom, rgba($color-blueLight, 1), rgba($color-blueDark, 1));
+$color-block-card-box-shadow: rgba(0, 0, 0, 0.4);
+$color-freeze-card-message: $color-greyLightMedium;
+
+$card-inactive-bg: linear-gradient(to bottom, rgba($color-gainsboro, 1), rgba($color-gainsboro, 1));
+
+// Overlay
+$color-overlay: $text-color-primary;
+$overlay-bg: $body-bg;
+$color-overlay-header-box: $color-greyNeutral;
+
+// Accounts
+$color-savings: $secondary-color;
+$color-current: $secondary-color;
+$color-credit-card: $warning-primary;
+$color-loan: $warning-secondary;
+$color-investment: $color-greenAccent;
+$color-greenbacks: $color-greenLight;
+$color-club: $color-greenAccent;
+$color-account-default: $text-color-primary;
+$color-travel-card: $color-greenLight;
+
+// Tooltip
+$tooltip-color: $color-greyLightest;
+$tooltip-text-color: $text-color-primary;
+$tooltip-back-ground: $color-greyBright;
+
+// Info Text Box
+$info-text-bg: $color-greyLightest;
+$info-text-color: $text-color-primary;
+
+// Navigation
+$nav-menu-color: $color-greyDark;
+$nav-menu-header-color: $text-color-primary;
+$nav-menu-header-weight:  $weight-bold;
+$nav-menu-border: $color-white;
+$nav-menu-border-active: $color-greyLightest;
+
+// Workflow
+$workflow-bg: $body-bg;
+$workflow-shadow-color: $color-greyLightest;
+$workflow-step-circle-bg-color: $color-white;
+$workflow-step-current-bg: $container-bg;
+$workflow-step-circle-border: $primary-color;
+$workflow-step-circle-color: $text-color-primary;
+$workflow-edit-link-color: $text-color-accent-primary;
+
+// Pop Over
+$pop-over-border: rgba(187, 187, 187, 0.5);
+$pop-over-bg: $container-bg;
+$pop-over-bg-hover: #f7f7f7;
+$pop-over-shadow-color: $color-greyLight;
+
+//Spinner
+$color-spinner: $color-white;
+$color-spinner-primary: $secondary-color;
+$color-spinner-disabled: $divider-secondary;
+
+//Date Picker
+$dp-selected-color: $text-color-highlight;
+$dp-selected-bg: $tertiary-color;
+$dp-selected-bg-hover: $highlight-dark-bg;
+
+// Common Variables
+$color-debit: $color-redDeep;
+$color-credit: $secondary-color;
+$color-notify: $color-yellowLight;
+$bg-tabs-list: $highlight-bg;
+$border-error: $warning-primary;
+
+// Reports
+$report-footer-reg-color: #8a8b8a;
+$report-para-color: #5b5f5d;
+$report-background: #a9a9a9;
+$report-outline: #708090;
+
+//Report suspicious
+$text-border: $color-greyNeutral;
+
+// Arrow border
+$arrow-border-gray-color-light: rgba(155, 155, 155, 0.3);
+$arrow-border-white-color: rgba(255, 255, 255, 0);
+$arrow-border-gray-color: rgba(155, 155, 155, 0);
+$arrow-border-pure-white: $color-extraWhite;
+
+// Document and preferences 
+$tab-border: $color-greenLight;
+$info-message: $info-window-color;

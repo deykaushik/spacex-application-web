@@ -1,0 +1,68 @@
+<section class="documents">
+   <div class="sub-menu">
+      <div class="retrieval-consent">
+         <span *ngIf='!creditLimitDetails.statementRetrival' class="line"></span>
+         <span *ngIf='creditLimitDetails.statementRetrival' class="tick"></span>
+         <span (click)="openStatement(true)" [ngClass]="{'text-black': !creditLimitDetails.statementRetrival, 'text-green': creditLimitDetails.statementRetrival}">{{labels.retrievalConsent}}</span>
+      </div>
+      <div class="bank-account">
+         <span *ngIf='!isDone && creditLimitDetails.statementRetrival' class="line"></span>
+         <span *ngIf='isDone' class="tick"></span>
+         <span (click)="onProvide(true)" [class.is-agree]='!creditLimitDetails.statementRetrival' [ngClass]="{'text-black': !isDone, 'text-green': isDone}">{{labels.bankAccountDetails}}</span>
+      </div>
+   </div>
+   <form class="section-body gd-form" #documentsForm="ngForm">
+      <div *ngIf='!isSelected' class="retrieval-consent-part">
+         <div class="consent-part">
+            <span class="consent-main-part">{{messages.retrieveStatement}}</span>
+            <span class="consent-sub-part">{{messages.bankList}}</span>
+         </div>
+         <div class="consent-button">
+            <button class="button-no" (click)="onProvideManually()">{{messages.noProvideManually}}</button>
+            <button class="button-yes" (click)="onProvide(true)">{{messages.yesIaggree}}</button>
+         </div>
+      </div>
+      <div *ngIf='isSelected' class="bank-account-part">
+         <span class="section-title">{{labels.bankAccountDetails}}</span>
+         <span class="section-sub-title">{{labels.specifyYourBank}}</span>
+         <div class="gd-form-row">
+            <label for="bank-name" class="active gd-sm-label">{{labels.bankName}}</label>
+            <div class="gd-basic-dropdown" dropdown>
+               <div dropdownToggle class="dropdown-place" id="locator-typ-drpdwn">
+                  <div class="text">
+                     {{ creditLimitDetails.bankName }}
+                  </div>
+                  <div class="icon">
+                     <span class="caret"></span>
+                  </div>
+               </div>
+               <ul *dropdownMenu class="dropdown-menu" role="menu">
+                  <li [class.active]="selectBank.bankName === creditLimitDetails.bankName" role="menuitem" *ngFor="let selectBank of banks"
+                     (click)="onBankSelected(selectBank)">
+                     {{selectBank.bankName}}
+                  </li>
+               </ul>
+            </div>
+         </div>
+         <div class="gd-form-row" [innerHtml]="''| skeletonLoader:skeletonMode"></div>
+         <div class="gd-form-row icon-link" *ngIf="creditLimitDetails.bankName === banks[0].bankName && !skeletonMode">
+            <app-account-list id="from-account" [insufficientFunds]="true" [title]="'Account'" [selectedAccount]="selectedFromAccount"
+               [accounts]="selectedFromAccounts" (onAccountSelection)="onFromAccountSelection($event)">
+            </app-account-list>
+         </div>
+         <div *ngIf="creditLimitDetails.bankName !== banks[0].bankName" class="gd-form-row">
+            <label for="account-number" class="active gd-sm-label">{{labels.accountNumber}}</label>
+            <input id="account-number" type="number" name="accountNumber" #accountNumber="ngModel" validateFor="number" class="validate form-element"
+               [(ngModel)]="creditLimitDetails.accountNumber" (keypress)="onAccountNumber($event)" appValidateOnblur appValidateRequired
+            />
+            <div *ngIf="(accountNumber.invalid && (accountNumber.dirty || accountNumber.touched))" class="error-msg">
+               <span>Please enter an account number.</span>
+            </div>
+         </div>
+         <div class="gd-form-row bottom-btn">
+            <button class="button-white" (click)="onProvideManually()">Skip</button>
+            <button class="button-green" [class.btn-disabled]="documentsForm.invalid || !creditLimitDetails.accountNumber" (click)="goToContactDetails(documentsForm.invalid)">Next</button>
+         </div>
+      </div>
+   </form>
+</section>

@@ -1,0 +1,304 @@
+@import './../../../../styles/_base.scss';
+@import './../../../../styles/_mixins.scss';
+$svg-path: './../../../../assets/svg';
+$close-gray: 'close-gray';
+$exit: 'exit';
+$green:'green-warning';
+$font-weight: 500;
+$line-height: 37.5px;
+
+.edit-autopay-block {
+   @include flexbox();
+   @include align-items(center);
+   .edit-autopay-inner {
+      @include flexbox();
+      @include flex-direction(column);
+      .section-title {
+         font-family: $font-markpro-medium;
+         color: $text-color-secondary;
+         display: block;
+      }
+      .section-desc {
+         color: $text-color-secondary;
+         font-family: $font-markpro-medium;
+      }
+      .edit-autopay {
+         .autopay-content {
+            color: $text-color-primary;
+            .right {
+               @include flexbox();
+               @include flex-direction(column);
+               .acc-no {
+                  color: $text-color-account-number;
+               }
+            }
+         }
+      }
+      .delete-btn {
+         ::ng-deep {
+            app-bottom-button {
+               .gd-primary-btn {
+                  color: $secondary-color;
+                  background: $container-bg;
+               }
+            }
+         }
+      }
+   }
+}
+
+.overlay-part {
+   @include flexbox();
+   .add-autopay {
+      @include flexbox();
+      @include flex-direction(column);
+      @include align-items(center);
+      .triangle-icon {
+         @include svg-image-full-path($svg-path, $green, 60px, 60px);
+         display: block;
+      }
+      .content-autopay {
+         text-align: center;
+         .text-autopay {
+            color: $text-color-secondary;
+            font-family: $font-markpro-bold;
+            display: block;
+         }
+         .text-description {
+            font-family: $font-markpro;
+            color: $text-color-secondary;
+            .pay-bill {
+               display: block;
+            }
+            .set-autopay {
+               display: block;
+            }
+            .block {
+               display: block;
+            }
+            .manual-payment {
+               margin-top: 15px;
+            }
+         }
+         .button-container {
+            .defaultColor {
+               margin-top: 20px;
+               color: $secondary-color !important;
+               background: $container-bg !important;
+            }
+            .no-edit-delete-part {
+               margin-bottom: 70px;
+            }
+         }
+      }
+   }
+}
+
+::ng-deep {
+   app-small-overlay {
+      &.autopay {
+         .overlay-modal {
+            .overlay .alternate {
+               margin-top: 100px;
+            }
+         }
+      }
+   }
+}
+
+@media (min-width: $media-xxs) {
+   .edit-autopay-block {
+      margin-top: 20px;
+      .edit-autopay-inner {
+         margin: 0 20px;
+         width: 100%;
+         .section-title {
+            text-align: center;
+            font-size: $font-lg;
+            margin-bottom: 40px;
+         }
+         .section-desc {
+            font-size: $font-default;
+         }
+         .edit-autopay {
+            margin-bottom: 60px;
+            .autopay-content {
+               margin-top: 16px;
+               width: 100%;
+               font-size: $font-default;
+               text-align: left;
+               .left {
+                  width: 100%;
+               }
+               .right {
+                  width: 100%;
+                  .acc-no {
+                     font-size: $font-sm;
+                  }
+               }
+            }
+         }
+         .next-btn {
+            margin: 0 -10px 20px;
+         }
+         .delete-btn {
+            margin: 0 -10px;
+         }
+      }
+   }
+   .overlay-part {
+      .add-autopay {
+         width: 400px;
+         &.add {
+            margin: 150px 0;
+         }
+         &.delete {
+            margin: 100px 0;
+         }
+         .triangle-icon {
+            margin-bottom: 20px;
+         }
+         .content-autopay {
+            .text-autopay {
+               font-size: $section-title-size-mob;
+               &.add-part {
+                  margin: 0 20px 20px;
+               }
+               &.delete-part {
+                  margin: 0 0 20px;
+               }
+            }
+            .text-description {
+               font-size: $font-default;
+               &.add-apo {
+                  margin: 0 20px;
+               }
+               &.delete-apo {
+                  margin: 0 -5px;
+               }
+               .block {
+                  margin: 0 -3px;
+               }
+               .pay-bill {
+                  margin: 0 13px 15px;
+               }
+               .set-autopay {
+                  margin: 0;
+                  &.no-edit-delete {
+                     margin-bottom: 35px;
+                  }
+               }
+            }
+            .button-container {
+               margin: 25px -10px 0;
+            }
+         }
+      }
+   }
+}
+
+@media (min-width: $media-sm) {
+   .overlay-part {
+      .add-autopay {
+         width: 400px;
+         &.add {
+            margin: 60px 109px;
+         }
+         &.delete {
+            margin: 40px 109px;
+         }
+         .triangle-icon {
+            &.add-margin {
+               margin-bottom: 60px;
+            }
+            &.delete-margin {
+               margin-bottom: 40px;
+            }
+         }
+         .content-autopay {
+            max-width: 400px;
+            .text-autopay {
+               font-size: $section-title-size;
+               &.add-part {
+                  margin: 0 0 30px;
+               }
+               &.delete-part {
+                  margin: 0 0 30px;
+               }
+            }
+            .text-description {
+               font-size: $para-title-size;
+               &.add-apo {
+                  margin: 0;
+               }
+               &.delete-apo {
+                  margin: 0;
+               }
+               .block {
+                  margin: 0;
+               }
+               .pay-bill {
+                  margin: 0 0 15px;
+               }
+               .set-autopay {
+                  margin: 0 -3px;
+                  &.no-edit-delete {
+                     margin-bottom: 20px;
+                  }
+               }
+            }
+            .button-container {
+               margin: 40px 0 0;
+            }
+         }
+      }
+   }
+   .edit-autopay-block {
+      margin: 60px 0;
+      .edit-autopay-inner {
+         margin-left: 20%;
+         width: 400px;
+         .section-title {
+            text-align: center;
+            font-size: $lg-heading-size;
+            margin-bottom: 30px;
+         }
+         .section-desc {
+            font-size: $section-title-secondary-size-mob;
+         }
+         .edit-autopay {
+            margin-bottom: 60px;
+            .autopay-content {
+               @include flexbox();
+               margin-top: 20px;
+               width: 400px;
+               font-size: $font-default;
+               text-align: left;
+               .left {
+                  width: 198px;
+               }
+               .right {
+                  width: 202px;
+                  .acc-no {
+                     font-size: $font-sm;
+                  }
+               }
+            }
+         }
+         .next-btn {
+            margin: 0 0 36px;
+         }
+         .delete-btn {
+            margin: 0;
+         }
+      }
+   }
+}
+
+@media(min-width: $media-md) {
+   .edit-autopay-block {
+      .edit-autopay-inner {
+         margin-left: 33%;
+      }
+   }
+}

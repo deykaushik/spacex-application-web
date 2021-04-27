@@ -1,0 +1,119 @@
+<app-colored-overlay [alternate]="true" [isVisible]="isOverlayVisible" [template]="selectedTemplate" [altButtonText]="btnText"
+   (onHide)="closeOverlay()">
+   <ng-template #cancelLoanTemplate>
+      <section class="cancel-loan-section">
+         <span class="title">{{labels.title}}</span>
+         <div *ngIf="isLoanPaidUp" class="section-paid-up">
+            <span class="paid-up-msg">{{labels.paidUpMsg}}</span>
+            <span class="req-cancel">{{labels.sendRequestToCancelLoan}}</span>
+            <span class="term-fee with-margin-bottom-60">{{labels.attorneyCancelationFee}}</span>
+            <span class="term-fee">{{labels.proceedLoanCancellation}}</span>
+         </div>
+         <div *ngIf="!isLoanPaidUp" class="section-not-paid-up">
+            <span class="not-paid-up-msg">{{labels.homeLoanNotPayed}}</span>
+            <ng-container *ngIf="isNinetyDaysNoticeEnabled; then ninetyDaysNotice else noticeAlreadyExists"></ng-container>
+            <ng-template #ninetyDaysNotice>
+               <span class="cancel-notice-msg">{{labels.cancelYourLoanWith90DayNotice}}</span>
+               <span class="like-to-place-notice">{{labels.likeToPlace90DayNotice}}</span>
+               <button class="gd-secondary-btn show-border" (click)="onClickPlaceNotice()">{{labels.placeNoticeNow}}</button>
+               <span class="like-to-place-notice">{{labels.cancelHomeLoanWithoutNotice}}</span>
+               <span class="early-termination-msg" [innerHtml]="labels.earlyTermination | highlight:cancellationFeeTextQuery:'highlightTextInBold'"></span>
+               <span class="term-fee">{{labels.proceedLoanCancellation}}</span>
+            </ng-template>
+            <ng-template #noticeAlreadyExists>
+               <app-notice-details [accountId]="accountId" (isEarlyTerminationFee)="onEarlyTerminationFee($event)"></app-notice-details>
+               <span class="early-termination-msg" [innerHtml]="(applyCancellationFee ? labels.earlyTermination : labels.attorneyFeeCancellation) | highlight:cancellationFeeTextQuery:'highlightTextInBold'"></span>
+               <span class="term-fee">{{labels.proceedLoanCancellation}}</span>
+            </ng-template>
+         </div>
+         <div class="email-input-container">
+            <form class="gd-form" #emailForm="ngForm">
+               <label id="lbl-email" class="gd-sm-label" for="email">{{labels.yourEmail}}</label>
+               <div class="field-with-icon">
+                  <div class="field-block">
+                     <input id="val-email" name="recipientEmailField" type="text" autocomplete="off" required
+                        appValidateOnblur [pattern]="emailPattern" class="validate input-email" #recipientEmailField="ngModel"
+                        [(ngModel)]="recipientEmail" (ngModelChange)="onEmailChange(recipientEmail)">
+                  </div>
+               </div>
+               <div *ngIf="recipientEmailField.dirty || recipientEmailField.touched" class="text-danger">
+                  <div *ngIf="!isValidEmail">
+                     {{messages.invalidEmail}}
+                  </div>
+               </div>
+            </form>
+         </div>
+         <div *ngIf="isJointBondEnabled" class="checkbox-container">
+            <label class="checkbox-label" for="tnc-checkbox">
+               <input type="checkbox" id="tnc-checkbox" [checked]="isAccepted" class="checkbox" (change)="isAccepted = !isAccepted">
+               <span class="tick-mark-container">
+                  <i class="tick-mark-icon glyphicon glyphicon-ok"></i>
+               </span>
+               <span class="text block-text">
+                  {{labels.confirmationForJointParty}}
+               </span>
+            </label>
+         </div>
+         <app-bottom-button [text]="isLoanPaidUp ? labels.placeRequest: labels.cancelWithoutNotice" (clickEmitter)="showHideConfirmPopup()"
+            [disableButton]="isJointBondEnabled && isValidEmail ? !isAccepted : !isValidEmail"></app-bottom-button>
+      </section>
+   </ng-template>
+   <ng-template #statusTemplate>
+      <app-action-status [status]="status" [statusDetail]="statusDetail" [requestInProgress]="requestInProgress"
+         [retryLimitExceeded]="retryLimitExceeded" (onRetry)="onRetry($event)"></app-action-status>
+   </ng-template>
+   <ng-template #successTemplate>
+      <section class="success-cancel-section">
+         <span class="title">{{labels.youAreDone}}</span>
+         <div *ngIf="isJointBondEnabled" class="msg-success">
+            <span class="success-msg">{{labels.placedBondCancellationRequest}}</span>
+            <span class="success-msg">{{labels.requestProcessedIn2Days}}</span>
+         </div>
+         <div *ngIf="!isJointBondEnabled" class="msg-success">
+            <span class="success-msg">{{labels.placedCancellationRequest}}</span>
+         </div>
+         <span class="what-happens-nxt">{{labels.whatHappensNext}}</span>
+         <span class="cancel-process-msg">{{labels.cancelBondAgainstProperty}}</span>
+         <span class="for-further-info">{{labels.contactUs}}</span>
+         <div class="icon-container">
+            <span class="icon"><a class="icon-phone"></a></span>
+            <span class="icon-title">{{labels.mobileNumber}}</span>
+         </div>
+         <div class="icon-container">
+            <span class="icon"><a class="icon-email-with-at"></a></span>
+            <span class="icon-title">{{labels.cancelLoanEmailId}}</span>
+         </div>
+      </section>
+   </ng-template>
+   <ng-template #cancelReqInProgressTemplate>
+      <section class="req-in-progress-section">
+         <span class="title">{{labels.title}}</span>
+         <span class="process-req-msg set-margin-btm">{{labels.receivedCancellationRequest}}</span>
+         <span class="what-happens-nxt">{{labels.whatHappensNext}}</span>
+         <span class="process-contact-msg">{{labels.receiveCancellationAmoutNotification}}</span>
+         <ng-container *ngTemplateOutlet="contactUsTemplate"></ng-container>
+      </section>
+   </ng-template>
+   <ng-template #cancelReqReceivedTemplate>
+      <section class="req-in-progress-section">
+         <span class="title">{{labels.title}}</span>
+         <span class="process-req-msg">{{labels.homeLoanCancellationProcessBusy}}</span>
+         <span class="process-contact-info">{{labels.throughOutProcess}}</span>
+         <ng-container *ngTemplateOutlet="contactUsTemplate"></ng-container>
+      </section>
+   </ng-template>
+   <ng-template #contactUsTemplate>
+      <span class="for-further-info">{{labels.contactUs}}</span>
+      <div class="icon-container">
+         <span class="icon"><a class="icon-phone"></a></span>
+         <span class="icon-title">{{labels.mobileNumber}}</span>
+      </div>
+      <div class="icon-container">
+         <span class="icon"><a class="icon-email-with-at"></a></span>
+         <span class="icon-title">{{labels.cancelLoanEmailId}}</span>
+      </div>
+   </ng-template>
+</app-colored-overlay>
+<section *ngIf="confirmPopup">
+   <app-confirm-modal [requestInProgress]="requestInProgress" (userActionClick)="userActionClick($event)"></app-confirm-modal>
+</section>

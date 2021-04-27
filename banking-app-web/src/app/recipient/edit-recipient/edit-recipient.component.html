@@ -1,0 +1,761 @@
+﻿<div class="empty-details" *ngIf="isEmptyState">After you’ve added recipients, you can manage their details here.</div>
+<div *ngIf="!isEmptyState">
+   <div *ngIf="!showLoader">
+      <ng-template #benfBankListTemplate let-model="item" let-index="index" let-match="match" let-query="query">
+         <span class="benf-bankname-type-ahead" [innerHtml]="model.bankName | highlight:query:'highlightText'"></span>
+      </ng-template>
+
+      <ng-template #benfBranchListTemplate let-model="item" let-index="index" let-match="match" let-query="query">
+         <div class="branch-name" [innerHtml]="model.branchName | highlight:query:'highlightText'"></div>
+         <div class="branch-code" [innerHtml]="model.branchCode | highlight:query:'highlightText'"></div>
+      </ng-template>
+      <div id="error-block-success" *ngIf="isShowMessageBlock" aria-live="assertive" role="alert" class="error-block-success" [class.hide]="!isSuccess">
+         <div class="icon-container">
+            <span class="success img-step-tick">
+            </span>
+         </div>
+         <div id="api-error-message" class="error-message">
+            {{statusMessage}}
+         </div>
+         <div class="icon-container">
+            <span class="img-step-close" (click)="closeMessageBlock()">
+            </span>
+         </div>
+      </div>
+      <div id="error-block-failure" *ngIf="isShowMessageBlock" aria-live="assertive" role="alert" class="error-block-failure" [class.hide]="isSuccess">
+         <div class="icon-container">
+            <span class="img-step-close-red" (click)="closeMessageBlock()">
+            </span>
+         </div>
+         <div class="error-message" id="error-msg">
+            <span class="error-message">{{statusMessage}}</span>
+            <span class="error-message">{{apiFailureMessage}}</span>
+         </div>
+         <div class="icon-container">
+            <span class="img-step-close" (click)="closeMessageBlock()">
+            </span>
+         </div>
+      </div>
+      <form class="gd-form profile-update" *ngIf="beneficiaryData" #beneficiaryForm="ngForm">
+         <div class="gd-form-row name-row" *ngIf="!isReadOnly">
+            <div id="user-avatar" class="user-avatar">
+               <a>{{acronymName}}</a>
+            </div>
+            <div class="gd-form-row name-input-ctr">
+               <input autocomplete="off" id="contact-card-name" type="text" #accountNameRef="ngModel" [(ngModel)]="contactName" name="contactCardName"
+                  ga-event-name="add_recipients_enter_recipient_name" appValidateOnblur appValidateRequired appValidationLatinWord
+                  appClipBoardValidation />
+
+               <div *ngIf="accountNameRef.invalid && (accountNameRef.dirty || accountNameRef.touched)" class="error-msg">
+                  <span>
+                     {{messages.requiredField}}
+                  </span>
+               </div>
+            </div>
+            <div id="delete-recipient-btn" *ngIf="!isAddMode && isShowDeleteButton" class="delete-recipient">
+               <app-bottom-button [disableButton]="false" [alternateTheme]="true" [text]="'Delete recipient'" [cssClass]="'delete'" (click)="showDeleteRecipientNotification()">
+               </app-bottom-button>
+            </div>
+            <div id="cancel-recipient-btn" *ngIf="isAddMode" class="delete-recipient">
+               <app-bottom-button [disableButton]="false" [alternateTheme]="true" [text]="'Cancel'" [cssClass]="'delete'" (click)="cancelAddRecipient();sendEvent('add_recipient_click_on_cancel');">
+               </app-bottom-button>
+            </div>
+         </div>
+         <div class="gd-form-row name-row" *ngIf="isReadOnly && contactName">
+            <div id="user-avatar-view" class="user-avatar" [class.readonly]="isReadOnly">
+               <a>{{acronymName}}</a>
+            </div>
+            <h4 class="gd-form-row label-value section-title">{{contactName}}</h4>
+
+            <div id="edit-recipient-btn" *ngIf="isReadOnly" class="edit-recipient">
+               <app-bottom-button [disableButton]="false" [alternateTheme]="true" [text]="'Edit or add details'" [cssClass]="'edit'" (click)="editAddRecipient()">
+               </app-bottom-button>
+            </div>
+            <div id="edit-recipient-btn-mob" *ngIf="isReadOnly" class="edit-recipient-mob">
+               <app-bottom-button [disableButton]="false" [alternateTheme]="true" [text]="'Edit'" [cssClass]="'edit'" (click)="editAddRecipient()">
+               </app-bottom-button>
+            </div>
+         </div>
+         <div *ngIf="isBankApprovedBeneficiary" class="gd-form-row gd-sm-label">
+            This is a bank-approved recipient
+         </div>
+         <div class="gd-form-row" *ngIf="!isReadOnly || getSectionItemCount(sectionNames.Sms) + getSectionItemCount(sectionNames.Fax) + getSectionItemCount(sectionNames.Email) > 0">
+            <label class="gd-lg-label" for="">Contact details</label>
+         </div>
+         <div *ngIf="!isReadOnly">
+            <ng-container *ngFor="let email of emailNotifications;let currentIndex=index;">
+               <div class="gd-form-row" *ngIf="!email?.isDeleted">
+                  <div>
+                     <label class="gd-sm-label active" [for]="'email'+currentIndex" [id]="'add-email-'+currentIndex">Email</label>
+                     <div class="field-with-icon">
+                        <div class="field-block">
+                           <input [id]="'add-email-address-'+currentIndex" [name]="'email'+currentIndex" autocomplete="off" type="text" [pattern]="patterns.email"
+                              #notificationInput="ngModel" [(ngModel)]="email.notificationAddress" required appValidateOnblur
+                              class="validate" ga-event-name='add_recipients_add_contact_email' />
+                        </div>
+                        <div class="icon-block" [id]="'remove-email-'+currentIndex">
+                           <div class="icons">
+                              <span class="icon-del icon" (click)="removeNotification(email)"></span>
+                           </div>
+                        </div>
+                     </div>
+                     <div *ngIf="notificationInput.invalid && (notificationInput.dirty || notificationInput.touched)" class="error-msg">
+                        <div *ngIf="notificationInput.errors.required">
+                           {{messages.requiredField}}
+                        </div>
+                        <div *ngIf="!notificationInput.errors.required && notificationInput.errors.pattern">
+                           {{messages.invalidEmail}}
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </ng-container>
+         </div>
+
+         <div *ngIf="isReadOnly && getSectionItemCount(sectionNames.Email) > 0">
+            <div class="contact-details-row" *ngFor="let email of emailNotifications;let currentIndex=index;">
+               <div *ngIf="!email?.isDeleted">
+                  <div [id]="'view-email-address-'+currentIndex" class="label-value text-with-icon">
+                     <span class="icon email"></span>
+                     <span class="text">{{email.notificationAddress}}</span>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <div class="gd-form-row add-item-row" *ngIf="!isReadOnly && getSectionItemCount(sectionNames.Email) <= 0">
+            <button (click)="addEmail()">
+               <span class="icon icon-add"></span>Add email</button>
+         </div>
+
+         <div *ngIf="!isReadOnly">
+            <ng-container *ngFor="let cellphone of smsNotifications;let currIndex = index;">
+               <div class="gd-form-row" *ngIf="!cellphone?.isDeleted">
+                  <div>
+                     <label [id]="'cellphone-'+currIndex" class="gd-sm-label active" [for]="'cellphone'+currIndex">Cellphone number</label>
+                     <div class="field-with-icon">
+                        <div class="field-block">
+                           <input [id]="'add-cellphone-'+currIndex" [name]="'cellphone'+currIndex" #notificationInput="ngModel" autocomplete="off" type="text"
+                              class="validate" [pattern]="patterns.mobile" [(ngModel)]="cellphone.notificationAddress" required
+                              appValidateInput validateFor='mobile' appValidateOnblur ga-event-name='add_recipients_add_contact_cellphone_number'
+                           />
+                           <div *ngIf="notificationInput.invalid && (notificationInput.dirty || notificationInput.touched)" class="error-msg">
+                              <div *ngIf="notificationInput.errors.required">
+                                 {{messages.requiredField}}
+                              </div>
+                              <div *ngIf="notificationInput.errors.pattern">
+                                 {{messages.invalidNumber}}
+                              </div>
+                           </div>
+                        </div>
+                        <div class="icon-block" [id]="'remove-cellphone-'+currIndex">
+                           <div class="icons">
+                              <span class="icon-del icon" (click)="removeNotification(cellphone)"></span>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </ng-container>
+         </div>
+         <div *ngIf="isReadOnly && getSectionItemCount(sectionNames.Sms) > 0">
+            <div class="contact-details-row" *ngFor="let cellphone of smsNotifications;let currIndex = index;">
+               <div *ngIf="!cellphone?.isDeleted">
+                  <div [id]="'view-cellphone-notificationAddress-'+currIndex" class="label-value text-with-icon">
+                     <span class="icon contact"></span>
+                     <span class="text">{{cellphone.notificationAddress}}</span>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <div class=" gd-form-row add-item-row" *ngIf="!isReadOnly && getSectionItemCount(sectionNames.Sms) <= 0">
+            <button (click)="addCellphone()">
+               <span class="icon icon-add"></span>Add cellphone number</button>
+         </div>
+
+         <div *ngIf="!isReadOnly">
+            <ng-container *ngFor="let fax of faxNotifications;let currIndex = index;">
+               <div class="gd-form-row" *ngIf="!fax?.isDeleted">
+                  <div>
+                     <label [id]="'fax-number-'+currIndex" class="gd-sm-label active" for="recipient_name">Fax number</label>
+                     <div class="field-with-icon">
+                        <div class="field-block">
+                           <input [id]="'add-fax-number-'+currIndex" [name]="'fax'+currIndex" #notificationInput="ngModel" [(ngModel)]="fax.notificationAddress"
+                              autocomplete="off" type="text" class="validate" [pattern]="patterns.mobile" required appValidateInput
+                              validateFor='mobile' appValidateOnblur ga-event-name='add_recipients_add_contact_fax_number' />
+                           <div *ngIf="notificationInput.invalid && (notificationInput.dirty || notificationInput.touched)" class="error-msg">
+                              <div *ngIf="notificationInput.errors.required">
+                                 {{messages.requiredField}}
+                              </div>
+                              <div *ngIf="notificationInput.errors.pattern">
+                                 {{messages.invalidFaxNumber}}
+                              </div>
+                           </div>
+                        </div>
+                        <div class="icon-block" [id]="'remove-fax-'+currIndex">
+                           <div class="icons">
+                              <span class="icon-del icon" (click)="removeNotification(fax)"></span>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </ng-container>
+         </div>
+         <div *ngIf="isReadOnly && getSectionItemCount(sectionNames.Fax) > 0">
+            <div class="contact-details-row" *ngFor="let fax of faxNotifications;let currIndex = index;">
+               <div *ngIf="!fax?.isDeleted">
+                  <div [id]="'view-fax-notification-address-'+currIndex" class="label-value text-with-icon">
+                     <span class="icon fax"></span>
+                     <span class="text">{{fax.notificationAddress}}</span>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="gd-form-row add-item-row" *ngIf="!isReadOnly && getSectionItemCount(sectionNames.Fax) <= 0">
+            <button (click)="addFax()">
+               <span class="icon icon-add"></span>Add fax number</button>
+         </div>
+         <hr *ngIf="!isReadOnly" />
+         <div class="gd-form-row" *ngIf="!isReadOnly">
+            <label [id]="'bank-accounts-'+currIndex" class="gd-lg-label" for="">Bank accounts</label>
+         </div>
+         <div *ngIf="!isReadOnly">
+            <div *ngFor="let account of accountContactCards;let currIndex=index;">
+               <div *ngIf="accountContactCards.length > 1 && !account.isDeleted && currIndex > 0">
+                  <label [id]="'another-account-'+currIndex" class="gd-sm-label" for="'title' + currIndex">Add another account</label>
+               </div>
+               <div *ngIf="!account.isDeleted">
+                  <div *ngIf="!isBankApprovedBeneficiary" class="gd-form-row bank-header-container bank-container autocomplete-container">
+                     <label [id]="'bank-'+currIndex" class="gd-sm-label active" [for]="'bank'+currIndex">Bank</label>
+                     <div class="field-with-icon">
+                        <div class="field-block bank-edit" [id]="'benf-bank-name-list-'+ currIndex">
+                           <input [id]="'add-bank-name-'+currIndex" autocomplete="off" type="text" [(ngModel)]="account.bankName" #bankNameRef="ngModel"
+                              [name]="'bank'+currIndex" [typeahead]="banks" [typeaheadItemTemplate]="benfBankListTemplate" typeaheadOptionField="bankName"
+                              typeaheadGroupField="category" (typeaheadOnSelect)="selectBank(account, $event)" [typeaheadMinLength]="0" (typeaheadOnBlur)="blurBank(account, $event)"
+                              (typeaheadNoResults)="clearBankSuggestion(account, $event)" (blur)="blurBankInput(account)" appValidateRequired
+                              class="validate" [typeaheadOptionsLimit]="banks && banks.length" />
+                           <div *ngIf="!isBankOpen('benf-bank-name-list-'+currIndex) && bankNameRef.invalid && (bankNameRef.dirty || bankNameRef.touched)"
+                              class="error-msg">
+                              <span *ngIf="bankNameRef.errors.required">
+                                 Bank name is required.
+                              </span>
+                           </div>
+                        </div>
+                        <div class="icon-block" [id]="'remove-account-'+currIndex">
+                           <div class="icons">
+                              <span class="icon-del icon" (click)="removeContactCardDetail(account)"></span>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="gd-form-row" [class.disabled]="isBankApprovedBeneficiary">
+                     <label [id]="'account-number-'+currIndex" class="gd-sm-label active" for="account_number">Account number</label>
+                     <div class="field-with-icon">
+                        <div class="field-block">
+                           <input [id]="'add-account-number-'+currIndex" [readonly]="isBankApprovedBeneficiary" autocomplete="off" type="text" class="validate"
+                              [name]=" 'accNo'+currIndex" #accountNumberRef="ngModel" [(ngModel)]="account.accountNumber" maxlength="13"
+                              required appValidateInput validateFor='number' maxLimit='13'>
+                        </div>
+                     </div>
+                     <div *ngIf="accountNumberRef.invalid && (accountNumberRef.dirty || accountNumberRef.touched)" class="visuallyhidden" aria-live="assertive" role="alert">
+                        {{ariaMessages.accountNumber}}
+                     </div> 
+                     <div *ngIf="accountNumberRef.invalid && (accountNumberRef.dirty || accountNumberRef.touched)" class="error-msg">
+                        <span *ngIf="accountNumberRef.errors.required">
+                           Account number is required.
+                        </span>
+                     </div>
+                  </div>
+                  <div class="gd-form-row" *ngIf="isNedBankSelected(account)">
+                     <div class="field-with-icon">
+                        <div class="field-block">
+                           <label [id]="'account-type-'+currIndex" class="gd-sm-label" for="'accTyp'+currIndex">Account Type</label>
+                           <input [id]="'add-account-type-'+currIndex" type="hidden" required [ngModel]="account.accountType" name="'accTyp'+currIndex"
+                              #accountTypeRef="ngModel" />
+                           <div class="gd-basic-dropdown" dropdown (click)="onAccountTypeDropdownOpen(account)">
+                              <div dropdownToggle class="dropdown-place">
+                                 <div class="text">
+                                    {{ account.accountType ? getAccountTypeName(account.accountType) : 'Please select' }}
+                                 </div>
+                                 <div class="icon">
+                                    <span class="caret"></span>
+                                 </div>
+                              </div>
+                              <ul *dropdownMenu class="dropdown-menu" role="menu">
+                                 <li [class.active]="accountType.value.text == getAccountTypeName(account.accountType)" role="menuitem" *ngFor="let accountType of accountTypes"
+                                    (click)="onAccountTypeChanged(account, accountType)">
+                                    <ng-container *ngIf="accountType.value.code !== creditCardAccountTypeCode || !isNedBankSelected(account)">{{accountType.value.text}}</ng-container>
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                     </div>
+                     <div *ngIf="accountTypeRef.invalid && account.accountTypeDirty" class="error-msg">
+                        <span *ngIf="accountTypeRef.errors.required">
+                           Account type is required.
+                        </span>
+                     </div>
+                  </div>
+                  <div class="gd-form-row branch-container autocomplete-container branch--autocomplete-container" *ngIf="account.isBranchVisible">
+                     <label [id]="'branch-name-'+currIndex" for="branch" class="gd-sm-label active">Branch name </label>
+                     <input [id]="'add-branch-name-'+currIndex" type="text" class="validate" #branchRef="ngModel" name="'branch'+curreIndex" [(ngModel)]="account.branchDisplayName"
+                        [typeahead]="account.branches" [typeaheadOptionsLimit]="account.branches && account.branches.length"
+                        [typeaheadItemTemplate]="benfBranchListTemplate" (typeaheadOnSelect)="selectBranch(account, $event)"
+                        (typeaheadOnBlur)="blurBranch(account, $event)" (typeaheadNoResults)="noBranchResults(account, $event)"
+                        (blur)="blurBranchInput(account)" [typeaheadMinLength]="0" typeaheadOptionField="displayName" appValidateRequired
+                        autocomplete="off" />
+                     <div *ngIf="branchRef.invalid && (branchRef.dirty || branchRef.touched)" class="error-msg">
+                        <span *ngIf="branchRef.errors.required">
+                           Please enter the branch name or code.
+                        </span>
+                     </div>
+                  </div>
+                  <div class="gd-form-row reference-row">
+                     <div class="col-xs-6 no-padding">
+                        <label [id]="'my-reference-'+currIndex" class="gd-sm-label active" for="recipient_name">{{referenceText}}</label>
+                        <div class="field-with-icon">
+                           <div class="field-block">
+                              <input [id]="'add-my-reference-'+currIndex" autocomplete="off" type="text" class="validate" [name]="'account'+currIndex + 'myReference'"
+                                 value="{{account.myReference}}" [(ngModel)]="account.myReference" #accountMyRef="ngModel" appValidateRequired
+                                 appValidateOnblur />
+                              <div *ngIf="accountMyRef.invalid && (accountMyRef.dirty || accountMyRef.touched)" class="visuallyhidden" aria-live="assertive" role="alert">
+                                    {{ariaMessages.yourReference}}
+                              </div> 
+                              <div *ngIf="accountMyRef.invalid && (accountMyRef.dirty || accountMyRef.touched)" class="error-msg">
+                                 <span>
+                                    {{messages.requiredField}}
+                                 </span>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-xs-6 padding-right-0">
+                        <label [id]="'their-reference-'+currIndex" class="gd-sm-label active" for="recipient_name">Their reference</label>
+                        <div class="field-with-icon">
+                           <div class="field-block">
+                              <input [id]="'add-their-reference-'+currIndex" autocomplete="off" type="text" class="validate" [name]="'account'+currIndex + 'beneficiaryReference'"
+                                 value="{{account.beneficiaryReference}}" [(ngModel)]="account.beneficiaryReference" #accountTheirRef="ngModel"
+                                 appValidateRequired appValidateOnblur />
+                              <div *ngIf="accountTheirRef.invalid && (accountTheirRef.dirty || accountTheirRef.touched)" class="visuallyhidden" aria-live="assertive" role="alert">
+                                    {{ariaMessages.theirReference}}
+                              </div> 
+                              <div *ngIf="accountTheirRef.invalid && (accountTheirRef.dirty || accountTheirRef.touched)" class="error-msg">
+                                 <span>
+                                    {{messages.requiredField}}
+                                 </span>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+
+               </div>
+            </div>
+         </div>
+
+         <div *ngIf="!isBankApprovedBeneficiary">
+            <div class="gd-form-row add-item-row" *ngIf="!isReadOnly && !isBankApprovedBeneficiary">
+               <button (click)="addAccount();sendEvent('add_recipients_add_bank_account');">
+                  <span class="icon icon-add"></span>Add bank account</button>
+            </div>
+            <hr *ngIf="!isReadOnly" />
+
+            <div class="gd-form-row" *ngIf="!isReadOnly">
+               <label [id]="'cellphone-numbers-'+currIndex" class="gd-lg-label" for="">Cellphone numbers</label>
+            </div>
+            <div *ngIf="!isReadOnly">
+               <div *ngFor="let prepaid of prepaidContactCards;let currIndex=index;">
+                  <div *ngIf="!prepaid?.isDeleted">
+                     <div class="gd-form-row">
+                        <label [id]="'cellphone-number-'+currIndex" class="gd-sm-label active" [for]="'prepaid'+currIndex">Cellphone number</label>
+                        <div class="field-with-icon">
+                           <div class="field-block">
+                              <input [id]="'add-cellphone-number-'+currIndex" [name]=" 'prepaid'+currIndex" autocomplete="off" type="text" class="validate"
+                                 [pattern]="patterns.mobile" #notificationInput="ngModel" [(ngModel)]="prepaid.accountNumber"
+                                 required appValidateInput validateFor='mobile' appValidateOnblur ga-event-name="add_recipients_add_prepaid_cellphone_number"
+                              />
+                              <div *ngIf="notificationInput.invalid && (notificationInput.dirty || notificationInput.touched) && notificationInput.errors.required" class="visuallyhidden" aria-live="assertive" role="alert">
+                                    {{ariaMessages.cellphone}}
+                              </div> 
+                              <div *ngIf="notificationInput.invalid && (notificationInput.dirty || notificationInput.touched)" class="error-msg">
+                                 <div *ngIf="notificationInput.errors.required">
+                                    {{messages.requiredField}}
+                                 </div>
+                                 <div *ngIf="notificationInput.errors.pattern">
+                                    {{messages.invalidNumber}}
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="icon-block" [id]="'remove-prepaid-'+currIndex">
+                              <div class="icons">
+                                 <span class="icon-del icon" (click)="removeContactCardDetail(prepaid)"></span>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="gd-form-row">
+                        <label [id]="'approved-my-reference-'+currIndex" class="gd-sm-label active" for="recipient_name">{{referenceText}}</label>
+                        <div class="field-with-icon">
+                           <div class="field-block">
+                              <input [id]="'add-approved-my-reference-'+currIndex" autocomplete="off" type="text" class="validate" [name]="'prepaid'+currIndex + 'myReference'"
+                                 value="{{prepaid.myReference}}" [(ngModel)]="prepaid.myReference" #cellMyRef="ngModel" appValidateRequired
+                                 appValidateOnblur ga-event-name="add_recipients_add_prepaid_cellphone_number_my_reference"
+                              />
+                              <div *ngIf="cellMyRef.invalid && (cellMyRef.dirty || cellMyRef.touched)" class="visuallyhidden" aria-live="assertive" role="alert">
+                                    {{ariaMessages.yourReference}}
+                              </div> 
+                              <div *ngIf="cellMyRef.invalid && (cellMyRef.dirty || cellMyRef.touched)" class="error-msg">
+                                 <span>
+                                    {{messages.requiredField}}
+                                 </span>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+            <div class="gd-form-row add-item-row" *ngIf="!isReadOnly && !isBankApprovedBeneficiary">
+               <button (click)=" addPrepaid()">
+                  <span class="icon icon-add"></span>Add cellphone number</button>
+            </div>
+            <hr *ngIf="!isReadOnly" />
+            <div class="gd-form-row" *ngIf="!isReadOnly">
+               <label [id]="'electricity-meters-'+currIndex" class="gd-lg-label" for="">Electricity meters</label>
+            </div>
+            <div *ngIf="!isReadOnly">
+               <ng-container *ngFor="let meter of electricityContactCards; let currentItem=index;">
+                  <div class="gd-form-row" *ngIf="!meter.isDeleted">
+                     <div>
+                        <div class="gd-form-row">
+                           <label [id]="'meter-number-'+currentItem" class="gd-sm-label active" [for]="'mtrNo'+currentItem">Meter number</label>
+                           <div class="field-with-icon">
+                              <div class="field-block">
+                                 <input [id]="'add-meter-number-'+currentItem" autocomplete="off" type="text" [name]=" 'mtrNo'+currentItem" [class.error]="meter.showMeterError"
+                                    class="validate" #meterNumberRef="ngModel" [(ngModel)]="meter.accountNumber" appValidateRequired
+                                    appValidateOnblur appValidateInput validateFor='alphanumeric' (blur)="onMeterNumberBlur(meter, meterNumberRef.value)"
+                                    (ngModelChange)="onMeterNumberChange(meter)" ga-event-name="add_recipients_add_meter_number"
+                                 />
+                              </div>
+                              <div class="icon-block" [id]="'remove-meter-'+currentItem">
+                                 <div class="icons">
+                                    <span class="icon-del icon" (click)="removeContactCardDetail(meter)"></span>
+                                 </div>
+                              </div>
+                           </div>
+                           <div *ngIf="meterNumberRef.invalid && (meterNumberRef.dirty || meterNumberRef.touched) && meterNumberRef.errors.required" class="visuallyhidden" aria-live="assertive" role="alert">
+                              {{ariaMessages.meterNumber}}
+                           </div>
+                           <div *ngIf="meterNumberRef.invalid && (meterNumberRef.dirty || meterNumberRef.touched)" class="error-msg">
+                              <span *ngIf="meterNumberRef.errors.required">
+                                 Meter number is required.
+                              </span>
+                           </div>
+                           <div *ngIf="meter.showMeterError && !meterNumberRef.errors" class="error-msg">
+                              <span>Meter number is not valid.</span>
+                           </div>
+                        </div>
+                        <div class="gd-form-row">
+                           <label [id]="'meter-number-reference-'+currentItem" class="gd-sm-label active" for="recipient_name">{{referenceText}}</label>
+                           <div class="field-with-icon">
+                              <div class="field-block">
+                                 <input [id]="'add-meter-number-reference-'+currentItem" autocomplete="off" type="text" class="validate" [name]="'meter'+currentItem + 'myReference'"
+                                    value="{{meter.myReference}}" [(ngModel)]="meter.myReference" #meterMyRef="ngModel" appValidateRequired
+                                    appValidateOnblur ga-event-name="add_recipients_add_meter_number_my_reference" />
+                                    <div *ngIf="meterMyRef.invalid && (meterMyRef.dirty || meterMyRef.touched)" class="visuallyhidden" aria-live="assertive" role="alert">
+                                          {{ariaMessages.yourReference}}
+                                    </div> 
+                                    <div *ngIf="meterMyRef.invalid && (meterMyRef.dirty || meterMyRef.touched)" class="error-msg">
+                                    <span>
+                                       {{messages.requiredField}}
+                                    </span>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </ng-container>
+            </div>
+
+            <div class="gd-form-row add-item-row" *ngIf="!isReadOnly && !isBankApprovedBeneficiary">
+               <button (click)="addMeter()">
+                  <span class="icon icon-add"></span>
+                  Add meter number
+               </button>
+            </div>
+            <hr *ngIf="!isReadOnly" />
+            <div class="gd-form-row" *ngIf="!isReadOnly">
+               <label id="credit-cards-header" class="gd-lg-label">Credit cards</label>
+            </div>
+            <div *ngIf="!isReadOnly">
+               <ng-container *ngFor="let creditCard of creditCardContactCards; let currentItem=index;">
+                  <div class="" *ngIf="!creditCard.isDeleted">
+                     <div>
+                        <div class="gd-form-row">
+                           <label [id]="'credit-card-number-'+currentItem" class="gd-sm-label active" [for]="'credit-card-number'+currentItem">Credit card number</label>
+                           <div class="field-with-icon">
+                              <div class="field-block">
+                                 <input [id]="'add-credit-card-number-'+currentItem" autocomplete="off" type="text" class="validate" [name]=" 'credit-card-number-'+currentItem"
+                                    #cardNumberRef="ngModel" [(ngModel)]="creditCard.accountNumber" required appValidateInput
+                                    appValidateOnblur validateFor='number' [minlength]="creditCardLengths.min" [maxlength]="creditCardLengths.max"
+                                    [maxLimit]='creditCardLengths.max'>
+                              </div>
+                              <div class="icon-block" [id]="'remove-creditCard-'+currentItem">
+                                 <div class="icons">
+                                    <span class="icon-del icon" (click)="removeContactCardDetail(creditCard)"></span>
+                                 </div>
+                              </div>
+                           </div>
+                           <div *ngIf="cardNumberRef.invalid && (cardNumberRef.dirty || cardNumberRef.touched) && cardNumberRef.errors.required" class="visuallyhidden" aria-live="assertive" role="alert">
+                              {{ariaMessages.creditCard}}
+                           </div>
+                           <div *ngIf="cardNumberRef.invalid && (cardNumberRef.dirty || cardNumberRef.touched)" class="error-msg">
+                              <span *ngIf="cardNumberRef.errors.required">
+                                 Credit card number is required.
+                              </span>
+                              <span *ngIf="cardNumberRef.errors.minlength">
+                                 Incorrect credit card number.
+                              </span>
+                           </div>
+                        </div>
+                        <div class="gd-form-row reference-row">
+                           <div class="col-xs-6 no-padding">
+                              <label [id]="'credit-card-number-reference-'+currentItem" class="gd-sm-label active" for="recipient_name">
+                                 {{referenceText}}</label>
+                              <div class="field-with-icon">
+                                 <div class="field-block">
+                                    <input [id]="'add-credit-card-number-reference-'+currentItem" autocomplete="off" type="text" class="validate" [name]="'credit-card '+ currentItem + 'my-reference'"
+                                       value="{{creditCard.myReference}}" [(ngModel)]="creditCard.myReference" #cardNumberMyRef="ngModel"
+                                       appValidateRequired appValidateOnblur />
+                                    <div *ngIf="cardNumberMyRef.invalid && (cardNumberMyRef.dirty || cardNumberMyRef.touched)" class="visuallyhidden" aria-live="assertive" role="alert">
+                                          {{ariaMessages.yourReference}}
+                                    </div>
+                                    <div *ngIf="cardNumberMyRef.invalid && (cardNumberMyRef.dirty || cardNumberMyRef.touched)" class="error-msg">
+                                       <span>
+                                          {{messages.requiredField}}
+                                       </span>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="col-xs-6 padding-right-0">
+                              <label [id]="'credit-card-number-their-reference-'+currentItem" class="gd-sm-label active" for="recipient_name">Their reference</label>
+                              <div class="field-with-icon">
+                                 <div class="field-block">
+                                    <input [id]="'add-ccredit-card-their-reference-'+currentItem" autocomplete="off" type="text" class="validate" [name]="'credit-card '+ currentItem + 'beneficiaryReference'"
+                                       value="{{creditCard.beneficiaryReference}}" [(ngModel)]="creditCard.beneficiaryReference"
+                                       #cardNumberTheirRef="ngModel" appValidateRequired appValidateOnblur />
+                                    <div *ngIf="cardNumberTheirRef.invalid && (cardNumberTheirRef.dirty || cardNumberTheirRef.touched)" class="visuallyhidden" aria-live="assertive" role="alert">
+                                          {{ariaMessages.theirReference}}
+                                    </div> 
+                                    <div *ngIf="cardNumberTheirRef.invalid && (cardNumberTheirRef.dirty || cardNumberTheirRef.touched)" class="error-msg">
+                                       <span>
+                                          {{messages.requiredField}}
+                                       </span>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </ng-container>
+            </div>
+
+            <div class="gd-form-row add-item-row" *ngIf="!isReadOnly && !isBankApprovedBeneficiary">
+               <button (click)="addCreditCard();sendEvent('add_recipients_add_credit_card');">
+                  <span class="icon icon-add"></span>
+                  Add credit card
+               </button>
+            </div>
+            <hr *ngIf="!isReadOnly" />
+         </div>
+         <div class="colps-section" [class.open]="!isCollapsed">
+            <div *ngIf="isReadOnly" class="colps-content ">
+               <hr *ngIf="getSectionItemCount(sectionNames.Sms) + getSectionItemCount(sectionNames.Fax) + getSectionItemCount(sectionNames.Email)> 0"
+               />
+               <div class="gd-form-row" *ngIf="getSectionItemCount(sectionNames.Account) > 0">
+                  <label [id]="'bank-accounts-'+currIndex" class="gd-lg-label" for="">Bank accounts</label>
+               </div>
+               <div *ngIf="isReadOnly">
+                  <div class="go-to-section" *ngFor="let account of accountContactCards;let currIndex=index;">
+                     <div class="gd-form-row gotobutton gotobuttonHover" (click)="contactCardToPay(account)">
+                        <div class="icon">
+                           <span class="pay-icon"></span>
+                        </div>
+                        <div class="btn gd-ghost-btn">
+                           <span>{{ labels.pay }}</span>
+                        </div>
+                     </div>
+                     <div class="gd-form-row">
+                        <label [id]="'read-only-bank-'+currIndex" class="gd-sm-label active">{{account?.bankName}}</label>
+                        <div [id]="'view-read-only-account-number-'+currIndex" class="label-value">{{account.accountNumber}}</div>
+                     </div>
+                     <div *ngIf="!isBankApprovedBeneficiary && isNedBankSelected(account)" class="gd-form-row">
+                        <div class="field-with-icon">
+                           <div class="field-block">
+                              <label [id]="'read-only-account-type-'+currIndex" class="gd-sm-label">Account Type</label>
+                              <div [id]="'view-read-only-account-type-'+currIndex" class=" label-value">{{getAccountTypeName(account.accountType)}}</div>
+                           </div>
+                        </div>
+                     </div>
+                     <div *ngIf="!isBankApprovedBeneficiary && account.branchName" class="gd-form-row branch-container autocomplete-container">
+                        <label [id]="'read-only-branch-name-'+currIndex" for="branch" class="gd-sm-label active">Branch name or code</label>
+                        <div [id]="'view-read-only-branch-name-'+currIndex" class=" label-value">{{account?.branchName}}</div>
+                     </div>
+
+                     <div class="gd-form-row reference-row">
+                        <div class="col-xs-6 no-padding">
+                           <label [id]="'read-only-my-reference-'+currIndex" class="gd-sm-label active">{{referenceText}}</label>
+                           <div [id]="'view-read-only-my-reference-'+currIndex" class=" label-value">{{account.myReference}}</div>
+                        </div>
+                        <div class="col-xs-6 padding-right-0">
+                           <label [id]="'read-only-beneficiary-reference-'+currIndex" class="gd-sm-label active">Their reference</label>
+                           <div [id]="'view-read-only-beneficiary-reference-'+currIndex" class=" label-value">{{account.beneficiaryReference}}</div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div *ngIf="!isBankApprovedBeneficiary">
+                  <hr *ngIf="getSectionItemCount(sectionNames.Account) > 0" />
+
+                  <div class="gd-form-row" *ngIf="getSectionItemCount(sectionNames.Prepaid) > 0">
+                     <label [id]="'cellphone-numbers-'+currIndex" class="gd-lg-label" for="">Cellphone numbers</label>
+                  </div>
+                  <div *ngIf="isReadOnly">
+                     <div class="go-to-section" *ngFor="let prepaid of prepaidContactCards;let currIndex=index;">
+                        <div>
+                           <div class="gd-form-row gotobutton">
+                              <span class="pay-redirect" (click)="prePaidToPay(prepaid)">
+                                 <div class="icon">
+                                    <span class="pay-icon"></span>
+                                 </div>
+                                 <div class="btn gd-ghost-btn">
+                                    <span>{{ labels.pay }}</span>
+                                 </div>
+                              </span>
+                              <span class="buy-prepaid" (click)="prePaidToBuy(prepaid)">
+                                 <div class="icon">
+                                    <span class="buy-icon"></span>
+                                 </div>
+                                 <div class="text">
+                                    <span>{{ labels.buy }}</span>
+                                 </div>
+                              </span>
+                           </div>
+                           <div class="gd-form-row">
+                              <label [id]="'readonly-account-number-'+currIndex" class="gd-sm-label active" [for]="'prepaid'+currIndex">Cellphone number</label>
+                              <div [id]="'view-readonly-account-number-'+currIndex" class=" label-value">{{prepaid.accountNumber}}</div>
+                           </div>
+
+
+                           <div class="gd-form-row">
+                              <label [id]="'readonly-my-reference-'+currIndex" class="gd-sm-label active" for="recipient_name">{{referenceText}}</label>
+                              <div [id]="'view-readonly-my-reference-'+currIndex" class="label-value">{{prepaid.myReference}}</div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <hr *ngIf="getSectionItemCount(sectionNames.Prepaid) > 0" />
+                  <div class="gd-form-row" *ngIf="getSectionItemCount(sectionNames.Electricity) > 0">
+                     <label [id]="'electricity-meters-'+currIndex" class="gd-lg-label" for="">Electricity meters</label>
+                  </div>
+                  <div *ngIf="isReadOnly">
+                     <div class="gd-form-row go-to-section" *ngFor="let meter of electricityContactCards; let currentItem=index;">
+                        <div *ngIf="!meter.isDeleted">
+                           <div class="gd-form-row gotobutton gotobuttonHover" (click)="electricityToBuy(meter)">
+                              <div class="icon">
+                                 <span class="buy-icon"></span>
+                              </div>
+                              <div class="btn gd-ghost-btn">
+                                 <span>{{ labels.buy }}</span>
+                              </div>
+                           </div>
+                           <div class="gd-form-row">
+                              <label [id]="'meter-account-number-'+currentItem" class="gd-sm-label active" [for]=" 'mtrNo'+currentItem">Meter number</label>
+                              <div [id]="'view-meter-account-number-'+currentItem" class=" label-value">{{meter.accountNumber}}</div>
+                           </div>
+
+                           <div class="gd-form-row">
+                              <label [id]="'meter-account-number-reference-'+currentItem" class="gd-sm-label active" for="recipient_name">{{referenceText}}</label>
+                              <div [id]="'view-meter-account-number-reference-'+currentItem" class=" label-value">{{meter.myReference}}</div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <hr *ngIf="getSectionItemCount(sectionNames.Electricity) > 0" />
+                  <div class="gd-form-row" *ngIf="getSectionItemCount(sectionNames.CreditCard) > 0">
+                     <label id="credit-cards-header" class="gd-lg-label">Credit cards</label>
+                  </div>
+                  <div *ngIf="isReadOnly">
+                     <div class="go-to-section" *ngFor="let creditCard of creditCardContactCards; let currentItem=index;">
+                        <div *ngIf="!creditCard.isDeleted">
+                           <div class="gd-form-row gotobutton gotobuttonHover" (click)="contactCardToPay(creditCard)">
+                              <div class="icon">
+                                 <span class="pay-icon"></span>
+                              </div>
+                              <div class="btn gd-ghost-btn">
+                                 <span>{{ labels.pay }}</span>
+                              </div>
+                           </div>
+                           <div class="gd-form-row">
+                              <label [id]="'credit-card-account-number- '+currentIndex" class="gd-sm-label active" [for]=" 'creditCardNo '+currentItem">Credit card number</label>
+                              <div [id]="'view-credit-card-account-number- '+currentIndex" class=" label-value">{{creditCard.accountNumber}}</div>
+                           </div>
+
+                           <div class="gd-form-row reference-row">
+                              <div class="col-xs-6 no-padding">
+                                 <label [id]="'credit-card-account-number-reference- '+currentItem" class="gd-sm-label active" for="recipient_name">{{referenceText}}</label>
+                                 <div [id]="'view-credit-card-account-number-reference- '+currentItem" class="label-value">{{creditCard.myReference}}</div>
+                              </div>
+                              <div class="col-xs-6 padding-right-0">
+                                 <label [id]="'credit-card-account-number-their-reference- '+currentItem" class="gd-sm-label active">Their reference</label>
+                                 <div [id]="'view-credit-card-account-number-their-reference- '+currentItem" class="label-value">{{creditCard.beneficiaryReference}}</div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <hr *ng If="getSectionItemCount(sectionNames.CreditCard) > 0" />
+               </div>
+            </div>
+            <div *ngIf="isReadOnly && (getSectionItemCount(sectionNames.Sms) + getSectionItemCount(sectionNames.Fax) + getSectionItemCount(sectionNames.Email) > 0)"
+               class="colps-toggle" (click)="toggleCollapse()">
+               <span class="text" *ngIf="isCollapsed">View More Details</span>
+               <span class="text" *ngIf="!isCollapsed">View Less Details</span>
+               <span class="toggle-icon"></span>
+            </div>
+         </div>
+         <app-recent-recipient-transactions *ngIf="isReadOnly && beneficiaryData?.contactCard?.beneficiaryRecentTransactDetails" [recentTransactions]="beneficiaryData?.contactCard.beneficiaryRecentTransactDetails"
+            [contactCardDetails]="beneficiaryData?.contactCard?.contactCardDetails" (repeatTransaction)="goToRepeatPayment($event)"></app-recent-recipient-transactions>
+         <div class="gd-form-row details-list" *ngIf="isReadOnly && beneficiaryData.schedulePayments?.length > 0 ">
+            <label id="scheduled-pay-lbl" class="gd-lg-label active margin-schedule" for="scheduled_pay">Scheduled payments</label>
+            <div class="label-value">
+               <app-scheduled-transaction *ngFor="let scheduleTransaction of beneficiaryData.schedulePayments;" [scheduleTransactionDetail]="scheduleTransaction"
+                  [sourcePage]="'recipient'" [skeletonMode]="skeletonModeSchedule" (editSchedule)="editSchedule.emit($event)"></app-scheduled-transaction>
+            </div>
+         </div>
+
+         <div class="gd-form-row btn-cntr">
+            <div *ngIf="!isReadOnly">
+               <app-bottom-button [class.btn-disabled]="!isBeneficiaryValid()" [disableButton]="saveLoading" [showLoader]="saveLoading"
+                  [text]="saveButtonText" (clickEmitter)="validateSaveClick();sendEvent('click_on_save_to_my_recipients');"
+                  [showAria]="!isBeneficiaryValid()" [ariaMsg]="ariaMessages.saveButton">
+               </app-bottom-button>
+            </div>
+            <div *ngIf="!isAddMode && isShowDeleteButton" class="delete-recipient-mob">
+               <app-bottom-button [disableButton]="false" [alternateTheme]="true" [text]="'Delete recipient'" [cssClass]=" 'delete'" (click)="showDeleteRecipientNotification()">
+               </app-bottom-button>
+            </div>
+            <div *ngIf="isAddMode" class="delete-recipient-mob">
+               <app-bottom-button [disableButton]="false" [alternateTheme]="true" [text]=" 'Cancel'" [cssClass]=" 'delete'" (click)="cancelAddRecipient();sendEvent('add_recipient_click_on_cancel');">
+               </app-bottom-button>
+            </div>
+         </div>
+      </form>
+   </div>
+</div>

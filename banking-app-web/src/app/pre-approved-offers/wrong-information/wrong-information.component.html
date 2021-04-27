@@ -1,0 +1,40 @@
+<div class="main-container" *ngIf="content.length">
+   <div class="header">
+      <p class="heading">{{heading}} </p>
+   </div>
+   <div class="sub-conatiner">
+      <ng-container *ngFor="let item of content; let i=index" [ngSwitch]="item.type">
+         <div class="element" *ngSwitchCase="'text'">
+            <span *ngFor="let content of item.content">
+                     {{ getContent(content, item.values) }}
+                     </span>
+         </div>
+         <ng-container *ngSwitchCase="'checkbox'">
+            <div class="element" *ngFor="let content of item.content">
+               <div class="options-container">
+                  <div class="icon gd-checkbox">
+                     <input type="checkbox" id="options-check-wrong-{{i}}" [(ngModel)]="options[i]" (change)="onOptionSelect()">
+                     <label for="options-check-wrong-{{i}}"></label>
+                  </div>
+                  <div class="container-items">
+                     <div>{{ content }}</div>
+                  </div>
+               </div>
+            </div>
+         </ng-container>
+      </ng-container>
+   </div>
+   <div class="next-button-container">
+      <app-bottom-button text="Send feedback" (click)="submitFeedback($event)" [class.btn-disabled]="isSubmitDisabled" [disableButton]="isSubmitDisabled"
+         [showLoader]='IsNextInProgress'></app-bottom-button>
+      <div class="next-button-spacer"></div>
+      <app-bottom-button text="Back" (click)="cancel($event)" [alternateTheme]="true"
+      [showLoader]='IsNextInProgress'></app-bottom-button>
+   </div>
+</div>
+
+<div class="spinner-container" *ngIf="!content.length">
+   <div class="spinner">
+      <app-spinner class="spinner" [color]="'green'"></app-spinner>
+   </div>
+</div>

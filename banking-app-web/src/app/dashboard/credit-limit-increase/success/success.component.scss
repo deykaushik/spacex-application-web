@@ -1,0 +1,74 @@
+@import './../../../../styles/_mixins.scss';
+@import './../../../../styles/_base.scss';
+$svg-path: './../../../../assets/svg';
+.title {
+   font-family: $font-markpro-medium;
+   font-weight: 500;
+   color: $text-color-secondary;
+}
+
+.review-section {
+   margin: 20px;
+   .title {
+      display: block;
+      margin-bottom: 30px;
+      font-size: $page-title-size;
+      @extend .title;
+   }
+   .status {
+      display: block;
+      margin: 0 70px 30px 0;
+      font-family: $font-markpro;
+      color: $text-color-primary;
+      font-weight: normal;
+      font-size: $font-md;
+   }
+   .contact-us {
+      .title {
+         display: block;
+         font-size: $lg-heading-size;
+         @extend .title;
+      }
+      .content-body {
+         @include flexbox();
+         .icon-phone {
+            @include svg-image-full-path($svg-path, 'phone-inactive', 45px, 45px);
+         }
+         .content-message {
+            width: 320px;
+            margin: 0 60px 0 15px;
+            font-family: $font-markpro;
+            font-weight: normal;
+            font-size: $font-default;
+            .message {
+               color: $text-color-primary;
+            }
+            .green {
+               color: $secondary-color;
+            }
+         }
+      }
+   }
+   .bottom-button {
+      margin: 60px -10px;
+   }
+}
+
+@media(min-width: $media-xs-up) {
+   .review-section {
+      margin: 92px 0px 140px 95px;
+      .title {
+         font-size: $main-title-size;
+      }
+      .contact-us {
+         .title {
+            font-size: $lg-heading-size;
+         }
+         .content-body {
+            .content-message {
+               font-size: $font-default;
+            }
+         }
+      }
+   }
+}

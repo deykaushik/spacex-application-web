@@ -1,0 +1,170 @@
+@import './../../../../styles/_mixins.scss';
+@import './../../../../styles/_base.scss';
+$svg-path: './../../../../assets/svg';
+.summary {
+   @include flexbox();
+   @include justify-content(center);
+   .summary-section {
+      margin: 30px 20px;
+      width: 100%;
+      .title-section {
+         margin-bottom: 30px;
+         .main {
+            display: block;
+            font-family: $font-markpro-medium;
+            font-weight: 500;
+            font-size: $font-md;
+            color: $text-color-secondary;
+         }
+         .sub {
+            display: block;
+            font-family: $font-markpro;
+            font-size: $font-md;
+            color: $text-color-secondary;
+            margin-bottom: 30px;
+         }
+      }
+      .summary-body {
+         .section {
+            margin-bottom: 60px;
+            .section-head {
+               @include flexbox();
+               margin-bottom: 35px;
+               .head {
+                  font-family: $font-markpro-medium;
+                  font-weight: 500;
+                  font-size: $font-sm;
+                  color: $text-color-primary;
+                  width: 50%;
+               }
+               .edit {
+                  font-family: $font-markpro;
+                  font-weight: normal;
+                  font-size: $font-sm;
+                  color: $secondary-color;
+                  text-decoration: underline;
+                  margin-left: 40%;
+                  width: 10%;
+                  cursor: pointer;
+               }
+            }
+            .section-body {
+               .content {
+                  @include flexbox();
+                  font-family: $font-markpro;
+                  font-weight: normal;
+                  font-size: $font-sm;
+                  color: $text-color-primary;
+                  border-bottom: 1px solid $divider-secondary;
+                  padding: 6px 0;
+                  .content-name {
+                     width: 60%;
+                     text-align: left;
+                  }
+                  .content-value {
+                     width: 38%;
+                     margin-right: 2%;
+                     text-align: right;
+                  }
+               }
+            }
+         }
+         .declaration {
+            margin-top: 45px;
+            .declaration-text {
+               font-family: $font-markpro-medium;
+               font-weight: 500;
+               font-size: $font-md;
+               color: $text-color-primary;
+            }
+         }
+         .declaration-statement {
+            @include flexbox();
+            .square {
+               width: 30px;
+               height: 30px;
+               border-radius: 5px;
+            }
+            .square-white {
+               border: 2px solid $divider-primary;
+            }
+            .square-green {
+               background-color: $tertiary-color;
+               .tick {
+                  @include svg-image-full-path($svg-path, 'tickCheckbox', 17px, 13px);
+                  position: absolute;
+               }
+            }
+         }
+         .bottom-button {
+            margin: 60px -10px;
+         }
+      }
+   }
+}
+
+@media(min-width: $media-xs-up) {
+   .summary {
+      .summary-section {
+         margin-top: 60px;
+         width: 400px;
+         .title-section {
+            margin-bottom: 30px;
+            .main {
+               font-size: $lg-heading-size;
+            }
+            .sub {
+               font-size: $para-title-size;
+            }
+         }
+         .summary-body {
+            .section {
+               margin-bottom: 60px;
+               .section-head {
+                  margin-bottom: 35px;
+                  .head {
+                     font-size: $font-md;
+                  }
+                  .edit {
+                     font-size: $font-default;
+                  }
+               }
+               .section-body {
+                  .content {
+                     font-size: $font-md;
+                     padding: 18px 0;
+                     .content-name {
+                        width: 60%;
+                     }
+                     .content-value {
+                        width: 38%;
+                        margin-right: 2%;
+                     }
+                  }
+               }
+            }
+            .declaration {
+               margin-top: 15px;
+               .declaration-text {
+                  font-size: $font-md;
+               }
+            }
+            .declaration-statement {
+               padding: 30px 0 0 0;
+               .square-green {
+                  .tick {
+                     padding: 6px 0 0 6px;
+                  }
+               }
+               .declaration-message {
+                  width: 370px;
+                  padding: 5px 0 0 10px;
+               }
+            }
+            .bottom-button {
+               margin: 60px 0;
+            }
+         }
+      }
+   }
+}

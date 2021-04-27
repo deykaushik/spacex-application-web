@@ -1,0 +1,32 @@
+﻿<div class="work-flow final-status">
+   <app-circle-icon-heading [heading]="cardInfo.success?successMessage:failureMessage" [successful]="cardInfo.success"></app-circle-icon-heading>
+   <div class="block">
+      <div class="steps-track"></div>
+      <div class="steps-block">
+         <div class="card-block-status">
+            <div *ngIf="!cardInfo.success" class="card-block-fail">
+               <span>Please call</span>
+               <span class="no-break">0800 11 0929</span>
+               <span>or</span>
+               <span class="no-break">+27 011 710 4330</span>
+               <span>(international) to replace your card.</span>
+            </div>
+            <div *ngIf="cardInfo.success  && !payload.isCourier" class="card-block-success">
+               <div>
+                  <p>Your replacement card will be sent to {{cardInfo.branchName}}</p>
+               </div>
+            </div>
+            <div *ngIf="cardInfo.success && payload.isCourier" class="card-block-success" >
+               <div>
+                  <p>Your card should be ready within 5 working days. You will receive an SMS once your card is ready for collection.</p>
+               </div>
+            </div>
+         </div>
+         <app-bottom-button *ngIf="!cardInfo.success" [text]="'Try again'" [showLoader]='isButtonLoader' [disableButton]="disableRetryButton || isButtonLoader" (click)="onRetryReplaceCard()"></app-bottom-button>
+         <app-bottom-button *ngIf="cardInfo.success" [text]="'Done'" [disableButton]="disableRetryButton" (click)="hideReplaceCardStatusPopup()"></app-bottom-button>
+         <div class="gd-error" *ngIf="disableRetryButton">
+            <span>{{labels.replaceCardRetryMessage}}</span>
+         </div>
+      </div>
+   </div>
+</div>

@@ -1,0 +1,82 @@
+﻿<div class="unit-trusts-status">
+   <div class="work-flow final-status">
+      <app-circle-icon-heading [heading]="heading" [successful]="successful"></app-circle-icon-heading>
+      <div class="block">
+         <div class="steps-track"></div>
+         <div class="steps-block gd-form">
+            <table class="tabular-data-col-2 gd-form-row">
+               <tbody>
+                  <tr>
+                     <td>{{labels.requestDate}}:</td>
+                     <td>{{buyVm.requestDate|date:dateFormat}}</td>
+                  </tr>
+                  <tr>
+                     <td>{{labels.fromText}}:</td>
+                     <td>
+                        <span class='capitalize'>{{buyVm.fromAccount.nickname}}</span>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>{{labels.toText}}:</td>
+                     <td>
+                        <span class='capitalize'>{{accountList}}</span>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+            <table class="tabular-data-col-2 gd-form-row">
+               <tbody>
+                  <tr>
+                     <td>{{labels.totalRandValue}}:</td>
+                     <td>{{buyVm.randValue | amountTransform: amountPipeConfig}}</td>
+                  </tr>
+               </tbody>
+            </table>
+            <table class="tabular-data-col-2 gd-form-row">
+               <tbody>
+                  <tr *ngIf="buyVm?.yourReference">
+                     <td>{{labels.yourReference}}:</td>
+                     <td>{{buyVm?.yourReference}}</td>
+                  </tr>
+                  <tr *ngIf="buyVm.transactionReference">
+                     <td>{{labels.referenceNumber}}:</td>
+                     <td>{{buyVm?.transactionReference}}</td>
+                  </tr>
+               </tbody>
+            </table>
+            <table *ngIf="buyVm.transactionReference" class="tabular-data-col-2 gd-form-row">
+               <tbody>
+                  <tr>
+                     <p class="notice">Please keep your reference number safe for future queries.</p>
+                  </tr>
+               </tbody>
+            </table>
+            <div class="half-btns gd-form-row no-print" *ngIf="successful">
+               <div class="left">
+                  <app-bottom-button (clickEmitter)="navigateToDashboard()" 
+                  [disableButton]="false" [text]="labels.finish"></app-bottom-button>
+               </div>
+               <div class="right">
+                  <app-bottom-button (clickEmitter)="newPurchase()" 
+                  [disableButton]="false" [text]="labels.newPurchase" 
+                  [alternateTheme]="true"></app-bottom-button>
+               </div>
+            </div>
+            <div class="half-btns gd-form-row no-print" *ngIf="!successful">
+               <div class="left">
+                  <app-bottom-button [disableButton]="disableRetryButton || requestInprogress" 
+                  [showLoader]='isButtonLoader' (clickEmitter)="retryPayment()"
+                  [text]="labels.tryAgain"></app-bottom-button>
+               </div>
+               <div class="right">
+                  <app-bottom-button [disableButton]="requestInprogress" (clickEmitter)="navigateToDashboard()" 
+                  [alternateTheme]="true" [text]="labels.cancelPurchase"></app-bottom-button>
+               </div>
+            </div>
+            <div class="gd-error no-print" *ngIf="errorMessage">
+               <span>{{errorMessage}}</span>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

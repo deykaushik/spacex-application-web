@@ -1,0 +1,148 @@
+﻿<h1 role="alert" class="visuallyhidden" attr.aria-label="{{heading}}"></h1>
+<div class="pay-status">
+   <div class="work-flow final-status">
+      <app-circle-icon-heading [heading]="successful?labels.paymentSuccess:!this.IsAPIFailure?labels.paymentFailed:labels.somethingWentWrong" [successful]="successful"></app-circle-icon-heading>
+      <div class="block">
+         <div class="steps-track"></div>
+         <div class="steps-block gd-form">
+            
+               <table class="tabular-data-col-2 gd-form-row">
+                  <tbody *ngIf="!isCrossBorderPayment">
+                     <tr>
+                        <td>Recipient:</td>
+                        <td>{{payToVm.recipientName}}</td>
+                     </tr>
+                     <tr *ngIf="isAccountPayment && paymentDetail.bank">
+                        <td>Bank:</td>
+                        <td>
+                           <span>{{paymentDetail.bank}}</span>
+                           <span *ngIf="!isCrossBorderPayment"> - {{paymentDetail.toAccount.accountNumber}}</span>
+                        </td>
+                     </tr>
+                     <tr *ngIf="isMobilePayment">
+                        <td>Cellphone no:</td>
+                        <td>{{payToVm.mobileNumber}}</td>
+                     </tr>
+                     <tr *ngIf="isCreditCardPayment">
+                        <td>Credit Card:</td>
+                        <td>{{payToVm.creditCardNumber}}</td>
+                     </tr>
+                     <tr>
+                        <td>Amount:</td>
+                        <td>{{paymentDetail.amount | amountTransform: amountPipeConfig}}</td>
+                     </tr>
+                  </tbody>
+                  <tbody *ngIf="isCrossBorderPayment">
+                     <tr>
+                        <td>Recipient:</td>
+                        <td>{{ payToVm.crossBorderPayment?.beneficiaryDetails.beneficiaryAccountName}}</td>
+                     </tr>
+                     <tr>
+                        <td>Bank:</td>
+                        <td> {{ payToVm.crossBorderPayment?.bank.bankName}}</td>
+                     </tr>
+                     <tr>
+                        <td>Principal Amount:</td>
+                        <td>{{payAmountVm.totalPaymentAmount - payAmountVm.remittanceCharge | amountTransform : {isLabel: true,
+                           showSign: true, prefixValue: defaultCurrency + ' '} }}</td>
+                     </tr>
+                  </tbody>
+               </table>
+               <table class="tabular-data-col-2 gd-form-row" *ngIf="isCrossBorderPayment">
+                  <tbody>
+                     <tr>
+                        <td>{{labels.fromAccount}}:</td>
+                        <td>
+                           <span class='capitalize'>{{accountNickName}}</span>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>{{labels.trasactionFee}}:</td>
+                        <td>{{payAmountVm.remittanceCharge | amountTransform: amountPipeConfig}}</td>
+                     </tr>
+                     <tr>
+                        <td>{{labels.totalCost}}:</td>
+                        <td>{{payAmountVm.totalPaymentAmount | amountTransform: amountPipeConfig}}</td>
+                     </tr>
+                  </tbody>
+               </table>
+               <table class="tabular-data-col-2 gd-form-row">
+                  <tbody>
+                     <tr *ngIf="!isCrossBorderPayment">
+                        <td>Pay from:</td>
+                        <td>
+                           <span class='capitalize'>{{accountNickName}}</span>
+                        </td>
+                     </tr>
+                     <tr *ngIf='payForVm?.notification?.value?.toLowerCase() !== "none"'>
+                        <td>{{labels.notify}}</td>
+                        <td>{{payForVm?.notification?.value + " - " + payForVm?.notificationInput}}</td>
+                     </tr>
+                     <tr>
+                        <td>{{labels.yourReference}}:</td>
+                        <td>{{ isCrossBorderPayment ? payForVm.yourReference : paymentDetail.myDescription}}</td>
+                     </tr>
+                     <tr *ngIf="!isMobilePayment && !isCrossBorderPayment">
+                        <td>{{labels.theirReference}}:</td>
+                        <td>{{paymentDetail.beneficiaryDescription}}</td>
+                     </tr>
+                     <tr *ngIf="isCrossBorderPayment">
+                        <td>{{labels.recipientReference}}:</td>
+                        <td>{{payForVm.theirReference}}</td>
+                     </tr>
+                  </tbody>
+               </table>
+               <table class="tabular-data-col-2 gd-form-row" *ngIf="!isCrossBorderPayment">
+                  <tbody>
+                     <tr *ngIf="successful && (paymentDetail.execEngineRef || paymentDetail.transactionID)">
+                        <td>Transaction no:</td>
+                        <td>{{paymentDetail.execEngineRef || paymentDetail.transactionID}}</td>
+                     </tr>
+                     <tr>
+                        <td>Payment date:</td>
+                        <td>{{!!payAmountVm.isInstantPay ? 'Instant payment' : paymentDetail.startDate | date : 'dd MMMM yyyy'}}</td>
+                     </tr>
+                  </tbody>
+               </table>
+               <div class="gd-form-row no-print" *ngIf="successful" (click)="print()">
+                  <a class="download">
+                     <span class="icon"></span>
+                     <span class="text">Print proof of Payment</span>
+                  </a>
+               </div>
+
+               <div class="half-btns gd-form-row no-print" *ngIf="successful">
+                  <div class="left">
+                     <app-bottom-button [disableButton]="false" (clickEmitter)="newPayment($event);sendEvent('pay_confirmation_click_on_new_payment')"
+                        [text]="'New payment'"></app-bottom-button>
+                  </div>
+                  <div class="right">
+                     <app-bottom-button [disableButton]="false" (clickEmitter)="navigateToDashboard();sendEvent('pay_confirmation_click_on_go_to_overview')"
+                        [text]="'Go to overview'" [alternateTheme]="true"></app-bottom-button>
+                  </div>
+               </div>
+               <div class="half-btns gd-form-row no-print" *ngIf="!successful">
+                  <div class="left">
+                     <app-bottom-button [disableButton]="disableRetryButton || requestInprogress" [showLoader]='isButtonLoader' (clickEmitter)="retryPayment()"
+                        [text]="'Try again'"></app-bottom-button>
+                  </div>
+                  <div class="right">
+                     <app-bottom-button [disableButton]="requestInprogress" (clickEmitter)="navigateToDashboard()" [alternateTheme]="true" [text]="this.IsAPIFailure ? labels.cancelText : labels.cancelPayment"></app-bottom-button>
+                  </div>
+               </div>
+               <div class="gd-error no-print">
+                  <span>{{apiFailureMessage}}</span>
+               </div>
+               <div *ngIf="payToVm.isCrossBorderPaymentActive && paymentNotice" class="gd-warning">
+                  <span>{{ paymentNotice }}</span>
+               </div>
+            
+         </div>
+      </div>
+   </div>
+
+   
+
+
+
+</div>

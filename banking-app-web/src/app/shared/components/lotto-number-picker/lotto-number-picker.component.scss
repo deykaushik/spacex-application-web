@@ -1,0 +1,65 @@
+﻿@import './../../../../styles/_base.scss';
+@import './../../../../styles/_mixins.scss';
+@import './../../../../styles/_lotto-numbers.scss';
+$svg-path: './../../../../assets/svg';
+$drp-bg: $container-bg;
+.gd-basic-dropdown {
+    &.open+.error-msg {
+        display: none;
+    }
+}
+
+.dropdown-menu li {
+    background-color: $drp-bg;
+}
+
+.divider {
+    height: 1px;
+    overflow: hidden;
+    background-color: $divider-primary !important;
+    margin: 0px 5px;
+}
+
+.lotteryDropdownDefaultText {
+    padding-top: 7px !important;
+    font-size: $font-sm;
+    .word-flow {
+        word-break: normal;
+    }
+}
+
+.lottery-dropdown-menu {
+    z-index: 1;
+    position: static;
+    margin-bottom: 10px;
+}
+
+.gd-basic-dropdown .dropdown-menu li {
+    cursor: default;
+    &.lotteryDropdownDefaultText {
+        line-height: 1.5;
+        word-break: break-all;
+    }
+}
+
+.lotto-ball-separator {
+    border: 1px solid $divider-primary;
+    width: 1.5px;
+    margin: 8px calc(16% - 28px) 8px 0px;
+}
+
+.selected-balls-container {
+    display: flex;
+}
+
+.single-ball-container {
+    flex: 1;
+    max-width: 16%;
+    margin-bottom: 3px;
+}
+
+.open {
+    .dropdown-hint-text {
+        visibility: hidden;
+    }
+}

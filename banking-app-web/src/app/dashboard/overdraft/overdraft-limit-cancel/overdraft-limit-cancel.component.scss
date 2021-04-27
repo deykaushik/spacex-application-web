@@ -1,0 +1,65 @@
+@import './../../../../styles/_mixins.scss';
+@import './../../../../styles/_base.scss';
+@import '../overdraft-limit-change/overdraft-limit-change.component.scss';
+
+.maintain-overdraft-carousel-container {
+   font-weight: normal;
+   font-style: normal;
+   font-stretch: normal;
+   letter-spacing: normal;
+   padding: 0px 20px;
+   .reason-input-label {
+      font-size: $label-size;
+      line-height: 1.5;
+      text-align: left;
+      color: $text-color-primary;
+      margin-top: 28px;
+   }
+   .reason-input-border {
+      padding: 13px 12px 20px 15px;
+      background-color: $container-bg;
+      border: solid 2px $highlight-dark-bg;
+      line-height: 1.5;
+      font-size: $font-default;
+      text-align: left;
+      color: $text-color-secondary;
+      max-height: 171px;
+   }
+   .reason-text-count {
+      font-size: $font-default;
+      line-height: 1.5;
+      text-align: right;
+      color: $color-greyLight;
+   }
+}
+
+@media (min-width: $media-sm) {
+   .maintain-overdraft-carousel-container {
+      max-width: 759px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0;
+      margin-top: 2px;
+      .reason-input-label {
+         margin-top: 47px;
+      }
+      .reason-input-border {
+         padding: 13px 25px 12px 15px;
+         background-color: $container-bg;
+         border: solid 2px $highlight-dark-bg;
+         line-height: 1.5;
+         font-size: $font-default;
+         text-align: left;
+         color: $text-color-secondary;
+         max-width: 645px;
+         max-height: 111px;
+      }
+      .reason-text-count {
+         max-width: 645px;
+         font-size: $font-default;
+         line-height: 1.5;
+         text-align: right;
+         color: $color-greyLight;
+      }
+   }
+}

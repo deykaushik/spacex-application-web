@@ -1,0 +1,28 @@
+<section class="select-dates">
+   <form class="section-body gd-form">
+      <span class="section-title">{{labels.selectDatesHeading}}</span>
+      <div class="select-date">
+         <div class="gd-form-row">
+            <label class="gd-sm-label" for="startDate">{{labels.startDate}}</label>
+            <app-custom-date-picker class="calendar" 
+               [config]="config" 
+               [date]="formatStartDate" 
+               (dateChanged)=setStartDate($event)>
+            </app-custom-date-picker>
+            <span class="icon-field custom-item-field" *ngIf="false">
+               <span class="icon calendar disabled custom-calendar"></span>
+            </span>
+         </div>
+         <div class="gd-form-row">
+            <label class="gd-sm-label" for="startDate">{{labels.endDate}}</label>
+            <app-custom-date-picker class="calendar" [config]="endConfig" [date]="formatEndDate" (dateChanged)=setEndDate($event)></app-custom-date-picker>
+            <span class="icon-field custom-item-field" *ngIf="false">
+               <span class="icon calendar disabled custom-calendar"></span>
+            </span>
+         </div>
+      </div>
+      <div class="bottom-btn">
+         <app-bottom-button [showLoader]="false" [disableButton]='!validForm' (clickEmitter)="onNextClick()" [text]="'Next'"></app-bottom-button>
+      </div>
+   </form>
+</section>

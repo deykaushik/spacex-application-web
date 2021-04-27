@@ -1,0 +1,73 @@
+<div class="info-container" *ngIf="informationVm.screen.length">
+   <p class="heading">{{heading}} </p>
+   <table class="info-table">
+      <ng-container *ngFor="let content of informationVm.screen; let i=index" [ngSwitch]="content.type">
+         <ng-container *ngSwitchCase="'text'">
+            <tr *ngIf="content.subText">
+               <td colspan="2" class="no-padding">
+                  <div class="tooltip-question" *ngIf="isTooltip[i]">
+                     <div class="tooltip-header-container">
+                        <div class="text-green"> Note </div>
+                        <div class="close-icon-container">
+                           <span class="close-icon" (click)="isTooltip[i] = !isTooltip[i]">&#10005;</span>
+                        </div>
+
+                     </div>
+                     <div class="tooltip-spacer"></div>
+                     <p> {{content.subText}} </p>
+                  </div>
+               </td>
+            </tr>
+            <tr>
+               <td class="name">
+                  <span> {{ content.name }} </span>
+                  <span class="tooltip-icon" (click)="isTooltip[i] = !isTooltip[i]"></span>
+               </td>
+               <td class="pull-right">
+                  <span> {{ content.value | amountTransform }} </span>
+               </td>
+            </tr>
+         </ng-container>
+         <ng-container *ngSwitchCase="'checkbox'">
+            <tr>
+               <td colspan="2">
+                  <div class="options-container">
+                     <div class="icon gd-checkbox">
+                        <input type="checkbox" id="options-check-{{i}}" [(ngModel)]="informationVm.isInfoWrong" (change)="isTooltip[i] = !isTooltip[i]">
+                        <label for="options-check-{{i}}"></label>
+                     </div>
+                     <div class="container-items">
+                        <div>{{ content.name }}</div>
+                     </div>
+                  </div>
+               </td>
+            </tr>
+            <tr *ngIf="content.subText">
+               <td colspan="2" class="no-padding">
+                  <div class="tooltip-question no-after" *ngIf="informationVm.isInfoWrong">
+                     <p class="text-green">{{pleaseNote}} </p>
+                     <div class="tooltip-spacer"></div>
+                     <p> {{content.subText}} </p>
+                  </div>
+               </td>
+            </tr>
+         </ng-container>
+      </ng-container>
+   </table>
+   <div class="next-button-spacer"></div>
+   <div class="next-button-container">
+      <app-bottom-button text="Next" (click)="acceptClientDetails($event)" 
+      [showLoader]='IsNextInProgress'></app-bottom-button>
+      <div class="back-button-spacer"></div>
+      <app-bottom-button text="Back" (click)="goBack($event)" [alternateTheme]="true"></app-bottom-button>
+   </div>
+</div>
+<app-colored-overlay alternate='true' [closeText]='false' [template]="wrongInformation" [cancelable]="false" [isVisible]="showWrongInfo"></app-colored-overlay>
+<ng-template #wrongInformation>
+   <app-wrong-information [offerId]="offerId" (hideOverlay)="cancel()"> </app-wrong-information>
+</ng-template>
+<div class="spinner-container" *ngIf="informationVm.screen.length <= 0">
+   <div class="spinner">
+      <app-spinner class="spinner" [color]="'green'"></app-spinner>
+   </div>
+</div>

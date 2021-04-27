@@ -1,0 +1,22 @@
+@import './../../../styles/_base.scss';
+@import './../../../styles/_mixins.scss';
+$svg-path: './../../../assets/svg/';
+
+.empty-state{
+   .icon-block{
+      .icon{
+         width: 80px;
+         @include svg-image-full-path($svg-path,'Transferdashboard');
+      }
+   }
+}
+
+@media (min-width: $media-sm) {
+   .empty-state{
+      .icon-block{
+         .icon{
+            @include svg-image-full-path($svg-path,'Transferdashboard');
+         }
+      }
+   }
+}

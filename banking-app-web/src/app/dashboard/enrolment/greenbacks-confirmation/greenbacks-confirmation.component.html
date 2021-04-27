@@ -1,0 +1,36 @@
+<app-colored-overlay [isVisible]="true" [alternate]="true" [template]="confirmGreenbacks" [headerFixed]="true" class="app-greenbacks-confirmation">
+   <ng-template #confirmGreenbacks>
+      <div class="confirmation-container">
+         <header class="header clearfix">
+            <i class="pull-left success"></i>
+            <div class="message">
+               <span class="block-text">
+                  Thank you
+               </span>
+               <span class="block-text">
+                  We’ve enrolled you in the Nedbank Greenbacks rewards programme.
+               </span>
+            </div>
+         </header>
+         <section class="main-section">
+            <span class="block-text">
+               Now watch your Greenbacks points grow every time you swipe your linked cards or shop online.
+            </span>
+            <span class="block-text">
+               Your Greenbacks account number is:
+               <span class="block-text card-number">
+                  {{accountNumber}}.
+               </span>
+            </span>
+            <span class="block-text disclaimer">
+               Please allow 1 hour for your account to be activated.
+            </span>
+         </section>
+         <footer class="bottom">
+            <app-bottom-button [text]="'Get started'" (click)="getStartedWithNewAccount()" [showLoader]='showLoader'>
+               Get started
+            </app-bottom-button>
+         </footer>
+      </div>
+   </ng-template>
+</app-colored-overlay>

@@ -1,0 +1,89 @@
+﻿<h1 role="alert" class="visuallyhidden" attr.aria-label="{{ currentStep?.summary.title }}"></h1>
+<div class="work-flow">
+   <div class="journey-info-block row block">
+      <div class="journey-title col-lg-6 col-xs-6">
+         <label>Making a {{workFlowInfo.title}}</label>
+      </div>
+      <div class="journey-cacnel col-lg-5 col-xs-6">
+         <a class="gd-ghost-btn" [routerLink]="workFlowInfo.cancelRouteLink">{{workFlowInfo.cancelButtonText}}</a>
+      </div>
+   </div>
+   <div class="status" *ngIf="beforeSteps.length!=0">
+      <div class="block" *ngFor="let step of beforeSteps;">
+         <div class="steps-track">
+            <span class="step-small">
+               <span class="success"></span>
+            </span>
+         </div>
+         <div class="steps-block mob">
+            <span class="step-small">
+               <span class="success"></span>
+            </span>
+            <p class="step-title">
+               <span>{{ step?.summary.title }}</span>
+               <button id="{{ getID(step?.buttons.edit.text, step?.summary.sequenceId) }}" class="edit-link" [disabled]="isButtonLoader"
+                  (click)="onStepClick(step?.summary.sequenceId)">{{ step?.buttons.edit.text }}</button>
+            </p>
+
+         </div>
+      </div>
+   </div>
+   <div class="current-steps">
+      <div class="block">
+         <div class="steps-track" [ngClass]="{'more': beforeSteps.length!=0, 'less': currentStep.summary.sequenceId === steps.length}">
+            <span class="step-large">{{ currentStep?.summary.sequenceId }} of {{steps.length}}</span>
+         </div>
+         <div class="steps-block">
+            <div class="mob">
+               <span class="step-large">{{ currentStep?.summary.sequenceId }} of {{steps.length}}</span>
+               <h4 class="section-title step-title">{{ currentStep?.summary.title }}</h4>
+            </div>
+            <ng-template appStepHost></ng-template>
+            <div class="next-button-container" *ngIf="showNextButton">
+                  <app-bottom-button *ngIf='!(showTwoButtons||showCustomizableTwoButtons)' id="wrkflow-next" [class.btn-disabled]="!isValid" (clickEmitter)="validateNextClick()" [showLoader]='isButtonLoader'
+                  [text]="currentStep.buttons.next.text"></app-bottom-button>
+                  <div class="half-btns" *ngIf='showTwoButtons'>
+                     <div class="left">
+                        <app-bottom-button [alternateTheme]='false' id="wrkflow-next" [class.btn-disabled]="!isValid" (clickEmitter)="validateNextClick()" [showLoader]='isButtonLoader'
+                           [text]="'Accept'"></app-bottom-button>
+                     </div>
+                     <div class="right">
+                        <app-bottom-button [alternateTheme]='true' (clickEmitter)="onDeclineClick()" [text]="'Decline'"></app-bottom-button>
+                     </div>
+                  </div>
+                  <div class="half-btns" *ngIf='showCustomizableTwoButtons'>
+                     <div class="left">
+                        <app-bottom-button [alternateTheme]='true' (clickEmitter)="onDeclineClick()" [text]="'Reset'"></app-bottom-button>
+                     </div>
+                     <div class="right">
+                        <app-bottom-button [alternateTheme]='false' id="wrkflow-next" [class.btn-disabled]="!isValid" (clickEmitter)="validateNextClick()" [showLoader]='isButtonLoader'
+                           [text]="'Buy currency'"></app-bottom-button>
+                     </div>
+                  </div>
+            </div>
+         </div>
+
+      </div>
+   </div>
+   <div class="upcoming-steps" *ngIf="afterSteps.length!=0">
+      <div class="block">
+         <div class="steps-track"></div>
+         <div class="steps-block">
+            <h6 class="para-title">Next steps</h6>
+         </div>
+      </div>
+      <div class="block gd-row" *ngFor="let step of afterSteps;">
+         <div class="steps-track" [class.less]="afterSteps.length === 1">
+            <span class="step-small">{{ step?.summary.sequenceId }}</span>
+         </div>
+         <div class="steps-block">
+            <div class="upcomming-step-block" *ngIf="steps.length !== currentStep?.summary.sequenceId">
+               <div class="mob">
+                  <span class="step-small">{{ step?.summary.sequenceId }}</span>
+                  <p class="step-title">{{ step?.summary.title }}</p>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

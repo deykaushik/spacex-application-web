@@ -1,0 +1,220 @@
+@import './../../../../styles/_mixins.scss';
+@import './../../../../styles/_base.scss';
+$svg-path: './../../../../assets/svg';
+$icon-tick: 'tickCheckbox';
+$icon-trash: 'Trash';
+.square {
+   margin: 11px 20px 10px 12px;
+   width: 30px;
+   height: 30px;
+   border: 2px solid $form-element-border;
+   border-radius: 5px;
+}
+.gd-basic-dropdown.open .dropdown-place {
+  border-color: $color-greenDark !important;
+}
+.gd-basic-dropdown .dropdown-place  {
+  border-color: $color-greyLight;
+  .query-input {
+    &.valid {
+      border-color: $form-element-border-valid;
+    }
+  }
+}
+.gd-basic-dropdown {
+  &.selected {
+    .dropdown-place {
+      &.selected {
+        border-color: $form-element-border-valid;
+      }
+    }
+  }
+}
+.gd-basic-dropdown.open .dropdown-menu {
+ border-color:  $color-greenDark;
+}
+
+input:focus{
+  border-color: $form-element-border !important;
+}
+.select-countries {
+   @include flexbox();
+   @include flex-direction(column);
+   @include align-items(center);
+   
+   .gd-form {
+      width: 90%;
+      margin-top: 60px;
+      .section-title {
+         font-family: $font-markpro-medium;
+         font-weight: $weight-medium;
+         color: $text-color-secondary;
+         font-size: $section-title-size-mob;
+      }
+      .section-body {
+         margin-top: 30px;
+         &.border {
+            .gd-form-row {
+              ::ng-deep {
+                .gd-basic-dropdown {
+                  .dropdown-place {
+                    input:valid {
+                      border-color: $form-element-border;
+                    }
+                  }
+                }
+              }
+            }
+            .gd-form-row {
+              ::ng-deep {
+                .gd-basic-dropdown {
+                  &.selected {
+                    .dropdown-place {
+                      &.selected {
+                        input:valid {
+                          border-color: $form-element-border-valid !important;
+                        }
+                     }
+                    }
+                 }
+                }
+              }
+            }
+          }
+         .gd-sm-label {
+            font-family: $font-markpro;
+            font-size: $label-size;
+            color: $text-color-primary;
+         }
+         .remove-all {
+            text-align: center;
+            background-color: $highlight-dark-bg;
+            padding: 5px;
+            .remove-all-text {
+               font-family: $font-markpro;
+               font-size: $font-default;
+               color: $text-color-primary;
+               cursor: pointer;
+            }
+         }
+         .gd-basic-dropdown {
+            .query-input{
+               margin-left: -15px;
+               border-left: none;
+               border-right: none;
+               &.valid {
+                border-color: $form-element-border-valid;
+               }
+            }
+            &.open{
+               .dropdown-menu{
+                  border-top: 2px solid $color-no-records-background;
+               }
+               .dropdown-place {
+                input:valid {
+                  border-top: none;
+                }
+              }
+            }
+            .dropdown-menu {
+               .scrollable {
+                  overflow: auto;
+                  &.scrollableLength{
+                     height: 368px;
+                  }
+                  li {
+                     padding: 0px;
+                  }
+               }
+               .country {
+                  @include flexbox();
+                  border-bottom: 2px solid $color-no-records-background;
+                  .white {
+                     @extend .square;
+                  }
+                  .green {
+                     @extend .square;
+                     background-color: $tertiary-color;
+                     .tick {
+                        @include svg-image-full-path($svg-path, $icon-tick, 17px, 13px);
+                        bottom: 8px;
+                        left: 4px;
+                     }
+                  }
+                  .country-name {
+                     font-family: $font-markpro;
+                     font-size: $font-default;
+                     font-size: $font-default;
+                     color: $form-element-text-disabled;
+                     &.country-name-selected {
+                        color: $drp-options-selected;
+                     }
+                  }
+               }
+            }
+            .dropdown-button {
+               @include flexbox();
+               @include flex-direction(row);
+               text-align: center;
+               font-family: $font-markpro-medium;
+               font-weight: $weight-medium;
+               font-size: $font-md;
+               color: $secondary-color;
+               border-top: 2px solid $color-greenDark;
+               .cancel {
+                  width: 50%;
+                  padding: 15px;
+                  border-right: 2px solid $primary-color;
+                  cursor: pointer;
+               }
+               .done {
+                  width: 50%;
+                  padding: 15px;
+                  cursor: pointer;
+               }
+            }
+         }
+         .selected-list {
+            margin-top: 18px;
+            .section-title {
+               font-family: $font-markpro;
+               font-size: $font-md;
+               color: $text-color-secondary;
+            }
+            .country-list {
+               border-bottom: 1px solid $highlight-bg;
+               color: $secondary-color;
+               font-size: $font-md;
+               margin-top: 33px;
+               @include markpro-medium();
+               @include flexbox();
+               @include flex-direction(row);
+               .country-text{
+                  width: 88%;
+               }
+               .trash {
+                  @include svg-image-full-path($svg-path, $icon-trash, 32px, 32px);
+               }
+            }
+         }
+         .bottom-btn {
+            margin-top: 60px;
+         }
+      }
+   }
+}
+
+@media (min-width: $media-xs-up) {  
+   .select-countries {
+      .gd-form {
+         width: 400px;
+         margin-top: 60px;
+         .section-title {
+            font-size: $section-title-size;
+         }
+         .section-body {
+            margin-top: 60px;
+         }
+      }
+   }
+}

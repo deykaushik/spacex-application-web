@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 210 210" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>Group</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Transfer" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="1440TransferError02-UI-Not-confirmed-Copy" transform="translate(-137.000000, -226.000000)" stroke="#666666">
+            <g id="Group" transform="translate(137.000000, 226.000000)">
+                <g id="icons/No-transfer-Copy">
+                    <g id="Circle">
+                        <circle cx="105" cy="105" r="104.5"></circle>
+                    </g>
+                </g>
+                <g id="shopping-24px-outline-2_card-add" transform="translate(55.000000, 59.000000)" stroke-linecap="square">
+                    <path d="M0.179731279,21.2060179 L99.5254075,21.2060179" id="Shape"></path>
+                    <path d="M0.179731279,47.0772877 L99.5254075,47.0772877" id="Shape"></path>
+                    <path d="M85.9782699,72.9485576 L85.9782699,103.994081" id="Shape"></path>
+                    <path d="M72.4311322,88.4713195 L99.5254075,88.4713195" id="Shape"></path>
+                    <path d="M99.5254075,47.0772877 L99.5254075,10.8575099 C99.5254075,5.16583056 95.4612662,0.509001986 90.4939824,0.509001986 L67.9154196,0.509001986 L9.21115639,0.509001986 C4.24387258,0.509001986 0.179731279,5.16583056 0.179731279,10.8575099 L0.179731279,78.1228116 C0.179731279,83.8144909 4.24387258,88.4713195 9.21115639,88.4713195 L45.3368568,88.4713195" id="Shape"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

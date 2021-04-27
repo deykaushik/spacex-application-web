@@ -1,0 +1,400 @@
+@import '../../../../styles/_mixins.scss';
+@import '../../../../styles/_base.scss';
+
+$report-font-size:10px;
+$very-small-font-mob: 9px;
+$pop-text-color: $text-color-accent-primary;
+$font-for-print:14px;
+$font-for-print-sm:12px;
+$font-for-print-xxs :5px;
+$custom-fontsize-xxs : 7px;
+$custom-fontsize-xs:9px;
+$custom-media-xxs :364px;
+$custom-media-xxs-up:$custom-media-xxs + 1;
+$custom-media-xs:476px;
+.span-Boardnumbers-print-font{
+  font-size:$font-for-print;
+}
+.div-bottom-margin{
+  margin-bottom: 7px;
+}
+.col-padding{
+  padding-right: 15px;
+  line-height: 1;
+  margin-bottom:3px;
+}
+.textcolor{
+  color:$pop-text-color!important;
+  font-size: $font-for-print-sm;
+  font-family: MarkPro, Century Gothic, Helvetica, Arial, sans-serif; 
+  margin-bottom: 0px;
+}
+.pop-game{
+  .title-font{
+    font-family: MarkPro, Century Gothic, Helvetica, Arial, sans-serif;
+    font-weight: bolder;
+  }
+   .pop-title{
+      font-size: $font-default;
+      font-weight: bold;
+      margin-bottom: 12px;
+      color: $pop-text-color!important;
+      -webkit-print-color-adjust: exact;
+  
+   }
+  
+   .note{
+      font-size: $report-font-size;
+      color: $pop-text-color!important;
+      padding: 15px 10px;
+      -webkit-print-color-adjust: exact;
+   }
+   .horz-line{
+      height: 1px;      
+      margin-bottom: 1px;
+      border-bottom: 1px solid $primary-color!important; 
+   }
+   .sub-title{
+      font-weight: bold;
+      font-size: $font-sm;
+      color: $pop-text-color!important;
+      margin-bottom: 5px;
+      margin-top: 10px;
+      -webkit-print-color-adjust: exact;
+   }
+   .margin-top-botm-20{
+      margin-top: 15px;
+      margin-bottom: 15px;
+   }
+   .tabular-details{
+      margin-bottom: 10px;
+      position: relative;
+      height: 40px;
+      &.row{
+         margin-bottom: 10px;
+         .background-img{
+            width: 100%;
+            height: 45px;
+         }
+         .field-text{
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            right: 0px;
+            bottom: 0px;
+            .column{
+               letter-spacing: 0;
+               -webkit-print-color-adjust: exact;
+               label{
+                  font-size: $report-font-size;
+                  color: $pop-text-color!important;
+                  -webkit-print-color-adjust: exact;
+                  font-weight: normal;
+                  margin-bottom: 0px;
+               }
+               .field-value{
+                  font-size: $font-for-print-sm;
+                  color: $text-color-primary!important;
+                  -webkit-print-color-adjust: exact;
+                  font-weight: bold;
+                  margin-top: -3px;
+                  padding-bottom: 5px;
+               }
+            }
+      }
+
+      }
+   }
+   .pay-amount{
+      margin-bottom: 10px;
+      font-weight: bold;
+      .amt-col-1{
+         label{
+            font-size: $font-sm;
+            color: $pop-text-color!important;
+            font-weight: bold;
+            margin-bottom: 0px;
+            -webkit-print-color-adjust: exact;
+         }
+         .payamount-number{
+            font-size: $font-xsm;
+            color: $text-color-success !important;
+            font-weight: bold;
+            -webkit-print-color-adjust: exact;
+         }
+      }
+      .amt-col-2{
+         font-size: $report-font-size;
+         color: $pop-text-color!important;
+         -webkit-print-color-adjust: exact;
+      }
+   }
+   .tranx-date{
+      .txn-col-1{
+         padding: 0px;
+         -webkit-print-color-adjust: exact;
+         position: relative;
+         .background-img{
+            width: 100%;
+            height: 54px;
+         }
+         .field-text{
+            position: absolute;
+            top: 10%;
+            left: 6%;
+            label{
+               font-size: $report-font-size;
+               color: $text-color-primary !important;
+               margin-bottom: 0px;
+            }
+            .dot-value{
+               color: $pop-text-color!important;
+               font-weight: bold;
+               font-size: $very-small-font-mob;
+               letter-spacing: 0;
+            }
+      }
+      }
+      .txn-col-2{
+         padding: 0px;
+         .background-img{
+            width: 100%;
+            height: 54px;
+         }
+         .field-text{
+            position: absolute;
+            top: 10%;
+            left: 6%;
+            .color-for-print{
+              font-size: $report-font-size ;
+              color: $text-color-highlight ;
+              margin-bottom: 0px;
+            }
+            .reference-value{
+               color: $text-color-success !important;
+               font-weight: bold;
+               font-size:$font-for-print-sm;
+            }
+         }
+      }
+   }
+   .para-label{
+      color: $pop-text-color!important;
+      font-size: $report-font-size;
+      font-weight: bold;
+   }
+   .details-para{
+      font-size: $report-font-size;
+      &.para_1{
+         font-style: normal;
+         font-stretch: normal;
+         line-height: 1.63;
+         letter-spacing: 0.2px;
+         color: $text-color-primary!important;
+         margin: 10px 0px;
+      }
+      &.para_2{
+         font-style: normal;
+         font-stretch: normal;
+         line-height: normal;
+         letter-spacing: 0.1px;
+         color: $report-para-color!important;
+         margin-bottom: 10px;
+         &.para-color{
+          color:$pop-text-color !important;
+        }
+      }
+      
+   }
+}
+
+@media (max-width:$custom-media-xxs ){
+  .span-Boardnumbers-print-font{
+    font-size:$font-for-print-xxs;
+  }
+  .col-padding{
+    padding-right: 0px;
+  }
+  .pop-game{
+    .tranx-date{
+      .txn-col-1{
+         .field-text{
+            .dot-value{
+             font-size: $font-xsm;
+            }
+         }
+      }
+      .txn-col-2{
+         .field-text{
+            .reference-value{
+             font-size: $custom-fontsize-xxs  !important;
+            }
+         }
+      }
+    }
+  }
+}
+@media (min-width:$custom-media-xxs-up ){
+  .span-Boardnumbers-print-font{
+    font-size:$custom-fontsize-xxs ;
+  }
+  .col-padding{
+    padding-right: 0px;
+  }
+  .pop-game{
+      .tranx-date{
+        .txn-col-1{
+           .field-text{
+              .dot-value{
+               font-size: $font-xsm;
+              }
+           }
+        }
+        .txn-col-2{
+           .field-text{
+              .reference-value{
+               font-size: $custom-fontsize-xs !important;
+              }
+           }
+        }
+      }
+      .tabular-details{
+         &.row{
+           .field-text{
+              .column{
+                 .field-value{
+                    font-size:  $font-xsm !important;
+                 }
+              }
+           }
+        }
+      }
+  }
+}
+@media (min-width:$custom-media-xs ){
+  .span-Boardnumbers-print-font{
+    font-size:$custom-fontsize-xs;
+  }
+  .col-padding{
+    padding-right: 0px !important;
+  }
+  .pop-game{
+      .tranx-date{
+        .txn-col-1{
+           .field-text{
+              .dot-value{
+               font-size: $font-xsm;
+              }
+           }
+        }
+        .txn-col-2{
+           .field-text{
+              .reference-value{
+               font-size: $font-xsm !important;
+              }
+           }
+        }
+      }
+      .tabular-details{
+         &.row{
+           .field-text{
+              .column{
+                 .field-value{
+                    font-size:  $font-xsm !important;
+                 }
+              }
+           }
+        }
+      }
+  }
+}
+@media (min-width: $media-sm){
+  .span-Boardnumbers-print-font{
+    font-size:$font-for-print-sm;
+  }
+  .col-padding{
+    padding-right: 15px;
+  }
+   .pop-game{
+       .tranx-date{
+         .txn-col-1{
+            .field-text{
+               .dot-value{
+                font-size: $font-xsm;
+               }
+            }
+         }
+         .txn-col-2{
+            .field-text{
+               .reference-value{
+                font-size: $font-xsm;
+               }
+            }
+         }
+       }
+       .tabular-details{
+          &.row{
+            .field-text{
+               .column{
+                  .field-value{
+                     font-size: $font-xsm!important;
+                  }
+               }
+            }
+         }
+       }
+   }
+}
+ @media print {
+  .span-Boardnumbers-print-font{
+    font-size:$font-for-print-sm;
+  }
+  .div-bottom-margin{
+    margin-bottom: 7px;
+  }
+  .col-padding{
+    padding-right: 15px;
+    line-height: 1;
+    margin-bottom:3px;
+  }
+  .textcolor{
+    color:$pop-text-color!important;
+    font-size: $font-for-print-sm !important;
+    font-family: MarkPro, Century Gothic, Helvetica, Arial, sans-serif !important; 
+  }
+  .pop-game{
+  
+      .title-font{
+        font-family: MarkPro-Bold, Century Gothic, Helvetica, Arial, sans-serif !important;
+        font-weight:100px !important;
+
+      }
+    .pop-title{
+      margin-bottom: 12px;
+    }
+      .tranx-date{
+        .txn-col-2{
+          .field-text{
+            .color-for-print{
+              font-size: $report-font-size !important;
+              color: $text-color-highlight !important;
+              margin-bottom: 0px;
+            }
+      .reference-value{
+        color: $text-color-success !important;
+        font-size:$font-for-print !important;
+     }
+    }
+    }
+    .txn-col-1{
+      .field-text{
+         .dot-value{
+          font-size:$font-for-print !important;
+         }
+      }
+   }
+    }
+
+  }
+ 
+}

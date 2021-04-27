@@ -1,0 +1,105 @@
+<div class="account-form">
+   <div class="header">
+      {{openAccountMessages.yourAccount  + productName}}
+   </div>
+   <div class="alert-msg">
+      <span class="note">{{openAccountMessages.noteHeader}}</span>
+      <div class="text-msg">
+         <span class="text-header">{{openAccountMessages.previousInvestmentAccount}}</span>
+         <span class="text-header">{{openAccountMessages.linkAccount}}</span>
+      </div>
+   </div>
+   <div *ngIf="!isMoreInvestorNumber && !noInvestorNumber">
+      <span class="investor-number-heading">{{openAccountMessages.investorNumbers}}</span>
+      <span class="investor-number">{{investorNumber}}</span>
+   </div>
+   <div class="form-group" *ngIf="isMoreInvestorNumber && !noInvestorNumber">
+      <span class="withdraw-label" for="investment_amount">{{labels.selectInvestorNumber}}</span>
+      <div class="gd-basic-dropdown investment-select-box" tabindex="0" dropdown>
+         <div dropdownToggle class="dropdown-place" id="game-select-method">
+            <div class="text">
+               {{investorNumber}}
+            </div>
+            <div class="icon">
+               <span class="caret"></span>
+            </div>
+         </div>
+         <ul class="dropdown-menu dropdown-height">
+            <li *ngFor="let invest of allInvestorNumbers" (click)="onInvestorChanged(invest.investorNumber)">
+               <span> {{invest.investorNumber}} </span>
+            </li>
+         </ul>
+      </div>
+   </div>
+   <div class="sub-header">
+      {{openAccountMessages.depositDetails}}
+   </div>
+   <form #form="ngForm">
+      <div class="form-group">
+         <label class="withdraw-label" for="investment_amount">{{labels.depositAmount}}</label>
+         <input autofocus class="investment-amount" id="deposit-amount" autocomplete="off" name="amount" [ngModel]="selectedAmount | amountTransform"
+            [amount]="true" #amount="ngModel" (ngModelChange)="onAmountChange($event)" type="text" [class.error]="false" [class.invalid-amount]="!isValidAmount || !isMaxAmount"
+            appValidateRequired appAmountFormatMask appCheckBlur />
+         <div *ngIf="!isMaxAmount">
+            <span class="error-msg">{{errorMessage}}</span>
+         </div>
+         <label *ngIf="isMaxAmount" class="amount-label" [class.error-msg]="!isValidAmount">{{labels.minimumAmount}} {{ entryAmount | amountTransform  : amountPipeConfig }}</label>
+      </div>
+      <div class="form-group">
+         <span class="withdraw-label" for="investment_amount">{{labels.payDepositAccount}}</span>
+         <div class="gd-basic-dropdown investment-select-box" tabindex="0" dropdown>
+            <div dropdownToggle class="dropdown-place" id="game-select-method">
+               <div class="text">
+                  {{account}}
+               </div>
+               <div class="icon">
+                  <span class="caret"></span>
+               </div>
+            </div>
+            <ul class="dropdown-menu dropdown-height">
+               <li *ngFor="let account of allAccounts" (click)="onAccountChanged(account)">
+                  <span> {{account.nickname}}-{{account.accountNumber}} </span>
+               </li>
+            </ul>
+         </div>         
+         <ng-container *ngIf="!isSufficientBalance" >
+            <span class="error-msg">{{labels.insufficientFund}}</span>
+         </ng-container>
+      </div>
+      <div class="form-group" *ngIf="!isNoticeDeposit">
+         <label class="withdraw-label">{{labels.monthDetails}}</label>
+         <div class="month-duration">
+            <div class="input-group">
+               <span class="input-group-btn">
+                  <button type="button" class="btn btn-success btn-number counter-btn" data-type="minus" (click)="decreaseMonth()"
+                     [disabled]="!isDecrement">
+                     <span class="glyphicon glyphicon-minus"></span>
+               </button>
+               </span>
+               <input type="text" id="quantity" name="quantity" class="form-control input-number" [(ngModel)]="selectedMonth" [min]="minMonth"
+                  [max]="maxMonth" [disabled]="!monthChange" (ngModelChange)="onMonthChange(selectedMonth)">
+               <span class="input-group-btn">
+                  <button type="button" class="btn btn-success btn-number counter-btn" data-type="plus" (click)="increaseMonth()"
+                     [disabled]="!isIncrement">
+                     <span class="glyphicon glyphicon-plus"></span>
+               </button>
+               </span>
+            </div>
+         </div>
+         <label class="withdraw-label" [class.error-msg]="!isValidMonth">{{labels.monthRange}} {{minMonth}} and
+            {{maxMonth}}</label>
+      </div>
+      <div class="account-btn">
+         <button class="gd-primary-btn next" [disabled]="!isValidData" [class.btn-disabled]="!isValidData" (click)="onSubmit()">{{labels.next}}</button>
+         <button class="gd-primary-btn back" (click)="back()">{{labels.back}}</button>
+      </div>
+   </form>
+   <section class="loader-mask" *ngIf="showLoader">
+      <div id="loaders-spinner" class="loader-spinner">
+         <app-spinner [color]="'green'"></app-spinner>
+      </div>
+   </section>
+</div>
+<div *ngIf="isRightOptions">
+   <app-right-options [showProducts]="showProducts"> </app-right-options>
+</div>

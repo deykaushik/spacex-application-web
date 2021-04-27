@@ -1,0 +1,248 @@
+﻿@import './../../../../styles/_mixins.scss';
+@import './../../../../styles/_base.scss';
+
+
+$svg-path: './../../../../assets/svg';
+$icon-light-bulb: 'lightbulb';
+$icon-light-bulb-green: 'lightbulbgreen';
+$icon-light-bulb-gray: 'lightbulbgray';
+$icon-light-bulb-yellow: 'lightbulbyellow';
+$icon-mobile-gray: 'mobile';
+$icon-mobile-green: 'mobile-green';
+
+.payment-options{
+    .payment-option-box{
+        margin: 10px 0 0 40px;
+        &:first-child{
+            margin-left: 0;
+        }
+    }
+}
+
+.buy-to-section {
+   margin-top: 30px;
+
+   .receipient-search-icon {
+      @include svg-image-full-path($svg-path, $icon-search-recipient, 30px, 30px);
+      position: relative;
+      display: block;
+   }
+
+   .light-bulb-icon-green {
+      @include svg-image-full-path($svg-path, $icon-light-bulb-gray, 35px, 35px);
+
+      &.selected {
+         @include svg-image-full-path($svg-path, $icon-light-bulb-green, 35px, 35px);
+      }
+
+      position: relative;
+      display: block;
+   }
+
+   .mobile-icon {
+      margin-left: 15px;
+      @include svg-image-full-path($svg-path, $icon-mobile-gray, 20px, 20px);
+
+      &.selected {
+         @include svg-image-full-path($svg-path, $icon-mobile-green, 20px, 20px);
+      }
+
+      position: relative;
+      display: block;
+   }
+
+   .fbe-info {
+      @include flexbox();
+      @include align-items(center);
+
+      .fbe-info-icon {
+         @include svg-image-full-path($svg-path, $icon-light-bulb-yellow);
+         position: relative;
+         display: block;
+         width: 35px;
+         height: 35px;
+         margin-right: 25px;
+      }
+
+      .fbe-info-text {
+         color: $text-color-primary;
+      }
+   }
+}
+
+.overlay-template {
+   .para-title {
+      color: $color-overlay;
+   }
+
+   .content {
+      margin-bottom: 20px;
+   }
+}
+
+.vertical-overlay-content-wrapper {
+   .icon {
+      @include svg-image-full-path($svg-path, 'electricity-grey');
+      width: 120px;
+   }
+}
+
+.fbe-modal {
+   .fbe-icon {
+      padding-top: 120px;
+
+      .light-bulb-icon {
+         @include svg-image-full-path($svg-path, $icon-light-bulb);
+         position: relative;
+         display: inline-block;
+         width: 60px;
+         height: 60px;
+      }
+   }
+
+   .fbe-text {
+      padding-top: 120px;
+
+      h6 {
+         font-size: 19px;
+         font-weight: bold;
+         line-height: 1.16;
+         text-align: center;
+         color: $text-color-highlight;
+      }
+
+      p {
+         opacity: 0.7;
+         font-size: 13px;
+         line-height: 1.31;
+         text-align: center;
+         color: $text-color-highlight;
+         margin-bottom: 80px;
+      }
+
+      .fbe-btn-container {
+         button {
+            margin: 15px 0;
+         }
+      }
+   }
+}
+.benificiary-list {
+   .name {
+      color: $text-color-primary;
+      margin-bottom: 5px;
+   }
+
+   .details {
+      @include flexbox();
+      @include align-items(center);
+      color: $text-color-info;
+
+      .icon-type {
+         margin-right: 10px;
+      }
+
+      .account-type {
+         @include flex(1);
+         white-space: normal;
+
+         .text {
+            &::after {
+               content: ' - ';
+            }
+         }
+         .account-type{
+             @include flex(1);
+             white-space: normal;
+             .text{
+                 &::after {
+                     content: ' - ';
+                 }
+             }
+         }
+     }
+     .icon-type{
+        @include svg-image-full-path($svg-path, 'electricity');
+        width: 22px;
+     }
+   }
+}
+@media (min-width: $media-sm) {
+   .fbe-modal {
+      .fbe-icon {
+         padding-top: 150px;
+
+         .light-bulb-icon {
+            @include svg-image-full-path($svg-path, $icon-light-bulb, 150px, 150px);
+            position: relative;
+            display: block;
+         }
+      }
+      .fbe-text {
+         padding-top: 150px;
+
+         h6 {
+            font-size: $font-xlg;
+            text-align: left;
+         }
+
+         p {
+            opacity: 0.7;
+            font-size: $font-sm;
+            text-align: left;
+            margin-bottom: 25px;
+            margin-top: 25px;
+         }
+         .fbe-btn-container {
+            button {
+               margin: 15px 0;
+            }
+         }
+      }
+   }
+
+   .overlay-template {
+      @include flex(1);
+      max-width: 700px;
+
+      .para-title {
+         font-size: $section-title-size;
+      }
+
+      .content {
+         margin-bottom: 20px;
+      }
+   }
+
+   .overlay-content-wrapper {
+      .icon {
+         @include svg-image-full-path($svg-path, 'electricity');
+         position: relative;
+         display: block;
+         width: 150px;
+         height: 150px;
+      }
+   }
+}
+
+@media (min-width: $media-md) {
+   .fbe-modal {
+      .fbe-icon {
+         .light-bulb-icon {
+            @include svg-image-full-path($svg-path, $icon-light-bulb, 200px, 200px);
+            position: relative;
+            display: block;
+         }
+      }
+   }
+
+   .overlay-content-wrapper {
+      .icon {
+         @include svg-image-full-path($svg-path, 'electricity');
+         position: relative;
+         display: block;
+         width: 200px;
+         height: 200px;
+      }
+   }
+}

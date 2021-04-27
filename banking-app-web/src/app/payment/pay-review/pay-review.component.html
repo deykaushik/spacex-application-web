@@ -1,0 +1,149 @@
+﻿<div class="pay-review">
+    <table class="tabular-data-col-2">
+        <tbody>
+            <tr *ngIf="isForeignBankPayment">
+                <td>Recipient will get: </td>
+                <td>{{payAmountVm?.beneficiaryAmount | amountTransform: {isLabel: true, showSign: true, prefixValue: payToVm.crossBorderPayment.beneficiaryDetails.beneficiaryCurrency + ' '} }}</td>
+            </tr>
+            <tr *ngIf="isForeignBankPayment">
+                <td>Principal amount: </td>
+                <td>{{payAmountVm.totalPaymentAmount - payAmountVm?.remittanceCharge | amountTransform : {isLabel: true, showSign: true, prefixValue: defaultCurrency + ' '} }}</td>
+            </tr>
+            <tr *ngIf="isForeignBankPayment">
+                <td>Transaction fees: </td>
+                <td>{{payAmountVm?.remittanceCharge | amountTransform : {isLabel: true, showSign: true} }}</td>
+            </tr>
+            <tr *ngIf="isForeignBankPayment">
+                <td>Total amount to be debited: </td>
+                <td>{{payAmountVm?.totalPaymentAmount | amountTransform : {isLabel: true, showSign: true} }}</td>
+            </tr>
+            <tr>
+                <td>Recipient: </td>
+                <td *ngIf="!isForeignBankPayment">{{payToVm.recipientName}}</td>
+                <td *ngIf="isForeignBankPayment">{{ payToVm.crossBorderPayment?.beneficiaryDetails.beneficiaryAccountName}}</td>
+            </tr>            
+            <tr *ngIf="isAccountPayment && payToVm.bankName && !payToVm.isCrossBorderAllowed">
+                <td>Bank:</td>
+                <td><span *ngIf="payToVm.bankName">{{payToVm.bankName}} - </span>{{payToVm.accountNumber}}</td>
+            </tr>
+            <tr *ngIf="isForeignBankPayment && payToVm && payToVm.crossBorderPayment && payToVm.crossBorderPayment.bank && payToVm.crossBorderPayment.bank.bankName">
+                <td>Bank:</td>
+                <td><span>{{payToVm.crossBorderPayment.bank.bankName}} - </span>{{payToVm.crossBorderPayment.bank.accountNumber}}</td>
+            </tr>
+            <tr *ngIf="isMobilePayment">
+                <td>Cellphone:</td>
+                <td>{{payToVm.mobileNumber}}</td>
+            </tr>
+            <tr *ngIf="isCreditCardPayment">
+                <td>Credit card:</td>
+                <td>{{payToVm.creditCardNumber}}</td>
+            </tr>
+            <tr *ngIf="!isForeignBankPayment">
+                <td colspan="2">&nbsp;</td>
+            </tr>
+            <tr *ngIf="!isForeignBankPayment">
+                <td>Amount:</td>
+                <td>{{payAmountVm.transferAmount | amountTransform: amountPipeConfig}}</td>
+            </tr>
+            <tr *ngIf="payAmountVm?.recurrenceFrequency">
+                    <td>{{labels.transferRepeatPayment}}</td>
+                    <td class="vertical-bottom">{{payAmountVm.repeatStatusText}}</td>
+            </tr>
+            <tr>
+                <td colspan="2">&nbsp;</td>
+            </tr>
+            <tr>
+                <td> {{ isForeignBankPayment ? labels.fromAccount : 'Pay from' }}:</td>
+                <td>
+                    <span class='capitalize'>{{accountNickName}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>Your reference:</td>
+                <td>{{payForVm.yourReference}}</td>
+            </tr>
+            <tr *ngIf='payForVm?.notification?.value?.toLowerCase() !== "none"'>
+                <td>{{labels.notify}}</td>
+                <td>{{payForVm?.notification?.value + " - " + payForVm?.notificationInput}}</td>
+            </tr>
+            <tr *ngIf="!isMobilePayment">
+                <td>{{isForeignBankPayment ? "Recipient's reference:": "Their reference:" }} </td>
+                <td>{{payForVm.theirReference}}</td>
+            </tr>
+            <tr>
+               <td colspan="2">&nbsp;</td>
+            </tr>
+            <tr>
+               <td>Payment date:</td>
+               <td>{{!!payAmountVm.isInstantPay ? 'Instant payment' : payAmountVm.paymentDate | date : dateFormat}}</td>
+            </tr>
+            <tr *ngIf='isForeignBankPayment'>
+               <td colspan="2">&nbsp;</td>
+            </tr>
+            <tr *ngIf='isForeignBankPayment'>
+               <td colspan="2" class='detail-title'><h4 class='section-title step-title'>Review your personal details</h4></td>
+            </tr>
+            <tr *ngIf='isForeignBankPayment'>
+               <td colspan="2">&nbsp;</td>
+            </tr>
+            <tr *ngIf='isForeignBankPayment'>
+               <td>Cellphone number: </td>
+               <td class='cell-no'>{{profileDetails.CellNumber | mobileNumberMask}}</td>
+            </tr>
+            <tr *ngIf='isForeignBankPayment && profileDetails.EmailAddress'>
+               <td>Email: </td>
+               <td>{{profileDetails.EmailAddress | emailMask}}</td>
+            </tr>
+            <tr *ngIf='isForeignBankPayment'>
+               <td>Home address: </td>
+               <td>{{fullAddress}}</td>
+            </tr>
+            <tr *ngIf='isForeignBankPayment'>
+               <td>RSA ID/Passport number: </td>
+               <td>{{displayRsaPassportNo()}}</td>
+            </tr>
+            <tr  *ngIf='!isForeignBankPayment'>
+                <td colspan="2">&nbsp;</td>
+            </tr>
+            <tr *ngIf="!isForeignBankPayment && (isShowSaveRecipient || (payToVm?.beneficiaryData?.contactCardDetails?.cardDetails?.valid==false))">
+                <td class="align-vertical-middle">
+                    <span>Save recipient </span>
+                </td>
+                <td>
+                    <label class="switch inline-block minimum-left-spacing">
+                  <input type="checkbox" [(ngModel)]="vm.isSaveBeneficiary" [checked]="vm.isSaveBeneficiary" (click)="validate(!vm.isSaveBeneficiary)">
+                  <div class="slider round inline-block"></div>
+               </label>
+                </td>
+            </tr>
+            <tr *ngIf="isFutureDate && isShowSaveRecipient && vm.isSaveBeneficiary">
+                <td colspan="2" class="left-padding-0">
+                    <div class="info-text ">
+                        <span class="info-icon"></span>
+                        <span>
+                            We'll automatically save this recipient so you can make a repeat payment.
+                        </span>
+                    </div>
+                </td>
+            </tr>
+            <tr *ngIf="isFutureDate && isShowSaveRecipient && !vm.isSaveBeneficiary">
+                <td colspan="2" class="left-padding-0">
+                    <div class="info-text ">
+                        <span class="info-icon"></span>
+                        <span>
+                            You need to save this recipient in order to make a recurring payment.
+                        </span>
+                    </div>
+                </td>
+            </tr>
+            <tr *ngIf='isForeignBankPayment'>
+               <td colspan="2">&nbsp;</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="gd-error">
+    <span>
+      {{ paymentError }}
+   </span>
+</div>

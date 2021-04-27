@@ -1,0 +1,50 @@
+@import '../../../styles/_mixins.scss';
+@import '../../../styles/_base.scss';
+$svg-path: './../../../assets/svg/';
+$icon-pay: 'Paydashboard';
+.amount {
+    padding-bottom: 15px;
+}
+
+.date {
+    color: $text-color-primary;
+}
+
+.label-trns-detail {
+    padding-bottom: 5px;
+    font-size: $font-xsm;
+    color: $form-label;
+}
+
+.value-trns-detail {
+    padding-bottom: 15px;
+    color: $text-color-secondary;
+}
+
+.close-area {
+    float: right;
+    .icon-close {
+        @include svg-image-full-path($svg-path, 'close-light-gray');
+        vertical-align: text-bottom;
+        width: 20px;
+        height: 20px;
+        margin: 8px 0 0 -9px;
+        cursor: pointer;
+    }
+}
+
+.travel-card-desc {
+   display: inline-block;
+   width: 33.3%
+}
+
+@media (max-width: $media-sm) {
+    .close-area {
+        margin: 0 0 30px 20px;
+        .icon-close {
+            width: 15px;
+            height: 15px;
+            margin: 5px 0 0 -9px;
+        }
+    }
+}

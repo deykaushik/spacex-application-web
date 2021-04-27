@@ -1,0 +1,547 @@
+@import '../../../../styles/_mixins.scss';
+@import '../../../../styles/_base.scss';
+$svg-path: './../../../../assets/svg';
+$icon-lotto: 'lotto';
+$icon-lotto-buy:'Paydashboard';
+$icon-win-number:'view-winning-numbers_img';
+$icon-chevron: 'chevron-down';
+$icon-replay: 'replay_img';
+$icon-sort: 'icon_sort_img';
+$icon-error: 'grey';
+$list-padding-sm: 10px;
+$list-padding: 20px;
+$lotto-card-border-left: 4px;
+@mixin list-bottom-line {
+   content: '';
+   position: absolute;
+   bottom: 0;
+   height: 1px;
+   left: 0;
+   right: 0;
+   display: block;
+}
+
+.inline {
+   display: inline-block;
+}
+
+.loader {
+   z-index: 100;
+   vertical-align: middle;
+   line-height: 1;
+   width: 35px;
+   color: $loader-bg;
+}
+
+.pallet {
+   color: $text-color-info;
+}
+
+.align {
+   text-align: right;
+   padding-right: 10%;
+}
+
+.pointer {
+   cursor: pointer;
+   color: $text-color-info;
+   font-size: $label-size;
+}
+
+.amount-label {
+   padding-left: 0px;
+}
+
+.amount {
+   font-weight: bold;
+}
+
+.credits {
+   color: $color-credit;
+}
+
+.debits {
+   color: $color-debit;
+}
+
+.sort-icon {
+   position: absolute !important;
+   padding-left: 5px;
+   @include svg-image-full-path($svg-path, $icon-sort, 16px, 10px);
+}
+
+.error-icon {
+   @include svg-image-full-path($svg-path, $icon-error, 60px, 60px);
+}
+
+.error-icon::before {
+   margin: 0px auto;
+}
+
+.next-draw {
+   margin-bottom: 25px;
+   margin-left: 12px;
+   color: $text-color-secondary;
+}
+
+.lotto-view {
+   padding: $landing-padding 0;
+   background: $body-bg;
+   div[class*="col-"] {
+      padding: 0;
+   }
+}
+
+.lotto-card {
+   border-left: $lotto-card-border-left solid $border-lottery-card;
+   .title {
+      @include flexbox();
+      @include align-items(flex-end);
+      padding: 0 15px;
+      .icon {
+         width: 36px;
+         height: 36px;
+         margin-right: 10px;
+      }
+      .lotto-icon {
+         @include svg-image-full-path($svg-path, $icon-lotto, 22px, 22px);
+      }
+      .lotto-inline {
+         padding-top: 25px;
+         display: inline-flex;
+      }
+      .account-color {
+         color: $lotto-selected-bg;
+      }
+      .text {
+         @include flex(1);
+         display: inline-flex;
+         font-size: $section-title-size-sm;
+         color: $text-color-secondary;
+      }
+   }
+  
+.controls {
+   padding: 10px 0;
+   border-top: 1px solid $divider-secondary;
+   border-bottom: 1px solid $divider-secondary;
+   .lotto-buy-icon {
+         float: left;
+         @include svg-image-full-path($svg-path, $icon-lotto-buy, 20px, 18px);
+   }
+   .win-number-icon {
+         float: left;
+         @include svg-image-full-path($svg-path, $icon-win-number, 18px, 16px);
+   }
+   ul {
+         list-style: none;
+         margin: 0;
+         padding: 0;
+         @include flexbox();
+         @include align-items(center);
+         li {
+            padding-left: 10px;
+            @include flex(1);
+            width: 40%;
+            flex: 0 0 48%;
+            a {
+               display: block;
+               cursor: pointer;
+               .icon,
+               .text {
+                     display: inline-block;
+                     vertical-align: middle;
+               }
+               .text {
+                     display: block;
+                     margin-top: 5px;
+                     padding-left: 30px;
+                     font-size: $font-sm;
+               }
+               .icon {
+                     width: 15px;
+                     height: 15px;
+               }
+            }
+         }
+         li:last-child {
+            flex: 0 0 46%;
+            padding-left: 0px;
+            a {
+               .text {
+                     padding-left: 25px;
+               }
+            }
+         }
+      }
+   }
+}
+
+.lotto-grid {
+   background: $container-bg;
+   margin-top: 30px;
+   padding: 20px 0 0;
+   .para-title {
+      padding: 0 $list-padding-sm;
+      font-size: $para-title-size;
+      color: $text-color-secondary;
+      font-weight: bold;
+   }
+   .list-wrapper {
+      padding: $list-padding-sm;
+      font-size: $font-sm;
+      @extend .clearfix;
+      table {
+         width: 100%;
+         border: 0;
+         padding: $list-padding-sm;
+         border-collapse: separate;
+         border-spacing: 0 5px;
+         th {
+            &::after {
+               @include svg-image-full-path($svg-path, $icon-sort, 100%, 100%);
+            }
+         }
+         thead tr th {
+            .align {
+               text-align: center;
+            }
+            border-collapse:separate;
+            border-spacing:5px 5px;
+            border-bottom-width: 21px;
+         }
+         tbody:first-of-type tr:first-child td {
+            border-top: 1px solid $form-element-border;
+            border-collapse: separate;
+            border-spacing: 5px 5px;
+         }
+         tbody {
+            td:first-child {
+               width: 15%;
+            }
+            td:nth-child(2) {
+               width: 50%
+            }
+            td:nth-child(3) {
+               width: 23%
+            }
+            td:nth-child(4) {
+               width: 12%
+            }
+            td {
+               border-bottom: 1px solid $divider-secondary;
+               padding: $list-padding-sm;
+               padding: 10px 10px 10px 0;
+               .descrp {
+                  cursor: pointer;
+               }
+               &:nth-child(2) {
+                  &::after {
+                     @include list-bottom-line;
+                     left: $list-padding-sm;
+                     right: $list-padding-sm;
+                  }
+               }
+            }
+            tr {
+               td:first-child {
+                  width: 15%;
+               }
+               td:nth-child(2) {
+                  width: 45%
+               }
+               td:nth-child(3) {
+                  width: 25%
+               }
+               td:nth-child(4) {
+                  width: 15%
+               }
+            }
+         }
+      }
+   }
+   .date {
+      color: $text-color-primary;
+      font-size: $font-sm;
+   }
+   .descrp-block {
+      @include flexbox();
+      @include align-items(center);
+      .icon {
+         width: 22px;
+         height: 22px;
+      }
+      .descrp {
+         @include flex(1);
+         .title-block {
+            margin-top: 5px;
+            font-size: $font-sm;
+            @include flexbox();
+            @include align-items(center);
+            .title {
+               @include flex(1);
+               word-break: break-word;
+               color: $text-color-secondary;
+               margin-right: 15px;
+               .from-account {
+                  color: $text-color-info;
+               }
+            }
+         }
+         .label-type {
+            display: none;
+         }
+      }
+   }
+}
+
+.ticket-btn {
+   margin: 0 auto;
+   border-bottom: 2px solid;
+   display: inline-flex;
+   text-align: center;
+   background-color: Transparent;
+   background-repeat: no-repeat;
+   border: none;
+   color: $text-color-info;
+}
+
+.chevron-icon {
+   @include svg-image-full-path($svg-path, $icon-chevron, 20px, 20px);
+   margin-left: 5px;
+}
+
+.replay-icon {
+   width: 45px;
+   height: 35px;
+   @include svg-image-full-path($svg-path, $icon-replay, 45px, 35px);
+}
+
+td.amount.debits {
+   padding-right: 0px !important;
+   padding-left: 0px !important;
+}
+
+@media (min-width: $media-xxs) {
+   .amount-label {
+      padding-left: 10px;
+   }
+   table {
+      tbody {
+         tr {
+            td:first-child {
+               width: 15%;
+            }
+            td:nth-child(2) {
+               width: 50%
+            }
+            td:nth-child(3) {
+               width: 23%
+            }
+            td:nth-child(4) {
+               width: 12%
+            }
+         }
+      }
+   }
+   th.pointer.align {
+      padding-right: 4% !important;
+   }
+   td.amount.debits {
+      padding-left: 2% !important;
+      padding-right: 2% !important;
+      text-align: right;
+   }
+}
+
+@media (max-width: $media-xs) {
+    .lotto-card {
+        .controls {
+            ul {
+                li {
+                    a {
+                        text-align: center;
+                        margin: 0 auto;
+                        span {
+                            &.lotto-buy-icon {
+                                float: none;
+                                @include svg-image-full-path($svg-path, $icon-lotto-buy, 20px, 18px);
+                            }
+                            &.win-number-icon {
+                                float: none;
+                                @include svg-image-full-path($svg-path, $icon-win-number, 18px, 16px);
+                            }
+                            &.text {
+                                vertical-align: none;
+                                margin-top: 0;
+                                padding-right: 25px;
+                            }
+                            &.icon {
+                                vertical-align: unset;
+                            }
+                        }
+                    }
+                }
+            }
+         }
+      }   
+   .web-view {
+      display: none;
+   }
+}
+
+@media (min-width: $media-xs) {
+   .amount-label {
+      padding-left: 10px;
+   }
+   table {
+      tbody {
+         tr {
+            td:first-child {
+               width: 15%;
+            }
+            td:nth-child(2) {
+               width: 50%
+            }
+            td:nth-child(3) {
+               width: 23%
+            }
+            td:nth-child(4) {
+               width: 12%
+            }
+         }
+      }
+   }
+   th.pointer.align {
+      padding-right: 5%;
+   }
+   td.amount.debits {
+      padding-left: 2% !important;
+      padding-right: 3% !important;
+      text-align: right;
+   }
+   .mobile-view {
+      display: none;
+   }
+}
+
+@media (max-width: $media-sm) {
+   .lotto-grid {
+      .list-wrapper {
+         padding: 0;
+         table {
+            padding: 0;
+            th {
+               display: none;
+            }
+            tbody {
+               td {
+                  padding: 0;
+                  &:first-child {
+                     border: none;
+                  }
+                  &:nth-child(odd),
+                  &:nth-child(4) {
+                     display: none;
+                  }
+                  .descrp {
+                     padding: 15px;
+                  }
+               }
+            }
+         }
+      }
+   }
+   .pointer {
+      padding-left: 47%;
+      border-top: 1px solid $divider-secondary;
+      padding-top: 10px;
+   }
+   .title-block {
+      margin: 5px 0 10px;
+   }
+   .from-account {
+      display: none;
+   }
+}
+
+@media (min-width: $media-sm) {
+   .lotto-grid {
+      margin-top: 0;
+      .para-title {
+         padding: 0 $list-padding;
+         font-weight: bold;
+      }
+      .descrp-block {
+         .amount,
+         .debits,
+         .date,
+         .replay-icon,
+         .icon {
+            display: none;
+         }
+      }
+      .list-title {
+         display: none;
+         padding: $list-padding;
+      }
+      td.amount.debits {
+         padding-left: 2% !important;
+         padding-right: 8% !important;
+         text-align: right;
+      }
+      th.pointer.align {
+         padding-right: 10% !important;
+      }
+   }
+   .empty-state {
+      .descrp-block {
+         font-size: $font-md;
+      }
+   }
+   .amount-label {
+      padding-left: 10px;
+   }
+}
+
+@media (min-width: $media-md) {
+   .lotto-card {
+      .controls {
+         ul {
+            li {
+               min-height: 45px;
+               height: auto;
+               a {
+                  display: inline-block;
+                  cursor: pointer;
+                  .icon {
+                     max-height: 43px;
+                     padding: 5% 0;
+                  }
+               }
+            }
+         }
+      }
+   }
+   .lotto-view {
+      padding: 30px 60px;
+      background: $body-bg;
+      div[class*="col-"] {
+         padding: 0 15px;
+      }
+   }
+   .amount-label {
+      padding-left: 10px;
+   }
+   td.amount.debits {
+      padding-left: 3% !important;
+      padding-right: 8% !important;
+   }
+   th.pointer.align {
+      padding-right: 10% !important;
+   }
+}
+
+.bg-white {
+   background-color: $container-bg;
+}

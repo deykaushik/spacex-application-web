@@ -1,0 +1,6 @@
+﻿<div tabindex="0" class="dp-picker-day-time-directive icon-field" id="daytimeDirective" #daytimeDirective style="position: relative">
+   <dp-date-picker (click)="datePickerOverlayClick($event)" id="datePicker" name="datePicker" #datePicker #datePickerModel="ngModel" [(ngModel)]="date" (onChange)="log($event)"
+                   [mode]="'day'" [displayDate]="date" [disabled]="disabled" [config]="config" (close)="closed()" [minDate]="minDate" [maxDate]="maxDate" [theme]="'dp-material'">
+   </dp-date-picker>
+   <span class="icon calendar" [class.disabled]="disabled" (click)="!disabled ? openCalendar($event) :''" ></span>
+</div>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 32 29" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48 (47235) - http://www.bohemiancoding.com/sketch -->
+    <title>ID</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="1440-Update-preferred-name-3" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-373.000000, -489.000000)" stroke-linecap="square">
+        <g id="ID" transform="translate(373.000000, 489.000000)" stroke="#808080" stroke-width="0.888888889">
+            <polygon id="Shape" points="0.695652207 0.687747068 16.0000008 4.81422948 31.3043493 0.687747068 31.3043493 24.0711474 16.0000008 28.1976298 0.695652207 24.0711474"></polygon>
+            <path d="M6.26086986,19.8071156 L11.8260875,21.3201591" id="Shape"></path>
+            <path d="M11.8260875,9.35336012 L6.26086986,7.84031657" id="Shape"></path>
+            <path d="M11.8260875,15.1304355 L6.26086986,13.7549414" id="Shape"></path>
+            <path d="M25.7391316,19.8071156 L20.173914,21.3201591" id="Shape"></path>
+            <path d="M20.173914,9.35336012 L25.7391316,7.84031657" id="Shape"></path>
+            <path d="M20.173914,15.1304355 L25.7391316,13.7549414" id="Shape"></path>
+        </g>
+    </g>
+</svg>

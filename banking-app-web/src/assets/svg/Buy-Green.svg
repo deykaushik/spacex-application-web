@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.3 (51167) - http://www.bohemiancoding.com/sketch -->
+    <title>24px/Buy/Green</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="24px/Buy/Green" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="square">
+        <g id="Group" transform="translate(4.000000, 4.000000)" stroke="#009639">
+            <polygon id="Shape" points="15.4285714 15.8169336 0 15.8169336 0 0 2.57142857 1.50637463 5.14285714 0 7.71428571 1.50637463 10.2857143 0 12.8571429 1.50637463 15.4285714 0"></polygon>
+            <path d="M3.55555556,6.22222222 L7.84126984,6.22222222" id="Shape"></path>
+            <path d="M11.5555556,6.22222222 L12.4126984,6.22222222" id="Shape"></path>
+            <path d="M3.55555556,8.88888889 L7.84126984,8.88888889" id="Shape"></path>
+            <path d="M11.5555556,8.88888889 L12.4126984,8.88888889" id="Shape"></path>
+            <path d="M3.55555556,11.5555556 L7.84126984,11.5555556" id="Shape"></path>
+            <path d="M11.5555556,11.5555556 L12.4126984,11.5555556" id="Shape"></path>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,79 @@
+﻿@import './../../styles/_mixins.scss';
+@import './../../styles/_base.scss';
+
+$svg-path: './../../assets/svg/';
+
+.branch-locator {
+   .control-container {
+      height: 100px;
+
+      .title {
+         padding-top: 15px;
+         font-size: $md-heading-size;
+         text-align: center;
+      }
+   }
+
+   .gd-error {
+      margin-top: 20px;
+   }
+
+   div.location input {
+      padding-right: 80px;
+   }
+   agm-map {
+      display: block;
+      height: 150px;
+      float: left;
+      width: 100%;
+      margin-top: 10px;
+   }
+
+}
+
+// This applies from 320px onwards
+@media (min-width: $media-xxs) {
+
+   .branch-locator {
+      .control-container {
+         height: 161px;
+
+         .title {
+            padding-top: 15px;
+            font-size: $md-heading-size;
+            text-align: center;
+         }
+
+         .icon-search {
+            @include svg-image-full-path($svg-path,'search-branch');
+            vertical-align: text-bottom;
+            width: 29px;
+            height: 18px;
+            border-right: 1px solid $divider-primary;
+            padding-right: 10px;
+            position: absolute;
+            top: 38px;
+            right: 54px;
+         }
+
+         .icon-close {
+            @include svg-image-full-path($svg-path,'close-light-gray');
+            vertical-align: text-bottom;
+            width: 18px;
+            height: 18px;
+            position: absolute;
+            right: 28px;
+            top: 38px;
+            cursor: pointer;
+         }
+         div.location input {
+            padding-right: 80px;
+         }
+      }
+
+      agm-map {
+         height: 670px;
+      }
+
+   }
+}

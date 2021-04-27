@@ -1,0 +1,379 @@
+@import './../../../styles/_base.scss';
+@import './../../../styles/_mixins.scss';
+$svg-path: './../../../assets/svg';
+$icon-tick: 'Success_check';
+$send_icon: 'send_icon';
+$we-contact-you: 'we-contact-you';
+$documents-icon: 'documents-icon';
+$email: 'stepper-email';
+$edit-input-box: 'edit-input-box';
+$phone-inactive: 'phone-inactive';
+$contact-green: 'contact_green';
+@mixin dark-font {
+   font-family: $font-markpro-medium;
+   letter-spacing: normal;
+   color: $text-color-secondary;
+   line-height: normal;
+   font-weight: $weight-bold;
+}
+
+.done-body {
+   padding: 60px 90px;
+   padding-right: 108.7px;
+   .done-contact-margin {
+      margin-top: 15px;
+   }
+   .done-button-margin {
+      padding-bottom: 90px;
+   }
+}
+
+.green-text {
+   color: $secondary-color;
+}
+
+.final-done-title {
+   .title-label {
+      @include dark-font;
+      font-size: $main-title-size;
+      line-height: 1.33;
+   }
+}
+
+.final-done-subtitle {
+   padding: 30px 0;
+   .subtitle-label {
+      font-size: $font-md;
+   }
+}
+
+.final-done-stepper {
+   padding: 30px 0;
+   .grey-border-box {
+      position: relative;
+      background: $color-white;
+      border: 1px solid rgba(155, 155, 155, 0.3);
+      padding: 0 20px;
+      height: 171px;
+      .stepper-main-content {
+         @include flexbox();
+         .stepper-content {
+            padding: 0;
+            .stepper-sub-title {
+               .sub-title-label {
+                  font-size: $font-md;
+                  color: $text-color-secondary;
+                  font-family: $font-markpro-bold;
+                  margin-bottom: 10px;
+               }
+            }
+            .stepper-sub-content {
+               .sub-content-label {
+                  font-size: $font-default;
+                  line-height: 1.38;
+                  letter-spacing: 0.2px;
+               }
+            }
+         }
+      }
+      .content-online-app {
+         margin-top: 47px;
+         .icon {
+            @include svg-image-full-path($svg-path, $icon-tick, 70px, 70px);
+            float: left;
+            margin-right: 20px;
+            margin-top: 10px;
+            flex-shrink: 0;
+         }
+      }
+      .content-submit-doc {
+         padding-top: 47px;
+         padding-left: 25px;
+         .icon {
+            @include svg-image-full-path($svg-path, $send_icon, 69.3px, 53.4px);
+            float: left;
+            margin-right: 20px;
+            margin-top: 6px;
+            flex-shrink: 0;
+         }
+      }
+      .content-contact-you {
+         margin-top: 36px;
+         padding-left: 19px;
+         .icon,
+         .icon-green {
+            width: 60.8px;
+            height: 62.2px;
+            float: left;
+            margin-right: 20px;
+            margin-top: 10px;
+            flex-shrink: 0;
+         }
+         .icon {
+            @include svg-image-full-path($svg-path, $we-contact-you);
+         }
+         .icon-green {
+            @include svg-image-full-path($svg-path, $contact-green);
+         }
+      }
+      &:nth-child(2) {
+         border: none;
+         background: $color-tile-done-block;
+      }
+   }
+   .arrow_box:after,
+   .arrow_box:before {
+      left: 100%;
+      top: 50%;
+      border: solid $arrow-border-gray-color-light;
+      content: " ";
+      height: 0;
+      width: 0;
+      position: absolute;
+      z-index: 1;
+   }
+   .arrow_box:after {
+      border-color: $arrow-border-white-color;
+      border-left-color: $container-bg;
+      border-width: 12px;
+      margin-top: -12px;
+   }
+   .arrow_box:before {
+      border-color: $arrow-border-gray-color;
+      border-left-color: $arrow-border-gray-color-light;
+      border-width: 13px;
+      margin-top: -13px;
+   }
+   .arrow_box:nth-child(2):after {
+      border-color: $arrow-border-white-color;
+      border-left-color: $arrow-border-pure-white;
+   }
+   .arrow_box:nth-child(2):before {
+      border-color: $arrow-border-gray-color;
+      border-left-color: $arrow-border-gray-color-light;
+   }
+   &::after {
+      content: '';
+      clear: both;
+      display: block;
+   }
+}
+
+.final-done-send-doc {
+   padding: 30px 0;
+   .section-title {
+      padding: 15px 0;
+      .section-contact {
+         @include dark-font;
+         font-size: $font-xlg;
+      }
+      .send-documents {
+         font-family: $font-markpro-medium;
+         font-size: $size-28;
+         color: $text-color-secondary;
+      }
+   }
+   .send-doc-content {
+      padding: 15px 0;
+      .wrapper {
+         min-width: 60px;
+      }
+   }
+   .send-doc-sec-1,
+   .send-doc-sec-2,
+   .send-doc-sec-3 {
+      @include flexbox();
+      .content {
+         max-width: 300px;
+         line-height: 1.5;
+      }
+   }
+   .send-doc-sec-1 {
+      .icon {
+         @include svg-image-full-path($svg-path, $documents-icon, 23.4px, 29px);
+         padding: 5px 0;
+      }
+      .dark-grey-text {
+         font-family: $font-markpro-bold;
+      }
+   }
+   .send-doc-sec-2 {
+      .icon {
+         @include svg-image-full-path($svg-path, $email, 38px, 28px);
+         padding: 5px 0;
+      }
+   }
+   .send-doc-sec-3 {
+      .icon {
+         @include svg-image-full-path($svg-path, $edit-input-box, 35px, 22px);
+         padding: 5px 0;
+      }
+   }
+}
+
+.final-done-contact-us {
+   .section-title {
+      padding: 15px 0;
+      .section-contact {
+         @include dark-font;
+         font-size: $font-xlg;
+      }
+   }
+   .contact-us-sec-1 {
+      @include flexbox();
+      .content {
+         max-width: 320px;
+         line-height: 1.5;
+      }
+      .icon {
+         @include svg-image-full-path($svg-path, $phone-inactive, 45px, 45px);
+         padding: 2px 0;
+         margin-right: 20px;
+         flex-shrink: 0;
+         margin-left: 1%;
+      }
+   }
+}
+
+.go-to-acc-btn {
+   padding-top: 60px;
+   padding-bottom: 30px;
+}
+
+.done-overlay ::ng-deep {
+   ::ng-deep {
+      .overlay.alternate {
+         max-width: 100%;
+      }
+   }
+   .logo-cntnr {
+      padding-left: 80px;
+   }
+   .overlay .btn-cntnr button {
+      border: 0;
+      background: url($svg-path + '/grey-close.svg') no-repeat;
+      &.alternate-button {
+         min-width: fit-content;
+         height: 32px;
+         margin-top: 10px;
+         padding: 16px;
+         margin-right: 60px;
+         outline: none;
+      }
+   }
+}
+
+@media (max-width: $media-md) {
+   .final-done-title {
+      .title-label {
+         font-size: $main-title-size-mob;
+      }
+   }
+   .final-done-stepper {
+      .grey-border-box {
+         padding: 0 15px 44px 15px;
+         height: auto;
+      }
+      .arrow_box:after,
+      .arrow_box:before {
+         border: 0;
+      }
+   }
+   .final-done-send-doc {
+      .send-doc-sec-1,
+      .send-doc-sec-2,
+      .send-doc-sec-3 {
+         .content {
+            p {
+               word-break: break-word;
+            }
+         }
+      }
+   }
+}
+
+::ng-deep {
+   .overlay.alternate {
+      max-width: 100%;
+   }
+}
+
+@media (max-width: $media-sm) {
+   .done-body {
+      padding: 30px 25px 60px 20px;
+   }
+   .final-done-stepper {
+      margin-left: 4px;
+      .grey-border-box {
+         padding: 0 15px 44px 15px;
+         .content-contact-you {
+            margin-top: 0;
+            padding-top: 36px;
+         }
+      }
+   }
+   .final-done-send-doc {
+      .section-title {
+         padding: 0;
+      }
+      .send-doc-sec-1 {
+         .icon {
+            width: 30px;
+         }
+      }
+      .send-doc-sec-1,
+      .send-doc-sec-2,
+      .send-doc-sec-3 {
+         .icon {
+            padding: 0;
+            margin: 0 auto;
+         }
+         .wrapper {
+            align-self: center;
+         }
+         .content {
+            margin-left: 23px;
+         }
+      }
+      .send-doc-content {
+         .wrapper {
+            min-width: 39px;
+         }
+      }
+   }
+   .final-done-contact-us {
+      .contact-us-sec-1 {
+         margin-right: 50px;
+         .icon {
+            align-self: center;
+            padding: 0;
+         }
+      }
+   }
+   .go-to-acc-btn {
+      padding-bottom: 0;
+   }
+   .done-overlay ::ng-deep {
+      .overlay .btn-cntnr {
+         margin-top: 5px;
+      }
+      .logo-cntnr {
+         padding-left: 0;
+         .logo.alternate-logo {
+            padding-left: 15px;
+         }
+      }
+      .overlay .btn-cntnr button {
+         border: 0;
+         background: url($svg-path + '/grey-close.svg') no-repeat;
+         &.alternate-button {
+            min-width: fit-content;
+            height: 32px;
+            margin-top: unset;
+            margin-right: unset;
+            outline: none;
+            border: 0;
+         }
+      }
+   }
+}

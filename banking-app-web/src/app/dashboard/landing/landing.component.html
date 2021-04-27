@@ -1,0 +1,45 @@
+﻿<div class="apply-button" *ngIf="showOpenNewAccount">
+   <app-apply-new-account></app-apply-new-account>
+</div>
+<div class="dashboard-container">
+   <div class="container">
+      <div class="row top-bar">
+         <div class="col-md-8 col-sm-6 col-xs-12 greeting-margin">
+            <app-greeting></app-greeting>
+         </div>
+         <div class="col-md-4 col-sm-6 col-xs-12 view-banker-container" *ngIf="isViewBanker">  
+            <div class="view-banker" *ngIf="isViewBanker">
+               <a [routerLink]="['/profile/view-banker']">
+                        <span class="contact"></span>
+                        <span>Your banker</span>
+                  </a>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="container">
+      <div class="row dashboard">
+         <div class="col-xs-12 gd-dashboard-landing">
+            <div [ngClass]=" chatActive ? 'chat-active' : 'accounts-blocks'" [class.slider]="triggerSlide">
+               <div class="accounts" [class.accountsblur]='isAccountsBlur'>
+                  <app-accounts></app-accounts>
+               </div>
+               <div *ngIf='!showTrusteerSplash'>
+                  <div class="quick-pay">
+                     <app-quickpay (mouseenter)="isQuickPayFocus(true)" (mouseleave)="isQuickPayFocus(false)"></app-quickpay>
+                  </div>
+                  <br/>
+                  <div class="lotto" *ngIf='showLottoPallet'>
+                     <app-game-pallet></app-game-pallet>
+                  </div>
+               </div>
+            </div>
+            <ng-container *ngIf="showNotification">
+               <div class="notification-block" [class.slider]="triggerSlide">
+                  <app-slide-bar show="true" title='Notifications' (triggerSlider)="triggerSlider($event)"></app-slide-bar>
+               </div>
+            </ng-container>
+         </div>
+      </div>
+   </div>
+</div>

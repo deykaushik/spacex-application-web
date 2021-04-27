@@ -1,0 +1,28 @@
+<div class="main-container" *ngIf="content">
+   <div class="header">
+      <p class="heading">{{heading}}</p>
+      <p class="heading"> {{subHeading}}</p>
+   </div>
+   <div class="sub-conatiner">
+      <ng-container *ngFor="let item of content.strings;let i = index;">
+         <div class="stage" *ngIf="i==0">
+            <span class="money-icon" *ngIf="i==0"></span>
+         </div>
+         <div class="element">
+            <span [innerHTML]="getContent(item, content.values)"></span>
+         </div>
+         <div class="stage" *ngIf="i==0">
+            <span class="email-icon"></span>
+         </div>
+      </ng-container>
+   </div>
+   <div class="next-button-container">
+      <app-bottom-button text="Done" (click)="done($event)" [class.btn-disabled]="isDisabled" [disableButton]="isDisabled" [showLoader]='isDisabled'></app-bottom-button>
+   </div>
+</div>
+
+<div class="spinner-container" *ngIf="!content">
+   <div class="spinner">
+      <app-spinner class="spinner" [color]="'green'"></app-spinner>
+   </div>
+</div>

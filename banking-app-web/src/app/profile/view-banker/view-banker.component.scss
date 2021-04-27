@@ -1,0 +1,384 @@
+@import './../../../styles/_base.scss';
+@import './../../../styles/_mixins.scss';
+
+
+$icon-path: '../../../assets/svg/';
+$svg-path: '../../../assets/svg/';
+$phone-icon: 'phone-icon';
+$email-icon: 'email-icon';
+$oval-green: 'oval-green';
+$icon-green-info: 'green-information';
+
+
+.banker-container {
+////////////  Top Error Bar Start  ///////////////////////////////////////////////
+   .top-alert{
+      position: relative;
+      width:100%;
+      padding: 10px;
+      background-color: $color-notify;
+      .alert-detail{
+         border-bottom: #fff solid 1px;
+      }
+      .message{
+         top: 25%;
+         position: absolute;
+         font-size: 14px;
+      }
+      .retry-container{
+         margin-top:10px;
+         padding-right:0px; 
+         .retry{
+            border-right:#fff solid;
+            text-align: left;
+            cursor: pointer;
+            padding-right: 0px; 
+         }
+      }
+      .retry-mob{
+         text-align: center;
+         padding-top:10px; 
+      }
+      .retry-icon-top{
+         color: $text-color-secondary;
+         @include svg-image-full-path($icon-path, 'icon-retry-black', 22px, 22px);
+         display: inline-flex;
+         font-size: 16px;
+         font-weight: bold;
+      }
+      .retry-icon-top::before{
+         margin-right: 10px;
+      }
+      .hide-mobile{
+         display: none;
+      }
+      .hide-web{
+         display: initial;
+      }
+      .warning-icon{
+         @include svg-image-full-path($icon-path, 'Error_Orange', 16px, 16px);
+         display: inline-block;
+         padding-right: 20px;
+         padding-top: 2px;
+      }
+      .close-icon{
+         @include svg-image-full-path($icon-path, 'close-light-gray', 20px, 20px);
+         cursor: pointer;
+         display: inline-block;
+      }
+      .close-icon-black{
+         @include svg-image-full-path($icon-path, 'icon-dismiss-black', 20px, 20px);
+         cursor: pointer;
+         display: inline-block;
+         margin-top: 10px;
+      }
+   }
+
+// top Error bar  End ////////////////////////////////////////
+
+   .profile-container {
+      background-color: $container-bg;
+      display: flex;
+      align-items: center;
+      padding: 22px;
+      flex-direction: row;
+
+      .user-pic-container {
+        width: 48px;
+        height: 48px;
+        text-align: center;
+        background-color: $user-pic-bg;
+        border: 2px solid $color-greenMedium;
+        font-size: $label-size;
+        border-radius: 25px;
+        padding: 12px 0;
+        float: left;
+        margin: 15px;
+  
+        a {
+           color: $text-color-secondary;
+        }
+     }
+      .user-name-container {
+         margin: 24px 25px;
+         display: flex;
+         flex-direction: column;
+   
+         .user-name {
+            @include markpro-medium();
+            text-transform: capitalize;
+            font-size: $section-title-size-sm;
+            color: $text-color-secondary;
+         }
+   
+         .link-text-normal {
+            font-size: $font-default;
+            cursor: pointer;
+            color: $text-color-link;
+            text-decoration: underline;
+         }
+      }
+   }
+
+   .fullWidth {
+       width:100%;
+       line-height: 54px;
+   }
+
+   .contact-detail {
+       span{
+           font-size: 18px;
+           margin-left: 20px;
+
+        &.telephon-text{
+            color:f9f9f9
+        }
+        &.mail-text {
+            color:  $color-greenMedium;
+            cursor: pointer;
+        }   
+       }
+   }
+
+   .second-row {
+    padding-left: 20px;
+    margin-top: 0;
+    padding-top: 5px;
+    margin-right: 15px;
+       .mail-block {
+          float: left;
+          margin-right: 25px;
+          span {
+             margin-left: 0;
+             font-size: $font-sm;
+          }
+       }
+       .telephone-block {
+          display: inline-block;
+          margin-left: 25px;
+          span {
+             font-size: $font-sm;
+             margin-left: 0;
+          }
+       }
+    }
+    .line-divider {
+        float: right;
+        border-right: 2px solid $info-message;
+        padding-left: 30px;
+        height: 54px;
+        background-color: $container-bg;
+     }
+}
+
+.warning-block {
+    width: 100%;
+    .warning-text {
+        margin: 20px 25px;
+    }
+
+    .green-warning-div {
+        float: left;
+        margin-right: 25px;
+        .green-warning {
+         margin-top: 11px;
+        }
+        p {
+        font-size: 18px;
+        margin-top: 0;
+        line-height: 1.5;
+        margin-right: 14px;
+        cursor: default;
+        span {
+            &:last-child {
+                color: $color-greenMedium;
+                cursor: pointer;
+            }
+        }
+        }
+    }
+ }
+
+.icon-field {
+    position: relative;
+    .icon {
+       width: 12px;
+       display: inline-block;
+       cursor: pointer;
+       line-height: 1;
+
+       &.left-arrow {
+          margin: 0px 0px 0px 20px;
+          @include rotate(180deg);
+          @include svg-image-full-path($icon-path, 'right-arrow-cap');
+       }
+    }
+    .banker-detail-header {
+       @include markpro-medium();
+       color: $text-color-secondary;
+       padding: 0;
+       display: inline-block;
+       margin-bottom: 25px;
+       margin-left: 10px;
+    }
+ }
+.telephone-icon {
+    @include svg-image-full-path($svg-path, $phone-icon, 32px, 32px);
+    display: inline-flex;
+    vertical-align: middle;
+    margin-top: -7px;
+ }
+ 
+ .mail-icon {
+    @include svg-image-full-path($svg-path, $email-icon, 32px, 32px);
+    display: inline-flex;
+    vertical-align: middle;
+    margin-top: -7px;
+ }
+ 
+ .green-warning {
+    @include svg-image-full-path($svg-path, $icon-green-info, 50px, 50px);
+    height: 50px;
+    &::before {
+       margin-right: 16px;
+    }
+ }
+
+ .profile-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin: 5px 0 5px 10px;
+ }
+ 
+ .profile-alt-image {
+    @include svg-image-full-path($svg-path, $oval-green, 50px, 50px);
+ }
+ 
+ .full-line-divider
+ {
+     display: none;
+ }
+
+ 
+@media (min-width: $media-sm) {
+   .banker-container {
+      .banker-detail-header {
+         text-align: left;
+      }
+      .left-arrow {
+         display: none !important;
+      }
+      .top-alert{
+         .alert-detail{
+            border-bottom: none;
+         }
+         .hide-mobile{
+            display: initial;
+         }
+         .hide-web{
+            display: none;
+         }
+         .close-icon-black{
+            margin-top: 4px;
+         }
+      }
+   }
+}
+
+@media (min-width: $media-md){
+   .banker-container {     
+      .top-alert{
+         .retry-container{
+            padding-right:initial;
+            .retry{
+               text-align: right;
+               padding-right: 25px;
+            }
+         }
+      }
+      .profile-container {
+        .user-pic-container {
+        width: 77px;
+        height: 77px;
+        text-align: center;
+        background-color: $user-pic-bg;
+        border: 2px solid $color-greenMedium;
+        font-size: $label-size;
+        border-radius: 40px;
+        padding: 24px 0;
+        float: left;
+        margin: 0px 20px 0px 0px;
+
+        a {
+           color: $text-color-secondary;
+        }
+
+       .user {
+           font-size: $font-default;
+        }
+      }
+    }
+   }
+}
+@media (max-width: $media-md) {
+    .banker-container {
+       .line-divider{
+        display: none;
+       }
+
+       .full-line-divider{
+        width:100%;
+        display: inline-block !important;
+        border-bottom: 2px solid $info-message;
+        padding-left: 30px;
+        background-color: $container-bg;
+      }
+    }
+}
+
+@media (max-width: $media-sm) {
+    .banker-container {
+       .line-divider{
+        display: none;
+       }
+
+
+
+    .profile-container{
+          padding: 32px 20px;
+      }
+
+    .contact-detail {
+        span{
+            font-size: 16px;
+            margin-left: 0px;
+        }
+      }
+    .fullWidth {
+        line-height: 2;
+    }
+      
+    .warning-block {
+        .green-warning-div {
+            float: none;
+            .green-warning {
+                &::before {
+                    margin: 0 auto;
+                }
+            }
+        }
+
+        .warning-text {
+            margin: 35px 60px;
+        }
+    }
+
+    .row {
+        margin: 0px;
+        div{
+            margin: 0px;
+        }
+    }
+   }
+ }

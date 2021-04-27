@@ -1,0 +1,13 @@
+<div class="popup-container">
+   <div class="popup-block">
+      <span class="overlay-close" (click)="discardAction(discardLabels.close)"></span>
+      <div class="inner-container">
+         <span class="green-warning"></span>
+         <h1>{{discardMessages.discardChanges}}</h1>
+         <div class="title-overlay">
+            <h2>{{discardMessages.discardMessage}}</h2>
+         </div>
+         <app-bottom-button id="continue-btn" [text]="discardLabels.continue" [class.btn-disabled]='false' [showLoader]='false' (click)="discardAction(discardLabels.confirm)"></app-bottom-button>
+      </div>
+   </div>
+</div>

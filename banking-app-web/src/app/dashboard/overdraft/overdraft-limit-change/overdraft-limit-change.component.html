@@ -1,0 +1,77 @@
+<app-colored-overlay [template]="changeOverdraft" [altButtonText]="'Cancel'" [alternate]='true' [isVisible]="isVisible" [backOption]="false"
+   (onHide)="closeOverlay($event)">
+   <ng-template #changeOverdraft>
+      <section class="maintain-overdraft-wrapper">
+         <section class="maintain-overdraft-carousel-container">
+            <div class="row">
+               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <div class="title" [innerHtml]="label.requestToChange | skeletonLoader:skeletonMode"></div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 limit-block">
+                  <div class="current-limit-label" [innerHtml]="label.currentLimit | skeletonLoader:skeletonMode"></div>
+                  <div class="current-limit-amt" [innerHtml]="accountBalanceDetails.overdraftLimit | amountTransform: amountPipeConfig | skeletonLoader:skeletonMode">
+                  </div>
+               </div>
+               <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 limit-block" *ngIf="!skeletonMode">
+                  <div class="new-limit-label">{{label.newLimit}}</div>
+                  <input type="text" appAmountFormatMask [noDecimal]="false" (ngModelChange)="newOverdraftLimitChange($event)" [ngModel]="newOverdraftLimit | amountTransform"
+                     [ngClass]="{'maintain-overdraft-new-limit-error': (invalidAmount || !multipleOfHundredMsg || sameAmount) , 'maintain-overdraft-new-limit': !(invalidAmount || !multipleOfHundredMsg || sameAmount)}">
+                  <div class="error-msg" *ngIf="invalidAmount">
+                     {{message.invalidOverdraftAmount}}
+                  </div>
+                  <div class="error-msg" *ngIf="!multipleOfHundredMsg">
+                     {{message.notMultipleOfHundredAmount}}
+                  </div>
+                  <div class="error-msg" *ngIf="sameAmount">
+                     {{message.sameOverdraftAmount}}
+                  </div>
+               </div>
+               <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 limit-block" [innerHtml]=" ''|skeletonLoader:skeletonMode"></div>
+            </div>
+            <div class="row">
+               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="!skeletonMode">
+                  <app-range-slider class="slider" [config]="config" [value]="newOverdraftLimit" (change)="onSliderValueChanged($event)"></app-range-slider>
+                  <div class="max-limit-label" [innerHtml]="maxOverdraftLimit | amountTransform: amountPipeConfig">
+                  </div>
+               </div>
+               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" [innerHtml]=" ''|skeletonLoader:skeletonMode"></div>
+            </div>
+            <div class="row">
+               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <div class="sub-title" [innerHtml]="label.contact |skeletonLoader:skeletonMode"></div>
+                  <div class="maintain-overdraft-info-msg" [innerHtml]=" label.contactMsg|skeletonLoader:skeletonMode"></div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="!skeletonMode">
+                  <app-phone-number-validator [phoneNumberValue]="cellNumber" (returnPhoneNumber)="getPhoneNumber($event)"></app-phone-number-validator>
+               </div>
+               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" [innerHtml]=" ''|skeletonLoader:skeletonMode"></div>
+            </div>
+            <div class="row">
+               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="!skeletonMode">
+                  <div class="email-address-label" [innerHtml]="label.email |skeletonLoader:skeletonMode"></div>
+                  <input id="overdraftInputEmail" class="input-email" autocomplete="off" type="text" name="overdraftInputEmail"
+                     #overdraftInputEmail="ngModel" [(ngModel)]="emailAddress" (ngModelChange)="onEmailChange()"
+                     appValidateRequired required appValidateOnblur [ngClass]="{'maintain-overdraft-input-border' : isEmailValid , 'maintain-overdraft-input-border-error' : !isEmailValid}"
+                  />
+                  <div *ngIf="!isEmailValid" class="error-msg">
+                     {{message.invalidEmail}}
+                  </div>
+               </div>
+               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" [innerHtml]=" ''|skeletonLoader:skeletonMode"></div>
+            </div>
+            <div class="row">
+               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 button-margin">
+                  <app-bottom-button [text]="label.submitBtn" [disableButton]='!isPhoneNumberValid || !isEmailValid || isNewOverdraftLimitValid || showLoader'
+                     (click)="changeAccountOverdraftLimit($event)" [showLoader]='showLoader'></app-bottom-button>
+               </div>
+            </div>
+         </section>
+      </section>
+   </ng-template>
+</app-colored-overlay>
+<app-overdraft-limit-fica [isVisible]="isFicaNotCompliant" (backToCard)="closeOverlay($event)"></app-overdraft-limit-fica>
+<app-overdraft-limit-success [isVisible]="isOverdraftSuccess" (backToCard)="closeOverlay($event)"></app-overdraft-limit-success>

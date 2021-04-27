@@ -1,0 +1,157 @@
+@import './../../../../styles/_mixins.scss';
+@import './../../../../styles/_base.scss';
+$svg-path: './../../../../assets/svg';
+.income-expenses {
+   @include flexbox();
+   @include justify-content(center);
+   .income-expenses-container {
+      width: 100%;
+      margin: 0 20px;
+      @include flex-direction(row);
+      .section-title {
+         display: block;
+         margin-top: 20px;
+         font-family: $font-markpro-medium;
+         font-weight: 500px;
+         color: $text-color-secondary;
+         font-size: $font-md;
+      }
+      .section-sub-title {
+         display: block;
+         font-family: $font-markpro;
+         color: $text-color-secondary;
+         font-size: $font-md;
+      }
+      .section-form {
+         .error-msg {
+            padding-left: 0;
+         }
+         .error-msg::before {
+            content: none;
+         }
+         input {
+            &.ng-valid {
+               border-color: $form-element-border;
+            }
+         }
+         .form-head {
+            font-family: $font-markpro-medium;
+            font-weight: 500px;
+            color: $text-color-secondary;
+            font-size: $font-lg;
+            padding: 0 0 15px 0;
+            &.income {
+               padding-top: 7px;
+               display: block;
+            }
+            &.expenses {
+               padding-top: 18px;
+               display: block;
+            }
+         }
+         .show-message {
+            @include flexbox();
+            @include justify-content(center);
+            @include flex-direction(column);
+            margin-bottom: 10px;
+            .triangle {
+               width: 0;
+               height: 0;
+               position: relative;
+               border-left: 12px solid transparent;
+               border-right: 12px solid transparent;
+               border-top: 12px solid $tooltip-back-ground;
+               margin-left: 88.5%;
+            }
+            .tooltip-part {
+               background-color: $tooltip-back-ground;
+               border-left: 2px solid $secondary-color;
+               margin: 5px 0;
+               .section-content {
+                  font-size: $font-sm;
+                  padding: 10px;
+                  .content-bold {
+                     font-family: $font-markpro-bold;
+                     color: $text-color-secondary;
+                     display: block;
+                  }
+                  .content {
+                     color: $text-color-primary;
+                     font-family: $font-markpro;
+                  }
+               }
+            }
+         }
+         .label-part {
+            @include flexbox();
+            .label-size {
+               width: 90%;
+            }
+            .tool-tip {
+               @include svg-image-full-path($svg-path, 'help', 16px, 16px);
+               cursor: pointer;
+               position: relative;
+            }
+         }
+         .add-source {
+            @include flexbox();
+            margin-top: 50px;
+            .add-icon {
+               @include svg-image-full-path($svg-path, 'Add', 32px, 32px);
+               cursor: pointer;
+            }
+            .add-msg {
+               font-family: $font-markpro;
+               font-size: $para-title-size;
+               color: $text-color-secondary;
+               padding: 5px 0 0 15px;
+            }
+         }
+         .bottom-btn {
+            margin: 0 -10px;
+            padding: 30px 0 60px 0;
+         }
+      }
+   }
+}
+
+@media (min-width: $media-xs-up) {
+   .income-expenses {
+      .income-expenses-container {
+         width: 400px;
+         .section-title {
+            padding-top: 60px;
+            font-size: $section-title-size;
+         }
+         .section-sub-title {
+            width: 450px;
+            font-size: $section-title-size-sm;
+         }
+         .section-form {
+            .form-head {
+               padding: 0 0 20px 0;
+               &.income {
+                  padding-top: 17px;
+               }
+               &.expenses {
+                  padding-top: 40px;
+               }
+            }
+            .show-message {
+               .tooltip-part {
+                  margin: 25px 0 0;
+                  .section-content {
+                     padding: 15px 6px 20px 15px;
+                  }
+               }
+            }
+            .add-source {
+               margin: 20px -20px 0 0;
+            }
+            .bottom-btn {
+               margin: 0;
+            }
+         }
+      }
+   }
+}

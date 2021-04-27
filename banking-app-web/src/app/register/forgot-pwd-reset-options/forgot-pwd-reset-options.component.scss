@@ -1,0 +1,39 @@
+@import './../../../styles/_mixins.scss';
+@import './../../../styles/_base.scss';
+$svg-path: './../../../assets/svg';
+
+.icon{
+  width: 16px;
+}
+
+.inlineStyle {
+  display: inline-block;
+  margin-right: 15px;
+  top: 3px;
+}
+
+.iconUsername {
+  @include svg-image-full-path($svg-path, 'user', 16px, 16px);
+}
+
+.iconLock {
+  @include svg-image-full-path($svg-path, 'lock', 16px, 16px);
+}
+
+.iconUserlock {
+  @include svg-image-full-path($svg-path, 'userlock', 16px, 16px);
+}
+
+.link-text {
+  color: $text-color-secondary;
+  font-size: $font-default;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.link-text:hover,
+.link-text:active {
+  text-decoration: none;
+}
+

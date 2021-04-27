@@ -1,0 +1,64 @@
+@import './../../../styles/_base.scss';
+@import './../../../styles/_mixins.scss';
+
+.container {
+  font-size: $font-default;
+  vertical-align: top;
+
+  .formInput {
+    max-width: 450px;
+    margin: auto;
+  }
+
+  .gd-form {
+    text-align: center;
+  }
+  
+  .gd-primary-btn {
+    max-width: 400px;
+  }
+  
+  .gd-secondary-btn,
+  .gd-ghost-btn {
+    max-width: 185px;
+    padding: 0;
+  }
+  
+  .navigateClose {
+    text-align: right;
+    margin: 20px 0 20px 0;
+  }
+  
+  a,
+  .number-text {
+    color: $text-color-link;
+    font-size: $font-sm;
+    font-weight: bold;
+    text-decoration: underline;
+    line-height: 30px;
+  }
+ 
+  .blocked {
+    @include svg-image-full-path($default-svg-image-path, 'noentry', 60px, 60px);
+  }
+  
+  .blocked:before {
+    fill: $text-color-secondary;
+    display: inline;
+  }
+}
+
+@media screen and (max-width: ($media-sm)) {
+  .container {
+    padding: 10px;  
+  
+    .gd-primary-btn {
+      max-width: initial;
+    }
+
+    .gd-secondary-btn,
+    .gd-ghost-btn {
+      max-width: 100px;
+    }
+  }  
+}

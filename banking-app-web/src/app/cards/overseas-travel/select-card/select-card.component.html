@@ -1,0 +1,34 @@
+<div class="loader-mask" *ngIf="showLoader">
+   <div class="loader-spinner">
+      <app-spinner [color]="'green'"></app-spinner>
+   </div>
+</div>
+<section class="select-cards">
+   <span class="section-header-mob">{{labels.selectCards}}</span>
+   <span class="section-header">{{labels.selectCardsHeading}}</span>
+   <form #selectCard class="section-body">
+      <div class="active-card">
+         <span class="section-title">{{labels.activeCards}}</span>
+         <div class="cards" *ngFor="let card of activeCard; let currentIndex = index">
+            <div class="cards-list" [class.no-last-child]= "(currentIndex) !== activeCard.length">
+               <div (click)="onCheckboxClicked(card)" [ngClass]="{'white': !card.isChecked, 'green': card.isChecked}">
+                  <span class="tick"></span>
+               </div>
+               <div class="active-card-details">
+                  <div class="property-left">
+                     <span class="account-type" [innerHtml]="card.accounts.plasticDescription | titlecase"></span>
+                     <span class="account-name" [innerHtml]="card.accounts.nameLine | titlecase"></span>
+                  </div>
+                  <div class="property-right">
+                     <span class="account-number" [innerHtml]="card.accounts.plasticNumber | cardMask:4:4"></span>
+                     <span class="available-balance" [innerHtml]="card.accounts.availableBalance | amountTransform: amountPipeConfig"></span>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="bottom-btn">
+         <app-bottom-button [disableButton]='!validForm' [showLoader]="false" (clickEmitter)="onNextClick()" [text]="'Next'"></app-bottom-button>
+      </div>
+   </form>
+</section>

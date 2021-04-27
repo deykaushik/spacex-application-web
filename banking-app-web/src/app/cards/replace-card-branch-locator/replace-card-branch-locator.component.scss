@@ -1,0 +1,181 @@
+﻿@import './../../../styles/_mixins.scss';
+@import './../../../styles/_base.scss';
+$svg-path: './../../../assets/svg/';
+$replace-card-info-bg: $body-bg;
+.replace-card {
+   .control-container {
+      .replace-card-container {
+         max-width: $form-element-max-width;
+         margin: 0 auto;
+      }
+      .row {
+         margin-bottom: 10px;
+         &.margin-top-60 {
+            margin-top: 30px;
+            margin-bottom: 30px;
+         }
+         .autocomplete-container {
+            font-size: $font-sm;
+         }
+         .error-msg {
+            color: $text-color-error;
+            font-size: $font-sm;
+            position: relative;
+            margin: 5px 0 0;
+            padding-left: 3px;
+            &::before {
+               content: '*'
+            }
+         }
+      }
+      .title {
+         padding-top: 15px;
+         font-size: $font-lg;
+         text-align: center;
+      }
+      .delivery-label {
+         font-size: $label-size;
+         line-height: 1.5;
+         text-align: left;
+         color: $text-color-primary;
+      }
+      .dropdown {
+         text-justify: auto;
+         word-break: break-all;
+      }
+      .arrow-btn {
+         @include svg-image-full-path($svg-path, 'greenarrow');
+         vertical-align: text-bottom;
+         width: $form-element-height;
+         height: $form-element-height;
+      }
+      .info-container {
+         background-color: $replace-card-info-bg;
+         margin: 0px;
+         display: inline-block;
+         width: 100%;
+         padding: 20px 15px 10px 15px;
+         margin-top: 17px;
+         @include flexbox();
+         @include align-items(flex-start);
+         .info-icon {
+            @include svg-image-full-path($svg-path, 'information', 23px, 23px);
+            vertical-align: text-bottom;
+            float: left;
+            margin-right: 10px;
+         }
+         .info-label {
+            font-size: 13px;
+            font-weight: normal;
+            @include flex(1);
+         }
+      }
+      .icon-search {
+         @include svg-image-full-path($svg-path, 'search-branch');
+         vertical-align: text-bottom;
+         width: 29px;
+         height: 18px;
+         border-right: 1px solid $divider-primary;
+         padding-right: 10px;
+         position: absolute;
+         top: 42px;
+         right: 54px;
+      }
+      .icon-close {
+         @include svg-image-full-path($svg-path, 'close-light-gray');
+         vertical-align: text-bottom;
+         width: 18px;
+         height: 18px;
+         position: absolute;
+         right: 28px;
+         top: 42px;
+      }
+   }
+   .map-padding {
+      padding-top: 39px;
+   }
+   div.location input {
+      padding-right: 80px;
+   }
+   agm-map {
+      height: 372px;
+   }
+   .disabled {
+      pointer-events: none;
+   }
+}
+
+// This applies from 320px onwards
+@media (min-width: $media-md) {
+   .replace-card {
+      .control-container {
+         .title {
+            padding-top: 15px;
+            font-size: $font-xlg;
+            text-align: center;
+         }
+         .arrow-btn {
+            @include svg-image-full-path($svg-path, 'greenarrow');
+            vertical-align: text-bottom;
+            width: $form-element-height;
+            height: $form-element-height;
+            cursor: pointer;
+         }
+         .info-container {
+            .info-label {
+               vertical-align: text-bottom;
+            }
+            .info-icon {
+               @include svg-image-full-path($svg-path, 'information', 23px, 23px);
+               vertical-align: text-bottom;
+               float: left;
+            }
+         }
+         .icon-search {
+            @include svg-image-full-path($svg-path, 'search-branch');
+            vertical-align: text-bottom;
+            width: 29px;
+            height: 18px;
+            border-right: 1px solid $divider-primary;
+            padding-right: 10px;
+            position: absolute;
+            top: 42px;
+            right: 54px;
+         }
+         .icon-close {
+            @include svg-image-full-path($svg-path, 'close-light-gray');
+            vertical-align: text-bottom;
+            width: 18px;
+            height: 18px;
+            position: absolute;
+            right: 28px;
+            top: 42px;
+            cursor: pointer;
+         }
+         div.location input {
+            padding-right: 80px;
+         }
+      }
+      agm-map {
+         height: 670px;
+      }
+   }
+}
+
+@media (min-width: $media-xs) {
+   .autocomplete-container {
+      font-size: $font-sm;
+      .location-textbox {
+         padding-right: 23%;
+      }
+   }
+}
+
+@media (min-width: $media-sm) {
+   .autocomplete-container {
+      font-size: $font-sm;
+      .location-textbox {
+         padding-right: 19%;
+      }
+   }
+}

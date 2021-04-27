@@ -1,0 +1,174 @@
+<div class="review-payment no-print">
+      <table class="tabular-data-col-2 no-print">
+         <tbody>
+            <tr>
+               <td>{{labels.fundTripLabels.paymentDate}}</td>
+               <td><span class='capitalize'>{{paymentDate|date:dateFormat}}</span></td>
+            </tr>
+            <tr>
+               <td colspan="2">&nbsp;</td>
+            </tr>
+            <tr>
+               <td>{{labels.fundTripLabels.payFrom}}</td>
+               <td><span class='capitalize'>{{paymentDetailsVm.toAccount.nickname}}</span></td>
+            </tr>
+            <tr>
+               <td>{{labels.fundTripLabels.acountNumber}}</td>
+               <td><span class='capitalize'>{{paymentDetailsVm.toAccount.accountNumber}}</span></td>
+            </tr>
+            <tr>
+               <td>{{labels.fundTripLabels.paymentAmount}}</td>
+               <td><span class='capitalize'>{{paymentDetailsVm.amount | amountTransform: amountPipeConfig}}</span></td>
+            </tr>
+            <tr>
+               <td colspan="2">&nbsp;</td>
+            </tr>
+            <tr>
+               <td>{{labels.fundTripLabels.payToAccount}}</td>
+               <td><span class='capitalize'>Travel Card</span></td>
+            </tr>
+            <tr>
+               <td>{{labels.fundTripLabels.acountNumber}}</td>
+               <td><span class='capitalize'>{{getQuoteVm.clientDetails.fromAccount.AccountNumber}}</span></td>
+            </tr>
+            <tr>
+               <td colspan="2">&nbsp;</td>
+            </tr>
+            <tr>
+               <td>{{labels.fundTripLabels.yourReference}}</td>
+               <td><span class='capitalize'>{{paymentDetailsVm.reference}}</span></td>
+            </tr>
+            <tr>
+               <td colspan="2">&nbsp;</td>
+            </tr>
+            <tr>
+               <td colspan="2">&nbsp;</td>
+            </tr>
+         </tbody>
+      </table>
+      <h4 class="section-title step-title no-print">{{labels.fundTripLabels.personalDetails}}</h4>
+      <table class="tabular-data-col-2 no-print">
+         <tbody>
+            <tr>
+               <td colspan="2">&nbsp;</td>
+            </tr>
+            <tr>
+               <td>{{labels.fundTripLabels.cellphoneNumber}}</td>
+               <td><span class='capitalize'>+{{getQuoteVm.clientDetails.areaCode}}{{getQuoteVm.clientDetails.phoneNumber}}</span></td>
+            </tr>
+            <tr>
+               <td>{{labels.fundTripLabels.email}}</td>
+               <td><span class='capitalize'>{{getQuoteVm.clientDetails.email}}</span></td>
+            </tr>
+            <tr>
+               <td>{{labels.fundTripLabels.homeAddress}}</td>
+               <td><span class='capitalize'>{{getConcatenatedAddress()}}</span></td>
+            </tr>
+            <tr>
+               <td>{{labels.fundTripLabels.rsaIdNumber}}</td>
+               <td><span class='capitalize'>{{getQuoteVm.clientDetails.rsaId}}</span></td>
+            </tr>
+            <tr>
+               <td colspan="2">&nbsp;</td>
+            </tr>
+            <tr>
+               <td colspan="2">&nbsp;</td>
+            </tr>
+         </tbody>
+      </table>
+      <h4 class="section-title step-title no-print">{{labels.fundTripLabels.termsAndCondition}}</h4>
+      <form #reviewPaymentDetailsForm="ngForm" class="gd-form" novalidate>
+      <table class="tabular-data-col-2 no-print">
+         <tbody>
+            <tr>
+               <td colspan="2">&nbsp;</td>
+            </tr>
+            <tr>
+               <td  colspan="2">
+                  <div class="checkbox-container">
+                  <label class="checkbox-label" for="tnc-checkbox1">
+                     <input type="checkbox" id="tnc-checkbox1" [checked]="tnc" (change)="tnc=!tnc;validate();"
+                     class="checkbox" value="">
+                     <span class="tick-mark-container">
+                        <i class="tick-mark-icon glyphicon glyphicon-ok"></i>
+                     </span>
+                     <span class="text block-text">
+                        <span>{{labels.fundTripLabels.confirmText}}.</span>
+                     </span>
+                  </label>
+                  </div>
+               </td>
+            </tr>
+            <tr>
+               <td  colspan="2">
+                  <div class="checkbox-container">
+                  <label class="checkbox-label" for="tnc-checkbox2">
+                     <input type="checkbox" id="tnc-checkbox2" [checked]="tncSarb" (change)="tncSarb=!tncSarb;validate();"
+                     class="checkbox" value="">
+                     <span class="tick-mark-container">
+                        <i class="tick-mark-icon glyphicon glyphicon-ok"></i>
+                     </span>
+                     <span class="text block-text">
+                        <span>{{labels.fundTripLabels.acceptTncText}}</span>
+                        <button class="btn btn-link" (click)="onClickSarbLink()">
+                              {{labels.fundTripLabels.acceptSarbTncText}}</button>
+                     </span>
+                  </label>
+                  </div>
+               </td>
+            </tr>
+            <tr>
+               <td  colspan="2">
+                  <div class="checkbox-container">
+                  <label class="checkbox-label" for="tnc-checkbox3">
+                     <input type="checkbox" id="tnc-checkbox3" [checked]="tncPDF" (change)="tncPDF=!tncPDF;validate();"
+                     class="checkbox" value="">
+                     <span class="tick-mark-container">
+                        <i class="tick-mark-icon glyphicon glyphicon-ok"></i>
+                     </span>
+                     <span class="text block-text">
+                        <span>{{labels.fundTripLabels.acceptTncText}}</span>
+                        <a class="btn btn-link" href="{{labels.fundTripLabels.termsPdfLink}}" target="_blank">
+                              {{labels.fundTripLabels.travelCardTncAcceptText}}
+                        </a>
+                     </span>
+                  </label>
+                  </div>
+               </td>
+            </tr>
+            <tr>
+               <td colspan="2">&nbsp;</td>
+            </tr>
+         </tbody>
+      </table>
+      </form>
+   </div>
+   
+   <div class="gd-error no-print">
+      <span>
+         {{ buyError }}
+      </span>
+   </div>
+   <app-colored-overlay [isVisible]="showSARBTerms" [alternate]="true" [altButtonText]="'Close'" [template]="sarbTemplate"
+   [backOption]="false" (onHide)="onClickSarbLink()">
+      <ng-template #sarbTemplate>
+      <div class="terms-container">
+         <div class="modal-header">
+            <div class="col-sm-10 header">
+               <h2 class="modal-title pull-left"><span class="bold-header-text">Travel Card</span>- SARB Declaration</h2>
+            </div>
+            <div class="col-sm-10 col-xs-12 print-icon no-print padding-top-20 text-left">
+               <a class="download" (click)="print()">
+                  <span class="icon"></span>
+                  <span class="text">Print</span>
+               </a>
+            </div>
+         </div>
+         <div class="modal-body print-section">
+            <div class="noticeContainer">
+               <div class="noticeContent" [innerHTML]="noticeDetails"></div>
+            </div>
+         </div>
+      </div>
+   </ng-template>
+   </app-colored-overlay>

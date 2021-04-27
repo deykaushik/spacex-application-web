@@ -1,0 +1,56 @@
+<section class="driver-information">
+   <form class="section  gd-form" #travelInformationForm="ngForm">
+      <span class="section-title">{{labels.title}}</span>
+      <div class="section-body">
+         <div class="first-section">
+            <div class="gd-form-row">
+               <label class="gd-lg-label" for="secondary-number">{{labels.emailInfo}}</label>
+            </div>
+            <div class="gd-form-row">
+               <label id="lbl-email" class="gd-sm-label" for="email">{{labels.emailAddress}}</label>
+               <div class="field-with-icon">
+                  <div class="field-block">
+                     <input id="val-rec-email" name="recipientEmailField" type="text" autocomplete="off" required appValidateOnblur [pattern]="emailPattern"
+                        class="validate input-email" #recipientEmailField="ngModel" [(ngModel)]="recipientEmail" (ngModelChange)="onEmailChange(recipientEmail)">
+                  </div>
+               </div>
+               <div *ngIf="recipientEmailField.dirty || recipientEmailField.touched" class="text-danger">
+                  <div *ngIf="!isValidEmail">
+                     Invalid email address
+                  </div>
+               </div>
+            </div>
+            <div class="gd-form-row">
+               <label class="gd-lg-label" for="secondary-number">{{labels.acknowledgment}}</label>
+            </div>
+            <div class="gd-form-row">
+               <label class="gd-sm-label" for="secondary-number">{{labels.info}}</label>
+            </div>
+            <div class="gd-form-row">
+               <div class="checkbox-container">
+                  <label class="checkbox-label" for="terms-checkbox">
+                     <input type="checkbox" id="terms-checkbox" [checked]="isAccepted" class="checkbox" (change)="isAccepted = !isAccepted">
+                     <span class="tick-mark-container">
+                        <i class="tick-mark-icon glyphicon glyphicon-ok"></i>
+                     </span>
+                     <span class="text block-text">
+                        <span>I have read and I agree with the acknowledgment.</span>
+                     </span>
+                  </label>
+               </div>
+            </div>
+            <div id="btn-send" class="gd-form-row">
+               <app-bottom-button [text]="'Request'" [disableButton]="!isAccepted || !isValidEmail || !travelInformationForm.valid" (clickEmitter)="onRequest()"
+                  [showLoader]="showLoader"></app-bottom-button>
+            </div>
+         </div>
+      </div>
+   </form>
+</section>
+<section *ngIf="status===notificationTypes.Success || status===notificationTypes.Error">
+   <app-colored-overlay [alternate]="true" [isVisible]="true" [template]="statusTemplate" [altButtonText]="'Close'" (onHide)="closeOverlay()">
+      <ng-template #statusTemplate>
+         <app-status [status]="status" [showLoader]="showLoader" (onRetry)="onRetryRequest($event)" [retryLimitExceeded]="retryLimitExceeded"></app-status>
+      </ng-template>
+   </app-colored-overlay>
+</section>

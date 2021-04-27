@@ -1,0 +1,13 @@
+﻿@import './../../../../styles/_mixins.scss';
+@import './../../../../styles/_base.scss';
+
+.buy-amount-section {
+   .rand-value-hint {
+      margin: 5px 0 0;
+      color: $text-color-info;
+      font-size: $font-sm;
+   }
+   input.reference[type=text] {
+      border: 2px solid $text-color-info;
+   }
+}

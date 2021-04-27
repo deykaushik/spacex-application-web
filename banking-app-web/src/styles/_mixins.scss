@@ -1,0 +1,322 @@
+﻿@import './_base.scss';
+@mixin svg-image($image-name, $width: 100%, $height: 100%, $extension: 'svg', $path: $default-svg-image-path) {
+   position: relative;
+   &::before {
+      content: url(#{$path}/#{$image-name}.#{$extension});
+      width: $width;
+      height: $height;
+      display: block;
+   }
+}
+
+@mixin svg-image-full-path($base-path, $image-name, $width: 100%, $height: 100%, $extension: 'svg', $path: $base-path) {
+   position: relative;
+   &::before {
+      content: url(#{$path}/#{$image-name}.#{$extension});
+      width: $width;
+      height: $height;
+      display: block;
+   }
+}
+
+@mixin app-footer() {
+   height: $footer-height-xxs;
+   @media (min-width: $footer-brk-xs) {
+      height: $footer-height-xs;
+   }
+   @media (min-width: $footer-brk-sm) {
+      height: $footer-height-sm;
+   }
+   @media (min-width: $footer-brk-md) {
+      height: $footer-height-md;
+   }
+   @media (min-width: $footer-brk-lg) {
+      height: $footer-height-lg;
+   }
+}
+
+@mixin main-content() {
+   min-height: calc( 100vh - #{$header-height-mob + $footer-height-xxs});
+   @media (min-width: $footer-brk-xs) {
+      min-height: calc( 100vh - #{$header-height-mob + $footer-height-xs});
+   }
+   @media (min-width: $footer-brk-sm) {
+      min-height: calc( 100vh - #{$header-height + $footer-height-sm});
+   }
+   @media (min-width: $footer-brk-md) {
+      min-height: calc( 100vh - #{$header-height + $footer-height-md});
+   }
+   @media (min-width: $footer-brk-lg) {
+      min-height: calc( 100vh - #{$header-height + $footer-height-lg});
+   }
+}
+
+@mixin recipient-content() {
+   height: calc( 100vh - #{$header-height-mob});
+   @media (min-width: $footer-brk-xs) {
+      height: calc( 100vh - #{$header-height-mob});
+   }
+   @media (min-width: $footer-brk-sm) {
+      height: calc( 100vh - #{$header-height + $footer-height-sm});
+   }
+   @media (min-width: $footer-brk-md) {
+      height: calc( 100vh - #{$header-height + $footer-height-md});
+   }
+   @media (min-width: $footer-brk-lg) {
+      height: calc( 100vh - #{$header-height + $footer-height-lg});
+   }
+}
+
+@mixin pop-over($top) {
+   position: relative;
+   &.open {
+      .pop-over {
+         display: block;
+      }
+      &::before {
+         content: '';
+         display: block;
+         position: absolute;
+         top: 100%;
+         left: calc( 50% - 10px);
+         z-index: 2;
+         width: 0;
+         height: 0;
+         border-left: 10px solid transparent;
+         border-right: 10px solid transparent;
+         border-bottom: 10px solid $pop-over-bg;
+         margin-top: ($top - 9);
+      }
+      &::after {
+         content: '';
+         display: block;
+         position: absolute;
+         top: 100%;
+         left: calc( 50% - 6px);
+         z-index: 3;
+         width: 13px;
+         height: 13px;
+         border: solid 1px $pop-over-border;
+         border-bottom: none;
+         border-right: none;
+         @include rotate(45deg);
+         margin-top: ($top - 7);
+      }
+   }
+   .pop-over {
+      margin-top: $top;
+   }
+}
+
+@mixin markpro-medium() {
+   font-family: $font-markpro-medium;
+   font-weight: 400;
+}
+
+@mixin markpro-bold() {
+   font-family: $font-markpro-bold;
+   font-weight: bold;
+}
+
+@mixin box-sizing($val: border-box) {
+   box-sizing: $val;
+   -webkit-box-sizing: $val;
+   -moz-box-sizing: $val;
+   -ms-box-sizing: $val;
+   -o-box-sizing: $val;
+}
+
+@mixin border-radius($val) {
+   border-radius: $val;
+   -webkit-border-radius: $val;
+   -moz-border-radius: $val;
+   -ms-border-radius: $val;
+   -o-border-radius: $val;
+}
+
+@mixin box-shadow($val) {
+   box-shadow: $val;
+   -webkit-box-shadow: $val;
+   -moz-box-shadow: $val;
+   -ms-box-shadow: $val;
+   -o-box-shadow: $val;
+}
+
+@mixin multi-box-shadow($val1, $val2) {
+   box-shadow: $val1, $val2;
+   -webkit-box-shadow: $val1, $val2;
+   -moz-box-shadow: $val1, $val2;
+   -ms-box-shadow: $val1, $val2;
+   -o-box-shadow: $val1, $val2;
+}
+
+@mixin translate($valX, $valY) {
+   transform: translate($valX, $valY);
+   -webkit-transform: translate($valX, $valY);
+   -moz-transform: translate($valX, $valY);
+   -ms-transform: translate($valX, $valY);
+   -o-transform: translate($valX, $valY);
+}
+
+@mixin scale($valX, $valY) {
+   transform: scale($valX, $valY);
+   -webkit-transform: scale($valX, $valY);
+   -moz-transform: scale($valX, $valY);
+   -ms-transform: scale($valX, $valY);
+   -o-transform: scale($valX, $valY);
+}
+
+@mixin rotate($deg) {
+   transform: rotate($deg);
+   -webkit-transform: rotate($deg);
+   -moz-transform: rotate($deg);
+   -ms-transform: rotate($deg);
+   -o-transform: rotate($deg);
+}
+
+@mixin transition($val, $val2: null, $val3: null, $val4: null, $val5: null) {
+   transition: $val, $val2, $val2, $val3, $val4, $val5;
+   -webkit-transition: $val, $val2, $val2, $val3, $val4, $val5;
+   -moz-transition: $val, $val2, $val2, $val3, $val4, $val5;
+   -ms-transition: $val, $val2, $val2, $val3, $val4, $val5;
+   -o-transition: $val, $val2, $val2, $val3, $val4, $val5;
+}
+
+// Flex mixins
+@mixin flexbox() {
+   display: -webkit-box;
+   display: -moz-box;
+   display: -ms-flexbox;
+   display: -webkit-flex;
+   display: flex;
+}
+
+@mixin flex($values: 1) {
+   -webkit-box-flex: $values;
+   -moz-box-flex: $values;
+   -webkit-flex: $values;
+   -ms-flex: $values;
+   flex: $values;
+}
+
+@mixin flex-direction($direction) {
+   -webkit-flex-direction: $direction;
+   -moz-flex-direction: $direction;
+   -ms-flex-direction: $direction;
+   -o-flex-direction: $direction;
+   flex-direction: $direction;
+}
+
+@mixin flex-wrap($wrap) {
+   -webkit-flex-wrap: $wrap;
+   -moz-flex-wrap: $wrap;
+   -ms-flex-wrap: $wrap;
+   -o-flex-wrap: $wrap;
+   flex-wrap: $wrap;
+}
+
+@mixin flex-flow($flow) {
+   -webkit-flex-flow: $flow;
+   -moz-flex-flow: $flow;
+   -ms-flex-flow: $flow;
+   -o-flex-flow: $flow;
+   flex-flow: $flow;
+}
+
+@mixin order($val) {
+   -webkit-box-ordinal-group: $val;
+   -moz-box-ordinal-group: $val;
+   -ms-flex-order: $val;
+   -o-flex-order: $val;
+   -webkit-order: $val;
+   order: $val;
+}
+
+@mixin flex-grow($grow) {
+   -webkit-flex-grow: $grow;
+   -moz-flex-grow: $grow;
+   -ms-flex-grow: $grow;
+   -o-flex-grow: $grow;
+   flex-grow: $grow;
+}
+
+@mixin flex-shrink($shrink) {
+   -webkit-flex-shrink: $shrink;
+   -moz-flex-shrink: $shrink;
+   -ms-flex-shrink: $shrink;
+   -o-flex-shrink: $shrink;
+   flex-shrink: $shrink;
+}
+
+@mixin flex-basis($width) {
+   -webkit-flex-basis: $width;
+   -moz-flex-basis: $width;
+   -ms-flex-basis: $width;
+   -o-flex-basis: $width;
+   flex-basis: $width;
+}
+
+@mixin justify-content($justify) {
+   -webkit-justify-content: $justify;
+   -moz-justify-content: $justify;
+   -ms-justify-content: $justify;
+   -o-justify-content: $justify;
+   justify-content: $justify;
+   -ms-flex-pack: $justify;
+}
+
+@mixin align-content($align) {
+   -webkit-align-content: $align;
+   -moz-align-content: $align;
+   -ms-align-content: $align;
+   -o-align-content: $align;
+   align-content: $align;
+}
+
+@mixin align-items($align: center) {
+   -webkit-align-items: $align;
+   -moz-align-items: $align;
+   -ms-align-items: $align;
+   -o-align-items: $align;
+   align-items: $align;
+}
+
+@mixin align-self($align) {
+   -webkit-align-self: $align;
+   -moz-align-self: $align;
+   -ms-align-self: $align;
+   -o-align-self: $align;
+   align-self: $align;
+}
+
+@mixin lotto-group-color($color) {
+   border: 1.5px solid $color;
+}
+
+@mixin animate($time) {
+   -webkit-animation: $time;
+   animation: $time;
+   -moz-animation: $time;
+   -ms-animation: $time;
+   -o-animation: $time;
+}
+
+@mixin text-style($val) {
+   font-weight: $val;
+   font-style: $val;
+   font-stretch: $val;
+   line-height: $val;
+   letter-spacing: $val;
+}
+
+@mixin appearance($val) {
+   -moz-appearance: $val;
+   -webkit-appearance: $val;
+   -ms-appearance: $val;
+   -o-appearance: $val;
+}
+
+@mixin spacer($space-height) {
+   height: $space-height;
+   width: 100%;
+}

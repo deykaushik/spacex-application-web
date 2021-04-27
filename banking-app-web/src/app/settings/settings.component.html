@@ -1,0 +1,52 @@
+﻿<div class="row floatingNotification submitRow limitHeader" *ngIf="(limitResponseMessage===''&& limitStatusmessage!=='')&& isProfileLimits">
+   <div class="col-sm-7 col-md-7 col-xs-12 textSubmit">
+         <span *ngIf="limitStatusmessage!==''" class="rename-icon"></span>
+          <span class="messagedecoration">{{limitStatusmessage}}</span>         
+
+        </div>
+   <div class="btnGroup hideIn-Mobile">
+      <div class="col-sm-2 col-xs-12 postionWebCancelButton">
+         <button class="gd-ghost-btn button-width postionHeaderBtnGrp" (click)="cancelLimitUpdate()">Cancel</button>
+      </div>
+      <div class="col-sm-3 col-md-2 col-xs-12 postionHeaderBtnGrp postionWebUpdateButton">
+         <app-bottom-button [disableButton]='limitListCount <= 0||!isAllValidationPassed' (click)="updatebtnClick($event)" [showLoader]='showLoader' [text]="limitListCount > 1 ?'Update all':'Update'"></app-bottom-button>
+      </div>
+   </div>
+   <div class="btnGroup hideIn-web">
+    <div class="col-sm-3 col-md-2 col-xs-12 postionMobileButton">
+       <app-bottom-button [disableButton]='limitListCount <= 0||!isAllValidationPassed' (click)="updatebtnClick($event)" [showLoader]='showLoader' [text]="limitListCount > 1 ?'Update all':'Update'"></app-bottom-button>
+    </div>    
+    <div class="col-sm-2 col-xs-12 postionMobileButton">
+      <button class="gd-ghost-btn" (click)="cancelLimitUpdate()">Cancel</button>
+   </div>
+ </div>
+</div>
+<div class="row top-alert submitRowResponse limitHeader" *ngIf="limitResponseMessage!=='' && isProfileLimits"
+[class.success]='success' [class.error]='error' [class.partial]='partial'>
+     <div class="col-md-8 col-sm-6 col-xs-11 alignContent">
+       <span class="icon"></span>
+       <span class="message messagedecoration">{{limitResponseMessage}}</span>
+       <span class="close-icon pull-right hide-web" (click)="cancelLimitUpdate(false)"></span>
+     </div>
+     <div class="col-md-3 col-sm-5 col-xs-1 retry-container hide-mobile">
+          <div class="col-sm-9 retry" (click)="updatebtnClick($event)" >
+             <span class="retry-icon" *ngIf="!success">Try again</span>
+          </div>
+          <div class="col-sm-3"><span class="close-icon" (click)="cancelLimitUpdate(false)"></span></div>
+     </div>
+     <div class="col-xs-12 hide-web retry-mob">
+        <span class="retry-icon" *ngIf="!success" (click)="updatebtnClick($event)">Try again</span>
+    </div> 
+</div>
+
+
+<div class="settings" [class.showProfileHeader]="isProfileLimits&&limitResponseMessage===''&& limitStatusmessage!==''">
+<div class="blocks">
+<div class="block settings-left-nav pull-left" [class.settings-top]="!(isProfileLimits&&limitResponseMessage==='' && limitStatusmessage!=='')">
+   <app-nav-menu [options]="navMenus" [navTitle]="navTitle"></app-nav-menu>
+</div>
+<div class="block settings-content" [class.contentPosition]="(isProfileLimits&&(limitResponseMessage!=='' && limitStatusmessage!==''))">
+   <router-outlet></router-outlet>
+</div>
+</div>
+</div>

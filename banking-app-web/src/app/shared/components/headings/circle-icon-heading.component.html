@@ -1,0 +1,19 @@
+﻿<div class="current-steps heading-block">
+   <div class="block" [ngClass]="(successful)?'succeed':'failed'">
+      <div class="steps-track">
+         <span class="step-large">
+            <span class="success" [ngClass]="(successful)?'img-step-tick':'img-step-close'"></span>
+         </span>
+      </div>
+      <div class="steps-block">
+         <div class="mob">
+            <span class="step-small">
+               <span class="success" [ngClass]="(successful)?'img-step-tick':'img-step-close'"></span>
+            </span>
+            <h4 class="step-title section-title">{{heading}}</h4>
+         </div>
+      </div>
+   </div>
+</div>
+
+

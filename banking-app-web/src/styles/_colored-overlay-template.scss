@@ -1,0 +1,122 @@
+﻿@import './_base.scss';
+@import './_mixins.scss';
+
+
+.overlay-content-wrapper {
+   text-align: center;
+   font-size: $font-xsm;
+   color: $color-overlay;
+   margin-top: 40px;
+
+   .icon {
+      display: inline-block;
+      width: 60px;
+      height: 60px;
+      margin-bottom: 15px;
+   }
+
+   .content {
+      .para-title {
+         color: $color-overlay;
+      }
+
+      .top {
+         margin-bottom: 20px;
+      }
+
+      .light-box {
+         background: lighten($overlay-bg, 2%);
+         padding: 20px;
+         margin-bottom: 20px;
+         text-align: left;
+         background: $highlight-bg;
+         ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+
+            li {
+               margin-bottom: 5px;
+            }
+         }
+      }
+
+      .bottom {
+         a {
+            color: $color-overlay;
+            text-decoration: underline;
+         }
+      }
+   }
+}
+.vertical-overlay-content-wrapper{
+   text-align: center;
+   font-size: $font-md;
+   color: $color-overlay;
+   margin-top: 40px;
+
+   .icon {
+      display: inline-block;
+      width: 50px;
+      margin-bottom: 40px;
+   }
+
+   .content {
+      .para-title {
+         color: $color-overlay;
+         font-size: $xlg-descrp-size;
+         margin-bottom: 30px;
+      }
+
+      .top {
+         max-width: 850px;
+         margin: 0 auto;
+      }
+   }
+}
+
+@media (min-width: $media-sm) {
+   .overlay-content-wrapper {
+      text-align: left;
+      font-size: $font-sm;
+      @include flexbox();
+      @include align-items(flex-start);
+      margin-top: 100px;
+
+      .icon {
+         width: 210px;
+         height: 210px;
+         margin: 0 60px 0 0;
+      }
+
+      .content {
+         max-width: 700px;
+         @include flex(1);
+
+         .para-title {
+            font-size: $section-title-size;
+         }
+
+         .top {
+            margin-bottom: 20px;
+         }
+
+         .light-box {
+            font-size: $para-title-size;
+         }
+      }
+   }
+   .vertical-overlay-content-wrapper{
+      font-size: $xlg-descrp-size;
+
+      .icon {
+         width: 70px;
+      }
+
+      .content {
+         .para-title {
+            font-size: $xlg-heading-size;
+         }
+      }
+   }
+}

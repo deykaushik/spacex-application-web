@@ -1,0 +1,161 @@
+﻿@import './../../../../styles/_mixins.scss';
+@import './../../../../styles/_base.scss';
+
+
+$icon-path: '../../../../assets/svg/';
+
+.gd-dropdown {
+   position: relative;
+   outline: 0;
+   &.open{
+      .discrp-block {
+         .icon-field {
+            .icon{
+               &.down {
+                  @include rotate(180deg);
+               }
+            }
+         }
+      }
+   }
+   &.one-account{
+      outline: none;
+      .discrp-block{
+         cursor: default;
+      }
+   }
+   .discrp-block {
+      @include flexbox();
+      @include align-items(center);
+      padding: 10px;
+      border: 2px solid $form-element-border;
+      background: $form-element-bg;
+      cursor: pointer;
+
+      &.active{
+         background-color: $highlight-bg;
+      }
+      .para-title {
+         margin-bottom: 0;
+      }
+
+
+      .icon-field {
+         position: relative;
+         width: 40px;
+         .icon {
+            width: 20px;
+            height: 15px;
+            cursor: pointer;
+            line-height: 1;
+            top: -12px;
+            &.down {
+               @include svg-image-full-path($icon-path, 'down',auto,auto);
+            }
+      }
+   }
+   }
+
+   .fields {
+      @include flex(1);
+
+      .field {
+         margin-bottom: 5px;
+         @include flexbox();
+
+         &:last-child {
+            margin-bottom: 0;
+         }
+
+         .left {
+            @include flex(1);
+         }
+
+         .right {
+            margin-left: 12px;
+            text-align: right;
+         }
+      }
+   }
+
+   .dropdown-menu {
+      float: none;
+      padding: 0;
+      width: 100%;
+      max-height: 260px;
+      overflow: hidden;
+      overflow-y: auto;
+      margin-top: 0;
+      border: none;
+      border-bottom: 2px solid $form-element-border;
+      @include border-radius(0);
+      @include box-shadow(none);
+
+      .discrp-block {
+         border-width: 1px;
+         border-bottom: none;
+      }
+      .available-title {
+         color: $text-color-primary;
+      }
+   }
+}
+
+.credit-card {
+   border-left: 3px solid $color-credit-card !important;
+
+   .toggle-icon {
+      color: $color-credit-card;
+   }
+}
+
+.loan {
+   border-left: 3px solid $color-loan !important;
+
+   .toggle-icon {
+      color: $color-loan;
+   }
+}
+.investment {
+   border-left: 3px solid $color-investment !important;
+
+   .toggle-icon {
+      color: $color-investment;
+   }
+}
+.default {
+   border-left: 3px solid $color-account-default !important;
+
+   .toggle-icon {
+      color: $color-account-default;
+   }
+}
+
+.rewards {
+   border-left: 3px solid $color-greenbacks !important;
+
+   .toggle-icon {
+      color: $color-greenbacks;
+   }
+}
+
+.savings {
+   border-left: 3px solid $color-savings !important;
+
+   .toggle-icon {
+      color: $color-savings;
+   }
+}
+
+.current {
+   border-left: 3px solid $color-current !important;
+
+   .toggle-icon {
+      color: $color-current;
+   }
+}
+
+.disabled {
+   pointer-events: none;
+   opacity: 0.5;
+}

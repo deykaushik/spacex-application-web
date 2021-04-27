@@ -1,0 +1,17 @@
+﻿<app-colored-overlay [isVisible]="replaceCardBranchLocatorVisible" [alternate]="true" [altButtonText]="'Cancel'" [template]="replaceCardBranchLocatorTemplate"
+                     [backOption]="false" (onHide)="hideReplaceCardBranchLocatorPopup()">
+   <ng-template #replaceCardBranchLocatorTemplate>
+      <app-branch-locator [cardInfo]="cardReplaceInfo"></app-branch-locator>
+   </ng-template>
+</app-colored-overlay>
+<app-colored-overlay [isVisible]="replaceCardStatusVisible" [alternate]="true" [altButtonText]="'Close'" [template]="replaceCardStatusTemplate"
+                     [backOption]="false" (onHide)="hideReplaceCardStatusPopup()">
+   <ng-template #replaceCardStatusTemplate>
+      <app-replace-card-status [cardInfo]="replaceCardStatus"></app-replace-card-status>
+   </ng-template>
+</app-colored-overlay>
+<div class="row">
+   <div class="col-xs-12">
+      <button class="gd-primary-btn btn-replace" (click)="showReplaceCardPopup();sendEvent('click_on_replace_card');">Replace Card</button>
+   </div>
+</div>

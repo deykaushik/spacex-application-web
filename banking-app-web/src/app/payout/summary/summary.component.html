@@ -1,0 +1,72 @@
+<div class="summary-container">
+   <div class="summary-block">
+      <h4 class="page-title">{{summaryLabels.summary}}</h4>
+      <span class="title-divider"></span>
+      <div class="property-block">
+         <span class="block-header" [innerHtml]="summaryLabels.propertyAddress"></span>
+         <span class="address-type" [innerHtml]="payoutStepData?.propertyAddress"></span>
+      </div>
+      <div class="pay-out-type-block">
+         <div class="pay-out-header">
+            <span class="block-header" [innerHtml]="summaryLabels.payoutType"></span>
+            <span class="edit-button" (click)="onEditClick(0)" [innerHtml]="summaryLabels.edit"></span>
+         </div>
+         <span class="address-type">{{paymentType}} {{summaryLabels.payout}}</span>
+      </div>
+      <div class="pay-out-details-block">
+         <div class="pay-out-details-header">
+            <span class="block-header" [innerHtml]="summaryLabels.payoutDetails"></span>
+            <span class="edit-button" (click)="onEditClick(1)" [innerHtml]="summaryLabels.edit"></span>
+         </div>
+         <div class="pay-out-details clearfix">
+            <div class="amount-div">
+               <span class="payment-details-label" [innerHtml]="this.amountLabel"></span>
+               <span class="payment-details-value" [innerHtml]="paymentAmount"></span>
+            </div>
+            <div class="recipient-div">
+               <span class="payment-details-label" [innerHtml]="summaryLabels.recipientName"></span>
+               <span class="payment-details-value capitalize-text" [innerHtml]="payoutStepData?.recipientName"></span>
+            </div>
+            <div class="bank-div">
+               <span class="payment-details-label" [innerHtml]="summaryLabels.bank"></span>
+               <span class="capitalize-text payment-details-value" [innerHtml]="payoutStepData?.bank.toLowerCase()"></span>
+            </div>
+            <div class="account-number-div">
+               <span class="payment-details-label" [innerHtml]="summaryLabels.accountNumber"></span>
+               <span class="payment-details-value" [innerHtml]="payoutStepData?.accountNumber"></span>
+            </div>
+         </div>
+      </div>
+      <div class="contact-person-block">
+         <div class="contact-person-header">
+            <span class="block-header" [innerHtml]="summaryLabels.contactPersonCamelCase"></span>
+            <span class="edit-button" (click)="onEditClick(2)" [innerHtml]="summaryLabels.edit"></span>
+         </div>
+         <div class="name-surname-div clearfix">
+            <span class="contact-person-label" [innerHtml]="summaryLabels.nameAndSurName"></span>
+            <span class="contact-person-value" [innerHtml]="payoutStepData?.personName"></span>
+         </div>
+         <div class="contact-number-div clearfix">
+            <span class="contact-person-label" [innerHtml]="summaryLabels.contactNumber"></span>
+            <span class="contact-person-value" [innerHtml]="formatTelephone(payoutStepData?.personContactNumber)"></span>
+         </div>
+         <div class="contact-email-div clearfix">
+            <span class="contact-person-label" [innerHtml]="summaryLabels.email"></span>
+            <span class="contact-person-value" [innerHtml]="payoutStepData?.email.toLowerCase()"></span>
+         </div>
+      </div>
+      <div class="term-condition-block">
+         <span class="terms-block" [innerHtml]="summaryLabels.byClickingTermsAndConditions"></span>
+         <span class="terms-block" [innerHtml]="summaryLabels.termAndConditionLabel" (click)="openTermsModal()"></span>
+      </div>
+      <div class="request-button">
+         <app-bottom-button [text]="'Request payment'" [class.btn-disabled]="showLoader" [disableButton]="showLoader" (click)="requestPayOut()" [showLoader]='showLoader'></app-bottom-button>
+      </div>
+   </div>
+</div>
+<app-colored-overlay class="initiate-overlay" [isVisible]="isOverlayView" [alternate]="true" [altButtonText]="''" [template]="termsAndConditions"
+   [backOption]="false" (onHide)="closeTermsModal()" [headerFixed]="true">
+   <ng-template #termsAndConditions>
+      <app-payout-terms></app-payout-terms>
+   </ng-template>
+</app-colored-overlay>

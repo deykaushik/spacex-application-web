@@ -1,0 +1,6 @@
+<div class="stars-wrapper" id="label.star">
+   <div (mouseenter)="setActiveStar(star)" (mouseleave)="resetActiveStar()" (touchend)="setActiveStarState(star)"
+      (click)="setActiveStarState(star)" *ngFor="let star of stars" [class.disabled]="star?.state === label.disableStatus"
+      [class.active]="star?.state === label.activeStatus" class="star">
+   </div>
+</div>

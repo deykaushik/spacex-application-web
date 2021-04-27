@@ -1,0 +1,51 @@
+<section class="processing-time-container">
+   <div class="header"><span>{{openAccountMessages.aboutNetbankInvest}}</span></div>
+   <div class="content">
+      <ul class="list">
+         <li>{{openAccountMessages.openInvestmentProduct}}</li>
+         <li>{{openAccountMessages.stopOrderInfo}}</li>
+         <li>{{openAccountMessages.internetBankingInfo}}</li>
+      </ul>
+   </div>
+   <div class="heading"><span>{{openAccountMessages.processingTimes}}</span></div>
+   <table class="table table-stripped">
+      <thead>
+         <tr>
+            <th>{{openAccountMessages.investInfo}}</th>
+            <th>{{openAccountMessages.reflectTransc}}</th>
+         </tr>
+      </thead>
+      <tbody>
+         <tr>
+            <td>{{openAccountMessages.weekdaysBefore}}</td>
+            <td>{{openAccountMessages.nextBusinessDay}}</td>
+         </tr>
+         <tr>
+            <td>{{openAccountMessages.weekdaysAfter}}</td>
+            <td>{{openAccountMessages.businessDay}}</td>
+         </tr>
+         <tr>
+            <td>{{openAccountMessages. beforeSaturdays}}</td>
+            <td>{{openAccountMessages.nextMonday}}</td>
+         </tr>
+         <tr>
+            <td>{{openAccountMessages.afterSaturday}}</td>
+            <td>{{openAccountMessages.nextTuesday}}</td>
+         </tr>
+         <tr>
+            <td>{{openAccountMessages.beforeHoliday}} </td>
+            <td>{{openAccountMessages.nextBusinessDay}}</td>
+         </tr>
+         <tr>
+            <td>{{openAccountMessages.afterNineteen}}</td>
+            <td>{{openAccountMessages.withinTwoDay}}</td>
+         </tr>
+      </tbody>
+   </table>
+   <div class="info">{{openAccountMessages.investmentProductInfo}} <a href="{{openAccountValues.nedBankSite}}" target="_blank"
+         class="hyper-link ">www.nedbank.co.za</a>.
+   </div>
+   <div class="done">
+      <app-bottom-button (click)="back()" [text]="'Done'"></app-bottom-button>
+   </div>
+</section>

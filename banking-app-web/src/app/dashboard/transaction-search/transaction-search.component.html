@@ -1,0 +1,103 @@
+<div class="transaction-search-container">
+   <div class="container">
+      <form #searchForm="ngForm">
+         <div class="search-field">
+            <span class="search-text">{{labels.searchLabel}}</span>
+            <div class="clear-field-block">
+               <input autofocus id="contextual-search" type="search" autocomplete="off" name="filter" placeholder={{labels.placeholderText}}
+                  [(ngModel)]="filter" (ngModelChange)="filterContentContextual($event)" [maxLength]="variableValues.contextualSearchMaxLength"
+                  appClearField>
+               <div class="filter-option" (click)="isAdvancedSearch = !isAdvancedSearch; GAEventAdvanceSearch()">
+                  <span class="filter-text" [class.filter-active]="isAdvancedSearch">{{labels.filter}}</span>
+                  <span class="icon" [ngClass]="isAdvancedSearch ? 'filter' : 'filter-grey'"></span>
+               </div>
+            </div>
+         </div>
+         <div *ngIf="isAdvancedSearch">
+            <div class="to-from-container row">
+               <div class="from-container col-sm-6">
+                  <label class="search-labels">{{amountLabel + labels.from}}</label>
+                  <input id="amountFrm" autocomplete="off" #amountFrm="ngModel" class="validate" [ngModel]="amountFrom" (ngModelChange)="onFromAmountChange($event)"
+                     type="text" name="amountFrm" [pattern]="accountDetails.accountType === accountTypeRewards ? patternPoint : patternAmount"
+                     (blur)="formatAmount(labels.amountFrom)" placeholder="{{accountDetails.accountType === accountTypeRewards ? variableValues.zeroValue : variableValues.zeroDecValue}}"
+                  />
+                  <span *ngIf="amountFrm.touched" role="alert" class="error-msg">
+                     <span *ngIf="amountFrm.errors" class="err-msg">{{messages.numericError}}</span>
+                  <div class="err-msg" *ngIf="isFromAmountInValid && focusAmount === labels.amountFrom">{{errorMessageFrom}}</div>
+                  </span>
+               </div>
+               <div class="to-container col-sm-6">
+                  <label [ngClass]="amountFrom===variableValues.emptyValue ? 'search-labels-blur' : 'search-labels'">{{amountLabel + labels.upTo}}</label>
+                  <input id="amountTo" autocomplete="off" #amntTo="ngModel" class="validate" [ngModel]="amountTo" (blur)="formatAmount(labels.amountTo)"
+                     (ngModelChange)="onToAmountChange($event)" type="text" name="amntTo" [pattern]="accountDetails.accountType === accountTypeRewards ? patternPoint : patternAmount"
+                     [readOnly]="amountFrom===variableValues.emptyValue" placeholder="{{accountDetails.accountType === accountTypeRewards ? variableValues.zeroValue : variableValues.zeroDecValue}}"
+                  />
+
+                  <span *ngIf="amountFrom && !amountValidation()" role="alert" class="err-msg">
+                     <span>{{errorMessageReqTo}}</span>
+                  </span>
+                  <div *ngIf="amntTo.touched">
+                     <span *ngIf="amountValidation() && amntTo.errors" class="err-msg">{{messages.numericError}}</span>
+                     <div class="err-msg" *ngIf="isToAmountInValid && focusAmount === labels.amountTo">{{errorMessageTo}}</div>
+                  </div>
+               </div>
+
+            </div>
+            <div class="period-container">
+               <label class="gd-period-label">{{labels.period}}</label>
+               <div class="btn-group">
+                  <app-toggle-button-group [toggleButtonGroup]="toggleButtonGroup" [selectedButtonValue]="selectedButton" (onSelectionChange)="selectDate($event)"></app-toggle-button-group>
+               </div>
+            </div>
+            <section *ngIf="showDatePicker" class="to-from-container row">
+               <div class="from-container col-sm-6">
+                  <label class="search-labels">{{labels.txnDateFrom}}</label>
+                  <div class="gd-form">
+                     <div class="gd-form-row">
+                        <app-custom-date-picker id="amount-from" [date]="formatDateFrom" [config]="fromConfig" (dateChanged)="setFromDate($event)"></app-custom-date-picker>
+                     </div>
+                  </div>
+               </div>
+               <div class="to-container col-sm-6">
+                  <label class="search-labels">{{labels.txnDateTo}}</label>
+                  <div class="gd-form">
+                     <div class="gd-form-row">
+                        <app-custom-date-picker id="amount-to" [config]="toConfig" [date]="formatDateTo" (dateChanged)="setToDate($event)" [disabled]="disableToCalendar"></app-custom-date-picker>
+                     </div>
+                  </div>
+               </div>
+            </section>
+            <div class="buttons row">
+               <div class="submit-btn col-sm-5">
+                  <app-bottom-button id="submit-btn" [disableButton]="disableSubmit || !searchForm.valid || isToAmountInValid || isFromAmountInValid || (amountFrom && !amountValidation())"
+                     [text]="labels.submitBtn" (click)="submit()"></app-bottom-button>
+               </div>
+               <div class="col-sm-5">
+                  <app-bottom-button id="cancel-btn" [alternateTheme]="true" [text]="labels.cancelBtn" (click)="goBack()"></app-bottom-button>
+               </div>
+            </div>
+         </div>
+      </form>
+   </div>
+   <ng-container *ngIf="showLoader; then loader else transactionList"></ng-container>
+   <ng-template #loader>
+      <div class="lazy-load-transactions">
+         <div class="loader">
+            <app-spinner [color]="'green'"></app-spinner>
+      </div>
+</div>
+</ng-template>
+<ng-template #transactionList>
+   <ng-container *ngIf="errorOccured; then errorScreen else transactionList"></ng-container>
+   <ng-template #errorScreen>
+      <div class="error-screen">
+         <span class="icon-warning"></span>
+         <span class="text">{{messages.errorMessageLine1}}</span>
+         <span class="text">{{messages.errorMessageLine2}}</span>
+      </div>
+   </ng-template>
+   <ng-template #transactionList>
+      <app-transaction-list [accountDetails]="accountDetails" [transactions]="visibleTransactions"></app-transaction-list>
+   </ng-template>
+</ng-template>
+</div>

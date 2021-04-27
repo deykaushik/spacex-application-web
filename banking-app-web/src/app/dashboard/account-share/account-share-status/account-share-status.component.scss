@@ -1,0 +1,107 @@
+@import './../../../../styles/_base.scss';
+@import './../../../../styles/_mixins.scss';
+$icon-path: '../../../../assets/svg';
+$icon-tick: 'tick_circle';
+$icon-error: 'close-circle-red';
+.header-row {
+   margin: 0 auto;
+   .status-block {
+      margin: 20px;
+      display: flex;
+      flex-direction: column;
+      .status-icon-text {
+         margin-bottom: 30px;
+         .icon-field {
+            width: auto;
+            .icon {
+               display: inline-block;
+               &.success {
+                  @include svg-image-full-path($icon-path, $icon-tick, 24px, 24px);
+               }
+               &.error {
+                  @include svg-image-full-path($icon-path, $icon-error, 24px, 24px);
+               }
+            }
+         }
+         .title {
+            font-size: $section-title-secondary-size-mob;
+            @include markpro-medium();
+            padding: 0 0 0 10px;
+            line-height: normal;
+            letter-spacing: normal;
+            font-weight: 500;
+            &.success {
+               color: $text-color-accent-secondary;
+            }
+            &.error {
+               color: $text-color-error;
+            }
+         }
+      }
+      .status-info-block {
+         margin-bottom: 40px;
+         .status-info-msg {
+            margin: 0 0 20px 0;
+            line-height: 1.5;
+            letter-spacing: normal;
+         }
+         .recipients-list {
+            font-size: $section-title-secondary-size-mob;
+            color: $text-color-message-block-content;
+            .recipient-lbl {
+               @include markpro-bold();
+               margin-bottom: 20px;
+               display: block;
+            }
+            .recipient-email {
+               display: block;
+            }
+         }
+      }
+   }
+}
+
+@media (min-width: $media-sm) {
+   .header-row {
+      max-width: 666px;
+      .status-block {
+         margin: 34px 15px;
+         .status-icon-text {
+            margin-bottom: 43px;
+            .icon-field {
+               width: auto;
+               .icon {
+                  &.success {
+                     @include svg-image-full-path($icon-path, $icon-tick, 32px, 32px);
+                  }
+                  &.error {
+                     @include svg-image-full-path($icon-path, $icon-error, 32px, 32px);
+                  }
+               }
+            }
+            .title {
+               padding: 0 0 0 15px;
+               font-size: $section-title-size;
+            }
+         }
+         .status-info-block {
+            margin: 0px 118px 40px;
+            .status-info-msg {
+               margin-bottom: 30px;
+            }
+            .recipients-list {
+                width: 459px;
+               .recipient-email {
+                  display: inline;
+               }
+            }
+         }
+         .btn-tryagain {
+            margin-bottom: 30px;
+            margin-left: 118px;
+            margin-right: 118px;
+            margin: 0px 118px 30px
+         }
+      }
+   }
+}

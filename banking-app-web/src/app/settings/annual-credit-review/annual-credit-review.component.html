@@ -1,0 +1,90 @@
+<app-message-alert class="message-alert" [showAlert]="isShowAlert" [displayMessageText]="alertMessage" [linkDisplayText]="''"
+   [action]="alertAction" [alertType]="alertType" (onAlertLinkEmit)="onAlertLinkSelected($event)"></app-message-alert>
+<section [class.is-skeleton-loading]='skeletonMode' class="preference-container">
+   <div class="col-xs-12 icon-field">
+      <h4 class="preference-container-header" [innerHtml]="labels.annualCreditReviewLabels.title"></h4>
+   </div>
+   <div *ngIf="showAnnualCreditReview && isCreditCardAvailable ">
+      <div class="col-xs-12 icon-field">
+         <span class="icon left-arrow" (click)="openSettingsMenu('Settings')"></span>
+         <span class="preference-container-sub-header  col-md-12" [innerHtml]=" labels.annualCreditReviewLabels.titleDescription1 | skeletonLoader:skeletonMode"></span>
+      </div>
+      <div class="preference-widget" *ngIf="isCreditCardAvailable">
+         <div class="col-xs-9 col-sm-9 col-md-10 col-lg-10 preference-widget-header">
+            <span [innerHtml]="labels.annualCreditReviewLabels.title"></span>
+         </div>
+         <div class="col-xs-2 col-sm-2 col-md-1 col-lg-1 limit-indicator preference-widget-header">
+            <label class="switch" for="chk-unilateral-limit-indicator">
+               <input id="chk-unilateral-limit-indicator" type="checkbox" name="isUnilateralLimitIndicatorMaster"  [(ngModel)]="isUnilateralLimitIndicatorMaster"
+                  (ngModelChange)="onMasterChange()">
+                  <div class="slider round inline-block"></div>
+            </label>
+         </div>
+      </div>
+      <div *ngIf="isUnilateralLimitIndicatorMaster && isCreditCardAvailable" class="optInOptOut col-xs-9 col-sm-9 col-md-10 col-lg-10">
+         <h2>{{labels.annualCreditReviewLabels.optInOrOutForIndividualAccountsText}}</h2>
+      </div>
+      <div *ngIf="allCreditCardAccounts && isUnilateralLimitIndicatorMaster && isCreditCardAvailable">
+         <div class="preference-widget individual-widget" *ngFor="let creditCard of allCreditCardAccounts; let currentIndex = index;">
+            <div class="limit-widget" [ngClass]="getAccountTypeStyle('CC')">
+               <div class="account-details">
+                  <div class="account-name-and-number">
+                     <div class="account-name">{{creditCard.accountName}}</div>
+                     <div *ngIf="creditCard.plastics && creditCard.plastics.length !==0">
+                        <div class="account-number" *ngFor="let plastic of creditCard.plastics">{{plastic.plasticNumber}}</div>
+                     </div>
+                  </div>
+               </div>
+               <div class="account-toggle">
+                  <div class="freeze-toggle">
+                     <label class="switch inline-block minimum-left-spacing">
+                        <input type="checkbox" (ngModelChange)="onIndividualAccountToggleChange(creditCard, $event)" [ngModel]="allCreditCardAccounts[currentIndex].unilateralLimitIndicator"/>
+                        <div class="slider round inline-block"></div>
+                     </label>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div *ngIf="isCreditCardAvailable">
+         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 list-title">
+            {{labels.annualCreditReviewLabels.benefitsTitle}}
+         </div>
+         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="list">
+               <div class="list-dot"></div>
+            </div>
+            <div class="preference-widget-sub-header" [innerHtml]=" labels.annualCreditReviewLabels.adjustYourLimitsText | skeletonLoader:skeletonMode"></div>
+         </div>
+         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="list">
+               <div class="list-dot"></div>
+            </div>
+            <div class="preference-widget-sub-header" [innerHtml]=" labels.annualCreditReviewLabels.noPaperWorkText | skeletonLoader:skeletonMode"></div>
+         </div>
+         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="list">
+               <div class="list-dot"></div>
+            </div>
+            <div class="preference-widget-sub-header" [innerHtml]=" labels.annualCreditReviewLabels.noCallingText | skeletonLoader:skeletonMode"></div>
+         </div>
+         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="list">
+               <div class="list-dot"></div>
+            </div>
+            <div class="preference-widget-sub-header last-sub-header" [innerHtml]=" labels.annualCreditReviewLabels.yourCreditLimitText | skeletonLoader:skeletonMode">
+            </div>
+         </div>
+      </div>
+   </div>
+   <div *ngIf="!isCreditCardAvailable" class="no-creditCard-message-container">
+      <div class="icon-field">
+         <span class="icon left-arrow hidden-md" (click)="openSettingsMenu('Settings')"></span>
+         <span class="preference-container-sub-header no-credit-card"></span>
+            {{labels.annualCreditReviewLabels.manageYourCreditCardText}}
+         <div class="credit-review-icon"></div>
+      </div>
+      <p class="noCredit-card-label  first-label">{{labels.annualCreditReviewLabels.noCreditCardNoticeText}}</p>
+      <p class="noCredit-card-label second-label"> {{labels.annualCreditReviewLabels.weWillReviewYourLimitsText}}</p>
+   </div>
+</section>

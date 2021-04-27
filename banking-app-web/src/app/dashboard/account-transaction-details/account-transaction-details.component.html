@@ -1,0 +1,169 @@
+<div (click)="closeTransactionDetails()" class="close-area">
+   <div id="btn-close" class="icon-close"></div>
+</div>
+<ng-container *ngIf="accountType !== accountTypes.travelCardAccountType.code; else basicTravelCardTransactionDetails" [ngTemplateOutlet]="basicTransactionDetails"></ng-container>
+
+<ng-container [ngSwitch]="setTransactionDetailsView">
+   <div *ngSwitchCase="transactionTemplates.stopOrderEftDebitOrderInternal">
+      <ng-container [ngTemplateOutlet]="stopOrderEftDebitOrderInternal"></ng-container>
+   </div>
+   <div *ngSwitchCase="transactionTemplates.iMali">
+      <ng-container [ngTemplateOutlet]="iMaliTemplate"></ng-container>
+   </div>
+   <div *ngSwitchCase="transactionTemplates.lotto">
+      <ng-container [ngTemplateOutlet]="lottoTemplate"></ng-container>
+   </div>
+   <div *ngSwitchCase="transactionTemplates.electricity">
+      <ng-container [ngTemplateOutlet]="prepaidElectricityTemplate"></ng-container>
+   </div>
+   <div *ngSwitchCase="transactionTemplates.airtime">
+      <ng-container [ngTemplateOutlet]="prepaidAirtimeTemplate"></ng-container>
+   </div>
+</ng-container>
+
+<ng-template #basicTransactionDetails>
+   <p id="lbl-desc" class="label-trns-detail">{{fieldLabels.description}}</p>
+   <p id="val-desc" x-ms-format-detection="none" [innerHtml]="visibleTransactionDetails?.TransactionDescription || transaction?.Description | skeletonLoader:isSkeletonMode"
+      class="value-trns-detail"></p>
+
+   <p id="lbl-ac-number" class="label-trns-detail">{{fieldLabels.accNumber}}</p>
+   <p id="val-ac-number" x-ms-format-detection="none" [innerHtml]="visibleTransactionDetails?.AccountNumber || transaction?.Account | skeletonLoader:isSkeletonMode"
+      class="value-trns-detail"></p>
+
+   <p id="lbl-tx-date" class="label-trns-detail">{{fieldLabels.transDate}}</p>
+   <p id="val-tx-date" class="date value-trns-detail" [innerHtml]="visibleTransactionDetails?.TransactionDate || transaction?.PostedDate | date: dateFormat | skeletonLoader:isSkeletonMode"></p>
+
+   <p id="lbl-amount" class="label-trns-detail" *ngIf="accountType!== labels.dashboardRewardsAccountTitle; else rewardsPoints">{{fieldLabels.amount}}</p>
+   <ng-template #rewardsPoints>
+      <p>{{fieldLabels.points}}</p>
+   </ng-template>
+   <p id="val-amount" class="amount" [innerHtml]="transaction?.Amount | amountTransform: amountPipeConfig: transaction?.Currency | skeletonLoader:isSkeletonMode"></p>
+
+   <ng-container *ngIf="accountType === accountTypes.foreignCurrencyAccountType.code">
+      <p id="lbl-value-date" class="label-trns-detail">{{fieldLabels.valueDate}}</p>
+      <p id="val-value-date" class="date value-trns-detail" [innerHtml]="visibleTransactionDetails?.ValueDate | date: dateFormat | skeletonLoader:skeletonMode"></p>
+   </ng-container>
+
+   <ng-container *ngIf="!isErrorStatus">
+      <p id="lbl-tx-type" class="label-trns-detail">{{fieldLabels.transType}}</p>
+      <p id="val-tx-type" [innerHtml]="visibleTransactionDetails?.TransactionType | skeletonLoader:isSkeletonMode" class="value-trns-detail"></p>
+
+      <p id="lbl-ref-num" class="label-trns-detail">{{fieldLabels.refNumber}}</p>
+      <p id="val-ref-num" [innerHtml]="visibleTransactionDetails?.ReferenceNumber | skeletonLoader:isSkeletonMode" class="value-trns-detail"></p>
+   </ng-container>
+
+   <ng-container *ngIf="accountType === unitTrustAccount" [ngTemplateOutlet]="unitTrustTemplate"></ng-container>
+   <ng-container *ngIf="accountType === creditCardAccount" [ngTemplateOutlet]="creditCardTemplate"></ng-container>
+
+</ng-template>
+
+<ng-template #basicTravelCardTransactionDetails>
+   <div class="row col-md-12">
+      <span class="col-md-4">
+            <p id="lbl-desc" class="label-trns-detail">{{fieldLabels.description}}</p>
+            <p id="val-desc" x-ms-format-detection="none" [innerHtml]="visibleTransactionDetails?.TransactionDescription || transaction?.Description | skeletonLoader:isSkeletonMode"
+               class="value-trns-detail"></p>
+         </span>
+      <span class="col-md-4">
+            <p id="lbl-desc" class="label-trns-detail">{{fieldLabels.cardNumber}}</p>
+            <p id="val-desc" x-ms-format-detection="none" [innerHtml]="visibleTransactionDetails?.AccountNumber || transaction?.Account | skeletonLoader:isSkeletonMode"
+            class="value-trns-detail"></p>
+         </span>
+      <span class="col-md-4">
+            <p id="lbl-desc" class="label-trns-detail">{{fieldLabels.transDate}}</p>
+            <p id="val-desc" x-ms-format-detection="none" [innerHtml]="visibleTransactionDetails?.TransactionDate || transaction?.PostedDate | date: dateFormat | skeletonLoader:isSkeletonMode"
+            class="value-trns-detail"></p>
+         </span>
+   </div>
+   <div class="row col-md-12">
+      <span class="col-md-4">
+            <p id="lbl-desc" class="label-trns-detail">{{fieldLabels.amount}}</p>
+            <p id="val-desc" x-ms-format-detection="none" [innerHtml]="visibleTransactionDetails?.Amount || transaction?.Amount | amountTransform: amountPipeConfig: transaction?.Currency | skeletonLoader:isSkeletonMode"
+               class="value-trns-detail"></p>
+         </span>
+   </div>
+</ng-template>
+
+<ng-template #stopOrderEftDebitOrderInternal>
+   <ng-container *ngIf="visibleRecipientsDetails?.AccountNumber">
+      <p id="lbl-ac-number" class="label-trns-detail">{{fieldLabels.recpAccNumber}}</p>
+      <p id="val-ac-number" class="value-trns-detail" x-ms-format-detection="none" [innerHtml]="visibleRecipientsDetails?.AccountNumber | skeletonLoader:isSkeletonMode"></p>
+   </ng-container>
+   <ng-container *ngIf="visibleRecipientsDetails?.BankName">
+      <p id="lbl-bank-name" class="label-trns-detail">{{fieldLabels.recpBankName}}</p>
+      <p id="val-bank-name" class="value-trns-detail" [innerHtml]="visibleRecipientsDetails?.BankName"></p>
+   </ng-container>
+   <ng-container *ngIf="visibleRecipientsDetails?.TransactionDescription">
+      <p id="lbl-tx-desc" class="label-trns-detail">{{fieldLabels.recpTransDescp}}</p>
+      <p id="val-tx-desc" class="value-trns-detail" [innerHtml]="visibleRecipientsDetails?.TransactionDescription"></p>
+   </ng-container>
+</ng-template>
+
+<ng-template #iMaliTemplate>
+   <ng-container *ngIf="visibleRecipientsDetails?.PhoneNumber">
+      <p id="lbl-recp-cell-number" class="label-trns-detail">{{fieldLabels.cellphoneNumber}}</p>
+      <p id="val-recp-cell-number" class="value-trns-detail" [innerHtml]="visibleRecipientsDetails?.PhoneNumber | skeletonLoader:isSkeletonMode"></p>
+   </ng-container>
+</ng-template>
+
+<ng-template #lottoTemplate>
+   <ng-container *ngIf="visibleRecipientsDetails?.GameName">
+      <p id="lbl-game-type" class="label-trns-detail">{{fieldLabels.gameType}}</p>
+      <p id="val-game-type" class="value-trns-detail" [innerHtml]="visibleRecipientsDetails?.GameType | skeletonLoader:isSkeletonMode"></p>
+   </ng-container>
+</ng-template>
+
+<ng-template #prepaidElectricityTemplate>
+   <ng-container *ngIf="visibleRecipientsDetails?.PrepaidType">
+      <p id="lbl-prepaid-type" class="label-trns-detail">{{fieldLabels.prepaidType}}</p>
+      <p id="val-prepaid-type" class="value-trns-detail" [innerHtml]="visibleRecipientsDetails?.PrepaidType | skeletonLoader:isSkeletonMode"></p>
+   </ng-container>
+   <ng-container *ngIf="visibleRecipientsDetails?.MeterNumber">
+      <p id="lbl-meter-number" class="label-trns-detail">{{fieldLabels.meterNumber}}</p>
+      <p id="val-meter-number" class="value-trns-detail" [innerHtml]="visibleRecipientsDetails?.MeterNumber | skeletonLoader:isSkeletonMode"></p>
+   </ng-container>
+</ng-template>
+
+<ng-template #prepaidAirtimeTemplate>
+   <ng-container *ngIf="visibleRecipientsDetails?.PrepaidType">
+      <p id="lbl-prepaid-type" class="label-trns-detail">{{fieldLabels.prepaidType}}</p>
+      <p id="val-prepaid-type" class="value-trns-detail" [innerHtml]="visibleRecipientsDetails?.PrepaidType | skeletonLoader:isSkeletonMode"></p>
+   </ng-container>
+   <ng-container *ngIf="visibleRecipientsDetails?.PhoneNumber">
+      <p id="lbl-cell-number" class="label-trns-detail">{{fieldLabels.cellphoneNumber}}</p>
+      <p id="val-cell-number" class="value-trns-detail" [innerHtml]="visibleRecipientsDetails?.PhoneNumber | skeletonLoader:isSkeletonMode"></p>
+   </ng-container>
+   <ng-container *ngIf="visibleRecipientsDetails?.ServiceProvider">
+      <p id="lbl-service-provider" class="label-trns-detail">{{fieldLabels.serviceProvider}}</p>
+      <p id="val-service-provider" class="value-trns-detail" [innerHtml]="visibleRecipientsDetails?.ServiceProvider | skeletonLoader:isSkeletonMode"></p>
+   </ng-container>
+</ng-template>
+
+<ng-template #unitTrustTemplate>
+   <ng-container>
+      <p id="lbl-inv-number" class="label-trns-detail">{{fieldLabels.invNumber}}</p>
+      <p id="val-inv-number" class="value-trns-detail" [innerHtml]="transaction?.InvestorNumber | skeletonLoader:isSkeletonMode"></p>
+   </ng-container>
+   <ng-container>
+      <p id="lbl-value-date" class="label-trns-detail">{{fieldLabels.valueDate}}</p>
+      <p id="val-value-date" class="date value-trns-detail" [innerHtml]="transaction?.ValueDate | date: dateFormat | skeletonLoader:isSkeletonMode"></p>
+   </ng-container>
+   <ng-container>
+      <p id="lbl-total-units" class="label-trns-detail">{{fieldLabels.totalUnits}}</p>
+      <p id="val-total-units" class="value-trns-detail" [innerHtml]="transaction?.TotalUnits | skeletonLoader:isSkeletonMode"></p>
+   </ng-container>
+   <ng-container>
+      <p id="lbl-price-per-unit" class="label-trns-detail">{{fieldLabels.pricePerUnit}}</p>
+      <p id="val-price-per-unit" class="value-trns-detail" [innerHtml]="transaction?.PricePerUnit | amountTransform: amountPipeConfig | skeletonLoader:isSkeletonMode"></p>
+   </ng-container>
+   <ng-container>
+      <p id="lbl-current-bal" class="label-trns-detail">{{fieldLabels.currentBalance}}</p>
+      <p id="val-current-bal" class="value-trns-detail amount" [ngClass]="(transaction?.CurrentBalance) > 0 ? 'credits' : 'debits'"
+         [innerHtml]="transaction?.CurrentBalance | amountTransform: amountPipeConfig | skeletonLoader:isSkeletonMode"></p>
+   </ng-container>
+</ng-template>
+
+<ng-template #creditCardTemplate>
+   <p id="lbl-process-date" class="label-trns-detail">{{fieldLabels.processDate}}</p>
+   <p id="val-process-date" class="date value-trns-detail" [innerHtml]="visibleTransactionDetails?.ProcessDate | date: dateFormat | skeletonLoader:skeletonMode"></p>
+</ng-template>

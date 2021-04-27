@@ -1,0 +1,64 @@
+<form class="statement-details-container gd-form" #statementForm="ngForm">
+   <div class="gd-form-row">
+      <div class="col-md-6 col-sm-4 col-xs-12 mb-30">
+         <app-toggle-button-group [toggleButtonGroup]="toggleButtonGroup" [selectedButtonValue]="statementMode" (onSelectionChange)="onStatementChange($event)"></app-toggle-button-group>
+      </div>
+   </div>
+   <div class="container" *ngIf="!isListingView">
+      <div *ngIf="!showLoader">
+         <div *ngIf="isStatement">
+            <table>
+               <tbody>
+                  <tr *ngFor="let months of statementMonths; let i=index;">
+                     <td class="data-align">{{months?.date}}</td>
+                     <td [class.download]="months?.download" (click)="months?.download ? startDateStatement(months) : false">
+                        <div class="content-align content-color">
+                           <ng-container *ngIf="months?.download">
+                              <div class="download-statement"></div>
+                              <span>{{labelValues.downloadLabel}} </span>
+                           </ng-container>
+                           <ng-container *ngIf="!months?.download">
+                              <span class="date">{{labelValues.noStatementAvailabelMonth}} </span>
+                           </ng-container>
+                        </div>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <div class="information-align" *ngIf="!isStatement">
+            <span class="information"></span>
+            <span class="no-statements-available">{{labelValues.noStatementAvailabel}}</span>
+         </div>
+      </div>
+      <div *ngIf="showLoader" class="loader-align">
+         <div class="loader">
+            <app-spinner [color]="'green'"></app-spinner>
+         </div>
+      </div>
+      <div class="note-container">
+         {{labelValues.footerNotificationMessage}}
+      </div>
+   </div>
+
+   <div class="container csv-download" *ngIf="isListingView">
+      <div class="gd-form-row date-Content">
+         <div class="col-md-4 col-sm-10 col-xs-12 from-date" [ngClass]=" !invalidFromDate ? 'no-error' : 'error'">
+            <label>From</label>
+            <app-custom-date-picker [date]="fromDate" [config]="fromconfig" id="from-date" (dateChanged)="setFromDate($event)"></app-custom-date-picker>
+            <span *ngIf="invalidFromDate" class="date-Error">* {{labelValues.fromDateError}}</span>
+         </div>
+         <div class="col-md-4 col-sm-10 col-xs-12 from-date no-error">
+            <label>To</label>
+            <app-custom-date-picker [date]="toDate" [config]="toconfig" id="to-date" (dateChanged)="setToDate($event)"></app-custom-date-picker>
+            <span *ngIf="invalidToDate" class="date-Error">* {{labelValues.fromDateError}}</span>
+         </div>
+      </div>
+      <div class="row btn-display date-content">
+         <div class="download-btn col-md-2 col-sm-12 col-xs-8">
+            <app-bottom-button [disableButton]="invalidFromDate || invalidToDate" [showLoader]="showLoader" [text]="labels.download"
+               (click)="downloadStatementCASA()"></app-bottom-button>
+         </div>
+      </div>
+   </div>
+</form>

@@ -1,0 +1,82 @@
+﻿<div class="buy-electricity-review">
+    <table class="tabular-data-col-2">
+        <tbody>
+            <tr>
+                <td>Recipient: </td>
+                <td class="pad-left" id="buy-elec-recp-name">{{buyElectricityToVm.recipientName}}</td>
+            </tr>
+            <tr>
+                <td>Meter no:</td>
+                <td class="pad-left" id="buy-elec-recp-metr">{{buyElectricityToVm.meterNumber}}</td>
+            </tr>
+            <tr>
+                <td>Amount:</td>
+                <td class="pad-left" id="buy-elec-amount">{{ (amount - electricityAmountInArrears > 0 ? amount - electricityAmountInArrears : 0) | amountTransform: amountPipeConfig }} prepaid electricity</td>
+            </tr>
+            <tr>
+                <td colspan="2">&nbsp;</td>
+            </tr>
+            <tr>
+                <td>Your reference:</td>
+                <td class="pad-left" id="buy-elec-your-ref">{{buyElectricityForVm.yourReference}}</td>
+            </tr>
+            <tr *ngIf='buyElectricityForVm?.notificationType!="None"' id="buy-elec-not-typ">
+                <td>{{labels.notify}}</td>
+                <td>{{buyElectricityForVm.notificationType +" - "+ buyElectricityForVm.notificationInput}}</td>
+            </tr>
+            <tr>
+                <td>{{labels.paymentDate}}:</td>
+                <td class="pad-left" id="buy-elec-start-dt">{{buyElectricityAmountVm.startDate | date:dateFormat}}</td>
+            </tr>
+            <tr>
+                <td colspan="2">&nbsp;</td>
+            </tr>
+            <tr *ngIf="!this.buyElectricityToVm.isRecipientPicked">
+                <td class="align-vertical-middle">
+                    <span>Save recipient </span>
+                </td>
+                <td>
+                    <label class="switch inline-block minimum-left-spacing">
+                  <input type="checkbox" id="buy-elec-save-benef" [(ngModel)]="vm.isSaveBeneficiary" [checked]="vm.isSaveBeneficiary">
+                  <div class="slider round inline-block"></div>
+               </label>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="2" class="td-terms-condition">
+                    <span>By clicking below you accept the relevant electricity purchase </span>
+                    <a href="{{termsAndConditionLink}}" id="buy-elec-tnc" target="_blank" class="linkTermsCondition">terms and conditions</a>.
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<app-colored-overlay [isVisible]="isVisible" [alternate]="false" [altButtonText]="'Cancel'" [template]="tshwanTemplate" [backOption]="false">
+    <ng-template #tshwanTemplate>
+        <div class="overlay-content-wrapper">
+            <div class="icon"></div>
+            <div class="content">
+                <h6 class="para-title">City of Tshwane deduction</h6>
+                <div class="top">
+                    <p id="buy-elec-deduct-msg">On this meter an amount of {{electricityAmountInArrears | amountTransform: amountPipeConfig}} is due to the City of Tshwane. if you continue this amount will be deducted from your electricity purchase.</p>
+                </div>
+                <div class="top">
+                    <p id="buy-elec-avail-amt-msg">After this deduction your meter will have {{ (amount - electricityAmountInArrears > 0 ? amount - electricityAmountInArrears : 0) | amountTransform: amountPipeConfig}} of prepaid electricity available.</p>
+                </div>
+                <div class="bottom">
+                    <div class="half-btns">
+                        <div class="left">
+                            <button id="buy-elec-accept" class="gd-primary-btn" (click)="tshwanContinueClick()">Continue</button>
+                        </div>
+                        <div class="right">
+                            <button id="buy-elec-decline" class="gd-ghost-btn" (click)="tshwanDeclineClick()">Decline</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</app-colored-overlay>

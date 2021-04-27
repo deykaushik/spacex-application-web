@@ -1,0 +1,83 @@
+<div class="pay-status">
+    <div class="work-flow final-status">
+        <app-circle-icon-heading [heading]="successful?labels.paymentSuccess:labels.paymentFailed" [successful]="successful"></app-circle-icon-heading>
+        <div class="block">
+            <div class="steps-track"></div>
+            <div class="steps-block gd-form">
+                <table class="tabular-data-col-2 gd-form-row">
+                    <tbody>
+                        <tr>
+                            <td>Recipient:</td>
+                            <td>{{paymentDetail.bFName}}</td>
+                        </tr>
+                        <tr>
+                            <td>Bank:</td>
+                            <td>
+                                <span>{{paymentDetail.bank}}</span>
+                                <span> - {{paymentDetail.toAccount.accountNumber}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Amount:</td>
+                            <td>{{paymentDetail.amount | amountTransform: amountPipeConfig}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="tabular-data-col-2 gd-form-row">
+                    <tbody>
+                        <tr>
+                            <td>Pay from:</td>
+                            <td>
+                                <span class='capitalize'>{{accountNickName}}</span>
+                            </td>
+                        </tr>
+                        <tr *ngIf='payForVm?.notification?.value?.toLowerCase() !== "none"'>
+                            <td>{{labels.notify}}</td>
+                            <td>{{payForVm?.notification?.value + " - " + payForVm?.notificationInput}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{labels.yourReference}}:</td>
+                            <td>{{ paymentDetail.myDescription}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{labels.theirReference}}:</td>
+                            <td>{{paymentDetail.beneficiaryDescription}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="tabular-data-col-2 gd-form-row">
+                    <tbody>
+                        <tr *ngIf="successful && (paymentDetail.execEngineRef || paymentDetail.transactionID)">
+                            <td>Transaction no:</td>
+                            <td>{{paymentDetail.execEngineRef || paymentDetail.transactionID}}</td>
+                        </tr>
+                        <tr>
+                            <td>Payment date:</td>
+                            <td>{{paymentDetail.startDate | date : 'dd MMMM yyyy'}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="half-btns gd-form-row no-print" *ngIf="successful">
+                    <div class="left">
+                        <app-bottom-button [disableButton]="false" (clickEmitter)="newPayment($event);" [text]="'New payment'"></app-bottom-button>
+                    </div>
+                    <div class="right">
+                        <app-bottom-button [disableButton]="false" (clickEmitter)="navigateToDashboard();" [text]="'Go to overview'" [alternateTheme]="true"></app-bottom-button>
+                    </div>
+                </div>
+                <div class="half-btns gd-form-row no-print" *ngIf="!successful">
+                    <div class="left">
+                        <app-bottom-button [disableButton]="disableRetryButton || requestInprogress" [showLoader]='isButtonLoader' (clickEmitter)="retryPayment()" [text]="'Try again'"></app-bottom-button>
+                    </div>
+                    <div class="right">
+                        <app-bottom-button [disableButton]="requestInprogress" (clickEmitter)="navigateToDashboard()" [alternateTheme]="true" [text]="'Cancel payment'"></app-bottom-button>
+                    </div>
+                </div>
+                <div class="gd-error no-print">
+                    <span>{{apiFailureMessage}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

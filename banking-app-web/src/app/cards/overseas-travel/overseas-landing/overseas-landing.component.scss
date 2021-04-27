@@ -1,0 +1,33 @@
+@import './../../../../styles/_base.scss';
+@import './../../../../styles/_mixins.scss';
+
+.work-flow{
+   ::ng-deep{
+      .overlay-modal{
+         .overlay{
+            app-navigation-bar{
+               .stepper-container{
+                  .steps-table{
+                     margin-left: 55px;
+                  }
+                  .steps-table{
+                     .step-container{
+                        max-width: 100%;
+                        .step-div{
+                           .step-span{
+                              width: 65%;
+                              margin-right: 0px;
+                           }
+                           .step-chevron{
+                              right: 0px;
+                              margin-right: 10px;
+                           }
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      }
+   }
+}

@@ -1,0 +1,72 @@
+﻿<h1 role="alert" class="visuallyhidden" attr.aria-label="{{heading}}"></h1>
+<div class="transfer-status" id="trns-transfer-status">
+   <div class="work-flow final-status">
+      <app-circle-icon-heading [heading]="this.isNoResponseReceived ? labels.somethingWentWrong : heading" [successful]="successful"></app-circle-icon-heading>
+      <div class="block">
+         <div class="steps-track"></div>
+         <div class="steps-block gd-form">
+            <table class="tabular-data-col-2  gd-form-row">
+               <tbody>
+                  <tr>
+                     <td>{{successful ? 'Paid from: ':'Pay from: '}} </td>
+                     <td>
+                        <span class="capitalize">{{fromAccountNickName}}</span>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>{{successful ? 'Paid to: ':'Pay to: '}} </td>
+                     <td>
+                        <span class="capitalize">{{toAccountNickName}}</span>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>Amount: </td>
+                     <td> {{transferDetail?.amount | amountTransform: amountPipeConfig}}</td>
+                  </tr>
+               </tbody>
+            </table>
+
+            <table class="tabular-data-col-2 gd-form-row">
+               <tbody>
+                  <tr *ngIf="successful  && transferDetail.transactionID">
+                     <td>Transaction no:</td>
+                     <td>{{transferDetail?.execEngineRef || transferDetail?.transactionID}}</td>
+                  </tr>
+                  <tr>
+                     <td>{{labels.transferDate}}</td>
+                     <td>{{transferDetail?.startDate | date : formats.ddMMMMyyyy}}</td>
+                  </tr>
+               </tbody>
+            </table>
+            <div class="gd-form-row no-print" *ngIf="successful" (click)="print()">
+               <a class="download">
+                  <span class="icon"></span>
+                  <span class="text">Print proof of Payment</span>
+               </a>
+            </div>
+            <div class="half-btns gd-form-row no-print" *ngIf="successful">
+               <div class="left">
+                  <app-bottom-button [disableButton]="false" (clickEmitter)="newTransfer($event);this.sendEvent('transfer_confirmation_click_on_new_transfer');"
+                     [text]="labels.newTransfer"></app-bottom-button>
+               </div>
+               <div class="left">
+                  <app-bottom-button [disableButton]="false" (clickEmitter)="goToDashboard($event);this.sendEvent('transfer_confirmation_click_on_go_to_overview');"
+                     [alternateTheme]="true" [text]="labels.goOverview"></app-bottom-button>
+               </div>
+            </div>
+            <div class="half-btns gd-form-row no-print" *ngIf="!successful">
+               <div class="left">
+                  <app-bottom-button [text]="labels.tryAgain" [showLoader]='isButtonLoader' [disableButton]="disableRetryButton || requestInprogress"
+                     (clickEmitter)="retryTransfer()"></app-bottom-button>
+               </div>
+               <div class="right">
+                  <app-bottom-button (clickEmitter)="goToDashboard($event)" [disableButton]="requestInprogress" [alternateTheme]="true" [text]="this.isNoResponseReceived ? labels.cancelText : labels.cancelTransfer"></app-bottom-button>
+               </div>
+            </div>
+            <div class="gd-error no-print">
+               <span>{{transferDetail.errorMessage}}</span>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

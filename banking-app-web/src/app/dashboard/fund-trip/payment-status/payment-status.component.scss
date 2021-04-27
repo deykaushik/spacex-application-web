@@ -1,0 +1,52 @@
+@import './../../../../styles/_mixins.scss';
+@import './../../../../styles/_base.scss';
+
+
+$svg-path: './../../../../assets/svg/';
+$buy-status-bg: $container-bg;
+
+
+.buy-status {
+   font-size: $label-size;
+   background: $buy-status-bg;
+   @include main-content();
+   .work-flow {
+      .downlaod-icon {
+         @include svg-image-full-path($svg-path,'green-download', 100%, 100%);
+      }
+
+      .download {
+         color: $text-color-link;
+         cursor: pointer;
+
+         .icon,
+         .text {
+            display: inline-block;
+            vertical-align: middle;
+         }
+
+         .icon {
+            @include svg-image-full-path($svg-path,'green-download', 100%, 100%);
+            width: 30px;
+         }
+      }
+   }
+}
+
+.message-margin-bottom {
+   margin-bottom: 30px;
+}
+
+table.tabular-data-col-2 tr td:last-child {
+   padding-left: 19px;
+   word-break: break-all;
+}
+
+@media (min-width: $media-sm) {
+   .buy-status {
+      font-size: $status-size;
+   }
+}
+table.tabular-data-col-2 tr td:first-child {
+   width: 165px;
+}

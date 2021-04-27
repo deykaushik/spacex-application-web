@@ -1,0 +1,215 @@
+<app-colored-overlay *ngIf="isQuestionsPage" [isVisible]="true" [closeText]="false" [alternate]="true" [template]="rightOptions"
+   [backOption]="false" (onHide)="closeOverlay($event)">
+   <ng-template #rightOptions>
+      <div class="nav-header" *ngIf="!headerOptions">
+         <div class="container-fluid heading">
+            <div class="row-fluid">
+               <ul>
+                  <li>
+                     <ng-container *ngIf="showNoticePeriodContent">
+                        <span class="icon" (click)="showRightOptions()"></span>
+                        <span class="seperator"></span>
+                     </ng-container>
+                     <span class="filter-by">{{openAccountMessages.filterBy}}</span>
+                     <span class="seperator"></span>
+                  </li>
+                  <li>
+                     <span *ngIf="isText" [ngClass]="{'greenText': isDeposit, 'bold-text': (depositFlag && !isDeposit)}">{{initialDeposit}}</span>
+                     <span *ngIf="!isText" [ngClass]="{'greenText': isDeposit, 'bold-text': (depositFlag && !isDeposit)}" [innerHtml]="initialDeposit | amountTransform"></span>
+                     <span class="seperator"></span>
+                  </li>
+                  <li>
+                     <span [ngClass]="{'greenText': isAccessMoney, 'bold-text': (keepDepositFlag && !isAccessMoney)}">{{additionalDeposit}}</span>
+                     <span class="seperator"></span>
+                  </li>
+                  <li>
+                     <span [ngClass]="{'greenText': isNoticePeriod, 'bold-text': (accessMoneyFlag && !isNoticePeriod)}">{{noticePeriod}}</span>
+                  </li>
+               </ul>
+            </div>
+         </div>
+      </div>
+      <div class="right-options-content text-center" *ngIf="!showNoticePeriodContent else noticeContent">
+         <div class="container">
+            <div class="row">
+               <div class="header">
+                  {{openAccountMessages.openAccountHeader}}
+               </div>
+               <div class="sub-header">
+                  {{openAccountMessages.chooseOption}}
+               </div>
+               <div class="options-seperator"></div>
+               <div [ngClass]="{'progress-bar1': depositFlag ,
+               'progress-bar2': keepDepositFlag,
+               'progress-bar3': accessMoneyFlag}" class="progress-bar"></div>
+               <div class="background1">
+                  <p class="bg-text1">{{optionText}}</p>
+               </div>
+               <div class="box-content">
+                  <div class="col-md-4 col-xs-12 heading" (click)="isInitialDeposit()">
+                     <div class="bordered-div" [ngClass]="{'set-border': depositFlag ,
+                     'active': depositFlag,
+                     'inactive': !depositFlag}">
+                        <div class="background">
+                           <p class="bg-text">1</p>
+                        </div>
+                        <span class="icon money-icon"></span>
+                        <div class="desc-text">
+                           {{labels.depositAmount}}
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-4 col-xs-12 heading" (click)="accessMoney()">
+                     <div class="background">
+                        <p class="bg-text">{{openAccountValues.optionText2}}</p>
+                     </div>
+                     <div class="bordered-div" [ngClass]="{'set-border': keepDepositFlag ,
+                     'active': keepDepositFlag,
+                     'inactive': !keepDepositFlag}">
+                        <span class="icon"></span>
+                        <div class=" desc-text desc-text-deposit">
+                           {{labels.makeDeposit}}
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-4 col-xs-12 heading">
+                     <div class="background">
+                        <p class="bg-text">{{openAccountValues.optionText3}}</p>
+                     </div>
+                     <div class="bordered-div" [ngClass]="{'set-border': accessMoneyFlag ,
+                     'active': accessMoneyFlag,
+                     'inactive': !accessMoneyFlag}">
+                        <span class="icon clock-icon"></span>
+                        <div class="desc-text">
+                           {{labels.accessMoney}}
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="row" *ngIf="depositFlag">
+               <div class="deposit">
+                  <form #IOform1="ngForm" id="io-form-1">
+                     <div class="gd-form-row">
+                        <label for="payout-details-amount" class="initial-message">{{labels.initialAmount}}</label>
+                        <input type="text" appFocus id="deposit-amount" autocomplete="off" name="amount" class="initial-amount" [ngModel]="payoutDetailsAmount | amountTransform"
+                           (ngModelChange)="onDepositAmountChange($event)" [class.error]="false" #amount="ngModel" [class.invalid-amount]="!isAmountValid"
+                           appValidateRequired appAmountFormatMask>
+                        <div *ngIf="!isMaxAmount" class="error-msg-amount">
+                           <span class="error-msg">{{openAccountMessages.amountShouldGreaterMessage}}</span>
+                        </div>
+                        <span *ngIf="isMaxAmount" class="amount-label" [class.error-msg-amount]="!isAmountValid">{{labels.minimumAmount}} {{minimumEntryAmount | amountTransform  : amountPipeConfig }}</span>
+                     </div>
+                  </form>
+                  <div class="gd-form-row text-center btn-sec">
+                     <button class="gd-primary-btn btn-white" (click)="seeAllProducts()">{{labels.seeAllProducts}}</button>
+                     <button class="gd-primary-btn btn-next" [class.btn-disabled]="!amountLimit" [disabled]="!amountLimit" (click)="goToKeepDeposit('keepDepositFlag')">{{labels.nextBtn}}</button>
+                  </div>
+               </div>
+            </div>
+            <div class="row" *ngIf="keepDepositFlag">
+               <div class="keep-deposit-amt-sec deposit">
+                  <form #IOform2="ngForm" id="io-form-2" class="gd-form io-form">
+                     <div class="gd-form-row keep-deposit-radio-items">
+                        <app-radio-button-list [radioList]='depFlagTypes' [selectedValue]="depFlagType" [groupName]="depDetail.depType" (onSelectionChange)="onDepFlagChange($event)">
+                        </app-radio-button-list>
+                     </div>
+                  </form>
+                  <div class="gd-form-row text-center btn-sec">
+                     <button class="gd-primary-btn btn-white" (click)="seeAllProducts()">{{labels.seeAllProducts}}</button>
+                     <button class="gd-primary-btn btn-next" (click)="goToAccessMoney('accessMoneyFlag')">{{labels.nextBtn}}</button>
+                  </div>
+               </div>
+            </div>
+            <div class="row" *ngIf="accessMoneyFlag">
+               <div class="keep-deposit-amt-sec deposit">
+                  <form #IOform3="ngForm" id="io-form-3" class="gd-form io-form w-1000">
+                     <div class="gd-form-row grey-background">
+                        <div class="money-period-header">
+                           {{openAccountMessages.noteHeader}}
+                        </div>
+                        <p class="content">
+                           {{openAccountMessages.interestMessage}}
+                        </p>
+                     </div>
+                     <div class="gd-form-row radio-items">
+                        <app-radio-button-list [radioList]='accessMoneyPeriodList' [selectedValue]="moneyPeriodType" [groupName]="moneyPeriodDetails.time"
+                           (onSelectionChange)="onMoneyPeriodChange($event)">
+                        </app-radio-button-list>
+                     </div>
+                  </form>
+                  <div class="gd-form-row text-center btn-sec">
+                     <button class="gd-primary-btn btn-white" (click)="seeAllProducts()">{{labels.seeAllProducts}}</button>
+                     <button class="gd-primary-btn btn-next" (click)="gotoNoticePeriod()">{{labels.nextBtn}}</button>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <ng-template #noticeContent>
+         <div class="np-content text-center">
+            <div class="container">
+               <div class="row">
+                  <div class="header" [class.no-products]="noProducts">
+                     <span>{{productHeader}}</span>
+                  </div>
+                  <div class="sub-header">
+                     <span>{{productSubHeader}}</span>
+                  </div>
+               </div>
+               <div *ngIf="noProducts">
+                  <button class="gd-primary-btn btn-next" (click)="allProducts()">{{openAccountMessages.seeAllInvestment}}</button>
+               </div>
+               <div class="row">
+                  <div class="box-content clearfix">
+                     <div class="content-wrapper temp" *ngFor="let product of productList; let i = index" (click)="selectProduct(i)" [ngClass]="[(selectedProduct == i) ? 'bordered-div' : 'no-border']">
+                        <div class="content-desc" *ngIf=" (productListInitialValue > i && product.name !== openAccountValues.empty)">
+                           <p class="title">{{product.name | uppercase}}</p>
+                           <p class="interest-rate">
+                              <ng-container *ngIf="(product.noticeDeposit === openAccountValues.yes)">
+                                 <span>{{labels.interestRate}}</span>
+                                 <span class="green-bold-text">{{product.realTimeRate + labels.interestPerAnnum}}</span>
+                              </ng-container>
+                              <ng-container *ngIf="(product.noticeDeposit === openAccountValues.no)">
+                                 <span>{{labels.upTo}}</span>
+                                 <span class="green-bold-text">{{product.realTimeRate + labels.interestPerAnnum}}</span>
+                              </ng-container>
+                           </p>
+                           <p class="description">{{product.shortDescription}}</p>
+                           <div class="sale-points" id="sales-message-content" *ngIf="(selectedProduct == i)">
+                              <ul class="list-desc" *ngFor="let salehighlights of product.salesHighlights">
+                                 <li>
+                                    {{salehighlights.type}}
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                        <div class="gd-form-row text-center btn-sec" *ngIf="(selectedProduct == i)">
+                           <button class="open-account" (click)="openAccount(product)">{{labels.openAccountBtn}}</button>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div *ngIf="!showAllProduct && !noProducts && allInvestmentProducts" class="row">
+                  <div class="gd-form-row text-center">
+                     <button class="gd-primary-btn border-less-btn" (click)="seeAllOtherProducts()">{{labels.seeOtherProductBtn}}</button>
+                  </div>
+               </div>
+               <div *ngIf="showAllProduct && allInvestmentProducts" class="row">
+                  <div class="gd-form-row text-center">
+                     <button class="gd-primary-btn border-less-btn" (click)="seeLessProduct()">{{labels.seeLessBtn}}</button>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </ng-template>
+      <section class="loader-mask" *ngIf="showLoader">
+         <div id="loaders-spinner" class="loader-spinner">
+            <app-spinner [color]="'green'"></app-spinner>
+         </div>
+      </section>
+   </ng-template>
+</app-colored-overlay>
+<div *ngIf="isStepper">
+   <app-stepper (stepperback)="stepperBack($event)"> </app-stepper>
+</div>

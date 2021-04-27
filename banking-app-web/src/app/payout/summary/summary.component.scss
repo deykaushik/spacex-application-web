@@ -1,0 +1,232 @@
+@import './../../../styles/_mixins.scss';
+@import './../../../styles/_base.scss';
+$svg-path: './../../../assets/svg/';
+$margin-spacing: 30px;
+%labelPlaceholder {
+   float: left;
+   line-height: 2.63;
+   letter-spacing: normal;
+   color: $color-greyLight;
+}
+
+%valuePlaceholder {
+   line-height: 2.63;
+   letter-spacing: normal;
+   float: right;
+}
+
+%textPlaceholder {
+   word-wrap: break-word;
+   width: 48%;
+   text-align: right;
+}
+
+.initiate-overlay ::ng-deep {
+   .logo-cntnr {
+      padding-left: 80px;
+      .logo {
+         width: 30px;
+      }
+   }
+   .overlay .btn-cntnr button {
+      border: 0;
+      background: url($svg-path + '/grey-close.svg') no-repeat;
+      &.alternate-button {
+         min-width: fit-content;
+         height: 32px;
+         margin-top: 10px;
+         padding: 16px;
+         margin-right: 60px;
+         outline: none;
+      }
+   }
+}
+
+.summary-container {
+   width: 424px;
+   text-align: center;
+   margin: auto;
+   overflow: inherit;
+   .summary-block {
+      text-align: left;
+      margin-top: 61px;
+      .page-title {
+         font-family: $font-markpro-medium;
+         color: #333;
+         font-size: $section-title-size;
+      }
+      .title-divider {
+         display: none;
+      }
+      .block-header {
+         font-family: $font-markpro-medium;
+         font-size: $status-size;
+         letter-spacing: normal;
+      }
+      .edit-button {
+         color: $text-color-info;
+         font-size: $font-xsm;
+         font-family: $font-markpro-medium;
+         cursor: pointer;
+         margin-top: 5px;
+      }
+      .address-type {
+         margin-top: 5px;
+         color: $color-greyLight;
+         font-size: $status-size;
+         line-height: 1.11;
+         letter-spacing: normal;
+      }
+      .property-block {
+         margin-top: $margin-spacing;
+         .address-type {
+            display: block;
+         }
+      }
+      .pay-out-type-block {
+         margin-top: $margin-spacing;
+         .pay-out-header {
+            .block-header {
+               float: left;
+            }
+            .edit-button {
+               float: right;
+            }
+         }
+         .address-type {
+            clear: both;
+            display: block;
+         }
+      }
+      .pay-out-details-block {
+         margin-top: $margin-spacing;
+         border-bottom: 1px solid $color-offWhite;
+         .pay-out-details-header {
+            .block-header {
+               float: left;
+            }
+            .edit-button {
+               float: right;
+            }
+         }
+         .pay-out-details {
+            clear: both;
+            .amount-div,
+            .recipient-div,
+            .bank-div,
+            .account-type-div,
+            .account-number-div {
+               border-top: 1px solid $color-offWhite;
+               clear: both;
+               .payment-details-label {
+                  @extend %labelPlaceholder;
+               }
+               .payment-details-value {
+                  @extend %valuePlaceholder;
+               }
+            }
+            .amount-div {
+               border-top: 0;
+            }
+            .recipient-div {
+               .payment-details-value {
+                  @extend %textPlaceholder;
+               }
+            }
+         }
+      }
+      .contact-person-block {
+         margin-top: $margin-spacing;
+         .contact-person-header,
+            {
+            .block-header {
+               float: left;
+            }
+            .edit-button {
+               float: right;
+            }
+         }
+         .contact-number-div,
+         .contact-email-div,
+         .account-number-div {
+            border-top: 1px solid $color-offWhite;
+         }
+         .name-surname-div,
+         .contact-number-div,
+         .contact-email-div {
+            clear: both;
+            .contact-person-label {
+               @extend %labelPlaceholder;
+            }
+            .contact-person-value {
+               @extend %valuePlaceholder;
+            }
+         }
+         .name-surname-div {
+            .contact-person-value {
+               @extend %textPlaceholder;
+            }
+         }
+      }
+      .term-condition-block {
+         margin-top: $margin-spacing;
+         clear: both;
+         .terms-block {
+            font-family: $font-markpro-medium;
+            font-size: $status-size;
+            &:last-child {
+               color: $secondary-color;
+               cursor: pointer;
+            }
+         }
+      }
+      .request-button {
+         margin-top: 60px;
+         margin-bottom: $margin-spacing;
+      }
+   }
+   .capitalize-text {
+      text-transform: capitalize;
+   }
+}
+
+@media (max-width: $media-sm) {
+   .initiate-overlay ::ng-deep {
+      .logo-cntnr {
+         padding-left: 15px;
+      }
+      .overlay .btn-cntnr button {
+         &.alternate-button {
+            margin-right: 0px;
+         }
+      }
+   }
+   .summary-container {
+      width: auto;
+      margin-left: 19px;
+      margin-right: 18px;
+      .summary-block {
+         margin-top: $margin-spacing;
+         .page-title {
+            margin-bottom: 0px;
+            padding-bottom: $margin-spacing;
+            font-size: $section-title-size-mob;
+         }
+         .title-divider {
+            display: block;
+            border-bottom: 1px solid $color-offWhite;
+            margin: 0 -20px 0 -20px;
+         }
+         .property-block {
+            margin-top: 0px;
+            padding-top: 24px;
+         }
+         .contact-person-block {
+            margin-top: 60px;
+         }
+         .request-button {
+            margin-bottom: 60px;
+         }
+      }
+   }
+}

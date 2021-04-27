@@ -1,0 +1,135 @@
+<div id="chat-box-container" class="chat-box-container no-print">
+   <div class="chatHead" id="chatHead">
+      <span class="back-icon" (click)="chatBoxClose()"></span>
+      <div class="chat-header-label" id="chat-header-label" *ngIf="!agentName; else agentConnected">
+         {{labels.chatHeading}}
+      </div>
+      <ng-template #agentConnected>
+         <div class="chat-header-label" id="chat-header-label-name">
+            {{labels.agentNameHeading}} {{agentName}}
+         </div>
+      </ng-template>
+      <div *ngIf="details" class="close-disconnect" (click)="chatDisconnect()">
+         <span class="close-icon"></span>
+      </div>
+      <span class="chat-minimise send-icon" (click)="chatBoxClose()"></span>
+   </div>
+
+   <form #details="ngForm" (ngSubmit)="continue(details)" id="chatbot-details-content" class="client-details" *ngIf="!details && !userAuthenticated">
+      <div class="gd-form-row chat-message chat-margin clearfix">
+         <div class="agent-msg">
+            <span class="concierge-live-chat">{{strTimeChat}} {{strTime | date:'shortTime'}}
+
+            </span>
+            <span class="icon nedbank-icon"></span>
+            <p class=" text msg"> {{agentLiveMessage}}</p>
+         </div>
+      </div>
+      <div class="gd-form-row">
+         <label for="name" class="form-label gd-sm-label">{{labels.nameLabel}}</label>
+         <input id="name" name="name" maxlength="50" class="form-input form-control text-box validate form-element"
+            required [(ngModel)]="user.name" #name="ngModel">
+         <div *ngIf="(name.invalid && (name.dirty || name.touched)) && name.errors.required">
+            <span class="error-msg">{{labels.nameRequiredMesaage}}</span>
+         </div>
+      </div>
+      <div class="gd-form-row">
+         <label class="form-label gd-sm-label">{{labels.emailLabel}}</label>
+         <input autocomplete="off" name="email" maxlength="50" id="email" [pattern]="patterns.email" class="form-input validate text-box form-element"
+            type="email" [(ngModel)]="user.email" required for="email" required #email="ngModel">
+         <div *ngIf="email.invalid && (email.dirty || email.touched)">
+            <div *ngIf="email.errors.required">
+               <span class="error-msg">{{labels?.emailRequiredMessage}}</span>
+            </div>
+            <div *ngIf="email.invalid && !email.errors.required">
+               <span class="error-msg">{{labels?.emailInvalidMessage}}</span>
+            </div>
+         </div>
+      </div>
+      <div class="button-margin">
+         <button class="gd-primary-btn btn-cont" id="form-submit" type="submit" [class.btn-disabled]="!details.valid">{{labels?.submitLabel}}</button>
+      </div>
+   </form>
+
+   <div *ngIf="details || userAuthenticated">
+      <div class="chatBody clearfix" id="chat-body">
+         <div class="chat-bot">
+            <perfect-scrollbar [style.height.px]="chatBotheight">
+               <div class="message-container clearfix" id="chatbot-message-content" [style.height.px]="chatBotheight">
+                  <div class="message-content">
+                     <div class="chat-message clearfix">
+                     </div>
+                     <div id="history">
+                        <div *ngFor="let history of chatsFEHistory">
+                           <div class="history-date">{{history.Date}}</div>
+                           <div class="chat-message clearfix" [ngClass]="(message.MessageType === 0)? 'sent' : 'recieved'"
+                              *ngFor="let message of history.ChatMessages;let i = index">
+                              <div class="wrap-divL">
+                                 <div *ngIf="message.MessageType !== 0" class="agent-initial-msg agent-msg clearfix">
+                                    <span class="concierge-live-chat">{{message?.WriteTime | date:"shortTime"}}
+                                    </span>
+                                    <span class="icon nedbank-icon"></span>
+                                    <p class="text msg agent-side"> {{message?.Message}}</p>
+                                 </div>
+                              </div>
+                              <div id="messagesChat" class="wrap-divR">
+                                 <div *ngIf="message.MessageType === 0">
+                                    <span class="concierge-live-chat time-chat">{{message?.WriteTime |
+                                       date:"shortTime"}}</span>
+                                 </div>
+                                 <div *ngIf="message.MessageType === 0" class="chat-message-wrap">
+                                    <div class="client-msg msg"> {{message?.Message}} </div>
+                                 </div>
+                                 <div *ngIf="message.MessageType === 0">
+                                    <span class="concierge-live-chat time-chat">{{message?.Status}}</span>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <span class="lottie-container clearfix" *ngIf="isTyping">
+                           <span class="lottie-icon nedbank-icon"></span>
+                           <lottie-animation-view class='lottie' [options]="lottieConfig" (animCreated)="handleAnimation($event)">
+                           </lottie-animation-view>
+                        </span>
+                     </div>
+                  </div>
+
+                  <div *ngIf="showNps" class="agent-initial-msg agent-msg clearfix">
+
+                     <div class="text msg star-align" *ngIf="!showSecondQuestion">
+                        <div class="que-card" id="question-one">
+                           <div class="que-num"> {{labels.questionOne}}</div>
+                           <div class="rating-head">{{questionHeader}}</div>
+                           <div class="question">{{questions.questionOne}}</div>
+                        </div>
+                        <app-chat-rating (rating)="submitRating($event)"></app-chat-rating>
+                     </div>
+                     <div class="star-align text msg slide-in agent-initial-msg agent-msg clearfix" *ngIf="showSecondQuestion">
+                        <div class="que-card" id="question-two">
+                           <div class="que-num">{{labels.questionTwo}}</div>
+                           <div class="rating-head">{{questionHeader}}</div>
+                           <div class="question">{{questions.questionTwo}}</div>
+                        </div>
+                        <app-chat-rating (rating)="submitRating($event)"></app-chat-rating>
+                     </div>
+                     <button class="gd-primary-btn no-thanks-btn" id="no-thanks-btn" (click)="noThanksClick()">{{noThanks}}</button>
+                  </div>
+               </div>
+            </perfect-scrollbar>
+            <div class="chat-inputbox-wrapper" id="chat-inputbox-wrapper">
+               <div *ngIf="!isloggedIn ; else loggedOut">
+                  <textarea autofocus appFocus maxlength="900" cols="100" rows="5" id="send-message"
+                     x-ms-format-detection="none" class="text-box right-space" [(ngModel)]="msg" [disabled]="!yesClicked"
+                     (keydown)="enterClick($event, msg)" appCheckBlur></textarea>
+               </div>
+               <ng-template #loggedOut>
+                  <textarea autofocus appFocus maxlength="900" cols="10" rows="5" id="send-message" [placeholder]="!sessionStarted ? startChat : ''"
+                     x-ms-format-detection="none" class="text-box right-space" [disabled]="yesClickedLoggedIn"
+                     [(ngModel)]="msg" (keydown)="enterClick($event, msg)" appCheckBlur></textarea>
+               </ng-template>
+               <span class=" send-icon send" id="send" (click)="sendMessage(msg)"></span>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

@@ -1,0 +1,139 @@
+@import './../../styles/_mixins.scss';
+@import './../../styles/_base.scss';
+
+
+$icon-path: '../../assets/svg/';
+
+
+.maintenance-container{
+   .first-column{
+      padding: 50px 20px 40px 20px;
+      .title-first{
+         font-size: $xlg-descrp-size;
+         font-weight: bold;
+         text-align: left;
+         color: $text-color-accent-primary;
+      }
+      .title-second{
+         font-size: $xlg-descrp-size;
+         font-weight: normal;
+         text-align: left;
+         color: $text-color-accent-primary;
+         padding: 20px 0px 40px 0px;
+      }
+      .title-hint{
+         font-size: $font-md;
+         font-weight: bold;
+         text-align: left;
+         color: $text-color-primary;
+      }
+   }
+   .second-column{
+         .icon-field {
+               position: relative;
+               margin-bottom: 20px;
+               .icon {
+                  width: 280px;
+                  display: inline-block;
+                  right: 0px;
+                  top: 10px;
+                  cursor: pointer;
+                  &.maintenance-icon {
+                     float: left;
+                     margin: 30px 0px 30px 20px;
+                     @include svg-image-full-path($icon-path, 'MaintenanceIcon');
+                  }
+               }
+            }
+   }
+}
+
+@media(min-width:$media-xs){
+   .maintenance-container{
+      .second-column{
+         .icon-field {
+                  .icon {
+                     width: 340px;
+                  }
+            }
+      }
+
+   }
+
+}
+@media(min-width:$media-sm){
+   .maintenance-container{
+      .first-column{
+         padding: 100px 14% 50px 14%;
+         .title-first{
+            font-size: $section-title-size;
+            line-height: 45px;
+         }
+         .title-second{
+            font-size: $section-title-size;
+            line-height: 45px;
+         }
+         .title-hint{
+            font-size: $section-title-size-sm;
+            line-height: 45px;
+         }
+      }
+      .second-column{
+         .icon-field {
+                  .icon {
+                     width: 640px;
+                  }
+            }
+      }
+
+   }
+
+}
+@media(min-width:$media-md){
+
+.maintenance-container{
+      .first-column{
+         padding: 100px 14% 50px 14%;;
+      }
+      .second-column{
+            .icon-field {
+                  .icon {
+                     width: 440px;
+                     &.maintenance-icon{
+                        margin: 15% 0px 30px 20px;
+                     }
+                  }
+               }
+      }
+   }
+}
+
+@media(min-width:$media-lg) {
+
+ .maintenance-container{
+      .first-column{
+         padding: 6% 14% 50px 14%;
+         .title-first{
+            font-size: $section-title-size;
+         }
+         .title-second{
+            font-size: $section-title-size;
+         }
+         .title-hint{
+            font-size: $section-title-size-sm;
+         }
+      }
+      .second-column{
+         padding-top: 1%;
+         .icon-field {
+                  .icon {
+                     width: 540px;
+                     &.maintenance-icon{
+                        margin: 10% 0px 30px 20px;
+                     }
+                  }
+            }
+      }
+
+   }
+}

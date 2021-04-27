@@ -1,0 +1,104 @@
+<div class="pop-game">
+    <div class="pop-title title-font">Notification of {{reportData?.gameDetails?.Game == 'LOT' ? 'LOTTO':'PowerBall' }} ticket details</div>
+    <div class="row no-margin tranx-date div-bottom-margin">
+        <div class="col-xs-5 txn-col-1 text-left">
+            <img src="{{backgroungImgWhite}}" class="background-img" />
+            <div class="field-text">
+                <label>Date of transaction</label>
+                <div class="dot-value title-font">
+                    {{ reportData?.gameDetails?.DrawDate | date : 'dd/MM/yyyy'}}
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-7 txn-col-2 text-left">
+            <img src="{{backgroungImgGreen}}" class="background-img" />
+            <div class="field-text">
+                <label class="color-for-print">Reference number</label>
+                <div class="reference-value title-font">
+                    {{reportData?.execEngineRef}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row no-margin horz-line"></div>
+    <div class="row no-margin pay-amount title-font ">
+        <div class="col-xs-5 amt-col-1 text-left no-padding">
+            <label>Amount</label>
+            <div class="payamount-number">
+                {{reportData?.selectedNumbers?.TotalCost | amountTransform : amountPipeConfig}}
+            </div>
+        </div>
+        <div class="col-xs-5 amt-col-1 text-left no-padding">
+            <label>Account number</label>
+            <div>
+                {{reportData?.selectedNumbers?.FromAccount?.accountNumber}}
+            </div>
+        </div>
+    </div>
+    <div class="row no-margin horz-line"></div>
+    <label class="sub-title title-font">Ticket details</label>
+    <div class="row no-margin tabular-details no-padding">
+        <img src="{{backgroungImgWhite}}" class="background-img" />
+        <div class="field-text">
+            <div class="col-xs-4 text-left column">
+                <label>First draw</label>
+                <div class="field-value">
+                    <span class='capitalize'>{{reportData?.selectedNumbers?.DrawNumber?.drawNumber}}</span>
+                </div>
+            </div>
+            <div class="col-xs-4 text-left column">
+                <label>Number of draws</label>
+                <div class="field-value">
+                    <span class='capitalize'>{{reportData?.selectedNumbers?.DrawsPlayed | number:'2.0'}}</span>
+                </div>
+            </div>
+
+            <div class="col-xs-4 text-left column">
+                <label>{{reportData?.gameDetails.Game === 'LOT'?'LOTTO Plus' :'PowerBall Plus'}}</label>
+                <div class="field-value">
+                    <span class='capitalize'>{{reportData?.selectedNumbers?.IsLottoPlus?'Yes':'No'}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div *ngFor="let board of reportData?.selectedNumbers?.BoardDetails;let boardNo=index;">
+
+            <div class="col-xs-3 text-left column col-padding">
+                <label class="textcolor">Board {{board.BoardNumber}}</label>
+                <div class="field-value">
+                    <span *ngFor="let selectedBall of board.SelectedBalls;let ballNo=index;" class="span-Boardnumbers-print-font"> {{selectedBall.numberValue | number:'2.0'}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row no-margin horz-line margin-top-botm-20"></div>
+    <div class="row details-para no-margin para_1">
+        This notification of payment is sent to you by Nedbank Limited Reg No 1951/000009/06. Enquiries regarding this payment notification
+        should be directed to the Nedbank Contact Centre on 0860 555 111. Please contact the payer for enquiries regarding
+        the contents of this notification.
+        <br/> Nedbank Ltd will not be held responsible for the accuracy of the information on this notification and we accept
+        no liability whatsoever arising from the transmission and use of the information. Payments may take up to three business
+        days. Please check your account to verify the existence of the funds.
+    </div>
+    <div>
+        <p class="details-para no-margin para_2 para-color">
+            <span class="para-label title-font">Note:</span> We as a bank will never send you an e-mail requesting you to enter your personal details or private
+            identification and authentication details.</p>
+    </div>
+    <label class="para-label title-font">Nedbank Limited Email</label>
+    <div class="row details-para no-margin para_2">
+        This email and any accompanying attachments may contain confidential and proprietary information. This information is private
+        and protected by law and, accordingly, if you are not the intended recipient, you are requested to delete this entire
+        communication immediately and are notified that any disclosure, copying or distribution of or taking any action based
+        on this information is prohibited. Emails cannot be guaranteed to be secure or free of errors or viruses. The sender
+        does not accept any liability or responsibility for any interception, corruption, destruction, loss, late arrival
+        or incompleteness of or tampering or interference with any of the information contained in this email or for its
+        incorrect delivery or non-delivery for whatsoever reason or for its effect on any electronic device of the recipient.
+        If verification of this email or any attachment is required, please request a hard copy version.
+    </div>
+    <label class="para-label title-font">Security Code</label>
+    <div class="row details-para no-margin para_2">
+        89EF072369F90D8D5DC09F6B7F5570C1F236313F
+    </div>

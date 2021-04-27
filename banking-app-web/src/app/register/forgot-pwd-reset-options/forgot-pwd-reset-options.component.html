@@ -1,0 +1,23 @@
+<div class="formInput">
+    <form #resetOptionsForm="ngForm" class="gd-form">
+        <div class="gd-form-row">
+            <h4 class="section-title darkText">I forgot my details.</h4>
+        </div>
+        <div class="top-margin50">
+            <div>
+                <a class="link-text" href="javascript:void(0)" (click)="navigateNext(View.ForgotPwdGetidentity)" (touchstart)="navigateNext(View.ForgotPwdGetidentity)">
+                    <span class="iconUsername inlineStyle"></span>
+                    <span class="active">I need my Nedbank ID username</span>
+                </a>
+                <hr />
+            </div>
+            <div>
+                <a class="link-text" href="javascript:void(0)" (click)="navigateNext(View.ForgotPwdGetusername)" (touchstart)="navigateNext(View.ForgotPwdGetusername)">
+                    <span class="iconLock inlineStyle"></span>
+                    <span>Reset my Nedbank ID password</span>
+                </a>
+                <hr />
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,45 @@
+<div class="charges-and-fees-review">
+   <ng-container>
+      <table class="tabular-data-col-2">
+         <tbody>
+            <tr>
+               <td>{{labels.fromText}}:</td>
+               <td>
+                  <span class='capitalize'>{{payVm.fromAccount.nickname}}</span>
+               </td>
+            </tr>
+            <tr>
+                  <td colspan="2">&nbsp;</td>
+            </tr>
+            <tr>
+               <td>{{labels.toText}}:</td>
+               <td>
+                  <span>{{payVm.forAccount.nickname}}</span>
+               </td>
+            </tr>
+      
+            <tr>
+                  <td colspan="2">&nbsp;</td>
+            </tr>
+            <tr>
+               <td>{{labels.amount}}</td>
+               <td>
+                  <span>{{payVm.costRands | amountTransform: amountPipeConfig}}</span>
+               </td>
+            </tr>
+            <tr>
+               <td>{{labels.payLabels.greenbacksValue}}:</td>
+               <td>
+                  <span>{{payVm.costPoints | amountTransform: amountPipeConfigRewards: labels.gbtype}}</span>
+               </td>
+            </tr>
+            <tr>
+               <td colspan="2">&nbsp;</td>
+            </tr>
+         </tbody>
+      </table>
+   </ng-container>
+   <tr>
+      <td colspan="2">&nbsp;</td>
+   </tr>
+</div>

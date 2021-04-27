@@ -1,0 +1,6 @@
+﻿<div class="greeting">
+   <div class="greeting-title" [class.is-skeleton-loading]='skeletonMode'>
+      <span class="user-name" [innerHtml]="greeting | skeletonLoader:skeletonMode"></span>
+   </div>
+
+</div>

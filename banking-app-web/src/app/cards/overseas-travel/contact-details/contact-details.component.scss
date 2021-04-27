@@ -1,0 +1,167 @@
+@import './../../../../styles/_mixins.scss';
+@import './../../../../styles/_base.scss';
+$svg-path: './../../../../assets/svg';
+$down: 'down';
+$help: 'help';
+.section-title {
+   font-family: $font-markpro-medium;
+   font-weight: $weight-medium;
+   color: $section-title-size-mob;
+}
+.mandary-optional{
+   color: $form-element-text-disabled;
+   font-size: $font-sm;
+}
+.contact-details {
+   margin-top: 60px;
+   @include flexbox();
+   @include flex-direction(column);
+   @include align-items(center);
+   .section {
+      width: 90%;
+      .section-title {
+         @extend .section-title;
+         font-size: $section-title-size;
+      }
+      .section-body {
+         width: 100%;
+         margin: 30px 0px;
+         .first-section {
+            ::ng-deep {
+               .gd-form-row {
+                  &.secondary-no {
+                     input:valid {
+                        border-color: $form-element-border;
+                     }
+                  }
+               }
+            }
+         }
+         .emergency-contact {
+            .show-message {
+               width: 100%;
+               .triangle {
+                  width: 0;
+                  height: 0;
+                  position: relative;
+                  margin-top: -15px;
+                  right: -289px;
+                  top: -7px;
+                  border-left: 12px solid transparent;
+                  border-right: 12px solid transparent;
+                  border-top: 12px solid $tooltip-back-ground;
+               }
+               .tooltip-part {
+                  margin: 25px 0px 15px 0px;
+                  background-color: $tooltip-back-ground;
+                  border-left: 2px solid $secondary-color;
+                  .tooltip-section {
+                     padding: 0px 9px 0px 15px;
+                     .section-content {
+                        padding-bottom: 15px;
+                        font-size: $font-sm;
+                        .content-bold {
+                           font-family: $font-markpro-bold;
+                           color: $text-color-secondary;
+                           display: block;
+                           padding-top: 15px;
+                        }
+                        .content {
+                           color: $text-color-primary;
+                           font-family: $font-markpro;
+                        }
+                     }
+                  }
+               }
+            }
+            .emergency { 
+               @include flexbox();
+               @include flex-direction(row);
+               margin: 5px 0 57px 0;
+               .down {
+                  @include svg-image-full-path($svg-path, $down, 20px, 20px);
+                  position: relative;
+                  margin-top: 6px;
+                  margin-right: -17px;
+                  padding-top: 0;
+               }
+               .up{
+                  @include svg-image-full-path($svg-path, $down, 20px, 20px);
+                  @include rotate(180deg);
+                  position: relative;
+                  margin-top: 6px;
+                  margin-right: -17px;
+                  padding-top: 38px;
+               }
+               .content{
+                  font-family: $font-markpro;
+                  color: $text-color-secondary;
+                  font-size: $xlg-descrp-size;
+               }
+               .question-mark{
+                  @include svg-image-full-path($svg-path, $help, 22px, 22px);
+                  bottom: -2px;
+                  left: -27px;
+                  margin-top: 3px;
+                  color: $text-color-primary;
+               }
+            }
+         }
+         .second-section {
+            margin-top: 0;
+            .section-title {
+               @extend .section-title;
+               font-size: $font-lg;
+            }
+            .contact-person{
+               margin-top: 30px;
+            }
+         }
+      }
+   }
+}
+
+@media (min-width: $media-xs-up) {
+   .section-title {
+      color: $text-color-secondary;
+   }  
+   .mandary-optional{
+      font-size: $font-sm;
+   }
+   .contact-details {
+      .section {
+         width: 425px;
+         .section-title {
+            font-size: $section-title-size;
+         }
+         .section-body {
+            width: 400px;
+            margin: 60px 0px;
+            .emergency-contact {
+               .show-message {
+                  width: 100%;
+                  .triangle {
+                     right: -311px;
+                     top: -7px;
+                  }
+               }
+               .emergency { 
+                  .down {
+                     margin-right: 0;
+                  }
+                  .up{
+                     margin-right: 0;
+                  }
+                  .question-mark{ 
+                     left: -66px;
+                     @include svg-image-full-path($svg-path, $help, 22px, 22px);
+                  }
+               }
+            }
+            .second-section {
+               margin-top: -30px;
+            }
+         }
+      }
+   }
+}

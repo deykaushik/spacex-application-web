@@ -1,0 +1,16 @@
+<app-colored-overlay [template]="ficaNotCompliant" [altButtonText]="'Close'" [alternate]='true' [isVisible]="isVisible" [backOption]="false"
+   (onHide)="closeOverlay($event)">
+   <ng-template #ficaNotCompliant>
+      <section class="maintain-overdraft-wrapper">
+         <div class="maintain-overdraft-carousel-container">
+            <div class="row">
+               <div class="maintain-overdraft-icon"></div>
+               <div class="title">{{label.FICATitle}}</div>
+            </div>
+            <div class="maintain-overdraft-msg msg1">{{label.FICAComplaintMsg}}</div>
+            <div class="maintain-overdraft-msg msg2">{{label.FICAContactMsg}}</div>
+            <div class="maintain-overdraft-msg msg3">{{label.FICAContactNumber}}</div>
+         </div>
+      </section>
+   </ng-template>
+</app-colored-overlay>

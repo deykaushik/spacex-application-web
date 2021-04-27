@@ -1,0 +1,283 @@
+@import './../../../styles/_mixins.scss';
+@import './../../../styles/_base.scss';
+$svg-path: './../../../assets/svg';
+$feedback-bg: $body-bg;
+$card-padding: 15px;
+$card-bg: $container-bg;
+$text-color-dark: $text-color-secondary;
+$reportSuspiciousBank: 'reportSuspiciousBank';
+$reportSuspiciousGray: 'reportSuspiciousGray';
+$reportSuspiciousInfo: 'info-grey';
+$font-infoMessage: $font-default - 3px;
+.gd-dropdown {
+   position: relative;
+   outline: 0;
+   &.one-account {
+      outline: none;
+      .discrp-block {
+         cursor: default;
+      }
+   }
+   .discrp-block {
+      @include flexbox();
+      @include align-items(center);
+      padding: 10px;
+      border: 2px solid $form-element-border;
+      background: $form-element-bg;
+      cursor: pointer;
+      &.active {
+         background-color: $highlight-bg;
+      }
+      .para-title {
+         margin-bottom: 0;
+      }
+      .icon-field {
+         position: relative;
+         width: 40px;
+         .icon {
+            width: 20px;
+            height: 15px;
+            cursor: pointer;
+            line-height: 1;
+            &.down {
+               @include svg-image-full-path($svg-path, 'down', auto, auto);
+            }
+         }
+      }
+   }
+   .fields {
+      @include flex(1);
+      .field {
+         margin-bottom: 5px;
+         @include flexbox();
+         &:last-child {
+            margin-bottom: 0;
+         }
+         .left {
+            @include flex(1);
+         }
+         .right {
+            margin-left: 12px;
+            text-align: right;
+         }
+      }
+   }
+   .dropdown-menu {
+      float: none;
+      padding: 0;
+      width: 100%;
+      max-height: 260px;
+      overflow: hidden;
+      overflow-y: auto;
+      margin-top: 0;
+      border: none;
+      border-bottom: 2px solid $form-element-border;
+      @include border-radius(0);
+      @include box-shadow(none);
+      .discrp-block {
+         border-width: 1px;
+         border-bottom: none;
+      }
+      .available-title {
+         color: $text-color-primary;
+      }
+   }
+}
+
+.credit-card {
+   border-left: 3px solid $color-credit-card !important;
+   .toggle-icon {
+      color: $color-credit-card;
+   }
+}
+
+.loan {
+   border-left: 3px solid $color-loan !important;
+   .toggle-icon {
+      color: $color-loan;
+   }
+}
+
+.investment {
+   border-left: 3px solid $color-investment !important;
+   .toggle-icon {
+      color: $color-investment;
+   }
+}
+
+.default {
+   border-left: 3px solid $color-account-default !important;
+   .toggle-icon {
+      color: $color-account-default;
+   }
+}
+
+.savings {
+   border-left: 3px solid $color-savings !important;
+   .toggle-icon {
+      color: $color-savings;
+   }
+}
+
+.current {
+   border-left: 3px solid $color-current !important;
+   .toggle-icon {
+      color: $color-current;
+   }
+}
+
+.disabled {
+   pointer-events: none;
+   opacity: 0.5;
+}
+
+textarea.report-suspicious-box {
+   padding: 15px;
+}
+
+.sub-heading {
+   font-size: $font-lg;
+   font-weight: 500;
+   color: $text-color-dark;
+}
+
+.card {
+   margin-top: 30px;
+   min-height: 300px;
+   background: $card-bg;
+}
+
+.loader {
+   width: 50px;
+   height: 20px;
+   margin: auto;
+   margin-top: 150px;
+}
+
+.report-suspicious {
+   .font-style {
+      @include text-style(normal);
+      text-align: left;
+   }
+   label {
+      @extend .font-style;
+      font-size: $font-default;
+      color: $text-color-primary;
+   }
+   .content {
+      label {
+         @extend .font-style;
+         margin-top: 30px;
+         font-size: $font-default;
+         color: $text-color-primary;
+      }
+      p {
+         margin-top: 5px;
+         margin-bottom: 5px;
+      }
+      >div {
+         margin-top: 20px;
+      }
+      .inline-block,
+      label {
+         display: inline-block !important;
+         vertical-align: middle;
+      }
+      .width-custom {
+         width: 70%;
+      }
+      .minimum-left-spacing {
+         margin-left: 10px;
+      }
+      .float-right {
+         float: right;
+      }
+      textarea {
+         height: 114px !important;
+         letter-spacing: normal;
+         border: solid 2px;
+         border-color: $text-border;
+      }
+      .report-suspicious-submit {
+         margin: 25px 0 15px 0;
+      }
+      .report-suspicious-info {
+         float: right;
+         color: $text-color-info;
+      }
+      .report-suspicious-message {
+         margin-top: 30px;
+         height: 260px;
+         background-color: $color-no-records-background;
+         .fraud-message {
+            @extend .font-style;
+            font-size: $font-infoMessage;
+            line-height: 1.23;
+            letter-spacing: -0.1px;
+            color: $text-color-message-block-content;
+            margin-top: 20px;
+            width: 290px;
+         }
+         .icon-margin {
+            margin-top: 21px;
+            margin-left: 20px;
+         }
+         .icon-bank {
+            @extend .icon-margin;
+            @include svg-image-full-path($svg-path, $reportSuspiciousBank, 32px, 32px);
+         }
+         .icon-card {
+            @extend .icon-margin;
+            @include svg-image-full-path($svg-path, $reportSuspiciousGray, 32px, 32px);
+         }
+         .icon-info {
+            @extend .icon-margin;
+            @include svg-image-full-path($svg-path, $reportSuspiciousInfo, 32px, 32px);
+         }
+         .number {
+            font-size: $font-infoMessage;
+            color: $text-color-accent-secondary;
+         }
+         a:focus {
+            text-decoration: none;
+         }
+      }
+   }
+}
+
+.error-msg {
+   color: $text-color-error;
+   font-size: $size-14;
+   margin: 5px 0 0;
+   position: relative;
+   padding-left: 10px;
+   &::before {
+      position: absolute;
+      left: 0;
+   }
+}
+
+.account-container {
+   position: relative;
+}
+
+.success-border {
+   border-color: $form-element-border-valid !important;
+}
+
+@media (min-width: $media-sm) {
+   .report-suspicious {
+      .card {
+         display: inline-block;
+         width: 100%;
+         min-height: 655px;
+      }
+      .content {
+         .report-suspicious-message {
+            .fraud-message {
+               width: 360px;
+            }
+         }
+      }
+   }
+}

@@ -1,0 +1,36 @@
+<div class="buy-status">
+   <div class="work-flow final-status">
+      <app-circle-icon-heading [heading]="this.isNoResponseReceived ?labels.somethingWentWrong : heading" [successful]="successful"></app-circle-icon-heading>
+      <div class="block">
+         <div class="steps-track"></div>
+         <div class="steps-block gd-form">
+            <div class="gd-form-row no-print content-area" *ngIf="successful">
+                  {{labels.loadTripLabels.headingTopText}} <span class="bold-text">{{refId}}</span>
+                  <div class="info-container">
+                     <div class="info-msg">
+                        <p class="bold-text">{{labels.loadTripLabels.whatsNextText}}</p>
+                        <p class="gap-text">{{labels.loadTripLabels.nextActionText}}</p>
+                        <p class="small-text">{{labels.loadTripLabels.verifyActionText}}</p>
+                     </div>
+                  </div>
+            </div>
+            <div class="gd-form-row no-print" *ngIf="successful">
+            
+                  <app-bottom-button (clickEmitter)="closeStatus()" [disableButton]="false" [text]="'Done'"></app-bottom-button>
+            </div>
+            <div class="half-btns gd-form-row no-print" *ngIf="!successful">
+               <div class="left">
+                  <app-bottom-button [disableButton]="disableRetryButton || requestInprogress" [showLoader]='isButtonLoader' (clickEmitter)="retryPayment()"
+                     [text]="'Try again'"></app-bottom-button>
+               </div>
+               <div class="right">
+                  <app-bottom-button [disableButton]="requestInprogress" (clickEmitter)="navigateToDashboard()" [alternateTheme]="true" [text]="this.isNoResponseReceived? labels.cancelText : labels.cancelPurchase"></app-bottom-button>
+               </div>
+            </div>
+            <div class="gd-error no-print" *ngIf="errorMessage">
+               <span>{{errorMessage}}</span>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

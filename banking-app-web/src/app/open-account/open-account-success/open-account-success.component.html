@@ -1,0 +1,45 @@
+<app-colored-overlay [isVisible]="true" [closeText]="false" [alternate]="true" [template]="openAccountSuccessTemplate" [backOption]="false"
+   (onHide)="closeOverlay()">
+   <ng-template #openAccountSuccessTemplate>
+      <div class="success-container" *ngIf="accountSuccess">
+         <div class="container">
+            <div class="header">
+               <span>{{openAccountMessages.success}}</span>
+            </div>
+            <div class="sub-header">
+               <span>{{openAccountMessages.openAccountTitle}}</span>
+            </div>
+            <div class="inv-section">
+               <span class="investment-acc"> {{openAccountMessages.investmentAcc}} </span>
+               <span class="content-label"> {{productName}} </span>
+            </div>
+            <div class="content">
+               <span> {{openAccountMessages.note}} </span>
+            </div>
+            <div>
+               <ul class="more-info-labels">
+                  <li class="info-msg">{{openAccountMessages.businessMessage}}
+                     <span class="click-here" (click)="processingTimePage()">{{labels.clickHere}}</span>
+                  </li>
+                  <li class="info-msg">
+                     {{openAccountMessages.manageAccountMessage}}
+                  </li>
+               </ul>
+            </div>
+            <div class="contact-us">
+               <span>{{openAccountMessages.contactUs}}</span>
+               <div>
+                  <span class="icon contact"></span>
+                  <span class="contact-number">{{openAccountValues.contactNumber}}</span>
+               </div>
+            </div>
+            <div class="done-btn">
+               <button class="investment-account-btn" (click)="gotoInvestmentAccount()">{{labels.goToOverview}}</button>
+            </div>
+         </div>
+      </div>
+      <div *ngIf="!accountSuccess">
+         <app-processing-time (successPage)=" isOpenAccountSuccess($event)"></app-processing-time>
+      </div>
+   </ng-template>
+</app-colored-overlay>

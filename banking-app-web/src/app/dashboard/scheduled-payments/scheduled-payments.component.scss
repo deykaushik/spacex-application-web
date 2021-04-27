@@ -1,0 +1,100 @@
+﻿@import '../../../styles/_mixins.scss';
+@import '../../../styles/_base.scss';
+@import '../account-widget/account-widget.component.scss';
+
+
+$svg-path: './../../../assets/svg/';
+$icon-pay: 'back-green';
+$bg-color-dashboard: $body-bg;
+
+
+.schedule-container {
+   padding: $landing-padding 0;
+   background-color: $bg-color-dashboard;
+   min-height: calc( 100vh - 170px);
+
+   .container {
+      .schedule {
+         .gd-schedule-accounts {
+            padding: 20px 0px;
+         }
+      }
+   }
+
+   .back-header {
+      @include flexbox();
+      @include align-items(center);
+
+      .icon {
+         width: 36px;
+         height: 36px;
+         display: block;
+         @include svg-image($icon-pay,24px,24px);
+         margin-right: 20px;
+      }
+
+      .page-header {
+         @include flex(1);
+         text-transform: capitalize;
+         border-bottom: none;
+         font-size: $font-xlg;
+         font-weight: bold;
+         margin: 0;
+         color: $text-color-secondary;
+      }
+   }
+
+   p.account-number {
+      font-size: 14px !important;
+      text-align: left;
+      font-weight: normal;
+      color: $text-color-primary;
+   }
+
+   @media (max-width: $media-sm) {      
+      .margin-top-left {
+         margin-left: -15px;
+      }
+
+      .back-header {
+         @include flexbox();
+         @include align-items(center);
+
+         .icon {
+            width: 36px;
+            height: 36px;
+            display: block;
+            @include svg-image($icon-pay,24px,24px);
+            margin-right: 20px;
+         }
+
+         .page-header {
+            @include flex(1);
+            font-size: $font-lg;
+            margin: 10px 0px;
+         }
+      }
+
+      .greeting-title {
+         font-size: $page-title-secondary-size;
+      }
+
+      .container {
+         .schedule {
+            margin: 20px;
+         }
+      }
+   }
+}
+
+
+.margin-row {
+   margin: 0px;
+}
+
+
+@media (min-width: $media-lg) {
+   .schedule-container {
+      padding: $landing-padding $landing-padding-lg;
+   }
+}

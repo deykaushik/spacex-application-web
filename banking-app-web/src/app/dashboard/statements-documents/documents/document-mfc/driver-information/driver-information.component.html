@@ -1,0 +1,52 @@
+<section class="driver-information">
+   <form class="section  gd-form" #driverInformationForm="ngForm">
+      <span class="section-title">{{labels.title}}</span>
+      <div class="section-body">
+         <div class="first-section">
+            <div class="gd-form-row">
+               <label class="gd-lg-label" for="secondary-number">{{labels.nominate}}</label>
+            </div>
+            <div class="gd-form-row">
+               <label class="gd-sm-label" for="secondary-number">{{labels.info}}</label>
+            </div>
+            <div class="gd-form-row">
+               <app-toggle-button-group [toggleButtonGroup]='toggleButtonGroup' [selectedButtonValue]="isDriverNominate" (onSelectionChange)="onTypeChange($event)"></app-toggle-button-group>
+            </div>
+         </div>
+         <div *ngIf="isDriverNominate === buttonGroup[1].value">
+            <div class="bottom-btn">
+               <app-bottom-button [showLoader]="false" (clickEmitter)="onNextClick()" [text]="'Next'"></app-bottom-button>
+            </div>
+         </div>
+         <div *ngIf="isDriverNominate === buttonGroup[0].value">
+            <form #travelInformationForm>
+               <section *ngFor="let driverInfo of driverInfoList; let currentItem=index;">
+                  <div class="gd-form-row">
+                     <label class="gd-sm-label" for="name">{{labels.name}}</label>
+                     <input [id]="'name-'+currentItem" type="text" [name]="'name-'+driverInfo.id" #nameRef="ngModel" [(ngModel)]="driverInfo.name">
+                  </div>
+                  <div class="gd-form-row">
+                     <label class="gd-sm-label" for="surname">{{labels.surname}}</label>
+                     <input [id]="'surname-'+currentItem" type="text" [name]="'surname-'+driverInfo.id" #surnameRef="ngModel" [(ngModel)]="driverInfo.surname">
+                  </div>
+                  <div class="gd-form-row">
+                     <label class="gd-sm-label" for="driver-license-number">{{labels.licence}}</label>
+                     <input [id]="'driver-license-number-'+currentItem" type="text" [name]="'driverLicenseNumber-'+driverInfo.id" #driverLicenseNumberRef="ngModel" [(ngModel)]="driverInfo.driverLicenseNumber">
+                  </div>
+                  <div class="gd-form-row">
+                     <label class="gd-sm-label" for="id-or-passport-number">{{labels.id}}</label>
+                     <input [id]="'id-or-passport-number-'+currentItem" type="text" [name]="'idOrPassportNumber-'+driverInfo.id" #secCellNumberRef="ngModel" [(ngModel)]="driverInfo.idOrPassportNumber">
+                  </div>
+               </section>
+               <div *ngIf="numberOfDriverInfo < values.noOfDriverInfo" class="gd-form-row">
+                  <div class="add" (click)="addDriverInfo()">
+                     <i class="add-icon"></i>
+                     <span class="add-driver"> {{labels.addDriver}} </span>
+                  </div>
+               </div>
+               <app-bottom-button [showLoader]="false" (clickEmitter)="onNextClick()" [disableButton]="travelInformationForm.invalid" [text]="'Next'"></app-bottom-button>
+            </form>
+         </div>
+      </div>
+   </form>
+</section>>

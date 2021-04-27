@@ -1,0 +1,60 @@
+﻿@import './../../styles/_mixins.scss';
+@import './../../styles/_base.scss';
+
+$profile-nav-bg: $container-bg;
+
+.profile {
+   width: 100%;
+   @include flexbox();
+   @include align-items(stretch);
+}
+
+.profile-left-nav {
+   display: none;
+   background: $profile-nav-bg;
+}
+
+.profile-content {
+   min-height: calc(100vh - 190px);
+   background-color: $body-bg;
+   width: 100%;
+   position: relative;
+}
+
+::ng-deep .content-container-padding{
+   padding: 30px 0;
+}
+
+@media (min-width: $media-sm) {
+   .profile-left-nav {
+      width: 250px;
+      display: block;
+      padding: 30px;
+   }
+
+   .profile-content {
+      width: calc( 100% - 250px );
+   }
+
+   ::ng-deep .content-container-padding{
+      padding: 30px;
+   }
+}
+
+@media (min-width: $media-md) {
+   .profile-left-nav {
+      width: 320px;
+      display: block;
+   }
+
+   .profile-content {
+      width: calc( 100% - 320px );  
+   }
+}
+
+@media (min-width: $media-lg) {
+
+   .profile-content {
+      min-height: calc(100vh - 160px);
+   }
+}

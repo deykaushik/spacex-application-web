@@ -1,0 +1,58 @@
+@import '../../../styles/_mixins.scss';
+@import '../../../styles/_base.scss';
+$transactions-bg: $container-bg;
+$icon-approve-it-info:'Green-info';
+.transactions-dormant {
+   background: $transactions-bg;
+   height: 330px;
+   padding-top: 30px;
+   margin-bottom: 15px;
+   .uplift-dormancy {
+      width: 340px;
+      text-align: center;
+      margin: 0 auto;
+      .reference-number-info-icon {
+         @include svg-image( $icon-approve-it-info, 62px, 62px);
+         display: inline-block;
+      }
+      .title {
+         height: 40px;
+         font-style: normal;
+         font-stretch: normal;
+         line-height: normal;
+         letter-spacing: normal;
+         font-size: $font-default;
+         color: $text-color-primary;
+      }
+      .para-title {
+         font-weight: normal;
+         @extend .title;
+         height: 60px;
+      }
+      .para-title-main {
+         font-weight: bold;
+         @extend .title;
+      }
+      .space {
+         margin-top: 30px;
+      }
+   }
+}
+
+@media (min-width: $media-md) {
+   .transactions-dormant {
+      padding-top: 30px;
+      .uplift-dormancy {
+         max-width: 650px;
+         margin: 0 auto;
+         width: 100%;
+         .btn-margin {
+            margin-top: 25px;
+            margin: 0 auto;
+         }
+         .space {
+            margin-top: 20px;
+         }
+      }
+   }
+}

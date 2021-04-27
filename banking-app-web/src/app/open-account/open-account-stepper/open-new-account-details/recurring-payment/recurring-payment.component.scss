@@ -1,0 +1,227 @@
+@import './../../../../../styles/_mixins.scss';
+@import './../../../../../styles/_base.scss';
+.acc-details-container {
+   width: 400px;
+   .header {
+      margin: 60px 0 30px;
+      span {
+         font-size: $section-title-size;
+         font-weight: $weight-light;
+         line-height: 1.25;
+         color: $color-greyDark;
+      }
+   }
+   .acc-details-wrapper {
+      .gd-form-row {
+         margin: 30px 0px;
+      }
+      .option-selected {
+         margin-top: 0;
+      }
+      .gd-sm-label {
+         font-size: $font-sm;
+         font-weight: $weight-light;
+         color: $color-greyMedium;
+         font-weight: $weight-medium;
+      }
+      .error-msg {
+         color: $warning-primary;
+      }
+      .invalid-amount {
+         border-color: $warning-primary !important;
+      }
+      .month-duration {
+         .counter-btn {
+            width: 50px;
+            height: 50px;
+            background-color: $text-color-tertiary;
+            border: none;
+            color: $text-color-highlight;
+         }
+         .input-number {
+            height: 50px;
+            text-align: center;
+            background-color: $text-color-highlight;
+            border: solid 2px $text-color-info;
+         }
+      }
+      .yes-no-toggler {
+         .toggle-btn-wrapper {
+            &:before,
+            &:after {
+               content: '';
+               display: table;
+            }
+            &:after {
+               clear: both;
+            }
+            border :2px solid $tertiary-color;
+            border-radius:4px;
+            width: 100%;
+            .toggle-btn {
+               float: left;
+               width: 50%;
+               text-align: center;
+               cursor: pointer;
+               line-height: 45px;
+               color: $tertiary-color;
+               border-right: solid 2px $color-greenLight;
+               &.active {
+                  background: $tertiary-color;
+                  color: $text-color-highlight;
+               }
+            }
+            .no {
+               border-right: none;
+            }
+         }
+      }
+      .notice {
+         padding: 10px 20px;
+         background-color: $info-message;
+         border-left: solid 2px $secondary-color;
+         .highlight {
+            font-size: $font-md;
+            font-weight: $weight-bold;
+            color: $secondary-color;
+            padding-bottom: 10px;
+         }
+         .notice-text {
+            display: block;
+            line-height: 1.56;
+            color: $text-color-primary;
+         }
+      }
+      /deep/ .radio-button-list {
+         padding-left: 10px;
+         input[type=radio]:checked~label {
+            color: $color-greyMedium;
+         }
+         ul {
+            li {
+               float: none;
+            }
+         }
+      }
+      div.buttons {
+         padding-top: 60px;
+         button.back-btn {
+            height: 50px;
+            background-color: $color-white;
+            font-weight: $weight-bold;
+            text-align: center;
+            color: $color-greenMedium;
+            width: 50%;
+            border: 0;
+            outline: 0;
+            margin: 30px 100px;
+         }
+      }
+   }
+   /deep/ .dropdown-place {
+      .text {
+         line-height: 1.5;
+      }
+   }
+   /deep/ .radio-button-list {
+      padding: 0;
+      input[type=radio]:checked~label {
+         color: $color-greyMedium;
+      }
+      ul {
+         li {
+            width: 300px;
+         }
+      }
+   }
+}
+
+.account-btn {
+   margin-top: 7%;
+   height: 120px;
+   display: block;
+   .next {
+      margin: 30px 0 40px;
+      border-radius: 5px;
+      background-color: $secondary-color;
+      border: solid 2px $secondary-color;
+   }
+   .back {
+      margin-bottom: 120px;
+      background-color: $text-color-highlight;
+      color: $secondary-color;
+   }
+}
+
+.alert-msg {
+   border-left: solid 2px $secondary-color;
+   padding: 3%;
+   margin-bottom: 4%;
+   height: 110px;
+   background-color: $info-message;
+   .note {
+      width: 240px;
+      font-size: $font-md;
+      font-weight: $weight-bold;
+      color: $secondary-color;
+   }
+   .text-msg {
+      display: block;
+      margin-top: 9px;
+      width: 310px;
+      font-size: $font-default;
+      line-height: 1.56;
+      color: $text-color-primary;
+   }
+}
+
+.error-msg {
+   color: $color-bloodRed-d3 !important;
+}
+
+.amount-label {
+   display: block;
+   height: 21px;
+   font-weight: $weight-light;
+   font-size: $font-sm;
+   line-height: 1.5;
+   text-align: left;
+   color: $footer-reg-color;
+}
+
+.dropdown-height {
+   max-height: 241px;
+   overflow-x: auto;
+   margin-bottom: 10%;
+}
+
+@media (max-width: $media-sm) {
+   .acc-details-container {
+      width: inherit;
+   }
+}
+
+@media (max-width: $media-xxs) {
+   .acc-details-container {
+      width: inherit;
+      .header {
+         margin: 40px 0 20px;
+      }
+      .acc-details-wrapper {
+         margin: 15px 0;
+         .gd-form-row {
+            margin: 20px 0;
+         }
+      }
+      .account-btn {
+         .back {
+            display: none;
+         }
+      }
+      .alert-msg {
+         .text-msg {
+            width: 260px;
+         }
+      }
+   }
+}

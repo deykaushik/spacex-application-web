@@ -1,0 +1,77 @@
+﻿<app-colored-overlay [isVisible]="true" [template]="timeOutOverlay" [backOption]="false">
+   <ng-template #timeOutOverlay>
+      <section class="row">
+         <div class="col-xs-12 icon-detail">
+            <a class="icon-back" [routerLink]="gameHistoryUrl"></a>
+            <h2 class="main-title">{{lottoLabels.lottoTitle}}</h2>
+         </div>
+      </section>
+      <section class="overlay-content-wrapper">
+         <div class="icon-lotto"></div>
+         <div class="content">
+            <h6 class="para-sub-title">{{title}}</h6>
+            <div class="top text-left text">
+               <p class="para-detail">
+                  {{lottoLabels.timeoutTitleDetails}} {{gameStartTime}} to {{lottoCutOffTiming[gameDayCodes.NORM.code]}} ({{lottoCutOffTiming[gameDayCodes.DRAW.code]}}
+                  on draw days) Monday to Saturday, and from {{gameStartTime}} to {{lottoCutOffTiming[gameDayCodes.SUN.code]}}
+                  on Sundays.
+               </p>
+               <span class="para-table">{{lottoLabels.timeoutTableInfo}}</span>
+            </div>
+            <div class="top table-responsive text">
+               <table class="tabular-data-col-2 lottoTable">
+                  <tbody>
+                     <tr>
+                        <th></th>
+                        <th class="table-headings">{{lottoConstants.lottoLable}}</th>
+                     </tr>
+                     <tr *ngFor="let timeSheet of lottoDayChart">
+                        <td class="capitalize">{{timeSheet.text}}</td>
+                        <td>{{timeSheet.startTime}} - {{timeSheet.endTime}}</td>
+                     </tr>
+                  </tbody>
+               </table>
+               <table class="tabular-data-col-2 powerTable">
+                  <tbody>
+                     <tr>
+                        <th></th>
+                        <th class="table-headings">{{lottoConstants.pwbLable}}</th>
+                     </tr>
+                     <tr *ngFor="let timeSheet of powerDayChart">
+                        <td class="capitalize">{{timeSheet.text}}</td>
+                        <td>{{timeSheet.startTime}} - {{timeSheet.endTime}}</td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+            <div class="top text">
+               <div class="note-container text-left">
+                  <span>
+                     <strong>{{lottoLabels.timeOutNote}}</strong>
+                  </span>
+                  <span class="para-content">{{lottoLabels.lottoTableText1}} {{lottoCutOffTiming[gameDayCodes.DRAW.code]}}.</span>
+                  <span class="para-content">{{lottoLabels.lottoTableText2}}
+                     <span *ngFor="let days of lottoDrawDays; let i = index">
+                        <span *ngIf="i==0">{{days.text | titlecase}}</span>
+                        <span *ngIf="i>0">and {{days.text | titlecase}}.</span>
+                     </span>
+                  </span>
+                  <span class="para-content"> {{lottoLabels.pwbTableText}}
+                     <span *ngFor="let days of PowerballDrawDays; let i = index">
+                        <span *ngIf="i==0">{{days.text | titlecase}}</span>
+                        <span *ngIf="i>0">and {{days.text | titlecase}}.</span>
+                     </span>
+                  </span>
+               </div>
+            </div>
+            <div class="bottom">
+               <div class="half-btns">
+                  <div class="left">
+                     <app-bottom-button [disableButton]="false" (clickEmitter)="goToHistory()" [text]="lottoLabels.replayTimeOutBtn"></app-bottom-button>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+   </ng-template>
+</app-colored-overlay>

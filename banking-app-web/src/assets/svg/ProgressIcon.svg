@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg  viewBox="0 0 84 67" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.3 (51167) - http://www.bohemiancoding.com/sketch -->
+    <title>Progress Icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="1440---Building_Loan---Stepper_1.1" transform="translate(-667.000000, -338.000000)" stroke="#000000" stroke-width="2">
+            <g id="Group-8-Copy" transform="translate(520.000000, 271.000000)">
+                <g id="Progress-Icon" transform="translate(148.000000, 67.000000)">
+                    <polyline id="Shape-Copy-7" points="81.9492473 0.669244734 81.9492473 52.7460799 0 52.7460799 2.86509168e-14 37.5467687 6.4848846 37.5467687 6.4848846 32.7926076 13.9414343 32.7926076 13.9414343 27.9831627 22.6649093 27.9831627 30.6768 27.9831627 30.6768 23.1727436 30.6768 1.56011575"></polyline>
+                    <path d="M31,1.61290323 L81.7619646,1.61290323" id="Line-Copy" stroke-linecap="square"></path>
+                    <g id="thin-0804_wheelbarrow_full" transform="translate(25.032258, 23.580645)">
+                        <g id="Group" transform="translate(0.000000, 0.000000)">
+                            <path d="M13.4984679,16.0602411 C9.61818363,16.0602411 14.1980852,5.22307891 16.8227385,5.11684128 C19.4476208,5.01060364 22.7108085,8.6215233 23.8459298,6.60370419 C24.9810512,4.58588508 27.0381438,3.73621599 31.2237607,3.20502783 C35.4091486,2.67407164 33.6357218,-0.937079981 36.2606041,0.231302001 C38.8854863,1.39945202 45.1771188,14.1484276 45.3900399,16.0602411 L13.4984679,16.0602411 Z" id="Shape" fill="#FFFFFF"></path>
+                            <ellipse id="Oval" cx="44.5107222" cy="37.5700738" rx="4.51072221" ry="4.57007382"></ellipse>
+                            <polyline id="Shape" points="3.99680289e-15 12 5.14124343 12 14.4307853 42.1547861 17.5687387 42.1547861 22.0343583 32.2385007"></polyline>
+                            <path d="M8.98867971,25.646748 C8.98867971,25.646748 36.5697473,46.1547861 47.7073528,16 L6,16 L8.98867971,25.646748 Z" id="Shape" fill="#FFFFFF"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

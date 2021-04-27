@@ -1,0 +1,37 @@
+﻿<div class="overlay" [ngClass]="{'alternate': alternate, 'header-fixed': headerFixed, 'alternate-header': alternateHeader}" *ngIf="isVisible" id="main-overlay">
+   <div class="container" [ngClass]="{'alternate-container': alternateHeader}">
+      <div *ngIf="alternate" class="row" [ngClass]="{'alternate-row': alternateHeader}" [class.container-header]="headerFixed">
+         <div class="col-xs-6 logo-cntnr">
+            <span class="logo" [ngClass]="{'alternate-logo' : alternateHeader}"></span>
+         </div>
+         <ng-container *ngIf="cancelable">
+         <div *ngIf="closeText && showCloseBtn" class="col-xs-6 btn-cntnr">
+            <button (click)="inactiveOverlay()" id="ovrly-cancel" [ngClass]="{'alternate-button': alternateHeader}">
+               {{altButtonText}}
+            </button>
+         </div>
+         <div *ngIf="!closeText" class="close-btn" (click)="inactiveOverlay()">
+            <div class="closeIcon"></div>
+         </div>
+      </ng-container>
+      </div>
+      <div class="row" [class.container-content]="headerFixed">
+         <div class="col-xs-12">
+            <div *ngIf="backOption" class="back" (click)="inactiveOverlay()" id="ovrly-bck">
+               <span class="icon"></span>
+               <span class="text">Pay</span>
+            </div>
+            <div class="content-wrapper">
+               <div *ngIf="!alternate" class="icon"></div>
+               <div class="content">
+                  <app-system-error [type]='sysErrorInstanceType.Modal'></app-system-error>
+                  <ng-template [ngTemplateOutlet]="template || defaultTemplate"></ng-template>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<ng-template #defaultTemplate>
+   <h1>Comming Soon !!!</h1>
+</ng-template>

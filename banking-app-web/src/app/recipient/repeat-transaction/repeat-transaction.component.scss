@@ -1,0 +1,11 @@
+@import '../../../styles/_base.scss';
+@import '../../../styles/_mixins.scss';
+$svg-path: '../../../assets/svg';
+.gd-error {
+    margin: 20px 0 10px;
+}
+
+.link {
+    cursor: pointer;
+}
+

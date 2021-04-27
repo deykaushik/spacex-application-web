@@ -1,0 +1,20 @@
+<app-small-overlay [template]="confirmJointBondOverlay" alternate="true">
+   <ng-template #confirmJointBondOverlay>
+      <section class="container popup-confirm">
+         <span class="overlay-cross" (click)="userAction(labels?.noButton)"></span>
+         <div class="template-content">
+            <div class="logo-cntnr">
+               <span class="green-warning"></span>
+            </div>
+            <span class="title">{{title}}</span>
+            <span *ngIf="isFromPlaceNotice && isJointBondAccount" class="message-jb-account">{{labels.jbActMessage}}</span>
+            <div [ngClass]="{'clear-margin-top': isFromPlaceNotice && isJointBondAccount, 'set-margin-top': !isFromPlaceNotice || !isJointBondAccount}">
+               <app-bottom-button class="btn-yes" id="btn-yes" [disableButton]="requestInProgress" (clickEmitter)="userAction(labels?.yesButton)"
+                  [text]="labels.yesButton" [showLoader]="requestInProgress" [alternateTheme]="false"></app-bottom-button>
+               <app-bottom-button id="btn-no" [alternateTheme]="true" (clickEmitter)="userAction(labels?.noButton)"
+                  [text]="labels.noButton"></app-bottom-button>
+            </div>
+         </div>
+      </section>
+   </ng-template>
+</app-small-overlay>

@@ -1,0 +1,21 @@
+﻿<div *ngIf="isErrorShown">
+   <div [ngClass]=" chatActive ? 'chat-active row no-padding no-margin' : 'row no-padding no-margin'" [class.bodyalert]="type === sysErrorInstanceType.Body"
+      [class.popupClass]="type==sysErrorInstanceType.Modal">
+      <div class="col-xs-12 no-padding application-error">
+         <alert [type]="'danger'" [dismissible]="true" (onClose)="onSystemAlertClose()">
+            <div class="icon-field system-error">
+               <span class="system-error icon warning"></span>
+            </div>
+            <div class="text" [ngSwitch]="messageType">
+               <div *ngSwitchCase="errorMessages.transactionMessage">
+                  Something went wrong on our side and your payment might not have gone through. Please
+                  <span class="redirect-link" (click)="navigationClick($event)">check</span> your transactions.
+               </div>
+               <div *ngSwitchDefault>
+                  Apologies! Looks like something's wrong on our side.
+               </div>
+            </div>
+         </alert>
+      </div>
+   </div>
+</div>

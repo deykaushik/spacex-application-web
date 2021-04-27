@@ -1,0 +1,60 @@
+@import './../../../../styles/_mixins.scss';
+@import './../../../../styles/_base.scss';
+
+
+$svg-path: './../../../../assets/svg/';
+
+
+.overlay-template {
+   .para-title {
+      color: $color-overlay;
+   }
+
+   .content {
+      margin-bottom: 20px;
+   }
+}
+
+.vertical-overlay-content-wrapper {
+   .icon {
+      @include svg-image-full-path($svg-path, 'mobile-grey');
+      width: 60px;
+   }
+}
+
+@media (min-width: $media-sm) {
+   .overlay-template {
+      @include flex(1);
+      max-width: 700px;
+
+      .para-title {
+         font-size: $section-title-size;
+      }
+
+      .content {
+         margin-bottom: 20px;
+      }
+   }
+
+   .overlay-content-wrapper {
+      .icon {
+         @include svg-image-full-path($svg-path, 'mobile');
+         position: relative;
+         display: block;
+         width: 120px;
+         height: 120px;
+      }
+   }
+}
+
+@media (min-width: $media-md) {
+   .overlay-content-wrapper {
+      .icon {
+         @include svg-image-full-path($svg-path, 'mobile');
+         position: relative;
+         display: block;
+         width: 170px;
+         height: 170px;
+      }
+   }
+}

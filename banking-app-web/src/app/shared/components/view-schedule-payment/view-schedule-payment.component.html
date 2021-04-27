@@ -1,0 +1,161 @@
+﻿<div class="view-schedule-conatiner">
+    <div class="container">
+        <div class="header-container">
+            <div class="flex-box">
+                <a class="icon" (click)="goBack()"></a>
+                <span class="header" [innerHTML]="labels.title">
+            </span>
+            </div>
+        </div>
+        <div class="success-block" [class.hide]="!isShowSuccessMessage">
+            <div class="icon-container pull-left">
+                <span class="success" class="img-step-tick">
+            </span>
+            </div>
+            <div class="sucess-message">{{ labels.editSuccessMsg }}</div>
+            <div class="icon-container cross-icon">
+                <span class="img-step-close" (click)="isShowSuccessMessage = false">
+            </span>
+            </div>
+        </div>
+        <div class="error-block" [class.hide]="!isDeleteFailed">
+            <div class="icon-container pull-left">
+                <span class="failure" class="img-step-close">
+            </span>
+            </div>
+            <div class="error-message">{{ paymentFailedMsg }}</div>
+            <div class="icon-container cross-icon">
+                <span class="img-step-close" (click)="isDeleteFailed = true">
+            </span>
+            </div>
+        </div>
+
+        <div class="view-schedule-card" [class.is-skeleton-loading]='skeletonMode'>
+            <div class="card-header">
+                <div class="icon">
+                    <span [class]="iconClass"></span>
+                </div>
+                <span class="title"> {{ heading }} {{transactionDetail?.bFName}} </span>
+                <span *ngIf="transactionDetail" class="format-edit" (click)="goToEdit();sendEvent('click_on_edit_scheduled_payment_on_view');">Edit</span>
+            </div>
+            <div class="section" *ngIf="transactionType != labels.transfer">
+                <div class="header">{{ labels.recipient }}</div>
+                <table class="table-format">
+                    <tr>
+                        <td>{{ labels.recipient }}:</td>
+                        <td *ngIf="transactionType != scheduleType.prepaid.name" [innerHTML]="transactionDetail?.bFName +' - '+ transactionDetail?.toAccount?.accountNumber | skeletonLoader:skeletonMode"></td>
+                        <td *ngIf="transactionType == scheduleType.prepaid.name" [innerHTML]="(!!transactionDetail?.bfName ? transactionDetail.bfName  +' - ' + transactionDetail?.destinationNumber : transactionDetail?.destinationNumber) | skeletonLoader:skeletonMode"></td>
+                    </tr>
+                    <tr *ngIf="transactionDetail?.toAccount?.accountNumber">
+                        <td>{{ labels.bank }}:</td>
+                        <td [innerHTML]="transactionDetail.toAccount.accountNumber | skeletonLoader:skeletonMode"></td>
+                    </tr>
+                    <tr>
+                        <td>{{ labels.amount }}:</td>
+                        <td [innerHTML]="transactionDetail?.amount.toFixed(2) | amountTransform | skeletonLoader:skeletonMode"></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="section" *ngIf="transactionType == labels.transfer">
+                <div class="header">{{ labels.transferDetail }}</div>
+                <table class="table-format">
+                    <tr>
+                        <td>{{ labels.transferTo }}:</td>
+                        <td [innerHTML]="transactionDetail?.toAccount?.accountNumber | skeletonLoader:skeletonMode"></td>
+                    </tr>
+                    <tr>
+                        <td>{{ labels.amount }}:</td>
+                        <td [innerHTML]="transactionDetail?.amount.toFixed(2) | amountTransform | skeletonLoader:skeletonMode"></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="section">
+                <div class="header">{{ labels.paymentDetails }}</div>
+                <table class="table-format">
+                    <tr>
+                        <td>{{ labels.payFrom }}:</td>
+                        <td [innerHTML]="transactionDetail?.fromAccount?.accountNumber | skeletonLoader:skeletonMode"></td>
+                    </tr>
+                    <ng-container *ngIf="transactionDetail?.reoccurrenceItem">
+                        <tr>
+                            <td>{{ labels.scheduledPayment }}:</td>
+                            <td [innerHTML]="transactionDetail?.reoccurrenceItem?.reoccurrenceFrequency | skeletonLoader:skeletonMode"></td>
+                        </tr>
+                        <tr>
+                            <td>{{ labels.NrOfRepeats }}:</td>
+                            <td [innerHTML]="transactionDetail?.reoccurrenceItem?.reoccurrenceOccur | skeletonLoader:skeletonMode"></td>
+                        </tr>
+                    </ng-container>
+                    <tr>
+                        <td>{{ labels.paymentDate }}:</td>
+                        <td [innerHTML]="transactionDetail?.nextTransDate | date:dateFormat | skeletonLoader:skeletonMode"></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="section" *ngIf="transactionType != labels.transfer">
+                <div class="header">{{ labels.notifications }}</div>
+                <table class="table-format">
+                    <tr *ngIf="transactionDetail?.notificationDetail">
+                        <td>{{ labels.notifications }}:</td>
+                        <td>{{transactionDetail?.notificationDetail.notificationType}} - {{transactionDetail?.notificationDetail.notificationAddress}}</td>
+                    </tr>
+                    <tr *ngIf="!transactionDetail?.notificationDetail">
+                        <td>{{ labels.notifications }}:</td>
+                        <td [innerHTML]="'None' | skeletonLoader:skeletonMode"></td>
+                    </tr>
+                    <tr>
+                        <td>{{ labels.yourRef }}:</td>
+                        <td [innerHTML]="transactionDetail?.myDescription | skeletonLoader:skeletonMode"></td>
+                    </tr>
+                    <tr *ngIf="transactionDetail?.beneficiaryDescription">
+                        <td>{{ labels.theirRef }}:</td>
+                        <td [innerHTML]="transactionDetail.beneficiaryDescription | skeletonLoader:skeletonMode"></td>
+                    </tr>
+                    <tr>
+                        <td>{{ labels.transactionNr }}:</td>
+                        <td [innerHTML]="transactionDetail?.transactionID | skeletonLoader:skeletonMode"></td>
+                    </tr>
+                    <tr>
+                        <td>{{ labels.payDate }}:</td>
+                        <td [innerHTML]="transactionDetail?.nextTransDate | date:dateFormat | skeletonLoader:skeletonMode"></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="margin-top delete-msg">
+                <app-bottom-button *ngIf="retryCount < 0" alternateTheme="true" [text]="labels.deleteBtnText" (click)="(transactionDetail?.capturedDate == transactionDetail?.startDate) || showCantBeDeletedMsg ? disableBtnErrorMsg = false:openDeleteOverlay()" [showLoader]='isDeleteInProcess'
+                    [class.btn-disabled]='(transactionDetail?.capturedDate == transactionDetail?.startDate) || showCantBeDeletedMsg' cssClass="delete"></app-bottom-button>
+                <app-bottom-button *ngIf="retryCount >= 0" alternateTheme="true" text="Try again" (click)="removeScheduleTransaction()" [showLoader]='isDeleteInProcess' [disableButton]=' retryCount > retryMaxCount ' cssClass="delete"></app-bottom-button>
+                <div class="error-message disableBtn-errorMsg" [class.hide]="disableBtnErrorMsg">Your payment is being processed and cannot be deleted.</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-small-overlay [template]="deleteOverlay" alternate='true' *ngIf="isDeleteOverlay">
+    <ng-template #deleteOverlay>
+        <span class="overlay-cross" (click)="closeDeleteOverlay()"></span>
+        <div class="template-content">
+            <div class="logo-cntnr">
+            </div>
+            <div class="logo-cntnr">
+                <span class="logo1"></span>
+            </div>
+            <span *ngIf="isDeleteFailed" class="delete-failed-msg"> Delete operation failed. Please try again in sometime.</span>
+            <span class="overlay-title">Are you sure you want to delete this scheduled payment?</span>
+            <span class="ovelay-text">If you choose to delete this payment, all occurrences of this payment will also be deleted.</span>
+            <div class="btns">
+                <div class="ok-button">
+                    <button class="gd-primary-btn margin-top-btn" [disabled]="isDeleteInProcess" (click)="removeScheduleTransaction();sendEvent('click_on_delete_scheduled_payment');">Delete scheduled payment</button>
+                </div>
+                <div class="cancel-button">
+                    <button class="gd-ghost-btn" (click)="closeDeleteOverlay();sendEvent('click_on_cancel_delete_scheduled_payment');">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</app-small-overlay>
+<app-colored-overlay *ngIf="transactionDetail" [isVisible]="showModal" [template]="editSchedulePayment" [alternate]="true" [altButtonText]="'Cancel'" (onHide)="hideOverlay($event);sendEvent('click_on_cancel_edit_scheduled_payment');">
+    <ng-template #editSchedulePayment>
+        <app-edit-scheduled-payment [transactionDetail]="transactionDetail" (refreshPayment)="refreshPayment()"></app-edit-scheduled-payment>
+    </ng-template>
+</app-colored-overlay>

@@ -1,0 +1,12 @@
+<div class="alertMessage container no-padding" [class.hidden]="!showAlert" role="alert">
+   <div class="gd-form-row alert-container">
+      <div class="message" [class.error]="alertType === 1" [class.lock]="alertType === 2" [class.success]="alertType === 3">
+         <div [class.errorIcon]="alertType === 1" [class.lockIcon]="alertType === 2" [class.successIcon]="alertType === 3"></div>
+         <div class="text">
+            <div>{{displayMessageText}}</div>
+            <div *ngIf="linkDisplayText != ''" class="linkText" (click)="onErrorLink()" (touchstart)="onErrorLink()">{{linkDisplayText}}</div>
+         </div>
+         <div class="icon closeIcon" (click)="onCloseMsg()" (touchstart)="onCloseMsg()"></div>
+      </div>
+   </div>
+</div>

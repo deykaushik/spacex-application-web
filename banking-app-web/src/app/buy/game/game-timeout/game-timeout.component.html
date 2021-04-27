@@ -1,0 +1,79 @@
+﻿<app-colored-overlay [isVisible]="true" [template]="timeOutOverlay" [backOption]="false">
+    <ng-template #timeOutOverlay>
+        <div class="overlay-content-wrapper">
+            <div class="icon"></div>
+            <div class="content">
+                <h6 class="para-title">{{title}}</h6>
+                <div *ngIf="visibleDetails">
+                    <div class="top text-left">
+                        <p>
+                            Tickets can be bought on Nedbank channels from {{lottoCutOffTiming.Start}} to {{lottoCutOffTiming[gameDayCodes.NORM.code]}} ({{lottoCutOffTiming[gameDayCodes.DRAW.code]}} on draw days) Monday to Saturday, and from {{lottoCutOffTiming.Start}} to {{lottoCutOffTiming[gameDayCodes.SUN.code]}}
+                            on Sundays.
+                        </p>
+                    </div>
+                    <div class="top text-left">
+                        <p>For more details see the table below:</p>
+                    </div>
+                </div>
+                <div *ngIf="!bothGamesNotAvailable() && !visibleDetails">
+                    <div class="top">
+                        <p>
+                            Unfortunately the
+                            <span *ngIf="onlyPowerballAvailable()">LOTTO</span>
+                            <span *ngIf="onlyLottoAvailable()">PowerBall</span> ticket purchase was not completed in time.
+                            <span class='view-times' (click)="viewTimes()">View times.</span>
+                        </p>
+                    </div>
+                </div>
+                <div class="top table-responsive">
+                    <table class="tabular-data-col-2 lottoTable" *ngIf="visibleLottoTable">
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td>LOTTO</td>
+                            </tr>
+                            <tr *ngFor="let timeSheet of lottoDayChart">
+                                <td class="capitalize">{{timeSheet.text}}</td>
+                                <td> {{timeSheet.startTime}} - {{timeSheet.endTime}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="tabular-data-col-2 powerTable" *ngIf="visiblePowerTable" [class.no-lotto]="!visibleLottoTable">
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td>PowerBall</td>
+                            </tr>
+                            <tr *ngFor="let timeSheet of powerDayChart">
+                                <td class="capitalize">{{timeSheet.text}}</td>
+                                <td> {{timeSheet.startTime}} - {{timeSheet.endTime}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="top">
+                    <div class="note-container" *ngIf="visibleDetails">
+                        <p class="text-left"><strong>Note:</strong></p>
+                        <p class=" text-left">
+                            On draw days the closing time for purchases is {{lottoCutOffTiming[gameDayCodes.DRAW.code]}} LOTTO, LOTTO PLUS 1 and LOTTO PLUS 2 draw days are
+                            <span *ngFor="let days of lottoDrawDays">{{days.text}} </span> PowerBall and PowerBall PLUS draw days are
+                            <span *ngFor="let days of PowerballDrawDays">{{days.text}} </span>
+                        </p>
+                    </div>
+                </div>
+                <div class="bottom">
+                    <div class="half-btns">
+                        <div class="left">
+                            <button class="gd-primary-btn" (click)="buttonClick()">{{labels.goOverview}}</button>
+                        </div>
+                        <div class="right">
+                            <div *ngIf="!bothGamesNotAvailable()">
+                                <button class="gd-ghost-btn" (click)="buttonClick(playGameCode)">{{"Play "+playTitle}}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</app-colored-overlay>

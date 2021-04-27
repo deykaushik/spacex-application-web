@@ -1,0 +1,145 @@
+@import './../../../styles/_base.scss';
+@import './../../../styles/_mixins.scss';
+$svg-path: './../../../assets/svg/';
+$icon-success: 'tick';
+$icon-cross: 'closeStatus';
+$icon-close-gray: 'close-gray';
+.title {
+   font-size: $md-heading-size;
+   @include markpro-medium();
+   margin: 40px auto 10px;
+   color: $text-color-primary;
+   text-align: center;
+   max-width: $title-width;
+}
+
+.block-form {
+   max-width: 400px;
+   margin: 0 auto;
+}
+
+.label-contact {
+   color: $text-color-primary;
+   font-size: $font-sm;
+}
+
+.cellphone-container {
+   position: relative;
+}
+
+textarea {
+   min-height: 110px;
+   letter-spacing: 0.2px;
+   border: solid 1.5px;
+   border-color: $form-element-border;
+}
+
+.readonly {
+   cursor: pointer;
+}
+
+.input-type-div {
+   position: absolute;
+   top: 0;
+   left: 0;
+}
+
+.feedback-container {
+   text-align: center;
+}
+
+.error-msg {
+   color: $text-color-error;
+   font-size: $font-sm;
+   margin: 5px 0 0;
+   position: relative;
+   padding-left: 10px;
+   &::before {
+      content: '* ';
+      position: absolute;
+      left: 0;
+   }
+}
+
+.content-item {
+   margin-top: 25px;
+}
+
+textarea.feedback-box {
+   padding: 15px;
+}
+
+.feedback-info {
+   float: right;
+   color: $text-color-info;
+}
+
+.message {
+   @include flexbox();
+   @include align-items(center);
+   padding: 10px;
+   margin: 0 0 10px 0;
+   left: 0;
+   top: auto;
+   right: 0;
+   z-index: 99;
+   &.error {
+      background: $color-error-bg;
+   }
+   &.success {
+      background: $color-success-bg;
+   }
+   .icon {
+      width: 15px;
+      height: 15px;
+   }
+   .try-again {
+      font-size: $font-xx-sm;
+      width: 50px;
+      cursor: pointer;
+      color: $text-color-error;
+   }
+   .text {
+      @include flex(1);
+      font-size: $font-sm;
+      margin: 0 20px;
+   }
+   .cross {
+      @include svg-image-full-path($svg-path, $icon-cross);
+   }
+   .success {
+      @include svg-image-full-path($svg-path, $icon-success);
+   }
+   .close-gray {
+      @include svg-image-full-path($svg-path, $icon-close-gray);
+   }
+}
+
+.success-border {
+   border-color: $form-element-border-valid;
+}
+
+.icon-field {
+   position: relative;
+   padding-right: 10px;
+   width: 36px;
+   height: 36px;
+   display: inline-block;
+   vertical-align: middle;
+   .icon {
+      width: 100%;
+      left: 0px;
+      top: -3px;
+      cursor: pointer;
+      display: inline-block;
+      height: 100%;
+      &.warning {
+         @include svg-image-full-path($svg-path, 'Error');
+      }
+      &.close {
+         width: 20px;
+         height: 20px;
+         @include svg-image-full-path($svg-path, 'close-red');
+      }
+   }
+}

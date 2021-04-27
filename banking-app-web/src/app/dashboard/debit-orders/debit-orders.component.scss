@@ -1,0 +1,485 @@
+@import './../../../styles/_mixins.scss';
+@import './../../../styles/_base.scss';
+$icon-path: '../../../assets/svg/';
+$account-debit-orders-bg: $body-bg;
+$debit-orders-row-bg: $container-bg;
+$order-item-shadow: $workflow-shadow-color;
+$disclaimer-bg: $body-bg;
+.card-title {
+   font-size: $xlg-descrp-size;
+   font-weight: bold;
+   padding: 0 0 0 20px;
+}
+.red-warning {
+   display: inline-block;
+   @include svg-image-full-path($icon-path, 'warning-error', 60px, 60px);
+   padding-bottom: 20px;
+}
+
+.account-debit-orders {
+   background: $account-debit-orders-bg;
+   padding: 0;
+   @include main-content();
+   .top-icon {
+      &.icon-field {
+         position: relative;
+         margin: 20px 0;
+         .icon {
+            display: inline-block;
+            right: 13px;
+            width: 10px;
+            height: 20px;
+            top: 0;
+            cursor: pointer;
+            &.left-arrow {
+               float: left;
+               margin: 12px 0 0 20px;
+               @include rotate(180deg);
+               @include svg-image-full-path($icon-path, 'right-arrow-cap');
+            }
+         }
+         .section-heading {
+            display: inline-block;
+            margin-left: 15px;
+            .section-title {
+               font-weight: $weight-bold;
+            }
+         }
+         .account-number {
+            margin-left: 0px;
+            font-size: $font-sm;
+         }
+         .section-title {
+            color: $text-color-secondary;
+            margin-bottom: 5px;
+         }
+      }
+   }
+   .debit-orders-row {
+      &.to-approve {
+         margin-bottom: 22px;
+      }
+      padding: 10px 0px;
+      margin-top: 15px;
+      background-color: $debit-orders-row-bg;
+      .debit-orders {
+         .para-title {
+            color: $text-color-secondary;
+            margin-bottom: 10px;
+            padding: 0px 15px;
+         }
+         .order-item {
+            padding: 0px 5px 20px 20px;
+            box-shadow: 0 1px 0 0 $order-item-shadow;
+            @include flexbox();
+            @include align-items(center);
+            &:last-child {
+               box-shadow: none;
+            }
+            .order-fields {
+               .field {
+                  padding: 20px 0px 0px 0px;
+                  .order-label {
+                     font-size: $label-size;
+                     text-align: left;
+                     color: $text-color-info;
+                  }
+                  .order-value {
+                     font-size: $font-default;
+                     text-align: left;
+                     color: $text-color-primary;
+                     word-break: break-all;
+                  }
+                  &.amount-field {
+                     float: right;
+                     padding-left: 10px;
+                  }
+               }
+            }
+            .order-icon {
+               .view-details-icon {
+                  &.icon-field {
+                     position: relative;
+                     margin: 20px 0;
+                     .icon {
+                        display: inline-block;
+                        right: 4px;
+                        top: 9px;
+                        cursor: pointer;
+                        &.details {
+                           margin: 0px 0px 0px 4px;
+                           @include svg-image-full-path($icon-path, 'Details');
+                        }
+                        &.dispute {
+                           margin: 0px 0px 0px 4px;
+                           @include svg-image-full-path($icon-path, 'reversed', 20px, 22px);
+                        }
+                        &.disputed {
+                           margin: 0px 0px 0px 16px;
+                           @include svg-image-full-path($icon-path, 'Disputed');
+                        }
+                     }
+                     .view-details-text {
+                        font-size: $label-size;
+                        text-align: center;
+                        color: $text-color-accent-secondary;
+                        margin-top: 10px;
+                        cursor: pointer;
+                     }
+                  }
+               }
+            }
+            &.align-item {
+               padding: 0 0 10px 0;
+               &.stopped {
+                  border-right: solid 5px $warning-primary;
+               }
+            }
+         }
+         .debit-details-container {
+            cursor: pointer;
+            .view-details {
+               left: 0;
+               display: inline-block;
+               vertical-align: middle;
+               @include svg-image-full-path($icon-path, 'green-details', 16px, 16px);
+            }
+            .text{
+               color: $secondary-color;
+               display: inline-block;
+               font-size: $font-sm;
+               padding-left: 5px;
+            }
+         }
+         .debit-reversed {            
+            cursor: default;
+            .reversed-order {
+               display: inline-block;
+               vertical-align: top;
+               @include svg-image-full-path($icon-path, 'reversed', 14px, 14px);
+            }
+            .text {
+               color: $warning-primary;
+               font-size: $font-sm;
+               padding-left: 5px;
+            }
+         }         
+      }
+   }
+   .no-debit-orders-container {
+      color: $text-color-secondary;
+      text-align: center;
+      margin-top: -15px;
+      .heading-block {
+         font-size: $font-lg;
+         line-height: $section-title-size-mob;
+      }
+      .descrp-block {
+         font-size: $font-default;
+         line-height: $md-heading-size;
+         color: $text-color-primary;
+         margin: 5% 9%;
+         padding-bottom: 25px;         
+      }
+      .btn-container {
+         position: absolute;
+         bottom: 7%;
+         width: 90%;
+         left: 0;
+         margin: 0 20px;
+      }
+   }
+}
+
+.mandate-conatiner {
+   .heading-container {
+      height: 27.4%;
+      padding: 18% 9%;
+      text-align: center;
+      .heading {
+         font-size: $font-md;
+         font-weight: $weight-medium;
+         line-height: 1.25;
+         text-align: center;
+         color: $text-color-secondary;
+      }
+   }
+   .disclaimer-container {
+      font-size: $font-sm;
+      line-height: 1.5;
+      text-align: left;
+      color: $text-color-primary;
+      background-color: $disclaimer-bg;
+      padding-top: 13px;
+      padding-bottom: 22px;
+      @include flexbox();
+   }
+   .button-container {
+      padding-top: 35px;
+   }
+}
+
+.empty-state {
+   padding: 0 0 30px;
+   .icon-block {
+      .icon {
+         width: 180px;
+         @include svg-image-full-path($icon-path, 'calendar-clock');
+      }
+   }
+}
+
+@media (min-width: $media-sm) {
+   .account-debit-orders {
+      padding: 0 20px;
+      .top-icon {
+         &.icon-field {
+            position: relative;
+            margin: 30px 0;
+            .icon {
+               width: 13px;
+               height: 20px;
+               display: inline-block;
+               right: 20px;
+               top: 0;
+               cursor: pointer;
+            }
+         }
+      }
+      .debit-orders-row {
+         padding: 15px 15px;
+         &.to-approve {
+            margin-bottom: 30px;
+         }
+         .debit-orders {
+            .para-title {
+               font-size: $font-lg;
+               margin-bottom: 15px;
+            }
+            .order-header {
+               @include box-shadow(0 1px 0 0 $order-item-shadow);
+               padding: 17px 5px 18px 15px;
+               .order-fields {
+                  .field {
+                     padding: 0px;
+                     .order-label {
+                        font-size: $label-size;
+                        text-align: left;
+                        color: $text-color-info;
+                     }
+                  }
+               }
+            }
+            .order-item {
+               padding: 0px 5px 10px 15px;
+               .order-fields {
+                  .field {
+                     padding: 5px 0px 0px 0px;
+                     .order-label {
+                        display: none;
+                     }
+                     .order-value {
+                        font-size: $font-default;
+                        text-align: left;
+                        color: $text-color-primary;
+                     }
+                     &.amount-field {
+                        float: none;
+                     }
+                  }
+                  .align-center {
+                     @include flexbox();
+                     @include align-items(center);
+                  }
+               }
+               .order-icon {
+                  .view-details-icon {
+                     &.icon-field {
+                        position: relative;
+                        margin: 0px 0px;
+                     }
+                  }
+               }  
+               &.align-item {
+                  padding: 10px 0;
+               }             
+            }
+            .debit-details-container {
+               .view-details {
+                  &::before {
+                     height: 30px;
+                     width: 30px;
+                  }                  
+                  left: 25%;
+               }         
+               .text {                  
+                  display: block;
+                  text-align: center;
+                  font-size: $font-default;
+                  padding-left: 0;
+               }      
+            }
+            .debit-reversed {
+               .reversed-order {
+                  &::before {
+                     height: 22px;
+                     width: 20px;
+                  }
+                  left: 14%;
+               }
+               .text {
+                  font-size: $font-default;
+                  word-wrap: break-word;
+                  display: block;
+                  padding: 5px 0 0 0;
+               }
+            }
+         }
+      }
+      .no-debit-orders-container {
+         .heading-block {
+            font-size: $font-xlg;
+            line-height: $xlg-heading-size;
+         }
+         .descrp-block {
+            font-size: $font-lg;
+            line-height: $md-heading-size;
+            margin: 5% 13%;
+         }
+         .btn-container {
+            width: 100%;
+            margin: 0 auto;
+            bottom: 10%;
+         }
+      }
+   }
+   .mandate-conatiner {
+      .heading-container {
+         margin-top: 64px;
+         height: 149p;
+         padding: 9% 12%;
+         text-align: center;
+         .heading {
+            font-size: $font-lg;
+            font-weight: $weight-medium;
+            line-height: 1.25;
+            color: $text-color-secondary;
+         }
+      }
+      .disclaimer-container {
+         font-size: $font-default;
+         @include flexbox();
+         margin: 0% 12%;
+         padding-top: 23px;
+         padding-bottom: 42px;
+      }
+      .button-container {
+         margin: 0% 12%;
+         padding-top: 35px;
+      }
+   }
+   .empty-state {
+      .icon-block {
+         .icon {
+            width: 250px;
+         }
+      }
+   }
+}
+
+.header-row {
+   max-width: 560px;
+   margin: 0 auto;
+   .title {
+      font-size: $md-heading-size;
+      @include markpro-medium();
+      margin: 40px auto;
+      color: $text-color-primary;
+      text-align: center;
+   }
+   .success-icon {
+      &.icon-field {
+         position: relative;
+         margin: 20px 0;
+         .icon {
+            display: inline-block;
+            right: 9%;
+            top: 9px;
+            cursor: pointer;
+            &.success {
+               @include svg-image-full-path($icon-path, 'success');
+            }
+         }
+      }
+   }
+   .error-icon {
+      &.icon-field {
+         position: relative;
+         margin: 20px 0;
+         .icon {
+            width: 60px;
+            height: 60px;
+            display: inline-block;
+            right: 5px;
+            top: 9px;
+            border: 2px solid $border-error;
+            border-radius: 50%;
+            padding: 15px;
+            cursor: pointer;
+            &.error {
+               @include svg-image-full-path($icon-path, 'closeStatus');
+            }
+         }
+      }
+   }
+}
+
+.block-form {
+   max-width: 400px;
+   margin: 0 auto;
+   .info-container {
+      background-color: $info-container-bg;
+      margin-top: 30px;
+      margin-bottom: 40px;
+      padding: 22px 14px;
+      .info-msg {
+         margin-left: 35px;
+         .dispute-notes {
+            padding-left: 18px;
+            li {
+               span {
+                  position: relative;
+                  left: 10px;
+               }
+            }
+         }
+      }
+      .icon {
+         float: left;
+         @include svg-image-full-path($icon-path, 'information', 23px, 23px);
+      }
+   }
+}
+
+@media screen and (min-width: $media-md-up) {
+   .block-form {
+      .title {
+         color: $text-color-secondary;
+         font-size: $md-heading-size;
+      }
+   }
+}
+
+@media (max-width: $media-xs) {
+   .card-title {
+      font-size: $font-md;
+      font-weight: bold;
+      padding: 0 0 0 20px;
+   }
+}
+
+@media (min-width: $media-lg) {
+   .account-debit-orders {
+      padding: $landing-padding $landing-padding-lg;
+   }
+}

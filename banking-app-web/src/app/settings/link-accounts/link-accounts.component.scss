@@ -1,0 +1,312 @@
+﻿@import './../../../styles/_base.scss';
+@import './../../../styles/_mixins.scss';
+
+
+$icon-path: '../../../assets/svg/';
+$account-card-border-left: 4px;
+$success-bg: $color-Frostee;
+
+.link-response-msg {
+   font-weight: bold;
+   padding: 15px;
+   width: 100%;
+   @include flexbox();
+   @include align-items(flex-start);
+
+   .left {
+      width: 50px;
+   }
+
+   .right {
+      margin-top: 10px;
+      cursor: pointer;
+   }
+
+   .center, .right {
+      @include flex(auto);
+      padding: 0 5px;
+   }
+
+   .right {
+      text-align: right;
+      white-space: nowrap;
+   }
+
+   &.success-msg {
+      background-color: $color-success-bg;
+      color: $text-color-secondary;
+   }
+
+   &.error-msg {
+      background-color: $color-error-bg;
+
+      .right {
+         text-decoration: underline;
+      }
+   }
+}
+.empty-record{
+   font-size: $font-sm;
+   color: $text-color-primary;
+   padding: 0 20px;
+   margin-bottom: 20px;
+}
+
+.msg-circle {
+   cursor: pointer;   
+   border-radius: 50%;
+   height: 40px;
+   width: 40px;
+   font-size: 25px;
+   text-align: center;
+   display: inline-block;
+   line-height: 40px;
+   color: $text-color-accent-secondary;
+}
+
+.gd-checkbox label {
+   margin-top: 6px;
+}
+
+.balance-title {
+   color: $text-color-info;
+}
+
+.balance {
+   padding: 15px 0 0 0;
+   @include flexbox();
+   @include align-items(flex-start);
+
+   .left, .right {
+      @include flex(1);
+   }
+
+   .right {
+      text-align: right;
+   }
+
+   .type {
+      font-size: $font-sm;
+      color: $text-color-info;
+      margin-bottom: 5px;
+   }
+
+   .bal {
+      color: $text-color-primary;
+      margin-bottom: 0;
+   }
+
+   .dark {
+      font-weight: bold;
+   }
+}
+
+.linkable-account-card {
+   min-height: 150px;
+   @include flexbox();
+   @include align-items(flex-start);
+
+   .icon {
+      width: 30px;
+      height: 30px;
+      margin-right: 20px;
+   }
+
+   .content {
+      @include flex(1);
+   }
+}
+
+.separator {
+   height: 15px;
+   clear: both;
+}
+
+.account-name {
+   font-weight: $weight-medium;
+   text-align: left;
+   color: $text-color-secondary;
+   font-weight: bold;
+}
+
+.account-number {
+   letter-spacing: 1px;
+   text-align: left;
+   color: $text-color-info;
+   padding-top: 5px;
+}
+
+.limit-widget {
+   &.savings {
+      border-left: $account-card-border-left solid $color-savings;
+
+      .account-color {
+         color: $color-savings;
+      }
+   }
+
+   &.current {
+      border-left: 4px solid $color-current;
+
+      .account-color {
+         color: $color-current  ;
+      }
+   }
+
+   &.credit-card {
+      border-left: 4px solid $color-credit-card;
+
+      .account-color {
+         color: $color-credit-card;
+      }
+   }
+
+   &.loan {
+      border-left: 4px solid $color-loan;
+
+      .account-color {
+         color: $color-loan;
+      }
+   }
+
+   &.investment {
+      border-left: 4px solid $color-investment;
+
+      .account-color {
+         color: $color-investment;
+      }
+   }
+
+   &.default {
+      border-left: 4px solid $color-account-default;
+
+      .account-color {
+         color: $color-account-default;
+      }
+   }
+}
+
+.linked-account-message {
+   margin-left: 20px;
+   padding-right: 15px;
+}
+
+.profile-container {
+   .profile-limit-header {
+      font-weight: bold;
+      text-align: left;
+      color: $text-color-primary;
+      padding: 0;
+      margin: 0 0 30px 10px;
+   }
+
+   .icon-field {
+      margin-bottom: 15px;
+
+      .icon {
+         width: 30px;
+         height: 30px;
+         display: inline-block;
+         right: 5px;
+         top: 10px;
+         cursor: pointer;
+      }
+   }
+}
+
+.limit-widget {
+   float: left;
+   margin: 10px 0;
+   width: 100%;
+   min-height: 81px;
+   padding: 15px;
+   background-color: $container-bg;
+
+   &.no-records-found {
+      text-align: center;
+      padding-top: 27px;
+   }
+
+   &.linkable-account-card {
+      min-height: 130px;
+   }
+
+   .widget-content {
+      padding: 20px 25px;
+   }
+}
+
+.limit-widget {
+   &.link-button {
+      clear: both;
+      background-color: transparent;
+   }
+}
+
+.success-msg-line {
+   padding-left: 10px;
+}
+
+@media (min-width: $media-sm) {
+   .link-error {
+      width: 94%;
+      margin: 10px;
+   }
+
+   .limit-widget {
+      width: 94%;
+      margin: 10px;
+
+      &.no-records-found {
+         text-align: center;
+         padding-top: 27px;
+      }
+   }
+   .empty-record{
+      padding: 0 10px;
+      font-size: $status-size;
+   }
+}
+
+@media (min-width: $media-md) {
+   .link-error {
+      width: 96%;
+      margin: 10px;
+   }
+
+   .limit-widget {
+      width: 47%;
+
+      &.no-records-found {
+         width: 96.5%;
+         text-align: center;
+         padding-top: 27px;
+      }
+   }
+}
+
+@media (min-width: $media-sm) {
+   .profile-container {
+
+      .linked-account-message {
+         margin-left: 10px;
+      }
+   }
+
+   .center {
+      margin-top: 10px;
+   }
+}
+@media (max-width: $media-sm - 1) {
+   .link-error {
+      width: 100%;
+   }
+
+   .center {
+      padding-left: 5px;
+   }
+
+   .link-response-msg {
+      width: 100%;
+   }
+}

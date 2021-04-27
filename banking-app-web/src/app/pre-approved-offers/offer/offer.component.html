@@ -1,0 +1,72 @@
+<div class="container" *ngIf="offerVm.terms.length > 0">
+   <div class="sub-conatiner">
+      <div class="header">
+         <p class="heading">{{heading}}</p>
+         <p class="sub-heading">{{subHeading}}</p>
+      </div>
+      <div class="control-container">
+         <span>{{loanAmount}}</span>
+         <div class="loan-input">
+            <input id="loan-amount" [ngModel]="offerVm.loanValue" (blur)="onAmountChange($event)" type="text"
+               class="input-alternate" name="loan-amount" (focus)="formatAmount($event)" autofocus #loanamount />
+            <p>{{loanAmountInfo}}</p>
+         </div>
+         <div class="gd-error" *ngIf="offerVm.amountInvalid">
+            {{errorText}}
+         </div>
+         <div class="loan-slider" [class.max]="isMax" [class.min]="isMin">
+            <p class="slider-title">{{sliderTitle}}</p>
+            <app-range-slider class="slider"  [showTooltip]="true" [config]="offerVm.config" [value]="offerVm.sliderValue" (change)="onSliderValueChanged($event)">
+            </app-range-slider>
+         </div>
+         <div>
+            <span class="min">{{sliderMin}}</span>
+            <span class="pull-right">{{sliderMax}}</span>
+         </div>
+         <div>
+            <div class="control-spacing"></div>
+            <p>{{selectTerm}}</p>
+            <div class="gd-basic-dropdown" [class.disable]="offerVm.amountInvalid" (onHidden)="offerVm.isDropdownOpen = false" (onShown)="offerVm.isDropdownOpen = true" dropdown>
+               <div dropdownToggle class="dropdown-place" [class.disabled]="offerVm.amountInvalid">
+                  <div class="text">
+                     <span >
+                     {{ offerVm.selectedTerm ? offerVm.selectedTerm.term : selectOption }}
+                     </span>
+                  </div>               
+                  <div class="icon">
+                     <span class="caret"></span>
+                  </div>
+               </div>
+               <ul *dropdownMenu class="dropdown-menu" role="menu">
+                  <li role="menuitem" *ngFor="let term of offerVm.termsAvailable" (click)="onTermChange(term)">
+                     {{term.term}}
+                  </li>
+               </ul>
+            </div>
+         </div>
+         <div class="calculated-amt" *ngIf="!offerVm.showCalculate" [class.is-skeleton-loading]='offerVm.skeletonMode'>
+            <p>{{monthlyRepayment}} </p>
+            <p [innerHTML]="offerVm.monthlyPayment | amountTransform | skeletonLoader:offerVm.skeletonMode" class="monthly-txt"> </p>
+            <div class="back-button-spacer"></div>
+         </div>
+      </div>
+      <div class="next-button-container">
+         <div class="back-button-spacer"></div>
+         <app-bottom-button *ngIf="!offerVm.showCalculate" text="Next" (click)="next($event)"></app-bottom-button>
+         <div class="back-button-spacer"></div>
+         <div class="tooltip-question no-after" *ngIf="offerVm.showCalculate">
+            <p class="text-green"> {{pleaseNote}} </p>
+            <div class="tooltip-spacer"></div>
+            <p> {{noteText}}</p>
+            <p>{{noteSubText}}</p>
+         </div>
+         <div class="rec-button-spacer"></div>
+         <app-bottom-button *ngIf="offerVm.showCalculate" text="Recalculate  →" (click)="calculate($event)" [disableButton]="offerVm.amountInvalid" [alternateTheme]="true"></app-bottom-button>
+      </div>
+   </div>
+</div>
+<div class="spinner-container" *ngIf="offerVm.terms.length <= 0">
+      <div class="spinner">
+         <app-spinner class="spinner" [color]="'green'"></app-spinner>
+      </div>
+</div>

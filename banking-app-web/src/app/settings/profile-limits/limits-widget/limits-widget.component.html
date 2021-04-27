@@ -1,0 +1,47 @@
+﻿<div class="limit-widget">
+   <div class="row">
+      <div class="col-xs-12 col-sm-7 limit-header" [id]="('id-limit-'+limitDetail.limitType)">
+         <span [innerHtml]="vm.headerText | skeletonLoader:skeletonMode"></span>
+      </div>
+      <div class="col-xs-12 col-sm-5 update-message-row message-type-icon" [class.success]="notification.type === notificationTypes.Success" [class.error]="notification.type === notificationTypes.Error" *ngIf="notification && isMessageOpened">
+            <span class="icon showIcon"></span>
+            <span class="header-message">{{notification.message}}</span>
+</div>
+   </div>
+   <hr class="horizontal-line" />
+   <div class="widget-content" [class.padding-bottom-5px]="limitDetail.isTempLimit">
+      <div class="row">
+         <div class="col-xs-12" *ngIf="!skeletonMode">
+            <app-range-amount-slider (change)="onLimitChange($event)" [errorMessages]="errorMessages" [currentLimit]="vm.displayLimit"
+               [config]="limitSliderConfig" (onEnd)="onSliderEnd($event);sendEvent(limitDetail.limitType+'_limit_enter_current_limit');"></app-range-amount-slider>
+         </div>
+         <div class="col-xs-12 margin-bottom-30" *ngIf="skeletonMode" [innerHtml]="' ' | skeletonLoader:skeletonMode">
+         </div>
+         <div class="col-xs-12" *ngIf="skeletonMode" [innerHtml]="' ' | skeletonLoader:skeletonMode">
+         </div>
+      </div>
+      <hr class="horizontal-line margin-class" />
+      <h6 class="current-type" [innerHtml]="'Limit type' | skeletonLoader:skeletonMode">
+      </h6>
+      <div class="limit-type-container">
+         <app-radio-button-list [radioList]='limitTypes' [selectedValue]="vm.limitTypeSelected" [groupName]="limitDetail.limitType"
+            (onSelectionChange)="onLimitTypeChange($event);sendEvent(limitDetail.limitType+'_limit_select_'+vm.limitTypeSelected+'_radio');"></app-radio-button-list>
+      </div>
+      <div *ngIf="limitDetail.isTempLimit" class="temporary-section gd-form">
+         <div class="start-date-label">
+            Start date
+         </div>
+         <div class="start-date">
+            {{ vm.limitStartDate }}
+         </div>
+         <div class="temp-limit-message">
+            You can only set your temporary limit from today up to 30 days
+         </div>
+         <div class="gd-form-row end-date-section">
+            <label class="gd-sm-label active" for="startDate">End date</label>
+            <app-custom-date-picker [config]="vm.calendarConfig" [date]="vm.limitEndDate" [minDate]="vm.minEndDate" [maxDate]="vm.maxEndDate"
+               (dateChanged)="setDate($event);sendEvent(limitDetail.limitType+'_limit_'+vm.limitTypeSelected+'_radio_select_end_date');"></app-custom-date-picker>
+         </div>
+      </div>
+   </div>
+</div>

@@ -1,0 +1,92 @@
+@import './../../../../../styles/_base.scss';
+@import './../../../../../styles/_mixins.scss';
+$icon-path: '../../../../../assets/svg';
+$icon-info: 'info_IconGreen';
+$icon-error: 'close-circle-red';
+.header-row {
+   margin: 0 auto;
+   .status-block {
+      margin: 40px 20px;
+      @include flexbox();
+      @include flex-direction(column);
+      .status-icon-text {
+         margin-bottom: 30px;
+         .icon-field {
+            width: auto;
+            .icon {
+               display: inline-block;
+               &.success {
+                  @include svg-image-full-path($icon-path, $icon-info, 24px, 24px);
+               }
+               &.error {
+                  @include svg-image-full-path($icon-path, $icon-error, 24px, 24px);
+               }
+            }
+         }
+         .title {
+            font-size: $section-title-secondary-size-mob;
+            @include markpro-medium();
+            padding: 2px 0 0 10px;
+            line-height: normal;
+            letter-spacing: normal;
+            &.success {
+               color: $text-color-accent-secondary;
+            }
+            &.error {
+               color: $text-color-error;
+            }
+         }
+      }
+      .status-info-block {
+         margin: 0 35px;
+         font-size: $font-lg;
+         margin-bottom: 40px;
+         line-height: 1.2;
+         letter-spacing: normal;
+         .status-info-msg {
+            display: block;
+            margin-bottom: 40px;
+         }
+         .contact-info {
+            color: $text-color-link;
+            .number {
+               display: block;
+               margin-bottom: 10px;
+            }
+         }
+      }
+   }
+}
+
+@media (min-width: $media-sm) {
+   .header-row {
+      max-width: 500px;
+      .status-block {
+         margin: 35px 0;
+         .status-icon-text {
+            margin-bottom: 30px;
+            .icon-field {
+               width: auto;
+               .icon {
+                  &.success {
+                     @include svg-image-full-path($icon-path, $icon-info, 32px, 32px);
+                  }
+                  &.error {
+                     @include svg-image-full-path($icon-path, $icon-error, 32px, 32px);
+                  }
+               }
+            }
+            .title {
+               padding: 0 0 0 15px;
+               font-size: $section-title-size;
+            }
+         }
+         .status-info-block {
+            margin: 0 50px;
+         }
+         .btn-try-again {
+            margin: 0 50px 30px;
+         }
+      }
+   }
+}

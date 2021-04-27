@@ -1,0 +1,36 @@
+<div class="mobile-div">
+   <table class="stepper-table" *ngIf="showMobileNav">
+      <tbody>
+         <ng-container *ngFor="let step of steps; let i = index">
+            <tr class="stepper-table-row divider" (click)="workFlowService.isStepValid(i) ?  mobileNextClick(i) : false">
+               <td class="stepper-table-col">
+                  <div class="table-col-block">
+                     <p [ngClass]="{'incomplete-step' : currentStep !== i && !workFlowService.isStepValid(i), 'final-incomplete-circle': showNextButton(i)}"
+                        *ngIf="!workFlowService.isStepValid(i)" class="add-circle">{{i+1}}</p>
+                     <p *ngIf="workFlowService.isStepValid(i)" class="round-tick"></p>
+                  </div>
+               </td>
+               <td class="stepper-table-col">
+                  <div class="table-col-block">
+                     <span class="stepper-step" [ngClass]="{'valid-step': workFlowService.isStepValid(i), 'current-step': (currentStep === i || i === workFlowService.workflow.length - 1)  && !workFlowService.isStepValid(i), 'incomplete-step' : currentStep !== i && !workFlowService.isStepValid(i), 'final-incomplete': showNextButton(i)}">{{step}}</span>
+                  </div>
+               </td>
+               <td class="stepper-table-col">
+                  <div class="table-col-block">
+                     <span class="stepper-step-edit" *ngIf="workFlowService.isStepValid(i)" (click)="mobileNextClick(i)">Edit</span>
+                  </div>
+               </td>
+            </tr>
+            <tr class="stepper-table-row" *ngIf="showNextButton(i)">
+               <td rowspan="1" colspan="3">
+                  <div class="bottom-div table-col-block">
+                     <app-bottom-button [text]="nextLabel" [class.btn-disabled]='false' (click)="mobileNextClick(i)" [showLoader]='false'>
+                     </app-bottom-button>
+                  </div>
+               </td>
+            </tr>
+         </ng-container>
+
+      </tbody>
+   </table>
+</div>

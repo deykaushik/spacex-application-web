@@ -1,0 +1,176 @@
+﻿<div class="search-recipients" [ngClass]="{'active': isOverlay, 'on-page': onPage, 'spinner': showLoader, 'scroll': alphabetScroll}">
+    <!-- dont remove just to load font -->
+    <span class="highlightText"></span>
+    <div class="search-block">
+        <div *ngIf="!onPage" class="head">
+            <h6 class="para-title">Search Recipients</h6>
+            <span class="icon" (click)="hideSearchRecipients()" id="srch-hide-recepient"></span>
+        </div>
+        <div class="search-field">
+            <div class="clear-field-block">
+                <input type="search" autocomplete="off" placeholder="Search" [(ngModel)]="filter" (ngModelChange)="filterContent()" appClearField>
+            </div>
+        </div>
+        <div class="tabs">
+            <ul>
+                <li (click)="selectTab(1)" [class.active]="activeTab === 1" id="srch-my-recip" ga-event-name="recipient_details_tab_myrecipient">My recipients</li>
+                <li (click)="selectTab(2)" [class.active]="activeTab === 2" id="srch-bnk-recip" ga-event-name="recipient_details_tab_bank_approved">Bank-approved</li>
+            </ul>
+        </div>
+    </div>
+    <div class="tabs-content" id="tabs-content" (scroll)="onScroll($event)" #tabContent>
+        <div class="recipients-list" id="recipients-list" #recipientsList [class.no-recipient-list]="!isShowContactCards">
+            <div *ngIf="activeTab === 1 && isShowContactCards && beneficiaryData?.length" #contactCardList>
+                <div *ngFor="let alphabet of contactCardAlphabetsList;">
+                    <section *ngIf="groupedContactCardData[alphabet.key] && groupedContactCardData[alphabet.key].length" class="list-block" id="{{alphabet.key}}">
+                        <h5 class="label-title">{{alphabet.key}}</h5>
+                        <ul class="list" *ngFor="let data of groupedContactCardData[alphabet.key];let itemIndex=index;">
+                            <li (click)="onContactCardSelection(data)" [id]="'srch-recip-card-'+alphabet.key+'-'+itemIndex" ga-event-name="recipient_details_select_recipient_name">
+                                <div class="card" [class.active]="activeCard == data">
+                                    <div class="card-info">
+                                        <h6 class="title word-break" [innerHtml]="data?.contactCardName | highlight:filter:'highlightText'"></h6>
+                                        <p class="account-type" *ngIf="isMultiplePayment(data)">Multiple payment details </p>
+                                        <p class="account-type" *ngIf="isSinglePayment(data)">
+                                            <span *ngIf="data.contactCardDetails[0].bankName"> {{data.contactCardDetails[0].bankName}} - </span>
+                                            <span [innerHtml]="data.contactCardDetails[0]?.accountNumber | highlight:filter:'highlightText'"></span>
+                                        </p>
+                                        <p class="last-paid" *ngIf="data?.beneficiaryRecentTransactDetails && data?.beneficiaryRecentTransactDetails.length">Last paid: R{{data.beneficiaryRecentTransactDetails[0].paymentAmount}} on {{data.beneficiaryRecentTransactDetails[0].paymentDate | date : 'dd/MM/yyyy' }}</p>
+                                    </div>
+                                    <div class="icons">
+                                        <ul>
+                                            <li *ngIf="isPrepaidContact(data)" class="mobile"></li>
+                                            <li *ngIf="isElectricityContact(data)" class="electricity"></li>
+                                            <li *ngIf="isAccountContact(data)" class="bankAccount"></li>
+                                            <li *ngIf="isCreditCardContact(data)" class="creditCard"></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                            <li *ngIf="isMultiplePayment(data) && !onPage" class="multi-cards" id="contact-card-{{data.contactCardID}}">
+                                <div class="cards-descrp">
+                                    <ul class="linked-cards" *ngFor="let cardDetail of data.contactCardDetails">
+                                        <li *ngIf="isBankAccountContactCard(cardDetail)" [id]="'srch-recip-card-'+alphabet.key+'-'+itemIndex+'-bank'" (click)="onAccountContactCardSelection(cardDetail)" ga-event-name="recipient_details_select_recipient_name">
+                                            <span class="icon bankAccount "></span>
+                                            <div class="info ">
+                                                <p class="type ">
+                                                    <span [innerHtml]="cardDetail.bankName | highlight:filter:'highlightText'"></span> -
+                                                    <span [innerHtml]="cardDetail.accountNumber | highlight:filter:'highlightText'"></span>
+                                                </p>
+                                            </div>
+                                        </li>
+                                        <li *ngIf="isPrepaidContactCard(cardDetail)" [id]="'srch-recip-card-'+alphabet.key+'-'+itemIndex+'-phn'" (click)="onPrepaidContactCardSelection(cardDetail)" ga-event-name="recipient_details_select_recipient_name">
+                                            <span class="icon mobile "></span>
+                                            <div class="info ">
+                                                <p class="type " [innerHtml]="cardDetail.accountNumber | highlight:filter:'highlightText'"></p>
+                                            </div>
+                                        </li>
+                                        <li *ngIf="isElectricityContactCard(cardDetail)" [id]="'srch-recip-card-'+alphabet.key+'-'+itemIndex+'-elec'" (click)="onElectricityContactCardSelection(cardDetail)" ga-event-name="recipient_details_select_recipient_name">
+                                            <span class="icon electricity "></span>
+                                            <div class="info ">
+                                                <p class="type " [innerHtml]="cardDetail.accountNumber | highlight:filter:'highlightText'"></p>
+                                            </div>
+                                        </li>
+                                        <li *ngIf="isCreditCardContactCard(cardDetail)" [id]="'srch-recip-card-'+alphabet.key+'-'+itemIndex+'-credit-card'" (click)="onCreditCardContactCardSelection(cardDetail)" ga-event-name="recipient_details_select_recipient_name">
+                                            <span class="icon creditCard "></span>
+                                            <div class="info ">
+                                                <p class="type " [innerHtml]="cardDetail.accountNumber | highlight:filter:'highlightText'"></p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </section>
+                </div>
+            </div>
+            <div *ngIf="activeTab === 2 && isShowBankApproved">
+                <div *ngFor="let alphabet of bankApprovedAlphabetsList">
+                    <section *ngIf="groupedBankApprovedData[alphabet.key] && groupedBankApprovedData[alphabet.key].length " class="list-block " id="{{alphabet.key}}">
+                        <h5 class="label-title ">{{alphabet.key}}</h5>
+                        <ul class="list ">
+                            <li *ngFor="let data of groupedBankApprovedData[alphabet.key]" (click)="onBankApprovedSelection(data)" ga-event-name="recipient_details_select_recipient_name">
+                                <div class="card " [class.active]="activeCard == data">
+                                    <div class="card-info ">
+                                        <h6 class="title word-break" [innerHtml]="data?.bDFName | highlight:filter:'highlightText'"></h6>
+                                    </div>
+                                    <div class="icons">
+                                        <ul>
+                                            <li class="bankAccount "></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </section>
+                </div>
+            </div>
+            <div *ngIf="isErrorOcuured" class="no-data try-again">
+                <div class="col-xs-12 no-padding text-center green-spinner">
+                    <span class="g-spinner" [class.active]="greenSpin"></span>
+                </div>
+                <div class="no-recipients-helper-text col-xs-12 no-padding">
+                    <span>We’re having some trouble loading your recipients here.</span>
+                </div>
+                <div class="btns">
+                    <button class="gd-primary-btn" id="srch-load-recipient" (click)="loadRecipients()">Try again</button>
+                </div>
+            </div>
+            <div *ngIf="activeTab === 1 && beneficiaryData?.length > 0 && !isShowContactCards && !isErrorOcuured && filter" class="no-data no-search-data">
+                <div class="col-xs-12 no-padding text-center">
+                    <span class="add-recipient-icon no-search-recipient-data"></span>
+                </div>
+                <div class="no-recipients-message col-xs-12 no-padding">
+                    <span>No results found.</span>
+                </div>
+                <div class="no-recipients-helper-text col-xs-12 no-padding">
+                    <span>We couldn’t find anything for {{filter}}. Check your spelling or search in a different tab.</span>
+                </div>
+            </div>
+            <div *ngIf="activeTab === 2 && beneficiaryData?.length > 0 && !isShowBankApproved && !isErrorOcuured" class="no-data no-search-data">
+                <div class="col-xs-12 no-padding text-center">
+                    <span class="add-recipient-icon no-search-recipient-data"></span>
+                </div>
+                <div class="no-recipients-message col-xs-12 no-padding">
+                    <span>No results found.</span>
+                </div>
+                <div class="no-recipients-helper-text col-xs-12 no-padding">
+                    <span>We couldn’t find anything for {{filter}}. Check your spelling or search in a different tab.</span>
+                </div>
+            </div>
+            <div *ngIf="activeTab === 1 && !isShowContactCards && !showLoader && !filter && isEmptyState" class="no-data">
+                <div *ngIf="!isErrorOcuured">
+                    <div class="col-xs-12 no-padding text-center">
+                        <span class="add-recipient-icon"></span>
+                    </div>
+                    <div class="no-recipients-message col-xs-12 no-padding">
+                        <span>You haven’t added recipients yet.</span>
+                    </div>
+                    <div class="no-recipients-helper-text col-xs-12 no-padding">
+                        <span>For convenience, add recipients that you pay regularly.</span>
+                    </div>
+                    <div class="btns">
+                        <button id="srch-add-recipeint" class="gd-primary-btn" (click)="navigationWithReload('recipient','add')">Add a recipient</button>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="activeTab === 2 && !isShowBankApproved && !beneficiaryData?.length" class="no-data">
+                <div *ngIf="!isErrorOcuured">
+                    <div class="col-xs-12 no-padding text-center">
+                        <span class="add-recipient-icon"></span>
+                    </div>
+                    <div class="no-recipients-message col-xs-12 no-padding">
+                        <span>No beneficiaries</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="alphabets-list" id="alphabets-list">
+            <ul *ngIf="activeTab === 1">
+                <li *ngFor="let alphabet of contactCardAlphabetsList" appClickScroll [target]="alphabet.key " [scrollArea]=tabContent [class.disabled]="!alphabet.isEnabled ">{{alphabet.key}}</li>
+            </ul>
+            <ul *ngIf="activeTab === 2 && isShowBankApproved">
+                <li *ngFor="let alphabet of bankApprovedAlphabetsList " appClickScroll [target]="alphabet.key " [scrollArea]=tabContent [class.disabled]="!alphabet.isEnabled ">{{alphabet.key}}</li>
+            </ul>
+        </div>
+    </div>
+</div>

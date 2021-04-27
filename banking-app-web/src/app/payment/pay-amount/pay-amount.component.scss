@@ -1,0 +1,120 @@
+﻿@import './../../../styles/_mixins.scss';
+@import './../../../styles/_base.scss';
+
+$title-msg-size: $font-sm;
+$highlightbox-bg: $highlight-bg;
+$descrp-size: $para-title-size;
+$helper-text-size: $font-sm;
+$info-text-color:$secondary-color;
+
+.pay-amount-section {
+   margin-top: 32px;
+}
+
+.icon-cursor {
+   cursor: pointer;
+}
+
+.info-msg {
+   color: $info-text-color;
+   font-size: 0.875rem;
+   margin: 5px 0 0;
+   position: relative;
+}
+
+.remove-icon {
+   position: absolute;
+   right: 0;
+   top: 5px;
+   font-size: $font-xsm !important;
+}
+.overlay-content-wrapper {
+   .icon {
+      @include svg-image('InstantpayThunderGrey');
+      width: 30px;
+      margin-bottom: 30px;
+   }
+}
+.calculate-btn-wrapper{
+   margin: 30px 0;
+}
+.breakdown{
+   margin-bottom: 40px;
+   .para-title{
+      font-weight: bold;
+   }
+   .title-msg{
+      font-size: $title-msg-size;
+   }
+   .highlight-box{
+      background: $highlightbox-bg;
+      padding: 20px;
+      margin-top: 20px;
+      .helper-text{
+         font-size: $helper-text-size;
+         color: $text-color-primary;
+         font-weight: normal;
+      }
+      .small-text{
+         font-size: $font-sm;
+         color: $text-color-primary;
+      }
+      .box-row{
+         @include flexbox();
+         font-size: $descrp-size;
+         margin-top: 20px;
+         font-weight: bold;
+         .right{
+            @include flex(1);
+         }
+         &:first-child{
+            margin-top: 0;
+         }
+      }
+   }
+}
+.api-error{
+   color: $text-color-error;
+   font-size: 0.875rem;
+   margin: 5px 0 0;
+}
+@media (min-width: $media-xs) {
+   .pay-amount-section {
+      margin-top: 26px;
+   }
+}
+
+@media (min-width: $media-sm) {
+   .pay-amount-section {
+      font-size: $status-size;
+      margin-top: 21px;
+   }
+   .overlay-content-wrapper {
+      .icon {
+         width: 50px;
+         margin: 0 80px;
+      }
+   }
+}
+
+@media (min-width: $media-lg) {
+   .pay-amount-section {
+      margin-top: 7px;
+   }
+}
+
+@media (min-width: $media-xlg) {
+   .pay-amount-section {
+      margin-top: 10px;
+   }
+}
+:host::ng-deep {
+   .bottom {
+      a {
+         cursor: pointer;
+      }
+   }
+}
+.margin-service-fee {
+   margin-bottom: 10px;
+}

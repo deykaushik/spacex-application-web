@@ -1,0 +1,100 @@
+<app-small-overlay class="autopay" [template]="autoPayOverlay" id="autopayOverlay" alternate='true' *ngIf="isAutoPay || isEnableEditAndDelete">
+   <ng-template #autoPayOverlay>
+      <div class="overlay-part">
+         <div class="add-autopay add">
+            <span class="triangle-icon add-margin"></span>
+            <div class="content-autopay">
+               <span class="text-autopay add-part">{{autoPayConstants.messages.autoPayOrder}}</span>
+               <div class="text-description add-apo">
+                  <span class="pay-bill" *ngIf="isAutoPay">{{autoPayConstants.messages.creditCardBills}}</span>
+                  <span class="set-autopay" *ngIf="isAutoPay">{{autoPayConstants.messages.setAutoPay}}</span>
+                  <span class="set-autopay no-edit-delete" *ngIf="isEnableEditAndDelete">{{autoPayConstants.messages.noEditAndDelete}}</span>
+               </div>
+               <div class="button-container">
+                  <button *ngIf="isEnableEditAndDelete" class="gd-primary-btn no-edit-delete-part" (click)="closeEditAndDeleteAlert()">{{autoPayConstants.messages.okay}}</button>
+                  <button *ngIf="isAutoPay" class="gd-primary-btn" (click)="showAutoPaySettings()">{{autoPayConstants.messages.next}}</button>
+                  <button *ngIf="isAutoPay" class="gd-primary-btn defaultColor" (click)="onClose(true)">{{autoPayConstants.messages.cancel}}</button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </ng-template>
+</app-small-overlay>
+<div class="delete-overlay">
+   <app-small-overlay class="autopay" [template]="deleteAutoPayOverlay" id="deleteAutoPayOverlay" alternate='true' *ngIf="isDeleteAutoPay">
+      <ng-template #deleteAutoPayOverlay>
+         <div class="overlay-part">
+            <div class="add-autopay delete">
+               <span class="triangle-icon delete-margin"></span>
+               <div class="content-autopay">
+                  <span class="text-autopay delete-part"> {{autoPayConstants.messages.deleteAutoPay}}</span>
+                  <div class="text-description delete-apo">
+                     <span class="block">{{autoPayConstants.messages.paymentDue1}}</span>
+                     <span>{{autopayDetails.dueDate | date: "d MMMM y"}}</span>
+                     <span>{{autoPayConstants.messages.paymentDue2}}</span>
+                     <p class="manual-payment">{{autoPayConstants.messages.manualPayment}}</p>
+                  </div>
+                  <div class="button-container">
+                     <button class="gd-primary-btn" (click)="deleteAutoPay()">{{autoPayConstants.messages.delete}}</button>
+                     <button class="gd-primary-btn  defaultColor" (click)="onClose(false)">{{autoPayConstants.messages.cancel}}</button>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </ng-template>
+   </app-small-overlay>
+</div>
+<div class="large-overlay-container">
+   <app-colored-overlay [template]="autoPayLargeOverlay" [altButtonText]="'Cancel'" [alternate]='true' [isVisible]="isEditAutoPay"
+      (onHide)="onEditAutoPayClose($event)">
+      <ng-template #autoPayLargeOverlay>
+         <div class="edit-autopay-block">
+            <div class="edit-autopay-inner">
+               <span class="section-title">{{autoPayConstants.messages.autoPayOrder}}</span>
+               <span class="section-desc">{{autoPayConstants.messages.autoPayDetails}}</span>
+               <div class="edit-autopay">
+                  <div class="autopay-content">
+                     <span class="left">{{autoPayConstants.autopayLabels.payTo}}</span>
+                     <div class="right">
+                        <span>{{card.plasticDescription | titlecase}}</span>
+                        <span class="acc-no">{{card.plasticNumber}}</span>
+                     </div>
+                  </div>
+                  <div class="autopay-content">
+                     <span class="left">{{autoPayConstants.autopayLabels.payFrom}}</span>
+                     <div class="right">
+                        <span>{{payFromBankType}}</span>
+                        <span class="acc-no">{{autopayDetails.payFromAccount}}</span>
+                     </div>
+                  </div>
+                  <div class="autopay-content">
+                     <span class="left">{{autoPayConstants.autopayLabels.paymentAmount}}</span>
+                     <div class="right">
+                        <span>{{paymentAmountText}}</span>
+                        <span *ngIf="autopayDetails?.autoPayAmount">{{autopayDetails.autoPayAmount | amountTransform}}</span>
+                     </div>
+                  </div>
+                  <div class="autopay-content">
+                     <span class="left">{{autoPayConstants.autopayLabels.paymentDate}}</span>
+                     <div class="right">
+                        <span>{{monthlyPaymentDay | daySelectionText :minDate:maxDate:isAutoPayTerm}}</span>
+                     </div>
+                  </div>
+               </div>
+               <div class="next-btn">
+                  <app-bottom-button [text]="'Edit'" (click)="editAutoPay()" [showLoader]='false'></app-bottom-button>
+               </div>
+               <div class="delete-btn">
+                  <app-bottom-button [text]="'Delete'" (click)="showDeleteOverlay()" [showLoader]='false'></app-bottom-button>
+               </div>
+            </div>
+         </div>
+      </ng-template>
+   </app-colored-overlay>
+</div>
+<section *ngIf="isApoStepper">
+   <app-apo-landing [plasticId]="plasticId" (onSuccess)="onSuccess($event)" (onHide)="hideStepper($event)"></app-apo-landing>
+</section>
+<section *ngIf="isSuccess">
+   <app-apo-success (onHide)="onSuccessApo($event)"></app-apo-success>
+</section>

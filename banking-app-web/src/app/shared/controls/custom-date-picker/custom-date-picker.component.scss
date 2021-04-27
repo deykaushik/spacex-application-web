@@ -1,0 +1,191 @@
+﻿@import './../../../../styles/_base.scss';
+@import './../../../../styles/_mixins.scss';
+
+:host::ng-deep {
+      
+   input[readonly] {
+         cursor: pointer !important;
+         &[disabled] {
+         cursor: not-allowed !important;
+         }
+      }
+   .dp-picker-day-time-directive {
+      outline: none;
+   }
+
+   dp-date-picker {
+      display: block;
+
+      .dp-open ~ div {
+         width: 100%;
+         top: 0px !important;
+         position: relative !important;
+         border: none;
+      }
+      .dp-input-container {
+         input {
+            background-color: $form-element-bg !important;
+         }
+         .dp-picker-input{
+            color: $text-color-primary !important;
+            border-color: $form-element-border-valid !important;
+         }
+         input[disabled] {
+            border: $form-element-border-size solid $form-element-border;
+            opacity: 1;
+            background-color:$form-element-bg-disabled !important;
+         }
+      }
+
+      dp-calendar-nav {
+         .dp-nav-header-btn {
+            display: inline-block;
+            width: auto;
+            &:first-child{
+               display: none;
+            }
+         }
+
+         span.dp-nav-header {
+               display: none;
+         }
+         .dp-nav-btns-container {
+            top: 12px;
+            right: 0px;
+            width: 100%;
+            z-index: 1;
+         }
+
+         .dp-calendar-nav-left {
+            left: 10px;
+            position: absolute;
+         }
+
+         .dp-calendar-nav-right {
+            right: 10px;
+            position: absolute;
+         }
+
+         button.dp-nav-header {
+            &:hover {
+               background: none;
+            }
+         }
+
+         &.dp-material {
+
+            .dp-nav-header-btn,
+            button {
+               font-size: $status-size;
+            }
+         }
+      }
+
+      .dp-popup {
+         box-shadow: none;
+         border: 2px solid $secondary-color;
+         border-top: none;
+         margin-top: -1px;
+         z-index: 1;
+      }
+
+      .dp-calendar-nav-container {
+         border: none !important;
+         padding: 20px 0px;
+         text-align: center;
+         > div {
+               &.dp-nav-header{
+                  width: calc( 100% - 60px );
+                  left: 50%;
+                  top: 50%;
+                  @include translate(-50%, -50%);
+                  z-index: 2;
+               }
+         }
+      }
+
+      .dp-calendar-wrapper {
+         border: none !important;
+         padding-bottom: 15px;
+      }
+
+      .dp-open {
+         input[type='text'] {
+            border-color:  $secondary-color !important;
+            border-bottom: none;
+         }
+
+         .icon.calendar {
+            top: 10px;
+         }
+      }
+
+      dp-month-calendar {
+         display: block;
+
+         .dp-calendar-month {
+            width: 56px;
+            margin-left: calc(12.5% - 28px);
+            margin-right: calc(12.5% - 28px);
+         }
+      }
+
+      dp-day-calendar {
+         display: block !important;
+
+         button[disabled] {
+            &:hover {
+               background: none;
+               cursor: default;
+            }
+
+            opacity: 0.4
+         }
+
+         .dp-calendar-weekday {
+            width: 14.28% !important;
+            font-size: $font-sm;
+         }
+
+         .dp-calendar-day {
+            *width: 32px !important;
+            font-size: $font-sm;
+            margin-left: calc(7.14% - 16px);
+            margin-right: calc(7.14% - 16px);
+         }
+
+         &.dp-material {
+            .dp-current-day,
+            .dp-current-month {
+               border: none;
+            }
+         }
+      }
+   }
+
+   .icon.calendar {
+      position: absolute;
+      right: 7px;
+      top: 8px;
+      &.disabled {
+            cursor: not-allowed;
+      }
+   }
+
+   &.dp-material {
+      .dp-picker-input {
+         width: 100%;
+         height: 50px;
+         font-size: $status-size;
+      }
+
+      .dp-selected {
+         background: $dp-selected-bg;
+         color: $dp-selected-color;
+
+         &:hover {
+            background: $dp-selected-bg-hover;
+         }
+      }
+   }
+}

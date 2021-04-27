@@ -1,0 +1,213 @@
+﻿@import './../../../styles/_mixins.scss';
+@import './../../../styles/_base.scss';
+
+
+$icon-path: '../../../assets/svg/';
+$bank-icon: 'account';
+$bank-icon-selected: 'account-selected';
+$blocked-icon-selected: 'icon-block';
+$icon-info: 'information';
+$mobile-icon: 'mobile';
+$mobile-icon-selected: 'mobile-green';
+$card-icon: 'pay-to-card';
+$card-icon-selected: 'pay-to-card-selected';
+
+
+.pay-to-section {
+    margin-top: 30px;
+    .receipient-search-icon {
+        @include svg-image-full-path($icon-path, $icon-search-recipient, 30px, 30px);
+        position: relative;
+        display: block;
+    }
+    .mobile-icon {
+        @include svg-image-full-path($icon-path, $mobile-icon, 100%, 100%);
+        width: 22px !important;
+    }
+    .mobile-icon.selected {
+        @include svg-image-full-path($icon-path, $mobile-icon-selected, 100%, 100%);
+        
+    }
+    .card-icon {
+        @include svg-image-full-path($icon-path, $card-icon, 100%, 100%);
+    }
+    .card-icon.selected {
+        @include svg-image-full-path($icon-path, $card-icon-selected, 100%, 100%);
+    }
+    .bank-icon {
+        @include svg-image-full-path($icon-path, $bank-icon, 100%, 100%);
+    }
+    .bank-icon.selected {
+        @include svg-image-full-path($icon-path, $bank-icon-selected, 100%, 100%);
+    }
+    .benificiary-list {
+        .name {
+            color: $text-color-primary;
+            margin-bottom: 5px;
+        }
+        .details {
+            @include flexbox();
+            @include align-items(center);
+            color: $text-color-info;
+            .icon-type {
+                margin-right: 10px;
+            }
+            .account-type {
+                @include flex(1);
+                white-space: normal;
+                .text {
+                    &::after {
+                        content: ' - ';
+                    }
+                }
+                .account-type {
+                    @include flex(1);
+                    white-space: normal;
+                    .text {
+                        &::after {
+                            content: ' - ';
+                        }
+                    }
+                }
+            }
+            .icon-type {
+                &.bankAccount {
+                    @include svg-image-full-path($icon-path, 'bank-account-list');
+                }
+                &.mobile {
+                    @include svg-image-full-path($icon-path, 'mobile');
+                    width: 14px;
+                }
+                &.electricity {
+                    @include svg-image-full-path($icon-path, 'electricity');
+                    width: 22px;
+                }
+            }
+        }
+    }
+    .blocked-icon.selected{
+        @include svg-image-full-path($icon-path, $blocked-icon-selected);
+        display: block;
+        margin: 0px auto;
+        width:60px;
+    }
+    .error-block{
+        padding: 40px 0;
+        .gd-lg-label{
+            margin-top: 20px;
+        }
+    }
+    .gd-form-row{
+        .gd-lg-label{
+            margin-bottom: 15px;
+        }
+    }
+    .dropdown-menu{
+        max-height: 315px;
+        overflow: auto;
+    }
+    .terms-condition {
+      font-size: $font-sm;
+      padding: 15px 0px;
+   }
+}
+
+.overlay-template {
+    .para-title {
+        color: $color-overlay;
+    }
+    .content {
+        margin-bottom: 20px;
+    }
+}
+
+.vertical-overlay-content-wrapper {
+    .icon {
+        @include svg-image-full-path($icon-path, 'PayIcon-grey');
+        width: 100px;
+    }
+}
+
+.no-cursor {
+    cursor: not-allowed !important;
+}
+.bank-name{
+    color: $text-color-info;
+}
+.countryname-type-ahead {
+   margin-top: 20px;
+   display: block;
+}
+.bank-helper-msg{
+    color: $text-color-info;
+}
+
+@media (min-width: $media-sm) {
+    .overlay-template {
+        @include flex(1);
+        max-width: 700px;
+        .para-title {
+            font-size: $section-title-size;
+        }
+        .content {
+            margin-bottom: 20px;
+        }
+    }
+    .extended-pay{
+        position: relative;
+        width: 116%;
+    }
+    .notify-color{
+        height: 80px;
+        background-color: $color-notify;
+        font-size: $font-sm;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: 1.3em;
+        letter-spacing: normal;
+        text-align: left;
+        color: $text-color-secondary;
+    }
+    .icon{
+      .info-icon {
+         margin-right: 9px;
+         @include svg-image-full-path($icon-path,$icon-info, 30px, 30px);
+         position: relative;
+         display: block;
+      }
+    }
+}
+
+
+@keyframes spinner {
+    to {
+       transform: rotate(360deg);
+    }
+ }
+
+.green-spinner {
+    margin: 100px 0;
+    text-align: center;
+    .g-spinner {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        background: none;
+        border: 2px solid $color-spinner-primary;
+        border-bottom-color: transparent;
+        @include border-radius(50%);
+        &.active {
+            animation: spinner 1000ms linear infinite;
+        }
+    }
+}
+
+.ng-valid.ng-untouched{
+    border-color: $form-element-border;
+}
+
+.ng-valid.ng-touched{
+    border-color: $form-element-border-valid;
+}
+

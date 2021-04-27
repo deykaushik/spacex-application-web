@@ -1,0 +1,229 @@
+<ng-template #searchBeneficiaryTemplate let-model="item" class="details1" let-index="index" let-match="match" let-query="query">
+   <div class="benificiary-list" ga-event-name="pay_recipient_details_select_recipient_name">
+      <div class="name" [innerHtml]="model.displayName | highlight:query:'highlightText'"></div>
+      <div class="details">
+         <div class="icon-type bankAccount"></div>
+         <div class="account-type">
+            <span class="text" [innerHtml]="model.branchName | highlight:query:'highlightText'"></span>
+            <span [innerHtml]="model.branchCode | highlight:query:'highlightText'"></span>
+         </div>
+      </div>
+   </div>
+</ng-template>
+<app-colored-overlay [isVisible]="true" [closeText]="false" [alternate]="true" [template]="noticeWithdrawalTemplate" [backOption]="false"
+   (onHide)="closeOverlay($event)">
+   <ng-template #noticeWithdrawalTemplate>
+      <div *ngIf="!isDeleteNotice">
+         <div class="notice-withdrawal-container" *ngIf="!isSubmit">
+            <h4 class="section-title header">
+               <span *ngIf="showNoticeFlow"> {{nowLabels.edit}}</span> {{nowLabels.nowTitle}}
+            </h4>
+            <p class="sub-header">{{nowLabels.withdraw}} {{investmentAmountLabel | amountTransform : amountPipeConfig}}
+            </p>
+            <div class="note-msg" *ngIf="!showNoticeFlow">
+               <p class="note">{{noticeWithdrawal.note}}</p>
+               <span> {{noticeWithdrawal.approveMsg}} </span>
+               <span class="note-text">{{noticeWithdrawal.deviceReady}}</span>
+               <p *ngIf="isAccountSelected">{{noticeWithdrawal.instruction}}{{selectedAccountType}}</p>
+            </div>
+            <form #form="ngForm" class="gd-form">
+               <div class="form-group">
+                  <div class="gd-form-row">
+                     <span class="gd-sm-label acive account-label">{{nowLabels.investmentAcc}}</span>
+                     <p class="account-detail">{{investmentAccount}}</p>
+                  </div>
+               </div>
+               <div class="form-group">
+                  <div class="gd-form-row">
+                     <span class=" gd-sm-label active account-label">{{nowLabels.accNumber}}</span>
+                     <p class="account-detail">{{accNumber}}</p>
+                  </div>
+               </div>
+               <div class="form-group">
+                  <div class="gd-form-row">
+                     <label class="gd-sm-label active heading-label" for="account">{{nowLabels.withdrawMsg}}</label>
+                     <input appFocus id="amount" autocomplete="off" [amount]="true" ngControl="amount" #amount="ngModel" [ngModel]="investmentAmount | amountTransform"
+                        (ngModelChange)="onAmountChange($event)" type="text" name="amount" appValidateRequired appAmountFormatMask
+                        appValidateMultipleFifty appCheckBlur [doValidation]="isPrepaid" [class.invalid-amount]="isEnteredAmountValid">
+                     <div class="amount-label" *ngIf="isAmountValid">
+                        <span>{{nowLabels.amount}}{{investmentAmountLabel | amountTransform  : amountPipeConfig}}</span>
+                     </div>
+                     <div class="amount-label error-msg-amount" *ngIf="!isAmountValid && !amountLimit">
+                        <span>{{nowLabels.minimumAmount}}{{partAmount | amountTransform  : amountPipeConfig}}</span>
+                     </div>
+                     <div *ngIf="amountLimit" class="error-msg-amount">
+                        <span>{{nowLabels.withdrawUpto}} {{entryValue | amountTransform  : amountPipeConfig}}{{nowLabels.yourAccount}}</span>
+                     </div>
+                  </div>
+               </div>
+               <div class="form-group account-head">
+                  <div class="gd-form-row">
+                     <label class="gd-sm-label heading-label">{{nowLabels.paidOut}}</label>
+                     <app-custom-date-picker id="trans-transfer-date" [config]="calendarConfig" [date]="formatDate" (dateChanged)="setDate($event);"
+                        [disabled]="fromAccountWarning || toAccountWarning"></app-custom-date-picker>
+                     <input type="text" class="disabled-date" readonly disabled *ngIf="fromAccountWarning || toAccountWarning" value="hello" />
+                     <span class="icon-field custom-item-field" *ngIf="fromAccountWarning || toAccountWarning">
+                    <span class="icon calendar disabled custom-calendar"></span>
+                     </span>
+                  </div>
+               </div>
+
+               <div class="form-group account-head ">
+                  <div class="gd-form-row">
+                     <label class="gd-sm-label active heading-label" for="account_type">{{nowLabels.paidAccount}}</label>
+                     <div class="gd-basic-dropdown" tabindex="0" dropdown>
+                        <div dropdownToggle class="dropdown-place" id="game-select-method">
+                           <div class="text select-account">
+                              {{ account}}
+                           </div>
+                           <div class="icon">
+                              <span class="caret"></span>
+                           </div>
+                        </div>
+                        <ul class="dropdown-menu dropdown-height">
+                           <li *ngFor="let account of allAccounts" (click)="onAccountChanged(account)">
+                              <span *ngIf="account.accountNumber else nickName">{{ account.nickname }}  {{account.accountNumber}}  </span>
+                              <ng-template #nickName><span>{{account.nickname}}</span></ng-template>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+               <div *ngIf="isBeneficiary" class="form-group autocomplete-container pay-to-section clear-field-block">
+                  <div class="note-msg">
+                     <p class="note">{{noticeWithdrawal.note}}</p>
+                     <p>{{noticeWithdrawal.recipientNote}}</p>
+                  </div>
+                  <div class="gd-form-row">
+                     <label class="gd-sm-label active heading-label" for="recipient_name">{{nowLabels.beneficiary}}</label>
+                     <div class="clear-field-block">
+                        <input autofocus id="recipient_name" type="search" autocomplete="off" class="validate close-recepient" #displayName="ngModel"
+                           [(ngModel)]="recipientName" ga-event-name="pay_step1_enter_recipient_name" [placeholder]="benificiary"
+                           (ngModelChange)="benificiaryChange($event)" [typeahead]="branches" [typeaheadItemTemplate]="searchBeneficiaryTemplate"
+                           typeaheadOptionField="displayName" name="displayName" appValidateRequired appClearField appCheckBlur
+                           appValidationLatinWord appClipBoardValidation />
+                     </div>
+                  </div>
+               </div>
+               <div class="footer-message" *ngIf="showNoticeFlow">
+                  <p class="note">{{noticeWithdrawal.note}} </p>
+                  <p *ngIf="!isRecipientSelected && !isAccountSelected">{{noticeWithdrawal.weNeed}} {{instructionMsg}} {{noticeWithdrawal.instructionMessage}} {{selectedAccountType}}</p>
+                  <p *ngIf="isRecipientSelected">{{selectedAccountType}}</p>
+                  <p *ngIf="isAccountSelected">{{noticeWithdrawal.note}}{{selectedAccountType}}</p>
+               </div>
+               <div class="submit">
+                  <app-bottom-button *ngIf="!showNoticeFlow" [disableButton]="isValidDate || !isEnteredAmountValid || isSelected || isRecipient"
+                     (click)="onSubmit()" [text]="submitBtnText"></app-bottom-button>
+               </div>
+            </form>
+         </div>
+         <div class="notice-withdrawal-container" *ngIf="isSubmit && !isNoticeSuccess">
+            <ng-container *ngIf="!showNoticeFlow; else withdrwalDetails">
+               <h1 class="table-title">{{noticeWithdrawal.almostDone}}</h1>
+               <p class="header-message">{{noticeWithdrawal.checkInfo}}</p>
+            </ng-container>
+            <ng-template #withdrwalDetails>
+               <p class="withdrawal-details">{{nowLabels.withdrawDetails}} </p>
+            </ng-template>
+            <div class="hidden-xs edit-btn">
+               <button class="gd-primary-btn amend-btn" *ngIf="!showNoticeFlow" [class.edit-btn]="showNoticeFlow" (click)="amendClick()">{{labels.editText}}</button>
+            </div>
+            <div class="withdraw-info">
+               <p class="withdraw-heading">{{nowLabels.investmentAcc}}</p>
+               <p class="account-info">{{investmentAccount}}</p>
+               <p class="withdraw-heading">{{nowLabels.accNumber}}</p>
+               <p class="account-info">{{accNumber}}</p>
+               <p class="withdraw-heading">{{nowLabels.amountWithdraw}}</p>
+               <p class="account-info">{{investmentAmount | amountTransform : amountPipeConfig }}</p>
+               <p class="withdraw-heading">{{nowLabels.withdrawDate}}</p>
+               <p class="account-info">{{investmentDate | date: dateFormat}}</p>
+               <p class="withdraw-heading">{{nowLabels.accountPaid}}</p>
+               <p class="account-info">{{selectedAccounType}}</p>
+               <div *ngIf="isRecipient">
+                  <p class="withdraw-heading">{{nowLabels.recipientMsg}}</p>
+                  <p class="account-info">{{recipientName}}</p>
+               </div>
+            </div>
+            <div class="footer-message" *ngIf="!isEditNotice">
+               <p class="note">{{noticeWithdrawal.note}} </p>
+               <p *ngIf="!isRecipientSelected && !isAccountSelected">{{noticeWithdrawal.weNeed}} {{instructionMsg}} {{noticeWithdrawal.instructionMessage}} {{selectedAccountType}}</p>
+               <p *ngIf="isRecipientSelected">{{selectedAccountType}}</p>
+               <p *ngIf="isAccountSelected">{{noticeWithdrawal.instruction}}{{selectedAccountType}}</p>
+            </div>
+            <div>
+
+               <button class="gd-primary-btn submit" *ngIf="showNoticeFlow && !isEditNotice && isDeleteBtnShow" (click)="deleteNotices()"> {{nowLabels.deleteNotice}}</button>
+               <button class="gd-primary-btn submit" *ngIf="isEditNotice" (click)="backToOverview()"> {{nowLabels.backToOverview}}</button>
+            </div>
+            <div *ngIf="!showNoticeFlow && !isEditNotice" class="confirm-btn">
+               <app-bottom-button [text]="nowLabels.confirm" (click)="confirm()" [showLoader]='showLoader'></app-bottom-button>
+               <div class=" visible-xs">
+                  <button class="gd-primary-btn btn-white" (click)="amendClick()">{{labels.editText}}</button>
+               </div>
+            </div>
+         </div>
+         <div *ngIf="isNoticeSuccess && isSubmit">
+            <div class="notice-success-container ">
+               <p class="thank-you-heading">{{noticeWithdrawal.thankyou}}</p>
+               <p class="notice-received-msg"> {{noticeWithdrawal.receivedMsg}}</p>
+               <div class="payment-dollar-icon"> </div>
+               <div class="thank-you-text-msg">
+                  {{noticeWithdrawal.moneyMsg}}{{instructionMsg}} {{selectedbusinessday}}
+               </div>
+               <div class="dashboard-btn">
+                  <app-bottom-button (click)="backToDashboard()" [text]="'Done'"></app-bottom-button>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="delete-notice-container" *ngIf="isDeleteNotice" [ngSwitch]="deleteNoticeValue">
+         <div *ngSwitchCase="1">
+            <p class="icons">
+               <span class="fica-icon"></span>
+            </p>
+            <p class="header-message">{{nowLabels.deleteHeader}}</p>
+            <p class="sub-header"> {{nowLabels.deleteSubHeader}} </p>
+            <div class="select">
+               <button class="gd-primary-btn  yes-btn" (click)="deleteNotice()">{{nowLabels.yes}}</button>
+               <button class="gd-primary-btn no-btn" (click)="cancelNotice()">{{nowLabels.no}} </button>
+            </div>
+         </div>
+         <div *ngSwitchCase="2">
+            <p class="icons">
+               <span class="right-icon"></span>
+            </p>
+            <p class="header-message">{{nowLabels.deleteSuccess}}</p>
+            <div>
+               <button class="gd-primary-btn back-to-overview" (click)="backToOverview()">{{nowLabels.backToOverview}}</button>
+            </div>
+         </div>
+         <div *ngSwitchCase="3">
+            <p class="icons">
+               <span class="error-icon"></span>
+            </p>
+            <p class="header-message">{{nowLabels.deleteError}}</p>
+            <p class="contact-details"> {{nowLabels.errormessage}} </p>
+            <div class="select">
+               <button class="gd-primary-btn  yes-btn" (click)="tryAgain()">{{nowLabels.tryagain}}</button>
+               <button class="gd-primary-btn no-btn" (click)="backToOverview()">{{nowLabels.backToOverview}}</button>
+            </div>
+         </div>
+         <div *ngSwitchCase="4">
+            <p class="icons">
+               <span class="fica-icon"></span>
+            </p>
+            <p class="header-message">{{nowLabels.cancelHeader}}</p>
+            <p class="sub-header"> {{nowLabels.cancelSubHeader}} </p>
+            <div class=" select">
+               <button class="gd-primary-btn  yes-btn" (click)="onYesClicked()">{{nowLabels.cancelTransaction}}</button>
+               <button class="gd-primary-btn no-btn" (click)="onNoClicked()">{{nowLabels.stayOnThisPage}}</button>
+            </div>
+         </div>
+      </div>
+      <section class="loader-mask" *ngIf="showLoader">
+         <div id="loaders-spinner" class="loader-spinner">
+            <app-spinner [color]="'green'"></app-spinner>
+         </div>
+      </section>
+   </ng-template>
+</app-colored-overlay>

@@ -1,0 +1,59 @@
+<app-colored-overlay *ngIf="isTermsAndCondition" [isVisible]="true" [closeText]="false" [alternate]="true" [template]="openNewAccountTemplate"
+   [backOption]="false" (onHide)="closeOverlay($event)">
+   <ng-template #openNewAccountTemplate>
+      <div class="open-account">
+         <h1 class="title">{{openAccountMessages.investmentAccount}} </h1>
+         <div class="steps">
+            <div class="step">
+               <span class="icon duration"></span>
+               <div class="text">{{openAccountMessages.newAccount}}</div>
+            </div>
+            <div class="step">
+               <span class="icon save-icon"></span>
+               <div class="text">{{openAccountMessages.allInfo}}</div>
+            </div>
+         </div>
+         <p class="getting-start-text">{{openAccountMessages.letsStart}}</p>
+         <p class="confirmation-message">
+            {{openAccountMessages.acknowledge}}
+            <span>{{openAccountMessages.financialAdvisor}} </span> {{openAccountMessages.disclosure}}
+            <span class="agree-msg" style="display:block">{{openAccountMessages.agreeMessage}}</span>
+         </p>
+         <div class="terms-checkbox">
+            <input type="checkbox" id="chk-cancel-stop-order" class="accept-checkbox" (change)="isCheck($event)">
+            <label for="chk-cancel-stop-order" class="checkbox-style"></label>
+            <div class="text">
+               <span>{{openAccountMessages.acknowledge + openAccountMessages.disclaimerAbove}}</span>
+            </div>
+         </div>
+         <div class="accept-btn">
+            <button class="gd-primary-btn" [disabled]="isChecked" (click)="onAccept()">{{labels.accept}}</button>
+         </div>
+      </div>
+   </ng-template>
+</app-colored-overlay>
+<app-colored-overlay [isVisible]="true" [closeText]="false" [alternate]="true" [template]="nonFicaTemplate" [backOption]="false"
+   *ngIf="showReasonError" (onHide)="closeOverlay($event)">
+   <ng-template #nonFicaTemplate>
+      <div class="non-fica">
+         <span class="fica-icon"></span>
+         <div *ngIf="!isValidClientType else validType">
+            <p class="header-message">{{openAccountMessages.nonFica}}</p>
+            <p class="sub-header"> {{openAccountMessages.visitFica}} </p>
+         </div>
+         <ng-template #validType>
+            <p class="header-message">{{openAccountMessages.nonFica}}</p>
+            <p class="sub-header"> {{openAccountMessages.visitFica}} </p>
+         </ng-template>   
+         <button class="gd-primary-btn back-to-overview " (click)="backToOverview()">{{labels.backToOverview}}</button>
+      </div>
+   </ng-template>
+</app-colored-overlay>
+<section class="loader-mask" *ngIf="showLoader">
+   <div id="loaders-spinner" class="loader-spinner">
+      <app-spinner [color]="'green'"></app-spinner>
+   </div>
+</section>
+<div *ngIf="isRightOptions">
+   <app-right-options (transactionFlag)="showDashboard($event)"> </app-right-options>
+</div>

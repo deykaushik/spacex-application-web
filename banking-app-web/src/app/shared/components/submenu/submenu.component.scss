@@ -1,0 +1,38 @@
+﻿@import './../../../../styles/_base.scss';
+@import './../../../../styles/_mixins.scss';
+
+
+$svg-path: './../../../../assets/svg';
+
+  li{
+      &.active{
+         background-color: $highlight-bg;
+      }
+      
+      &:focus{
+         background-color: $highlight-bg;
+      }
+   }
+.mobile {
+   @include svg-image-full-path($svg-path, 'mobile', 15px);
+}
+
+.electricity {
+   @include svg-image-full-path($svg-path, 'electricity');
+}
+
+.lotto {
+   @include svg-image-full-path($svg-path, 'lotto');
+}
+
+.menu-logoff {
+   @include svg-image-full-path($svg-path, 'MobiLogoff');
+}
+
+.new-recipient {
+   @include svg-image-full-path($svg-path, 'New-recipient');
+}
+
+.menu-settings {
+   @include svg-image-full-path($svg-path, 'settingsMob-grey');
+}

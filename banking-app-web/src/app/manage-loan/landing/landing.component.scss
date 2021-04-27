@@ -1,0 +1,65 @@
+@import '../../../styles/_mixins.scss';
+@import '../../../styles/_base.scss';
+$icon-path: '../../../assets/svg/';
+
+.manage-loan-section {
+   margin-top: 45px;
+
+   .title {
+      @include markpro-medium();
+      text-align: center;
+      font-size: $para-title-size-mob;
+      line-height: 1.25;
+      font-weight: $weight-medium;
+      letter-spacing: 0;
+      display: block;
+      color: $text-color-secondary;
+   }
+
+   .content {
+      margin-top: 50px;
+      text-align: center;
+
+      .icon-container {
+         cursor: pointer;
+         display: inline-block;
+
+         .icon {
+            margin-bottom: 40px;
+            display: inline-block;
+
+            &.icon-notice {
+               @include svg-image-full-path($icon-path, 'notice-icon', 41px, 42px);
+            }
+
+            &.icon-home {
+               @include svg-image-full-path($icon-path, 'home', 41px, 42px);
+            }
+         }
+
+         .icon-title {
+            width: 135px;
+            font-size: $section-title-size-mob;
+            color: $text-color-link;
+            display: block;
+            line-height: 1.25;
+            letter-spacing: 0;
+         }
+
+         margin-bottom: 80px;
+      }
+   }
+
+}
+
+@media(min-width: $media-sm) {
+   .manage-loan-section {
+      margin-top: 25px;
+
+      .title {
+         font-size: $main-title-size;
+         line-height: 1.33;
+         font-weight: 400;
+      }
+   }
+}

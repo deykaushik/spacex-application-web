@@ -1,0 +1,25 @@
+<div *ngIf="isDormantAccount" class="transactions-dormant" [class.is-skeleton-loading]='skeletonMode'>
+
+   <div class="uplift-dormancy">
+      <span class="reference-number-info-icon" [innerHtml]="'' | skeletonLoader:skeletonMode"></span>
+      <h6 class="para-title-main" [innerHtml]="labels.headerInfo | skeletonLoader:skeletonMode"></h6>
+      <h6 class="para-title" [innerHtml]="subHeaderInfo | skeletonLoader:skeletonMode"></h6>
+      <div class="btn-margin space" *ngIf="!skeletonMode">
+         <app-bottom-button *ngIf='locateBranchFlow || !isOfTypeTransferAccounts' [text]="btnLabel" routerLink="{{branchLocatorURL}}">
+         </app-bottom-button>
+         <app-bottom-button *ngIf='activateAccountFlow' [text]="btnLabel" (click)="activateDormantAccount()" [disableButton]='showLoader'
+            [showLoader]='showLoader'>
+         </app-bottom-button>
+      </div>
+      <div class="btn-margin space" [innerHtml]=" ''|skeletonLoader:skeletonMode"></div>
+      <div class="row" *ngIf='isOfTypeTransferAccounts && transferAmountFlow && !skeletonMode'>
+         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <app-bottom-button [text]="labels.transfer" routerLink="{{route.transfer}}">
+            </app-bottom-button>
+         </div>
+         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <app-bottom-button [text]="labels.locateBranch" [alternateTheme]="true" (clickEmitter)="navigateToLocateBranch()"></app-bottom-button>
+         </div>
+      </div>
+   </div>
+</div>

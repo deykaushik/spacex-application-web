@@ -1,0 +1,68 @@
+﻿<ng-template #itemTemplate let-item="item" let-index="index">
+   <div class="div-row" (dragover)="enableDragIcon(index)" (drop)="disableDragIcon(index)">
+      <div *ngIf="skeletonMode" [innerHtml]="item?.value?.currency?.currency | skeletonLoader:skeletonMode"></div>
+      <div class="div-col date icon-link" [ngClass]="item?.value?.currency?.currency">
+         <span class="pocket-row-block">
+            <span class="gd-lg-label">{{getCurrencyName(item?.value?.currency?.currency)}}</span>
+            <span class="pocket-flag"></span>{{item?.value?.currency?.currency}}
+         </span>
+      </div>
+      <div class="div-col right drag-icon" *ngIf="isDrag===index">
+      </div>
+   </div>
+</ng-template>
+
+<div class="options" *ngIf="showPocketPriority">
+   <div (click)="!editMode && changePriority()" class="pull-left option-text"><span [ngClass]="{'enabled-option': !editMode,'disabled-option': editMode}">{{labels.changeCurrencyPriority}}</span></div>
+   <div *ngIf="editMode" class="pull-right option-text"><span class="enabled-option" (click)="savePriorityOrder()">Save changes </span>|<span (click)="cancelChangePriority()" class="disabled-option"> Cancel</span></div>
+   <div *ngIf="editMode" class="option-description">To change the priority listing of your currencies, <strong>Click</strong> and <strong>hold</strong> on your selection, <strong>drag</strong> your selected pocket to a suitable position. Don't forget to <strong>save</strong> your updated listing.</div>
+</div>
+<div id="error-block-success" class="error-block-success" *ngIf="isShowMessageBlock">
+   <div class="icon-container">
+      <span class="success img-step-tick">
+      </span>
+   </div>
+   <div id="api-error-message" class="error-message">
+      {{statusMessage}}
+   </div>
+   <div class="icon-container">
+      <!--span class="img-step-close" (click)="closeMessageBlock()">
+      </span-->
+   </div>
+</div>
+<div class="transactions" [class.is-skeleton-loading]='skeletonMode'>
+<div *ngIf="!editMode" id="trnsaction-pockets-container">
+   <div class="list-wrapper" *ngIf="_pockets">
+      <p class="list-title" [innerHtml]="''| skeletonLoader:skeletonMode"></p>
+      <table>
+         <thead>
+            <tr>
+               <th [innerHtml]="''| skeletonLoader:skeletonMode"></th>
+               <th [innerHtml]="''| skeletonLoader:skeletonMode"></th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr *ngFor="let pocket of _pockets" (click)="onPocketClick(itemAccountId, pocket?.currency?.currency)">
+               <td *ngIf="skeletonMode" [innerHtml]="pocket?.currency?.currency | skeletonLoader:skeletonMode"></td>
+               <td class="date icon-link" [ngClass]="pocket?.currency?.currency">
+                  <span class="pocket-row-block">
+                     <span class="gd-lg-label">{{getCurrencyName(pocket?.currency?.currency)}}</span>
+                     <span class="pocket-flag"></span>{{pocket?.currency?.currency}}
+                  </span>
+               </td>
+               <td class="date icon-link"><span class="pocket-arrow pull-right"></span><span class="pull-right pocket-row-block"><span class="gd-sm-label">{{labels.availableBal}}</span><span>{{getCurrencySymbol(pocket?.currency?.currency)}}{{pocket?.currency?.amount}}</span></span>
+               </td>
+            </tr>
+         </tbody>
+      </table>
+   </div>
+</div>
+<div *ngIf="editMode" class="row">
+      <div class="col-xs-12">
+            <bs-sortable [(ngModel)]="_pockets" [itemTemplate]="itemTemplate" itemClass="sortable-item"
+            itemActiveClass="sortable-item-active" placeholderItem="Drag here" placeholderClass="placeholderStyle"
+            wrapperClass="sortable-wrapper" (onChange)="reOrderPriority()"
+          ></bs-sortable>
+      </div>
+   </div>
+</div>

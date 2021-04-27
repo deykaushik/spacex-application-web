@@ -1,0 +1,36 @@
+@import '../../../styles/_mixins.scss';
+@import '../../../styles/_base.scss';
+
+$svg-path: '../../../assets/svg/reports-logo';
+.reports-footer{
+   padding: 10px 0px 0px 0px;
+   .footer-first-row{
+      @include markpro-bold();
+      font-size: $font-xsm;
+      margin-bottom: 15px;
+   }
+   .footer-second-row{
+      .trade-mark-logo{
+         width: 130px;
+         @include svg-image-full-path($svg-path, 'OMFull');
+      }
+      .registerationNo{
+         font-size: 6px;
+         font-weight: normal;
+         font-style: normal;
+         font-stretch: normal;
+         line-height: normal;
+         letter-spacing: normal;
+         color: $report-footer-reg-color;
+      }
+   }
+  
+}
+.print-footer-color-pop{
+   color: $text-color-accent-primary;
+}
+@media print{
+   .print-footer-color-pop{
+      color: $text-color-accent-primary !important;
+   }
+}

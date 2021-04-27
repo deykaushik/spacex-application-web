@@ -1,0 +1,5 @@
+﻿<div class="slider-padding" id="slider-cntnr">
+   <nouislider [connect]="[true, false]" [min]="config.min" [max]="config.max" [step]="config.step" [(ngModel)]="shownValue"
+               (slide)="onChange($event)" [tooltips]="showTooltip" [format]="tipFormatter" (end)="onSliderEnd($event)">
+   </nouislider>
+</div>

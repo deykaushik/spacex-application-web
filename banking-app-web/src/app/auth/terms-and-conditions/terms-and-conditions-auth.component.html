@@ -1,0 +1,105 @@
+<div class="terms-component">
+   <div *ngIf="!mustShowTerms; then loadingPage else termsPage"></div>
+   <ng-template #loadingPage></ng-template>
+   <ng-template #termsPage>
+      <div class="component-container">
+         <div class="terms-container">
+            <div>
+               <app-message-alert [showAlert]="acceptError != ''" [displayMessageText]="acceptError" [linkDisplayText]="errorLinkText"
+                  [action]="alertAction" [alertType]="alertType" (onAlertLinkEmit)="onAlertLinkSelected($event)"></app-message-alert>
+            </div>
+         </div>
+
+         <div *ngIf="termsToAcceptNedId?.length > 0; then nedIdTermsAndConditions"></div>
+         <ng-template #nedIdTermsAndConditions>
+            <div class="terms-container">
+               <div>
+                  <div class="titleDiv">
+                     <h4 class="section-title">Please review our new terms and conditions</h4>
+                  </div>
+                  <div class="downloadDiv">
+                     <a class="download" href="{{constants.links.termsAndConditionsNedId}}" target="_blank">
+                        <span class="icon"></span>
+                        <span class="text">Print</span>
+                     </a>
+                  </div>
+               </div>
+               <div *ngFor="let term of termsToAcceptNedId">
+                  <div class="noticeContainer">
+                     <hr />
+                     <div class="noticeTitle">{{term?.noticeTitle}}</div>
+                     <div *ngIf="term?.noticeDetails.versionDate != ''" class="notice-version">
+                        Last updated: {{term?.noticeDetails.versionDate | date:dateFormat }}
+                     </div>
+                     <div *ngIf="term?.versionNumber != ''" class="notice-version">
+                        Version: {{term?.versionNumber }}
+                     </div>
+                     <div class="noticeContent" innerHtml="{{ term?.noticeDetails.noticeContent }}"></div>
+                  </div>
+               </div>
+            </div>
+            <div class="sticky">
+               <div class="terms-container">
+                  <div class="half-btns"></div>
+                  <div class="half-btns">
+                     <div class="left">
+                        <app-bottom-button [disableButton]="showLoader" (clickEmitter)="declineTermsAndConditions()" [text]="'Decline'" [showLoader]='false'
+                           [alternateTheme]="true"></app-bottom-button>
+                     </div>
+                     <div class="right">
+                        <app-bottom-button [disableButton]="false" (clickEmitter)="acceptNedIdTermsAndConditions()" [text]="'Accept'" [showLoader]='showLoader'></app-bottom-button>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </ng-template>
+
+         <div *ngIf="termsToAcceptNedId?.length === 0 && termsToAcceptProfile?.length > 0; then profileTermsAndConditions"></div>
+         <ng-template #profileTermsAndConditions>
+            <div class="terms-container">
+               <div>
+                  <div class="titleDiv">
+                     <h4 class="section-title">Please review our new terms and conditions</h4>
+                  </div>
+                  <div class="downloadDiv">
+                     <a class="download" href="{{constants.links.termsAndConditionsProfile}}" target="_blank">
+                        <span class="icon"></span>
+                        <span class="text">Print</span>
+                     </a>
+                  </div>
+               </div>
+               <div *ngFor="let term of termsToAcceptProfile">
+                  <div class="noticeContainer">
+                     <hr />
+                     <div class="noticeTitle">{{term?.noticeTitle}}</div>
+                     <div *ngIf="term?.noticeDetails.versionDate != ''" class="notice-version">
+                        Last updated: {{formatDate(term?.noticeDetails.versionDate) | date:dateFormat }}
+                     </div>
+                     <div *ngIf="term?.versionNumber != ''" class="notice-version">
+                        Version: {{term?.versionNumber }}
+                     </div>
+                     <div class="noticeContent" innerHtml="{{ term?.noticeDetails.noticeContent }}"></div>
+                  </div>
+               </div>
+            </div>
+            <div class="sticky">
+               <div class="terms-container">
+                  <div class="half-btns"></div>
+                  <div class="half-btns">
+                     <div class="left">
+                        <app-bottom-button [disableButton]="showLoader" (clickEmitter)="declineTermsAndConditions()" [text]="'Decline'" [showLoader]='false'
+                           [alternateTheme]="true"></app-bottom-button>
+                     </div>
+                     <div class="right">
+                        <app-bottom-button [disableButton]="false" (clickEmitter)="acceptProfileTermsAndConditions()" [text]="'Accept'" [showLoader]='showLoader'></app-bottom-button>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </ng-template>
+      </div>
+   </ng-template>
+   <div class="closeBtn">
+      <div class="closeIcon" (click)="declineTermsAndConditions()" (touchstart)="declineTermsAndConditions()"></div>
+   </div>
+</div>

@@ -1,0 +1,32 @@
+<div class="formInput">
+   <form #getUsernameForm="ngForm" class="gd-form">
+      <div class="gd-form-row">
+         <h4 class="section-title darkText">Please enter your Nedbank ID username to reset your password.</h4>
+      </div>
+      <app-message-alert [showAlert]="serviceError != ''" [displayMessageText]="serviceError" [linkDisplayText]="errorLinkText"
+         [action]="alertAction" [alertType]="alertType" (onAlertLinkEmit)="onAlertLinkSelected($event)"></app-message-alert>
+      <div class="gd-form-row">
+         <label for="username" class="active gd-sm-label">Nedbank ID Username</label>
+         <input id="username" name="username" autocomplete="off" [disabled]="showLoader" minlength="7" maxlength="100" #username="ngModel"
+            type="text" class="validate form-element" (ngModelChange)="onInputChanged($event)" [(ngModel)]="vm.username" appValidateInput
+         />
+         <div *ngIf="username.invalid && (username.dirty || username.touched)" class="error-msg">
+            <ng-container *ngIf="username.errors.required;else patternCheck">
+               {{messages.requiredField}}
+            </ng-container>
+            <ng-template #patternCheck>
+               <ng-container *ngIf="username.errors.pattern;else lengthCheck">
+                  <span>Incorrect format.</span>
+               </ng-container>
+            </ng-template>
+            <ng-template #lengthCheck>
+               <ng-container *ngIf="username.hasError('minlength') || username.hasError('maxlength');else defaultError">
+                  <span>Must be between 7 and 100 characters.</span>
+               </ng-container>
+            </ng-template>
+            <ng-template #defaultError>Incorrect format</ng-template>
+         </div>
+      </div>
+      <app-bottom-button [text]="'Next'" [disableButton]='!this.isValid' (clickEmitter)="navigateNext($event)" [showLoader]='showLoader'></app-bottom-button>
+   </form>
+</div>

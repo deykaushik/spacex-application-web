@@ -1,0 +1,12 @@
+@import '../../../styles/_mixins.scss';
+@import '../../../styles/_base.scss';
+
+$svg-path: '../../../assets/svg/reports-logo';
+.report-header{
+   padding-bottom: 0px;
+    .nedbanklogo {
+      width: 70px;
+      height: 70px;
+      @include svg-image-full-path($svg-path, 'Logo_80px_145px');
+   }
+}

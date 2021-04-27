@@ -1,0 +1,145 @@
+<app-colored-overlay [alternate]="true" [isVisible]="isOverlayVisible" [template]="otherPaymentModesTemplate" [altButtonText]="closeBtnText"
+   (onHide)="closeOverlay()">
+   <ng-template #otherPaymentModesTemplate>
+      <section class="other-payment-modes-section">
+         <h4 class="title">{{labels.title}}</h4>
+         <div class="mode-cash">
+            <div class="icon-text">
+               <span class="icon icon-cash"></span>
+               <span class="text">{{labels.cashDepositTitle}}</span>
+            </div>
+            <div *ngIf="isMfCSettlement">
+               <p class="para-desc">{{labels.MFC.cashDepositInfo}}</p>
+               <p class="para-desc">{{labels.MFC.cashDepositRefNumber}}</p>
+            </div>
+            <div *ngIf="isPlSettlement" class="para-desc">{{labels.cashDepositDesc}}</div>
+            <div *ngIf="isHlSettlement">
+               <p class="para-desc">{{labels.HL.cashDepositInfo}}</p>
+               <p class="para-desc">{{labels.HL.cashDepositRefNumber}}</p>
+            </div>
+         </div>
+         <span class="divider"></span>
+         <div class="mode-eft">
+            <div class="icon-text">
+               <span class="icon icon-eft"></span>
+               <span class="text">{{labels.eftPaymentsTitle}}</span>
+            </div>
+            <p class="para-desc">{{labels.eftPaymentsDesc}}</p>
+            <ng-container *ngIf="isPlSettlement">
+               <div class="eft-account">
+                  <span class="name">{{labels.eftPayments.nedBank}}</span>
+                  <div class="details">
+                     <div class="account-type">
+                        <span>{{labels.eftPayments.accountType}}</span>
+                        <span>{{labels.eftPayments.personalLoanAccountType}}</span>
+                     </div>
+                     <div class="account-number">
+                        <span>{{labels.eftPayments.accountNumber}}</span>
+                        <span>{{nedBankaccountNo}}</span>
+                     </div>
+                     <div class="account-branch-code">
+                        <span>{{labels.eftPayments.branchCode}}</span>
+                        <span [innerHtml]="branchCode | skeletonLoader:isSkeletonMode"></span>
+                     </div>
+                  </div>
+               </div>
+               <div class="eft-account">
+                  <span class="name">{{labels.eftPayments.standardBank}}</span>
+                  <div class="details">
+                     <div class="account-number">
+                        <span>{{labels.eftPayments.accountNumber}}</span>
+                        <span>{{sbAccountNo}}</span>
+                     </div>
+                     <div class="account-branchcode">
+                        <span>{{labels.eftPayments.branchCode}}</span>
+                        <span [innerHtml]="branchCode | skeletonLoader:isSkeletonMode"></span>
+                     </div>
+                  </div>
+               </div>
+               <div class="eft-account">
+                  <span class="name">{{labels.eftPayments.otherBank}}</span>
+                  <div class="details">
+                     <div class="account-number">
+                        <span>{{labels.eftPayments.accountNumber}}</span>
+                        <span>{{nedBankaccountNo}}</span>
+                     </div>
+                     <div class="account-branchcode">
+                        <span>{{labels.eftPayments.branchCode}}</span>
+                        <span [innerHtml]="branchCode | skeletonLoader:isSkeletonMode"></span>
+                     </div>
+                  </div>
+               </div>
+            </ng-container>
+            <ng-container *ngIf="isHlSettlement">
+               <div class="eft-account">
+                  <span class="name">{{labels.eftPayments.nedBank}}</span>
+                  <div class="details">
+                     <div class="account-type">
+                        <span>{{labels.HL.eftPayments.nedbank.paymentType}}</span>
+                     </div>
+                     <div class="account-type">
+                        <span>{{labels.HL.eftPayments.nedbank.accountType}}</span>
+                     </div>
+                     <div class="account-number">
+                        <span>{{labels.HL.eftPayments.nedbank.accountNumber}}</span>
+                     </div>
+                  </div>
+               </div>
+               <div class="eft-account">
+                  <span class="name">{{labels.eftPayments.absaAndFnb}}</span>
+                  <div class="details">
+                     <div class="account-type">
+                        <span>{{labels.HL.eftPayments.absaAndFnb.paymentType}}</span>
+                     </div>
+                     <div class="account-type">
+                        <span>{{labels.HL.eftPayments.absaAndFnb.accountType}}</span>
+                     </div>
+                     <div class="account-number">
+                        <span>{{labels.HL.eftPayments.absaAndFnb.accountNumber}}</span>
+                     </div>
+                     <div class="account-branch-code">
+                        <span>{{labels.HL.eftPayments.absaAndFnb.clearingCode}}</span>
+                     </div>
+                     <div class="account-branch-code">
+                        <span>{{labels.HL.eftPayments.absaAndFnb.reference}}</span>
+                     </div>
+                  </div>
+               </div>
+               <div class="eft-account">
+                  <span class="name">{{labels.eftPayments.standardBank}}</span>
+                  <div class="details">
+                     <div class="account-type">
+                        <span>{{labels.HL.eftPayments.standardBank.paymentType}}</span>
+                     </div>
+                     <div class="account-type">
+                        <span>{{labels.HL.eftPayments.standardBank.accountType}}</span>
+                     </div>
+                     <div class="account-number">
+                        <span>{{labels.HL.eftPayments.standardBank.accountNumber}}</span>
+                     </div>
+                     <div class="account-branch-code">
+                        <span>{{labels.HL.eftPayments.standardBank.branchCode}}</span>
+                     </div>
+                  </div>
+               </div>
+            </ng-container>
+         </div>
+         <span *ngIf="isPlSettlement || isMfCSettlement" class="divider"></span>
+         <div *ngIf="isPlSettlement || isMfCSettlement" class="contact-info">
+            <span class="desc">{{labels.contactDetails.description}}</span>
+            <div class="icon-text">
+               <span class="icon icon-email"></span>
+               <a href="{{emailLink}}" target="_top" data-rel="external" class="text-email">{{contactEmail}}</a>
+            </div>
+            <span *ngIf="isMfCSettlement" class="para-desc">{{labels.MFC.contactInfo}}</span>
+         </div>
+         <div *ngIf="isPlSettlement" class="info-text">
+            <span class="info-icon"></span>
+            <div class="text">
+               <div class="text-process-info">{{labels.loanClosure}}</div>
+               <div>{{labels.paidUpLetter}}</div>
+            </div>
+         </div>
+      </section>
+   </ng-template>
+</app-colored-overlay>

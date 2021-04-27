@@ -1,0 +1,58 @@
+<form class="gd-form" #statementPreferencesEmailForm="ngForm">
+   <div class="gd-form-row">
+      <label for="primary_email" class="active gd-sm-label">{{labels.primaryEmail}}</label>
+      <input autocomplete="off" type="text" id="primary_email" name="primaryEmail" #primaryEmail="ngModel" appValidateRequired
+           [ngModel]="statementPreferencesDetails.email[variableValues.zero]" (focus)="onFocus()"
+         class="primary-email" [pattern]="patterns.email" (keyup)="checkEqual(statementPreferencesEmailForm)" />
+      <div *ngIf="primaryEmail.invalid && (primaryEmail.dirty || primaryEmail.touched)" class="error-msg">
+         <div *ngIf="primaryEmail.errors.required">
+            * {{messages.statementPreferences.emailRequired}}
+         </div>
+         <div *ngIf="!primaryEmail.errors.required && primaryEmail.errors.pattern">
+            * {{messages.statementPreferences.invalidEmail}}
+         </div>
+      </div>
+   </div>
+   <div *ngIf="addSecondaryEmailOption && !isMfc" class="gd-form-row add-email" (click)="addSecondaryEmail()">
+      <span class="add-icon"></span>
+      <label class="gd-md-label add-msg">{{ labels.addSecondaryEmail }}</label>
+   </div>
+   <div class="gd-form-row" *ngIf="secondaryEmailVisible && !isMfc">
+      <label for="secondary_email" class="active gd-sm-label secondary-label">{{ labels.secondaryEmail }}</label>
+      <div class="search-block">
+         <div class="search-field">
+            <span class="search-icon" (click)="deleteSecondaryEmail()"></span>
+            <input autocomplete="off" [ngClass]="!checkSame ? 'no-error' : 'error'" type="text" id="secondary_email" name="secondaryEmail" #secondaryEmail="ngModel" [ngModel]="statementPreferencesDetails.email[variableValues.one]"
+               (focus)="onFocus()" (keyup)="checkEqual(statementPreferencesEmailForm)" [pattern]="patterns.email" class="secondary-email" />
+            <div *ngIf="secondaryEmail.invalid && (secondaryEmail.dirty || secondaryEmail.touched)" class="error-msg">
+               <div *ngIf="!secondaryEmail.errors.required && secondaryEmail.errors.pattern">
+                  * {{messages.statementPreferences.invalidEmail}}
+               </div>
+            </div>
+            <div *ngIf="checkSame" class="error-msg">
+                * {{statementMessage.sameAlternativeEmail}}
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="gd-form-row">
+      <span class="frequency-label"> {{ labels.statementFrequency }}</span>
+      <span class="frequency">{{statementPreferencesDetails.frequency | titlecase}}</span>
+   </div>
+   <div class="gd-form-row" *ngIf="isCasa || isMfc">
+      <div class="info-container">
+         <span class="info-icon"></span>
+         <div class="info-msg">
+            <span *ngIf="isCasa">{{informations.frequencyDisclaimer}}</span>
+            <span *ngIf="isMfc">{{informations.frequencyDisclaimerMFCOld}}</span>
+            <span *ngIf="isCasa" class="call-center-number">{{informations.callCenterNumber}}</span>
+            <span *ngIf="isMfc" class="call-center-number">{{informations.callCenterNumberMFC}}</span>
+         </div>
+      </div>
+   </div>
+   <div class="gd-form-row button-update">
+      <app-bottom-button [text]="buttonName"  [class.disable]="isDisable((statementPreferencesEmailForm.dirty || statementPreferencesEmailForm.touched) && statementPreferencesEmailForm.invalid)"
+         [disableButton]="isDisable((statementPreferencesEmailForm.dirty || statementPreferencesEmailForm.touched) && statementPreferencesEmailForm.invalid) || checkSame"
+         (click)="updateStatementPreferences(statementPreferencesEmailForm)"></app-bottom-button>
+   </div>
+</form>

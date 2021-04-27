@@ -1,0 +1,127 @@
+<div class="approveit-container modal-body">
+  <form #approveItForm="ngForm" class="gd-form">
+
+    <div *ngIf="showScreen == 1">
+      <div class="spinnerContainer">
+        <div class="spinner"></div>
+        <div class="section-title">{{countdownTimer}}</div>
+      </div>
+      <div class="section-title">An Approve-it<sup>TM</sup> message has been sent to your cellphone</div>
+      <div class="marginTop">Please accept the Approve-it message to continue.</div>
+      <div class="marginTop">Should you not get an Approve-it message, an SMS with a one-time password (OTP) will be sent to you.</div>
+      <div *ngIf="serviceError != ''" class="marginTop">
+        <div class="gd-form-row">
+          <span class="error-msg">{{serviceError}}</span>
+        </div>
+      </div>
+      <br />
+    </div>
+
+    <div *ngIf="showScreen == 2">
+      <h4 class="section-title" style="text-align:center">An Approve-it<sup>TM</sup> message could not be sent at this time.</h4>
+      <div>Please click resend to try again.</div>
+      <div class="half-btns marginTop">
+        <div class="left">
+          <app-bottom-button [disableButton]="false" (clickEmitter)="ResendApproveUser()" [text]="'Resend'" [showLoader]='showLoader'></app-bottom-button>
+        </div>
+        <div class="right">
+          <app-bottom-button [disableButton]="showLoader" (clickEmitter)="navigateCancel()" [text]="'Cancel'" [alternateTheme]="true"></app-bottom-button>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="showScreen == 3">
+      <div class="section-title" style="text-align:center">A one-time password (OTP) was sent to your cellphone</div>
+      <div>An Approve-it<sup>TM</sup> message couldn't be sent at this time. Please enter the OTP to continue.</div>
+      <div class="marginTop">
+        <div class="gd-form-row">
+          <label for="otp" class="gd-sm-label">Enter OTP</label>
+          <input id="otp" [disabled]="showLoader" autocomplete="off" type="tel" maxlength="6" class="validate form-element" type="text"
+            [(ngModel)]="otpValue" #otp="ngModel" name="otp" appValidateInput validateFor='number'
+            [class.ng-invalid]="otpValidationError != ''"/>
+            <div *ngIf="otpValidationError" class="error-msg">{{otpValidationError}}</div>
+        </div>
+      </div>
+      <div class="half-btns marginTop">
+        <div class="left">
+          <app-bottom-button [disableButton]="!this.isValid" (clickEmitter)="ApproveUserSMS()" [text]="'Submit'" [showLoader]='showLoader'></app-bottom-button>
+        </div>
+        <div class="right">
+          <app-bottom-button (clickEmitter)="navigateCancel()" [text]="'Cancel'" [alternateTheme]="true"></app-bottom-button>
+        </div>
+      </div>
+      <div *ngIf="serviceError != ''" class="marginTop">
+        <div class="gd-form-row">
+          <span class="error-msg">{{serviceError}}</span>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="showScreen == 4">
+      <span class="blocked"></span>
+      <div class="section-title">You have rejected the Approve-it<sup>TM</sup> message</div>
+      <div class="marginTop">If you suspect any fraudulent activity, please visit your nearest branch or contact the call centre on the number below.</div>
+      <div class="marginTop darkGrey-text">Everyday banking</div>
+      <div class="link-text">+27 86 055 5111</div>
+      <div class="marginTop">
+        <div>
+          <app-bottom-button [disableButton]="false" (clickEmitter)="navigateCancel()" [text]="'Return to transaction'"></app-bottom-button>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="showScreen == 5">
+      <div class="section-title">The Approve-it<sup>TM</sup> has been accepted</div>
+      <div>Close to continue...</div>
+      <div class="marginTop"></div>
+      <div class="">
+        <app-bottom-button [disableButton]="showLoader" (clickEmitter)="navigateClose()" [text]="'Close'" [alternateTheme]="true"></app-bottom-button>
+      </div>
+    </div>
+
+    <div *ngIf="showScreen == 6">
+      <div class="spinnerContainer">
+        <div class="disabledSpinner"></div>
+        <div class="section-title">0</div>
+      </div>
+      <h4 class="section-title" style="text-align:center">The Approve-it<sup>TM</sup> message timed out</h4>
+      <div>Request the Approve-it message to be resent.</div>
+      <div class="half-btns marginTop">
+        <div class="left">
+          <app-bottom-button [disableButton]="false" (clickEmitter)="ResendApproveUser()" [text]="'Resend'" [showLoader]='showLoader'></app-bottom-button>
+        </div>
+        <div class="right">
+          <app-bottom-button [disableButton]="showLoader" (clickEmitter)="navigateCancel()" [text]="'Cancel'" [alternateTheme]="true"></app-bottom-button>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="showScreen == 7">
+      <span class="blocked"></span>
+      <div class="section-title">Your one-time password (OTP) has been entered incorrectly {{otpMaxTries}} times</div>
+      <div class="marginTop">Please visit a branch to reactivate this functionality. For further information, please call the contact centre.</div>
+      <div class="marginTop darkGrey-text">Everyday banking</div>
+      <div class="link-text">+27 86 055 5111</div>
+      <div class="marginTop">
+        <div class="noPadding">
+          <app-bottom-button [disableButton]="false" (clickEmitter)="navigateCancel()" [text]="'Cancel'"></app-bottom-button>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="showScreen == 8">
+      <div class="section-title">An error has occured</div>
+      <div>Close to continue...</div>
+      <div class="marginTop"></div>
+      <div class="">
+        <app-bottom-button [disableButton]="showLoader" (clickEmitter)="navigateCancel()" [text]="'Close'" [alternateTheme]="true"></app-bottom-button>
+      </div>
+      <div *ngIf="serviceError != ''" class="marginTop">
+        <div class="gd-form-row">
+          <span class="error-msg">{{serviceError}}</span>
+        </div>
+      </div>
+    </div>
+
+  </form>
+</div>

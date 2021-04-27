@@ -1,0 +1,152 @@
+<app-message-alert [showAlert]="isErrorShown" [displayMessageText]="visibilityError" [linkDisplayText]="''" [action]="alertAction"
+   [alertType]="alertType" (onAlertLinkEmit)="onAlertLinkSelected($event)"></app-message-alert>
+
+<div class="account-view" [class.is-skeleton-loading]='skeletonMode'>
+   <div class="container">
+      <div class="row" *ngIf="!isViewNotices">
+         <div class="col-md-4">
+            <div *ngIf="accountContainers && accountId">
+               <app-account-card [accountContainers]="accountContainers" [itemAccountId]="accountId" (accountChange)="onAccountChange($event)"
+                  (noticeWithdrawalFlag)="onWithdrawalFlag($event)" (selectedAccountInfo)="accountInfo($event)" [skeletonMode]="skeletonMode" 
+                  [isOptionsVisible]="featureVisible" [isDormantAccount]="isDormantAccount" [settlementFeatureProps]="settlementFeatureProps"
+                  [isNow]="isNow" [buildingLoanAccount]="buildingLoanBalance" [allNotices]="allNotices">
+               </app-account-card>
+            </div>
+            <div class="features" *ngIf="showShareAccount || featureVisible || showSettlementQuote() || isStatementPreferencesVisible || showRequestBuildingLoan || this.buildingSkeletonMode">
+               <h4 class="section-title">{{labels.featureTitle}}</h4>
+               <ul>
+                  <li *ngIf="showShareAccount && !isTravelCardActive() && !isOpenNewAccount">
+                     <a *ngIf="skeletonMode" [innerHtml]="''| skeletonLoader:skeletonMode"></a>
+                     <a class="icon-link" (click)="onAccountDetailsClick()">{{labels.accountDetails}}</a>
+                     <span class="icon icon-link"></span>
+                     <span class="icon-skeleton-margin" [innerHtml]="''| skeletonLoader:skeletonMode:'skeleton-icon'"></span>
+                  </li>
+                  <li *ngIf="showSettlementQuote() || this.homeLoanSkeletonMode">
+                     <a *ngIf="homeLoanSkeletonMode" [innerHtml]="''| skeletonLoader:homeLoanSkeletonMode"></a>
+                     <a *ngIf="!homeLoanSkeletonMode" class="icon-link" (click)="onSettlementQuoteClick()">{{settlementQuoteBtnLbl}}</a>
+                     <span *ngIf="!homeLoanSkeletonMode" class="icon icon-link"></span>
+                     <span class="icon-skeleton-margin" [innerHtml]="''| skeletonLoader:homeLoanSkeletonMode:'skeleton-icon'"></span>
+                  </li>
+                  <li *ngIf="featureVisible && !removeDebitOrderFlag">
+                     <a *ngIf="skeletonMode" [innerHtml]="''| skeletonLoader:skeletonMode"></a>
+                     <a class="icon-link" [routerLink]="['/dashboard/account/detail',accountId,'debit-orders']" (click)="debitOrderClicked()">{{debitOrderLabel}}</a>
+                     <span class="icon icon-link"></span>
+                     <span class="icon-skeleton-margin" [innerHtml]="''| skeletonLoader:skeletonMode:'skeleton-icon'"></span>
+                  </li>
+                  <li *ngIf="checkLoanPaymentOption()">
+                     <a *ngIf="skeletonMode" [innerHtml]="''| skeletonLoader:skeletonMode"></a>
+                     <a class="icon-link" [routerLink]="['/dashboard/account/detail',accountId,'manage-payment']" (click)="loanClicked()">{{managePaymentLabel}}</a>
+                     <span class="icon icon-link"></span>
+                     <span class="icon-skeleton-margin" [innerHtml]="''| skeletonLoader:skeletonMode:'skeleton-icon'"></span>
+                  </li>
+                  <li *ngIf="featureVisible">
+                     <a *ngIf="skeletonMode" [innerHtml]="''| skeletonLoader:skeletonMode"></a>
+                     <a class="icon-link" [routerLink]="['/dashboard/account/scheduled/',accountId]" (click)="sendEvent('click_on_scheduled_payments')">Scheduled payments</a>
+                     <span class="icon icon-link"></span>
+                     <span class="icon-skeleton-margin" [innerHtml]="''| skeletonLoader:skeletonMode:'skeleton-icon'"></span>
+                  </li>
+                  <li *ngIf="featureVisible || isTravelCardActive()">
+                     <a *ngIf="skeletonMode" [innerHtml]="''| skeletonLoader:skeletonMode"></a>
+                     <a class="icon-link" *ngIf="!isTravelCardActive()" [routerLink]="['/cards',accountId]" (click)="sendEvent('click_on_card_management');sendEventAccountType()">{{labels.cardManagement}}</a>
+                     <a class="icon-link" *ngIf="isTravelCardActive()" [routerLink]="['/cards']" (click)="sendEvent('click_on_card_management')">{{labels.cardManagement}}</a>
+                     <span class="icon icon-link"></span>
+                     <span class="icon-skeleton-margin" [innerHtml]="''| skeletonLoader:skeletonMode:'skeleton-icon'"></span>
+                  </li>
+                  <li *ngIf="isTravelCardActive() && showTravelCardTrips">
+                     <a *ngIf="skeletonMode" [innerHtml]="''| skeletonLoader:skeletonMode"></a>
+                     <a class="icon-link" [routerLink]="['/dashboard/account/detail/trip/',accountId]" (click)="sendEvent('click_on_my_trips')">{{labels.loadTripLabels.myTripsText}}</a>
+                     <span class="icon icon-link"></span>
+                     <span class="icon-skeleton-margin" [innerHtml]="''| skeletonLoader:skeletonMode:'skeleton-icon'"></span>
+                  </li>
+                  <li *ngIf="showOpenNewAccount && isOpenNewAccount">
+                     <a class="icon-link" (click)="openNewAccount()">{{labels.nowLabels.openNewAccount}}</a>
+                     <span class="icon icon-link"></span>
+                     <span class="icon-skeleton-margin"></span>  
+                  </li>
+                  <li *ngIf="(isViewSubmittedNotice && isNoticeFlag)">
+                     <a *ngIf="skeletonMode" [innerHtml]="''| skeletonLoader:skeletonMode"></a>
+                     <a class="icon-link" (click)="viewNotices()">{{labels.nowLabels.viewNotice}}</a>
+                     <span class="icon icon-link"></span>
+                     <span class="icon-skeleton-margin"></span>
+                  </li>
+                  <li *ngIf="isGreenbacksAccount && redemptionToggle && hasUnitTrustsInvAccount">
+                     <a *ngIf="skeletonMode" [innerHtml]="''| skeletonLoader:skeletonMode"></a>
+                     <a class="icon-link" [routerLink]="['/unitTrusts',accountId]" (click)="sendEvent('click_on_redeem_for_unit_trusts')">Redeem for Unit Trusts</a>
+                     <span class="icon icon-link"></span>
+                     <span class="icon-skeleton-margin" [innerHtml]="''| skeletonLoader:skeletonMode:'skeleton-icon'"></span>
+                  </li>
+                  <li *ngIf="isGreenbacksAccount && chargesAndFeeToggle">
+                     <a *ngIf="skeletonMode" [innerHtml]="''| skeletonLoader:skeletonMode"></a>
+                     <a class="icon-link" [routerLink]="['/chargesAndFees',accountId]" (click)="sendEvent('click_on_redeem_for_charges_and_fees')">{{labels?.chargesAndFees.redeemTitle}}</a>
+                     <span class="icon icon-link"></span>
+                     <span class="icon-skeleton-margin" [innerHtml]="''| skeletonLoader:skeletonMode:'skeleton-icon'"></span>
+                  </li>
+                  <li *ngIf="showRequestBuildingLoan || this.homeLoanSkeletonMode">
+                     <a href="javascript:void(0)" *ngIf="homeLoanSkeletonMode" [innerHtml]="''| skeletonLoader:homeLoanSkeletonMode"></a>
+                     <a *ngIf="!homeLoanSkeletonMode" class="icon-link" [routerLink]="['/payout/initiate',accountId]" (click)="sendEvent(analyticsConstants.requestPayOut)">{{labels?.buildingLoan.requestPayment}}</a>
+                     <span *ngIf="!homeLoanSkeletonMode" class="icon icon-link"></span>
+                     <span class="icon-skeleton-margin" [innerHtml]="''| skeletonLoader:homeLoanSkeletonMode:'skeleton-icon'"></span>
+                  </li>
+                  <li *ngIf="showStatementsDocument && isStatementPreferencesVisible">
+                     <a *ngIf="skeletonMode" [innerHtml]="''| skeletonLoader:skeletonMode"></a>
+                     <a class="icon-link" (click)="onStatementDocumentClick()">{{labels?.statementAndDocument.title}}</a>
+                     <span class="icon icon-link"></span>
+                     <span class="icon-skeleton-margin" [innerHtml]="''| skeletonLoader:skeletonMode:'skeleton-icon'"></span>
+                  </li>
+                  <li *ngIf='requestCreditLimitToggle && isCreditCard'>
+                     <a *ngIf="skeletonMode" [innerHtml]="''| skeletonLoader:skeletonMode"></a>
+                     <a class="icon-link" (click)="onRequestCreditLimitIncreaseClick()">{{labels?.requestCreditLimitIncrease}}</a>
+                     <span class="icon icon-link"></span>
+                     <span class="icon-skeleton-margin" [innerHtml]="''| skeletonLoader:skeletonMode:'skeleton-icon'"></span>
+                  </li>
+                  <li *ngIf="manageLoan || manageLoanSkeletonMode">
+                     <a *ngIf="manageLoanSkeletonMode; else showFeature" [innerHtml]="''| skeletonLoader:manageLoanSkeletonMode"></a>
+                     <ng-template #showFeature>
+                        <a class="icon-link" [routerLink]="['/manageloan', accountId]">{{labels.manageYourLoan}}</a>
+                        <span class="icon icon-link"></span>
+                     </ng-template>
+                     <span class="icon-skeleton-margin" [innerHtml]="''| skeletonLoader:manageLoanSkeletonMode:'skeleton-icon'"></span>
+                  </li>
+               </ul>
+            </div>
+            <div *ngIf="isTransactionAccount" class="new-feature">
+               <div class="text-center">
+                  <span class="new-feature-icon"></span>
+               </div>
+               <h5 class="section-title-secondary">{{labels.newFeatureTitle}}</h5>
+               <div class="content">
+                  <p>{{labels.newFeatureSubTitle}} <a class="inner-link" [href]="emptyStateUrl" target="_blank">{{labels.oldBanking}}</a>{{labels.site}}</p>
+               </div>
+            </div>
+         </div>
+         <div class="col-md-8">
+            <app-account-transactions [transactions]="transactions" [graphTransactions]="graphTransactions" [parentSkeleton]="skeletonMode"
+               [accountType]="accountType" [transactionDetailsData]="transactionDetailsData" (notifications)="notifications($event)"
+               [currency]="currency" [itemAccountId]="accountId" [containerName]="containerName" [pockets]="pockets"  [accountNumber]="accountNumber">
+            </app-account-transactions>
+
+            <div *ngIf="showMoreTransactionsButton && !skeletonMode && !searchMode" class="lazy-load-transactions">
+               <div *ngIf="showLoader" class="loader">
+                  <app-spinner [color]="'green'"></app-spinner>
+            </div>
+            <div *ngIf="!noMoreTransactions && !showLoader">
+               <button (click)="viewMoreTransactions()" class="btn-text">{{transactionHistory.viewMoreTransactions}}
+                  <span class="chevron-icon"></span> </button>
+            </div>
+            <div *ngIf="transactionHistoryFailed || noMoreTransactions">
+               {{message}}
+            </div>
+         </div>
+      </div>
+      <div class="col-sm-12 withdrawal" *ngIf="isNoticeWithdrawal">
+         <app-account-withdrawal [investmentType]="investmentType" [accountId]="accountId" [accountInformation]="accountInformation"
+            [showNoticeFlow]="showNoticeFlow" [noticeDetails]="noticeDetails" (transactionFlag)="isTransactionClick($event)"
+            [firstWitdrawDate]="firstWithdrawalDate" [isDeleteBtnShow]="deleteNotice" [productType]="productType"> </app-account-withdrawal>
+      </div>
+   </div>
+   <div class="row" *ngIf="isViewNotices">
+      <app-view-notices [allNotices]="allNotices" [investmentType]="investmentType" (backNotices)="isNotices($event)" [accNumber]="accountInformation.AccountNumber"
+         (viewNotices)="showNotice($event)"> </app-view-notices>
+   </div>
+</div>
+</div>

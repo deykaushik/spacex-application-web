@@ -1,0 +1,16 @@
+<app-colored-overlay [isVisible]="true" [closeText]="false" [alternate]="true" [template]="popupTemplate" [backOption]="false"
+   (onHide)="closeOverlay()">
+   <ng-template #popupTemplate>
+      <div class="popup-container">
+         <p class="icons">
+            <span class="fica-icon"></span>
+         </p>
+         <p class="header-message">{{openAccountMessages.logoutHeader}}</p>
+         <p class="sub-header"> {{openAccountMessages.logoutSubHeader}} </p>
+         <div class=" select">
+            <app-bottom-button (click)="onYesClicked()" [text]="openAccountMessages.cancelTransaction"></app-bottom-button>
+            <button class="gd-primary-btn no-btn" (click)="closeOverlay()">{{openAccountMessages.stayOnThisPage}}</button>
+         </div>
+      </div>
+   </ng-template>
+</app-colored-overlay>
