@@ -1,9 +1,0 @@
-﻿<button class="{{cssClass}}" id="{{ getID() }}" [disabled]="disableButton" (click)="onClick()" 
-   [ngClass]="{ 'gd-ghost-btn' :alternateTheme, 'gd-primary-btn': !alternateTheme}">
-   <span class="visuallyhidden" aria-live="assertive" role="alert" id="btnMsg" [attr.aria-hidden]="!showAria">{{ariaMsg}}</span> 
-   {{text}}
-   <div *ngIf="showLoader" class="loader">
-      <app-spinner></app-spinner>
-   </div>
-   <div *ngIf="showLoader" class="overlay-loader"></div>
-</button>

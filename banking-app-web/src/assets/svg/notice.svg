@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-    <g fill="none" fill-rule="evenodd">
-        <path stroke="#BBB" stroke-linecap="square" d="M15 18.743l1.584 1.828L21 16"/>
-        <path stroke="#BBB" d="M20.5 23.5V4.699L16.534.5H4.5v23h16zM14 17.143H7M18 14.857H7M13 12.571H7"/>
-        <text fill="#BBB" font-family="MarkPro-Bold, Mark Pro" font-size="4" font-weight="bold" transform="translate(4)">
-            <tspan x="2.114" y="8">Notice</tspan>
-        </text>
-    </g>
-</svg>

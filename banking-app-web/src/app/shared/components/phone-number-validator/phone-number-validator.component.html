@@ -1,7 +1,0 @@
-<div class="phone-number">
-   <div class="phone-number-label" [innerHtml]="phoneNumberLabel ? phoneNumberLabel : label.phoneNumber"></div>
-   <input type="text" #phoneNumber="ngModel" name="phoneNumber" maxlength="15" autocomplete="off" [(ngModel)]="phoneNumberField" (blur)="onFocusOut()"
-      (input)='onInputTermValidator($event)' (ngModelChange)='onInputKeyPressValidator($event)' appValidateRequired
-      required [ngClass]="{'input-border-success' : !maxLengthError , 'input-border-error' : maxLengthError}" />
-   <div class="error-msg" *ngIf="maxLengthError">{{messages.invalidPhone}}</div>
-</div>

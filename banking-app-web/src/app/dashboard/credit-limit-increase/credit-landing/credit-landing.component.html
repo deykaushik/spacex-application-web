@@ -1,9 +1,0 @@
-<section *ngIf='isRequestCreditLimit'>
-   <app-request-credit-limit [isRequestCreditLimit]='isRequestCreditLimit' (changeRequestCreditLimit)='changeRequestCreditLimit($event)'>
-   </app-request-credit-limit>
-</section>
-<section *ngIf='isProcessStarted'>
-   <app-stepper-workflow [steppers]="steppers" [exitStepperLink]="exitUrl" [restructureSteps]="navigationSteps"
-   (onCurrentStepIndex)="onCurrentStepIndex($event)">
-   </app-stepper-workflow>
-</section>

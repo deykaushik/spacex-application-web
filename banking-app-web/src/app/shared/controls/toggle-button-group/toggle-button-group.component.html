@@ -1,8 +1,0 @@
-<div class="button-group">
-   <div *ngFor="let button of buttonGroup;let i = index;">
-      <input type="radio" class="input-box" [name]="groupName" [checked]="selectedButtonValue && button.value === selectedButtonValue"
-         [disabled]="isGroupDisabled">
-      <label  (click)="onRadioItemSelection(button)" [class]="(i === 0 ? 'first-of-type' :((i + 1) === buttonGroup.length ? 'last-of-type' : ''))"
-         [style.width]="100 / this.buttonGroup.length + '%'">{{button.label}}</label>
-   </div>
-</div>

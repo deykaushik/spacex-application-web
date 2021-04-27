@@ -1,9 +1,0 @@
-﻿<ul *dropdownMenu role="menu" #dropdownRef>
-   <li role="menuitem" class="sub-menu-item" [class.active]="selectedOption ? option.path == selectedOption.path :false" *ngFor="let option of options"
-      [ngClass]="{ 'disabled':option.disable,  'no-ponter': option.disable}">
-      <a href="javascript:void(0)" role="presentation" (click)="onSubmenuClick($event,option)" id="submenu-text-link" class="submenu-anchor">
-         <span class="icon {{option.iconCls}}"></span>
-         <span class="text">{{option.text}}</span>
-      </a>
-   </li>
-</ul>

@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 210">
-    <g fill="none" fill-rule="evenodd" stroke="#666666">
-        <circle cx="105" cy="105" r="104.5"/>
-        <path d="M60.125 83.875h95"/>
-        <path stroke-dasharray="2" d="M155.125 131.375h-79.25"/>
-        <path stroke-linecap="square" d="M131.375 60.125l23.75 23.75-23.75 23.75"/>
-        <path stroke-dasharray="2" d="M83.875 155.125l-23.75-23.75 23.75-23.75"/>
-    </g>
-</svg>

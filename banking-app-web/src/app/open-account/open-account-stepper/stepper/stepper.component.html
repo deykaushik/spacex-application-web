@@ -1,7 +1,0 @@
-
-   <app-stepper-workflow [steppers]="steppers" [restructureSteps]="navigationSteps" (onHide)="setPopup(true)">
-   </app-stepper-workflow>
-   <div *ngIf="isPopup">
-      <app-exit-pop-up (stepperPage)="setPopup(false)"></app-exit-pop-up>
-   </div>
-

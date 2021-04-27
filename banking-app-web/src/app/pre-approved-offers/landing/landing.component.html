@@ -1,9 +1,0 @@
-<app-stepper-workflow [steppers]="steppers" [alternateExitButton]="true" (onHide)="exitProcess()" [restructureSteps]="navigationSteps"
-[showErrorOnInvalidSteps]="true">
-</app-stepper-workflow>
-<ng-container *ngIf="showFeedbackScreen">
-<app-colored-overlay alternate='true' [closeText]='false' [cancelable]="false" [isVisible]="showFeedbackScreen" [template]="feedbackTemplate" [cancelable]="false"></app-colored-overlay>
-</ng-container>
-<ng-template #feedbackTemplate>
-   <app-feedback [offerId]="offerId" (hideOverlay)="cancel()"></app-feedback>
-</ng-template>
